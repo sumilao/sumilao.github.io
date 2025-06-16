@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BPF Graph Data Structures &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Redirect" href="redirect.html" />
+    <link rel="prev" title="BPF LLVM Relocations" href="llvm_reloc.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/bpf/graph_ds_impl.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="bpf-graph-data-structures">
+<h1>BPF Graph Data Structures<a class="headerlink" href="#bpf-graph-data-structures" title="Link to this heading">¶</a></h1>
+<p>This document describes implementation details of new-style “graph” data
+structures (linked_list, rbtree), with particular focus on the verifier’s
+implementation of semantics specific to those data structures.</p>
+<p>Although no specific verifier code is referred to in this document, the document
+assumes that the reader has general knowledge of BPF verifier internals, BPF
+maps, and BPF program writing.</p>
+<p>Note that the intent of this document is to describe the current state of
+these graph data structures. <strong>No guarantees</strong> of stability for either
+semantics or APIs are made or implied here.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#unstable-api" id="id2">Unstable API</a></p></li>
+<li><p><a class="reference internal" href="#locking" id="id3">Locking</a></p></li>
+<li><p><a class="reference internal" href="#non-owning-references" id="id4">Non-owning references</a></p></li>
+</ul>
+</nav>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The BPF map API has historically been the main way to expose data structures
+of various types for use within BPF programs. Some data structures fit naturally
+with the map API (HASH, ARRAY), others less so. Consequently, programs
+interacting with the latter group of data structures can be hard to parse
+for kernel programmers without previous BPF experience.</p>
+<p>Luckily, some restrictions which necessitated the use of BPF map semantics are
+no longer relevant. With the introduction of kfuncs, kptrs, and the any-context
+BPF allocator, it is now possible to implement BPF data structures whose API
+and semantics more closely match those exposed to the rest of the kernel.</p>
+<p>Two such data structures - linked_list and rbtree - have many verification
+details in common. Because both have “root”s (“head” for linked_list) and
+“node”s, the verifier code and this document refer to common functionality
+as “graph_api”, “graph_root”, “graph_node”, etc.</p>
+<p>Unless otherwise stated, examples and semantics below apply to both graph data
+structures.</p>
+</section>
+<section id="unstable-api">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Unstable API</a><a class="headerlink" href="#unstable-api" title="Link to this heading">¶</a></h2>
+<p>Data structures implemented using the BPF map API have historically used BPF
+helper functions - either standard map API helpers like <code class="docutils literal notranslate"><span class="pre">bpf_map_update_elem</span></code>
+or map-specific helpers. The new-style graph data structures instead use kfuncs
+to define their manipulation helpers. Because there are no stability guarantees
+for kfuncs, the API and semantics for these data structures can be evolved in
+a way that breaks backwards compatibility if necessary.</p>
+<p>Root and node types for the new data structures are opaquely defined in the
+<code class="docutils literal notranslate"><span class="pre">uapi/linux/bpf.h</span></code> header.</p>
+</section>
+<section id="locking">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Locking</a><a class="headerlink" href="#locking" title="Link to this heading">¶</a></h2>
+<p>The new-style data structures are intrusive and are defined similarly to their
+vanilla kernel counterparts:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">node_data</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">bpf_rb_node</span><span class="w"> </span><span class="n">node</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">bpf_spin_lock</span><span class="w"> </span><span class="n">glock</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">bpf_rb_root</span><span class="w"> </span><span class="n">groot</span><span class="w"> </span><span class="nf">__contains</span><span class="p">(</span><span class="n">node_data</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The “root” type for both linked_list and rbtree expects to be in a map_value
+which also contains a <code class="docutils literal notranslate"><span class="pre">bpf_spin_lock</span></code> - in the above example both global
+variables are placed in a single-value arraymap. The verifier considers this
+spin_lock to be associated with the <code class="docutils literal notranslate"><span class="pre">bpf_rb_root</span></code> by virtue of both being in
+the same map_value and will enforce that the correct lock is held when
+verifying BPF programs that manipulate the tree. Since this lock checking
+happens at verification time, there is no runtime penalty.</p>
+</section>
+<section id="non-owning-references">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Non-owning references</a><a class="headerlink" href="#non-owning-references" title="Link to this heading">¶</a></h2>
+<p><strong>Motivation</strong></p>
+<p>Consider the following BPF code:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">node_data</span><span class="w"> </span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_obj_new</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="o">*</span><span class="n">n</span><span class="p">));</span><span class="w"> </span><span class="cm">/* ACQUIRED */</span>
+
+<span class="n">bpf_spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="n">bpf_rbtree_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="cm">/* PASSED */</span>
+
+<span class="n">bpf_spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>From the verifier’s perspective, the pointer <code class="docutils literal notranslate"><span class="pre">n</span></code> returned from <code class="docutils literal notranslate"><span class="pre">bpf_obj_new</span></code>
+has type <code class="docutils literal notranslate"><span class="pre">PTR_TO_BTF_ID</span> <span class="pre">|</span> <span class="pre">MEM_ALLOC</span></code>, with a <code class="docutils literal notranslate"><span class="pre">btf_id</span></code> of
+<code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">node_data</span></code> and a nonzero <code class="docutils literal notranslate"><span class="pre">ref_obj_id</span></code>. Because it holds <code class="docutils literal notranslate"><span class="pre">n</span></code>, the
+program has ownership of the pointee’s (object pointed to by <code class="docutils literal notranslate"><span class="pre">n</span></code>) lifetime.
+The BPF program must pass off ownership before exiting - either via
+<code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code>, which <code class="docutils literal notranslate"><span class="pre">free</span></code>’s the object, or by adding it to <code class="docutils literal notranslate"><span class="pre">tree</span></code> with
+<code class="docutils literal notranslate"><span class="pre">bpf_rbtree_add</span></code>.</p>
+<p>(<code class="docutils literal notranslate"><span class="pre">ACQUIRED</span></code> and <code class="docutils literal notranslate"><span class="pre">PASSED</span></code> comments in the example denote statements where
+“ownership is acquired” and “ownership is passed”, respectively)</p>
+<p>What should the verifier do with <code class="docutils literal notranslate"><span class="pre">n</span></code> after ownership is passed off? If the
+object was <code class="docutils literal notranslate"><span class="pre">free</span></code>’d with <code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code> the answer is obvious: the verifier
+should reject programs which attempt to access <code class="docutils literal notranslate"><span class="pre">n</span></code> after <code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code> as
+the object is no longer valid. The underlying memory may have been reused for
+some other allocation, unmapped, etc.</p>
+<p>When ownership is passed to <code class="docutils literal notranslate"><span class="pre">tree</span></code> via <code class="docutils literal notranslate"><span class="pre">bpf_rbtree_add</span></code> the answer is less
+obvious. The verifier could enforce the same semantics as for <code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code>,
+but that would result in programs with useful, common coding patterns being
+rejected, e.g.:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">node_data</span><span class="w"> </span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_obj_new</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="o">*</span><span class="n">n</span><span class="p">));</span><span class="w"> </span><span class="cm">/* ACQUIRED */</span>
+
+<span class="n">bpf_spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="n">bpf_rbtree_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="cm">/* PASSED */</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<span class="n">n</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+
+<span class="n">bpf_spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Both the read from and write to <code class="docutils literal notranslate"><span class="pre">n-&gt;data</span></code> would be rejected. The verifier
+can do better, though, by taking advantage of two details:</p>
+<blockquote>
+<div><ul>
+<li><p>Graph data structure APIs can only be used when the <code class="docutils literal notranslate"><span class="pre">bpf_spin_lock</span></code>
+associated with the graph root is held</p></li>
+<li><p>Both graph data structures have pointer stability</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Because graph nodes are allocated with <code class="docutils literal notranslate"><span class="pre">bpf_obj_new</span></code> and
+adding / removing from the root involves fiddling with the
+<code class="docutils literal notranslate"><span class="pre">bpf_{list,rb}_node</span></code> field of the node struct, a graph node will
+remain at the same address after either operation.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>Because the associated <code class="docutils literal notranslate"><span class="pre">bpf_spin_lock</span></code> must be held by any program adding
+or removing, if we’re in the critical section bounded by that lock, we know
+that no other program can add or remove until the end of the critical section.
+This combined with pointer stability means that, until the critical section
+ends, we can safely access the graph node through <code class="docutils literal notranslate"><span class="pre">n</span></code> even after it was used
+to pass ownership.</p>
+<p>The verifier considers such a reference a <em>non-owning reference</em>. The ref
+returned by <code class="docutils literal notranslate"><span class="pre">bpf_obj_new</span></code> is accordingly considered an <em>owning reference</em>.
+Both terms currently only have meaning in the context of graph nodes and API.</p>
+<p><strong>Details</strong></p>
+<p>Let’s enumerate the properties of both types of references.</p>
+<p><em>owning reference</em></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This reference controls the lifetime of the pointee</p></li>
+<li><p>Ownership of pointee must be ‘released’ by passing it to some graph API
+kfunc, or via <code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code>, which <code class="docutils literal notranslate"><span class="pre">free</span></code>’s the pointee</p>
+<ul>
+<li><p>If not released before program ends, verifier considers program invalid</p></li>
+</ul>
+</li>
+<li><p>Access to the pointee’s memory will not page fault</p></li>
+</ul>
+</div></blockquote>
+<p><em>non-owning reference</em></p>
+<blockquote>
+<div><ul>
+<li><p>This reference does not own the pointee</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>It cannot be used to add the graph node to a graph root, nor <code class="docutils literal notranslate"><span class="pre">free</span></code>’d via
+<code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>No explicit control of lifetime, but can infer valid lifetime based on
+non-owning ref existence (see explanation below)</p></li>
+<li><p>Access to the pointee’s memory will not page fault</p></li>
+</ul>
+</div></blockquote>
+<p>From verifier’s perspective non-owning references can only exist
+between spin_lock and spin_unlock. Why? After spin_unlock another program
+can do arbitrary operations on the data structure like removing and <code class="docutils literal notranslate"><span class="pre">free</span></code>-ing
+via bpf_obj_drop. A non-owning ref to some chunk of memory that was remove’d,
+<code class="docutils literal notranslate"><span class="pre">free</span></code>’d, and reused via bpf_obj_new would point to an entirely different thing.
+Or the memory could go away.</p>
+<p>To prevent this logic violation all non-owning references are invalidated by the
+verifier after a critical section ends. This is necessary to ensure the “will
+not page fault” property of non-owning references. So if the verifier hasn’t
+invalidated a non-owning ref, accessing it will not page fault.</p>
+<p>Currently <code class="docutils literal notranslate"><span class="pre">bpf_obj_drop</span></code> is not allowed in the critical section, so
+if there’s a valid non-owning ref, we must be in a critical section, and can
+conclude that the ref’s memory hasn’t been dropped-and- <code class="docutils literal notranslate"><span class="pre">free</span></code>’d or
+dropped-and-reused.</p>
+<p>Any reference to a node that is in an rbtree _must_ be non-owning, since
+the tree has control of the pointee’s lifetime. Similarly, any ref to a node
+that isn’t in rbtree _must_ be owning. This results in a nice property:
+graph API add / remove implementations don’t need to check if a node
+has already been added (or already removed), as the ownership model
+allows the verifier to prevent such a state from being valid by simply checking
+types.</p>
+<p>However, pointer aliasing poses an issue for the above “nice property”.
+Consider the following example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">node_data</span><span class="w"> </span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_obj_new</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="o">*</span><span class="n">n</span><span class="p">));</span><span class="w">     </span><span class="cm">/* 1 */</span>
+
+<span class="n">bpf_spin_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="n">bpf_rbtree_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w">        </span><span class="cm">/* 2 */</span>
+<span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_rbtree_first</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">);</span><span class="w">     </span><span class="cm">/* 3 */</span>
+
+<span class="n">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_rbtree_remove</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 4 */</span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpf_rbtree_remove</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 5 */</span>
+
+<span class="n">bpf_spin_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="n">bpf_obj_drop</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
+<span class="n">bpf_obj_drop</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 6 */</span>
+</pre></div>
+</div>
+<p>Assume the tree is empty before this program runs. If we track verifier state
+changes here using numbers in above comments:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>n is an owning reference</p></li>
+<li><p>n is a non-owning reference, it’s been added to the tree</p></li>
+<li><p>n and m are non-owning references, they both point to the same node</p></li>
+<li><p>o is an owning reference, n and m non-owning, all point to same node</p></li>
+<li><p>o and p are owning, n and m non-owning, all point to the same node</p></li>
+<li><p>a double-free has occurred, since o and p point to same node and o was
+<code class="docutils literal notranslate"><span class="pre">free</span></code>’d in previous statement</p></li>
+</ol>
+</div></blockquote>
+<p>States 4 and 5 violate our “nice property”, as there are non-owning refs to
+a node which is not in an rbtree. Statement 5 will try to remove a node which
+has already been removed as a result of this violation. State 6 is a dangerous
+double-free.</p>
+<p>At a minimum we should prevent state 6 from being possible. If we can’t also
+prevent state 5 then we must abandon our “nice property” and check whether a
+node has already been removed at runtime.</p>
+<p>We prevent both by generalizing the “invalidate non-owning references” behavior
+of <code class="docutils literal notranslate"><span class="pre">bpf_spin_unlock</span></code> and doing similar invalidation after
+<code class="docutils literal notranslate"><span class="pre">bpf_rbtree_remove</span></code>. The logic here being that any graph API kfunc which:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>takes an arbitrary node argument</p></li>
+<li><p>removes it from the data structure</p></li>
+<li><p>returns an owning reference to the removed node</p></li>
+</ul>
+</div></blockquote>
+<p>May result in a state where some other non-owning reference points to the same
+node. So <code class="docutils literal notranslate"><span class="pre">remove</span></code>-type kfuncs must be considered a non-owning reference
+invalidation point as well.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">BPF Graph Data Structures</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#unstable-api">Unstable API</a></li>
+<li><a class="reference internal" href="#locking">Locking</a></li>
+<li><a class="reference internal" href="#non-owning-references">Non-owning references</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="llvm_reloc.html">
+                    <span class="icon">&lt;</span><span>BPF LLVM Relocations</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="redirect.html"><span>Redirect</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

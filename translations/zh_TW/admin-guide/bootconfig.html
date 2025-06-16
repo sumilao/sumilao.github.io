@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>引導配置 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="清除 WARN_ONCE" href="clearing-warn-once.html" />
+    <link rel="prev" title="解釋“No working init found.”啓動掛起消息" href="init.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">繁體中文翻譯</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">與Linux 內核社區一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">內部API文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">開發工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#id3">面向用戶的文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相關文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">體系結構文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">術語表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_TW/admin-guide/bootconfig.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Traditional)
+
+<ul>
+
+<li><a href="../../../admin-guide/bootconfig.html">English</a></li>
+
+<li><a href="../../zh_CN/admin-guide/bootconfig.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>此文件的目的是爲讓中文讀者更容易閱讀和理解，而不是作爲一個分支。因此，
+如果您對此文件有任何意見或改動，請先嘗試更新原始英文文件。如果要更改或
+修正某處翻譯文件，請將意見或補丁發送給維護者（聯繫方式見下）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您發現本文檔與原始文件有任何不同或者有翻譯問題，請聯繫該文件的譯者，
+或者發送電子郵件給胡皓文以獲取幫助：&lt;<a class="reference external" href="mailto:2023002089&#37;&#52;&#48;link&#46;tyut&#46;edu&#46;cn">2023002089<span>&#64;</span>link<span>&#46;</span>tyut<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../admin-guide/bootconfig.html"><span class="doc">Boot Configuration</span></a></p>
+</dd>
+<dt class="field-even">譯者<span class="colon">:</span></dt>
+<dd class="field-even"><p>吳想成 Wu XiangCheng &lt;<a class="reference external" href="mailto:bobwxc&#37;&#52;&#48;email&#46;cn">bobwxc<span>&#64;</span>email<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="id1">
+<h1>引導配置<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">作者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Masami Hiramatsu &lt;<a class="reference external" href="mailto:mhiramat&#37;&#52;&#48;kernel&#46;org">mhiramat<span>&#64;</span>kernel<span>&#46;</span>org</a>&gt;</p>
+</dd>
+</dl>
+<section id="id2">
+<h2>概述<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>引導配置擴展了現有的內核命令行，以一種更有效率的方式在引導內核時進一步支持
+鍵值數據。這允許管理員傳遞一份結構化關鍵字的配置文件。</p>
+</section>
+<section id="id3">
+<h2>配置文件語法<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>引導配置文件的語法採用非常簡單的鍵值結構。每個關鍵字由點連接的單詞組成，鍵
+和值由 <code class="docutils literal notranslate"><span class="pre">=</span></code> 連接。值以分號（ <code class="docutils literal notranslate"><span class="pre">;</span></code> ）或換行符（ <code class="docutils literal notranslate"><span class="pre">\n</span></code> ）結尾。數組值中每
+個元素由逗號（ <code class="docutils literal notranslate"><span class="pre">,</span></code> ）分隔。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>KEY[.WORD[...]] = VALUE[, VALUE2[...]][;]
+</pre></div>
+</div>
+<p>與內核命令行語法不同，逗號和 <code class="docutils literal notranslate"><span class="pre">=</span></code> 周圍允許有空格。</p>
+<p>關鍵字只允許包含字母、數字、連字符（ <code class="docutils literal notranslate"><span class="pre">-</span></code> ）和下劃線（ <code class="docutils literal notranslate"><span class="pre">_</span></code> ）。值可包含
+可打印字符和空格，但分號（ <code class="docutils literal notranslate"><span class="pre">;</span></code> ）、換行符（ <code class="docutils literal notranslate"><span class="pre">\n</span></code> ）、逗號（ <code class="docutils literal notranslate"><span class="pre">,</span></code> ）、
+井號（ <code class="docutils literal notranslate"><span class="pre">#</span></code> ）和右大括號（ <code class="docutils literal notranslate"><span class="pre">}</span></code> ）等分隔符除外。</p>
+<p>如果你需要在值中使用這些分隔符，可以用雙引號（ <code class="docutils literal notranslate"><span class="pre">&quot;VALUE&quot;</span></code> ）或單引號
+（ <code class="docutils literal notranslate"><span class="pre">'VALUE'</span></code> ）括起來。注意，引號無法轉義。</p>
+<p>鍵的值可以爲空或不存在。這些鍵用於檢查該鍵是否存在（類似布爾值）。</p>
+<section id="id4">
+<h3>鍵值語法<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>引導配置文件語法允許用戶通過大括號合併鍵名部分相同的關鍵字。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo.bar.baz = value1
+foo.bar.qux.quux = value2
+</pre></div>
+</div>
+<p>也可以寫成:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo.bar {
+   baz = value1
+   qux.quux = value2
+}
+</pre></div>
+</div>
+<p>或者更緊湊一些，寫成:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo.bar { baz = value1; qux.quux = value2 }
+</pre></div>
+</div>
+<p>在這兩種樣式中，引導解析時相同的關鍵字都會自動合併。因此可以追加類似的樹或
+鍵值。</p>
+</section>
+<section id="id5">
+<h3>相同關鍵字的值<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>禁止兩個或多個值或數組共享同一個關鍵字。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = bar, baz
+foo = qux  # !錯誤! 我們不可以重定義相同的關鍵字
+</pre></div>
+</div>
+<p>如果你想要更新值，必須顯式使用覆蓋操作符 <code class="docutils literal notranslate"><span class="pre">:=</span></code> 。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = bar, baz
+foo := qux
+</pre></div>
+</div>
+<p>這樣 <code class="docutils literal notranslate"><span class="pre">foo</span></code> 關鍵字的值就變成了 <code class="docutils literal notranslate"><span class="pre">qux</span></code> 。這對於通過添加（部分）自定義引導
+配置來覆蓋默認值非常有用，免於解析默認引導配置。</p>
+<p>如果你想對現有關鍵字追加值作爲數組成員，可以使用 <code class="docutils literal notranslate"><span class="pre">+=</span></code> 操作符。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = bar, baz
+foo += qux
+</pre></div>
+</div>
+<p>這樣， <code class="docutils literal notranslate"><span class="pre">foo</span></code> 關鍵字就同時擁有了 <code class="docutils literal notranslate"><span class="pre">bar</span></code> ， <code class="docutils literal notranslate"><span class="pre">baz</span></code> 和 <code class="docutils literal notranslate"><span class="pre">qux</span></code> 。</p>
+<p>此外，父關鍵字下可同時存在值和子關鍵字。
+例如，下列配置是可行的。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = value1
+foo.bar = value2
+foo := value3 # 這會更新foo的值。
+</pre></div>
+</div>
+<p>注意，裸值不能直接放進結構化關鍵字中，必須在大括號外定義它。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo {
+    bar = value1
+    bar {
+        baz = value2
+        qux = value3
+    }
+}
+</pre></div>
+</div>
+<p>同時，關鍵字下值節點的順序是固定的。如果值和子關鍵字同時存在，值永遠是該關
+鍵字的第一個子節點。因此如果用戶先指定子關鍵字，如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo.bar = value1
+foo = value2
+</pre></div>
+</div>
+<p>則在程序（和/proc/bootconfig）中，它會按如下顯示:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = value2
+foo.bar = value1
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>註釋<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>配置語法接受shell腳本風格的註釋。註釋以井號（ <code class="docutils literal notranslate"><span class="pre">#</span></code> ）開始，到換行符
+（ <code class="docutils literal notranslate"><span class="pre">\n</span></code> ）結束。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># comment line
+foo = value # value is set to foo.
+bar = 1, # 1st element
+      2, # 2nd element
+      3  # 3rd element
+</pre></div>
+</div>
+<p>會被解析爲:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo = value
+bar = 1, 2, 3
+</pre></div>
+</div>
+<p>注意你不能把註釋放在值和分隔符（ <code class="docutils literal notranslate"><span class="pre">,</span></code> 或 <code class="docutils literal notranslate"><span class="pre">;</span></code> ）之間。如下配置語法是錯誤的:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>key = 1 # comment
+      ,2
+</pre></div>
+</div>
+</section>
+</section>
+<section id="proc-bootconfig">
+<h2>/proc/bootconfig<a class="headerlink" href="#proc-bootconfig" title="Link to this heading">¶</a></h2>
+<p>/proc/bootconfig是引導配置的用戶空間接口。與/proc/cmdline不同，此文件內容以
+鍵值列表樣式顯示。
+每個鍵值對一行，樣式如下:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>KEY[.WORDS...] = &quot;[VALUE]&quot;[,&quot;VALUE2&quot;...]
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>用引導配置引導內核<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>用引導配置引導內核有兩種方法：將引導配置附加到initrd鏡像或直接嵌入內核中。</p>
+<p><em>initrd: initial RAM disk，初始內存磁盤</em></p>
+<section id="initrd">
+<h3>將引導配置附加到initrd<a class="headerlink" href="#initrd" title="Link to this heading">¶</a></h3>
+<p>由於默認情況下引導配置文件是用initrd加載的，因此它將被添加到initrd（initramfs）
+鏡像文件的末尾，其中包含填充、大小、校驗值和12字節幻數，如下所示:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[initrd][bootconfig][padding][size(le32)][checksum(le32)][#BOOTCONFIG\n]
+</pre></div>
+</div>
+<p>大小和校驗值爲小端序存放的32位無符號值。</p>
+<p>當引導配置被加到initrd鏡像時，整個文件大小會對齊到4字節。空字符（ <code class="docutils literal notranslate"><span class="pre">\0</span></code> ）
+會填補對齊空隙。因此 <code class="docutils literal notranslate"><span class="pre">size</span></code> 就是引導配置文件的長度+填充的字節。</p>
+<p>Linux內核在內存中解碼initrd鏡像的最後部分以獲取引導配置數據。由於這種“揹負式”
+的方法，只要引導加載器傳遞了正確的initrd文件大小，就無需更改或更新引導加載器
+和內核鏡像本身。如果引導加載器意外傳遞了更長的大小，內核將無法找到引導配置數
+據。</p>
+<p>Linux內核在tools/bootconfig下提供了 <code class="docutils literal notranslate"><span class="pre">bootconfig</span></code> 命令來完成此操作，管理員
+可以用它從initrd鏡像中刪除或追加配置文件。你可以用以下命令來構建它:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># make -C tools/bootconfig
+</pre></div>
+</div>
+<p>要向initrd鏡像添加你的引導配置文件，請按如下命令操作（舊數據會自動移除）:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># tools/bootconfig/bootconfig -a your-config /boot/initrd.img-X.Y.Z
+</pre></div>
+</div>
+<p>要從鏡像中移除配置，可以使用-d選項:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># tools/bootconfig/bootconfig -d /boot/initrd.img-X.Y.Z
+</pre></div>
+</div>
+<p>然後在內核命令行上添加 <code class="docutils literal notranslate"><span class="pre">bootconfig</span></code> 告訴內核去initrd文件末尾尋找內核配置。</p>
+</section>
+<section id="id8">
+<h3>將引導配置嵌入內核<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<p>如果你不能使用initrd，也可以通過Kconfig選項將引導配置文件嵌入內核中。在此情
+況下，你需要用以下選項重新編譯內核:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_BOOT_CONFIG_EMBED=y
+CONFIG_BOOT_CONFIG_EMBED_FILE=&quot;/引導配置/文件/的/路徑&quot;
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CONFIG_BOOT_CONFIG_EMBED_FILE</span></code> 需要從源碼樹或對象樹開始的引導配置文件的
+絕對/相對路徑。內核會將其嵌入作爲默認引導配置。</p>
+<p>與將引導配置附加到initrd一樣，你也需要在內核命令行上添加 <code class="docutils literal notranslate"><span class="pre">bootconfig</span></code> 告訴
+內核去啓用內嵌的引導配置。</p>
+<p>注意，即使你已經設置了此選項，仍可用附加到initrd的其他引導配置覆蓋內嵌的引導
+配置。</p>
+</section>
+</section>
+<section id="id9">
+<h2>通過引導配置傳遞內核參數<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<p>除了內核命令行，引導配置也可以用於傳遞內核參數。所有 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 關鍵字下的鍵
+值對都將直接傳遞給內核命令行。此外， <code class="docutils literal notranslate"><span class="pre">init</span></code> 下的鍵值對將通過命令行傳遞給
+init進程。參數按以下順序與用戶給定的內核命令行字符串相連，因此命令行參數可以
+覆蓋引導配置參數（這取決於子系統如何處理參數，但通常前面的參數將被後面的參數
+覆蓋）:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[bootconfig params][cmdline params] -- [bootconfig init params][cmdline init params]
+</pre></div>
+</div>
+<p>如果引導配置文件給出的kernel/init參數是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kernel {
+  root = 01234567-89ab-cdef-0123-456789abcd
+}
+init {
+ splash
+}
+</pre></div>
+</div>
+<p>這將被複制到內核命令行字符串中，如下所示:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root=&quot;01234567-89ab-cdef-0123-456789abcd&quot; -- splash
+</pre></div>
+</div>
+<p>如果用戶給出的其他命令行是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ro bootconfig -- quiet
+</pre></div>
+</div>
+<p>則最後的內核命令行如下:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root=&quot;01234567-89ab-cdef-0123-456789abcd&quot; ro bootconfig -- splash quiet
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2>配置文件的限制<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<p>當前最大的配置大小是32KB，關鍵字總數（不是鍵值條目）必須少於1024個節點。
+注意：這不是條目數而是節點數，條目必須消耗超過2個節點（一個關鍵字和一個值）。
+所以從理論上講最多512個鍵值對。如果關鍵字平均包含3個單詞，則可有256個鍵值對。
+在大多數情況下，配置項的數量將少於100個條目，小於8KB，因此這應該足夠了。如果
+節點數超過1024，解析器將返回錯誤，即使文件大小小於32KB。（請注意，此最大尺寸
+不包括填充的空字符。）
+無論如何，因爲 <code class="docutils literal notranslate"><span class="pre">bootconfig</span></code> 命令在附加啓動配置到initrd映像時會驗證它，用戶
+可以在引導之前注意到它。</p>
+</section>
+<section id="api">
+<h2>引導配置API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
+<p>用戶可以查詢或遍歷鍵值對，也可以查找（前綴）根關鍵字節點，並在查找該節點下的
+鍵值。</p>
+<p>如果您有一個關鍵字字符串，則可以直接使用 <a class="reference internal" href="../../../admin-guide/bootconfig.html#c.xbc_find_value" title="xbc_find_value"><code class="xref c c-func docutils literal notranslate"><span class="pre">xbc_find_value()</span></code></a> 查詢該鍵的值。如果
+你想知道引導配置裏有哪些關鍵字，可以使用 <a class="reference internal" href="../../../admin-guide/bootconfig.html#c.xbc_for_each_key_value" title="xbc_for_each_key_value"><code class="xref c c-func docutils literal notranslate"><span class="pre">xbc_for_each_key_value()</span></code></a> 迭代鍵值對。
+請注意，您需要使用 <a class="reference internal" href="../../../admin-guide/bootconfig.html#c.xbc_array_for_each_value" title="xbc_array_for_each_value"><code class="xref c c-func docutils literal notranslate"><span class="pre">xbc_array_for_each_value()</span></code></a> 訪問數組的值，例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vnode = NULL;
+xbc_find_value(&quot;key.word&quot;, &amp;vnode);
+if (vnode &amp;&amp; xbc_node_is_array(vnode))
+   xbc_array_for_each_value(vnode, value) {
+     printk(&quot;%s &quot;, value);
+   }
+</pre></div>
+</div>
+<p>如果您想查找具有前綴字符串的鍵，可以使用 <a class="reference internal" href="../../../admin-guide/bootconfig.html#c.xbc_find_node" title="xbc_find_node"><code class="xref c c-func docutils literal notranslate"><span class="pre">xbc_find_node()</span></code></a> 通過前綴字符串查找
+節點，然後用 <a class="reference internal" href="../../../admin-guide/bootconfig.html#c.xbc_node_for_each_key_value" title="xbc_node_for_each_key_value"><code class="xref c c-func docutils literal notranslate"><span class="pre">xbc_node_for_each_key_value()</span></code></a> 迭代前綴節點下的鍵。</p>
+<p>但最典型的用法是獲取前綴下的命名值或前綴下的命名數組，例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root = xbc_find_node(&quot;key.prefix&quot;);
+value = xbc_node_find_value(root, &quot;option&quot;, &amp;vnode);
+...
+xbc_node_for_each_array_value(root, &quot;array-option&quot;, value, anode) {
+   ...
+}
+</pre></div>
+</div>
+<p>這將訪問值“key.prefix.option”的值和“key.prefix.array-option”的數組。</p>
+<p>鎖是不需要的，因爲在初始化之後配置只讀。如果需要修改，必須複製所有數據和關鍵字。</p>
+</section>
+<section id="id11">
+<h2>函數與結構體<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<p>相關定義的kernel-doc參見：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>include/linux/bootconfig.h</p></li>
+<li><p>lib/bootconfig.c</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">引導配置</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">配置文件語法</a><ul>
+<li><a class="reference internal" href="#id4">鍵值語法</a></li>
+<li><a class="reference internal" href="#id5">相同關鍵字的值</a></li>
+<li><a class="reference internal" href="#id6">註釋</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#proc-bootconfig">/proc/bootconfig</a></li>
+<li><a class="reference internal" href="#id7">用引導配置引導內核</a><ul>
+<li><a class="reference internal" href="#initrd">將引導配置附加到initrd</a></li>
+<li><a class="reference internal" href="#id8">將引導配置嵌入內核</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">通過引導配置傳遞內核參數</a></li>
+<li><a class="reference internal" href="#id10">配置文件的限制</a></li>
+<li><a class="reference internal" href="#api">引導配置API</a></li>
+<li><a class="reference internal" href="#id11">函數與結構體</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="init.html">
+                    <span class="icon">&lt;</span><span>解釋“No working init found.”啓動掛起消息</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="clearing-warn-once.html"><span>清除 WARN_ONCE</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

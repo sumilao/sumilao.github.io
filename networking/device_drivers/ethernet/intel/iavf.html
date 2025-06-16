@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux Base Driver for Intel(R) Ethernet Adaptive Virtual Function &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <script src="../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Linux Base Driver for the Intel(R) Ethernet Controller 800 Series" href="ice.html" />
+    <link rel="prev" title="Linux Base Driver for the Intel(R) Ethernet Controller 700 Series" href="i40e.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../index.html" title="Go to homepage"><img src="../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/networking/device_drivers/ethernet/intel/iavf.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="linux-base-driver-for-intel-r-ethernet-adaptive-virtual-function">
+<h1>Linux Base Driver for Intel(R) Ethernet Adaptive Virtual Function<a class="headerlink" href="#linux-base-driver-for-intel-r-ethernet-adaptive-virtual-function" title="Link to this heading">¶</a></h1>
+<p>Intel Ethernet Adaptive Virtual Function Linux driver.
+Copyright(c) 2013-2018 Intel Corporation.</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Overview</p></li>
+<li><p>Identifying Your Adapter</p></li>
+<li><p>Additional Configurations</p></li>
+<li><p>Known Issues/Troubleshooting</p></li>
+<li><p>Support</p></li>
+</ul>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This file describes the iavf Linux Base Driver. This driver was formerly
+called i40evf.</p>
+<p>The iavf driver supports the below mentioned virtual function devices and
+can only be activated on kernels running the i40e or newer Physical Function
+(PF) driver compiled with CONFIG_PCI_IOV.  The iavf driver requires
+CONFIG_PCI_MSI to be enabled.</p>
+<p>The guest OS loading the iavf driver must support MSI-X interrupts.</p>
+</section>
+<section id="identifying-your-adapter">
+<h2>Identifying Your Adapter<a class="headerlink" href="#identifying-your-adapter" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>The driver in this kernel is compatible with devices based on the following:</dt><dd><ul class="simple">
+<li><p>Intel(R) XL710 X710 Virtual Function</p></li>
+<li><p>Intel(R) X722 Virtual Function</p></li>
+<li><p>Intel(R) XXV710 Virtual Function</p></li>
+<li><p>Intel(R) Ethernet Adaptive Virtual Function</p></li>
+</ul>
+</dd>
+</dl>
+<p>For the best performance, make sure the latest NVM/FW is installed on your
+device.</p>
+<p>For information on how to identify your adapter, and for the latest NVM/FW
+images and Intel network drivers, refer to the Intel Support website:
+<a class="reference external" href="https://www.intel.com/support">https://www.intel.com/support</a></p>
+</section>
+<section id="additional-features-and-configurations">
+<h2>Additional Features and Configurations<a class="headerlink" href="#additional-features-and-configurations" title="Link to this heading">¶</a></h2>
+<section id="viewing-link-messages">
+<h3>Viewing Link Messages<a class="headerlink" href="#viewing-link-messages" title="Link to this heading">¶</a></h3>
+<p>Link messages will not be displayed to the console if the distribution is
+restricting system messages. In order to see network driver link messages on
+your console, set dmesg to eight by entering the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># dmesg -n 8
+</pre></div>
+</div>
+<dl class="simple">
+<dt>NOTE:</dt><dd><p>This setting is not saved across reboots.</p>
+</dd>
+</dl>
+</section>
+<section id="ethtool">
+<h3>ethtool<a class="headerlink" href="#ethtool" title="Link to this heading">¶</a></h3>
+<p>The driver utilizes the ethtool interface for driver configuration and
+diagnostics, as well as displaying statistical information. The latest ethtool
+version is required for this functionality. Download it at:
+<a class="reference external" href="https://www.kernel.org/pub/software/network/ethtool/">https://www.kernel.org/pub/software/network/ethtool/</a></p>
+</section>
+<section id="setting-vlan-tag-stripping">
+<h3>Setting VLAN Tag Stripping<a class="headerlink" href="#setting-vlan-tag-stripping" title="Link to this heading">¶</a></h3>
+<p>If you have applications that require Virtual Functions (VFs) to receive
+packets with VLAN tags, you can disable VLAN tag stripping for the VF. The
+Physical Function (PF) processes requests issued from the VF to enable or
+disable VLAN tag stripping. Note that if the PF has assigned a VLAN to a VF,
+then requests from that VF to set VLAN tag stripping will be ignored.</p>
+<p>To enable/disable VLAN tag stripping for a VF, issue the following command
+from inside the VM in which you are running the VF:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ethtool -K &lt;if_name&gt; rxvlan on/off
+</pre></div>
+</div>
+<p>or alternatively:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ethtool --offload &lt;if_name&gt; rxvlan on/off
+</pre></div>
+</div>
+</section>
+<section id="adaptive-virtual-function">
+<h3>Adaptive Virtual Function<a class="headerlink" href="#adaptive-virtual-function" title="Link to this heading">¶</a></h3>
+<p>Adaptive Virtual Function (AVF) allows the virtual function driver, or VF, to
+adapt to changing feature sets of the physical function driver (PF) with which
+it is associated. This allows system administrators to update a PF without
+having to update all the VFs associated with it. All AVFs have a single common
+device ID and branding string.</p>
+<p>AVFs have a minimum set of features known as “base mode,” but may provide
+additional features depending on what features are available in the PF with
+which the AVF is associated. The following are base mode features:</p>
+<ul class="simple">
+<li><p>4 Queue Pairs (QP) and associated Configuration Status Registers (CSRs)
+for Tx/Rx</p></li>
+<li><p>i40e descriptors and ring format</p></li>
+<li><p>Descriptor write-back completion</p></li>
+<li><p>1 control queue, with i40e descriptors, CSRs and ring format</p></li>
+<li><p>5 MSI-X interrupt vectors and corresponding i40e CSRs</p></li>
+<li><p>1 Interrupt Throttle Rate (ITR) index</p></li>
+<li><p>1 Virtual Station Interface (VSI) per VF</p></li>
+<li><p>1 Traffic Class (TC), TC0</p></li>
+<li><p>Receive Side Scaling (RSS) with 64 entry indirection table and key,
+configured through the PF</p></li>
+<li><p>1 unicast MAC address reserved per VF</p></li>
+<li><p>16 MAC address filters for each VF</p></li>
+<li><p>Stateless offloads - non-tunneled checksums</p></li>
+<li><p>AVF device ID</p></li>
+<li><p>HW mailbox is used for VF to PF communications (including on Windows)</p></li>
+</ul>
+</section>
+<section id="ieee-802-1ad-qinq-support">
+<h3>IEEE 802.1ad (QinQ) Support<a class="headerlink" href="#ieee-802-1ad-qinq-support" title="Link to this heading">¶</a></h3>
+<p>The IEEE 802.1ad standard, informally known as QinQ, allows for multiple VLAN
+IDs within a single Ethernet frame. VLAN IDs are sometimes referred to as
+“tags,” and multiple VLAN IDs are thus referred to as a “tag stack.” Tag stacks
+allow L2 tunneling and the ability to segregate traffic within a particular
+VLAN ID, among other uses.</p>
+<p>The following are examples of how to configure 802.1ad (QinQ):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ip link add link eth0 eth0.24 type vlan proto 802.1ad id 24
+# ip link add link eth0.24 eth0.24.371 type vlan proto 802.1Q id 371
+</pre></div>
+</div>
+<p>Where “24” and “371” are example VLAN IDs.</p>
+<dl class="simple">
+<dt>NOTES:</dt><dd><p>Receive checksum offloads, cloud filters, and VLAN acceleration are not
+supported for 802.1ad (QinQ) packets.</p>
+</dd>
+</dl>
+</section>
+<section id="application-device-queues-adq">
+<h3>Application Device Queues (ADq)<a class="headerlink" href="#application-device-queues-adq" title="Link to this heading">¶</a></h3>
+<p>Application Device Queues (ADq) allows you to dedicate one or more queues to a
+specific application. This can reduce latency for the specified application,
+and allow Tx traffic to be rate limited per application. Follow the steps below
+to set ADq.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>The sch_mqprio, act_mirred and cls_flower modules must be loaded</p></li>
+<li><p>The latest version of iproute2</p></li>
+<li><p>If another driver (for example, DPDK) has set cloud filters, you cannot
+enable ADQ</p></li>
+<li><p>Depending on the underlying PF device, ADQ cannot be enabled when the
+following features are enabled:</p>
+<ul>
+<li><p>Data Center Bridging (DCB)</p></li>
+<li><p>Multiple Functions per Port (MFP)</p></li>
+<li><p>Sideband Filters</p></li>
+</ul>
+</li>
+</ul>
+<p>1. Create traffic classes (TCs). Maximum of 8 TCs can be created per interface.
+The shaper bw_rlimit parameter is optional.</p>
+<p>Example: Sets up two tcs, tc0 and tc1, with 16 queues each and max tx rate set
+to 1Gbit for tc0 and 3Gbit for tc1.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev &lt;interface&gt; root mqprio num_tc 2 map 0 0 0 0 1 1 1 1
+queues 16@0 16@16 hw 1 mode channel shaper bw_rlimit min_rate 1Gbit 2Gbit
+max_rate 1Gbit 3Gbit
+</pre></div>
+</div>
+<p>map: priority mapping for up to 16 priorities to tcs (e.g. map 0 0 0 0 1 1 1 1
+sets priorities 0-3 to use tc0 and 4-7 to use tc1)</p>
+<p>queues: for each tc, &lt;num queues&gt;&#64;&lt;offset&gt; (e.g. queues 16&#64;0 <a class="reference external" href="mailto:16&#37;&#52;&#48;16">16<span>&#64;</span>16</a> assigns
+16 queues to tc0 at offset 0 and 16 queues to tc1 at offset 16. Max total
+number of queues for all tcs is 64 or number of cores, whichever is lower.)</p>
+<p>hw 1 mode channel: ‘channel’ with ‘hw’ set to 1 is a new new hardware
+offload mode in mqprio that makes full use of the mqprio options, the
+TCs, the queue configurations, and the QoS parameters.</p>
+<p>shaper bw_rlimit: for each tc, sets minimum and maximum bandwidth rates.
+Totals must be equal or less than port speed.</p>
+<p>For example: min_rate 1Gbit 3Gbit: Verify bandwidth limit using network
+monitoring tools such as <code class="docutils literal notranslate"><span class="pre">ifstat</span></code> or <code class="docutils literal notranslate"><span class="pre">sar</span> <span class="pre">-n</span> <span class="pre">DEV</span> <span class="pre">[interval]</span> <span class="pre">[number</span> <span class="pre">of</span> <span class="pre">samples]</span></code></p>
+<dl class="simple">
+<dt>NOTE:</dt><dd><p>Setting up channels via ethtool (ethtool -L) is not supported when the
+TCs are configured using mqprio.</p>
+</dd>
+</dl>
+<ol class="arabic" start="2">
+<li><p>Enable HW TC offload on interface:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ethtool -K &lt;interface&gt; hw-tc-offload on
+</pre></div>
+</div>
+</li>
+<li><p>Apply TCs to ingress (RX) flow of interface:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># tc qdisc add dev &lt;interface&gt; ingress
+</pre></div>
+</div>
+</li>
+</ol>
+<dl class="simple">
+<dt>NOTES:</dt><dd><ul class="simple">
+<li><p>Run all tc commands from the iproute2 &lt;pathtoiproute2&gt;/tc/ directory</p></li>
+<li><p>ADq is not compatible with cloud filters</p></li>
+<li><p>Setting up channels via ethtool (ethtool -L) is not supported when the TCs
+are configured using mqprio</p></li>
+<li><p>You must have iproute2 latest version</p></li>
+<li><p>NVM version 6.01 or later is required</p></li>
+<li><p>ADq cannot be enabled when any the following features are enabled: Data
+Center Bridging (DCB), Multiple Functions per Port (MFP), or Sideband Filters</p></li>
+<li><p>If another driver (for example, DPDK) has set cloud filters, you cannot
+enable ADq</p></li>
+<li><p>Tunnel filters are not supported in ADq. If encapsulated packets do arrive
+in non-tunnel mode, filtering will be done on the inner headers.  For example,
+for VXLAN traffic in non-tunnel mode, PCTYPE is identified as a VXLAN
+encapsulated packet, outer headers are ignored. Therefore, inner headers are
+matched.</p></li>
+<li><p>If a TC filter on a PF matches traffic over a VF (on the PF), that traffic
+will be routed to the appropriate queue of the PF, and will not be passed on
+the VF. Such traffic will end up getting dropped higher up in the TCP/IP
+stack as it does not match PF address data.</p></li>
+<li><p>If traffic matches multiple TC filters that point to different TCs, that
+traffic will be duplicated and sent to all matching TC queues.  The hardware
+switch mirrors the packet to a VSI list when multiple filters are matched.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="known-issues-troubleshooting">
+<h2>Known Issues/Troubleshooting<a class="headerlink" href="#known-issues-troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="bonding-fails-with-vfs-bound-to-an-intel-r-ethernet-controller-700-series-device">
+<h3>Bonding fails with VFs bound to an Intel(R) Ethernet Controller 700 series device<a class="headerlink" href="#bonding-fails-with-vfs-bound-to-an-intel-r-ethernet-controller-700-series-device" title="Link to this heading">¶</a></h3>
+<p>If you bind Virtual Functions (VFs) to an Intel(R) Ethernet Controller 700
+series based device, the VF slaves may fail when they become the active slave.
+If the MAC address of the VF is set by the PF (Physical Function) of the
+device, when you add a slave, or change the active-backup slave, Linux bonding
+tries to sync the backup slave’s MAC address to the same MAC address as the
+active slave. Linux bonding will fail at this point. This issue will not occur
+if the VF’s MAC address is not set by the PF.</p>
+</section>
+<section id="traffic-is-not-being-passed-between-vm-and-client">
+<h3>Traffic Is Not Being Passed Between VM and Client<a class="headerlink" href="#traffic-is-not-being-passed-between-vm-and-client" title="Link to this heading">¶</a></h3>
+<p>You may not be able to pass traffic between a client system and a
+Virtual Machine (VM) running on a separate host if the Virtual Function
+(VF, or Virtual NIC) is not in trusted mode and spoof checking is enabled
+on the VF. Note that this situation can occur in any combination of client,
+host, and guest operating system. For information on how to set the VF to
+trusted mode, refer to the section “VLAN Tag Packet Steering” in this
+readme document. For information on setting spoof checking, refer to the
+section “MAC and VLAN anti-spoofing feature” in this readme document.</p>
+</section>
+<section id="do-not-unload-port-driver-if-vf-with-active-vm-is-bound-to-it">
+<h3>Do not unload port driver if VF with active VM is bound to it<a class="headerlink" href="#do-not-unload-port-driver-if-vf-with-active-vm-is-bound-to-it" title="Link to this heading">¶</a></h3>
+<p>Do not unload a port’s driver if a Virtual Function (VF) with an active Virtual
+Machine (VM) is bound to it. Doing so will cause the port to appear to hang.
+Once the VM shuts down, or otherwise releases the VF, the command will complete.</p>
+</section>
+<section id="using-four-traffic-classes-fails">
+<h3>Using four traffic classes fails<a class="headerlink" href="#using-four-traffic-classes-fails" title="Link to this heading">¶</a></h3>
+<p>Do not try to reserve more than three traffic classes in the iavf driver. Doing
+so will fail to set any traffic classes and will cause the driver to write
+errors to stdout. Use a maximum of three queues to avoid this issue.</p>
+</section>
+<section id="multiple-log-error-messages-on-iavf-driver-removal">
+<h3>Multiple log error messages on iavf driver removal<a class="headerlink" href="#multiple-log-error-messages-on-iavf-driver-removal" title="Link to this heading">¶</a></h3>
+<p>If you have several VFs and you remove the iavf driver, several instances of
+the following log errors are written to the log:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Unable to send opcode 2 to PF, err I40E_ERR_QUEUE_EMPTY, aq_err ok
+Unable to send the message to VF 2 aq_err 12
+ARQ Overflow Error detected
+</pre></div>
+</div>
+</section>
+<section id="virtual-machine-does-not-get-link">
+<h3>Virtual machine does not get link<a class="headerlink" href="#virtual-machine-does-not-get-link" title="Link to this heading">¶</a></h3>
+<p>If the virtual machine has more than one virtual port assigned to it, and those
+virtual ports are bound to different physical ports, you may not get link on
+all of the virtual ports. The following command may work around the issue:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ethtool -r &lt;PF&gt;
+</pre></div>
+</div>
+<p>Where &lt;PF&gt; is the PF interface in the host, for example: p5p1. You may need to
+run the command more than once to get link on all virtual ports.</p>
+</section>
+<section id="mac-address-of-virtual-function-changes-unexpectedly">
+<h3>MAC address of Virtual Function changes unexpectedly<a class="headerlink" href="#mac-address-of-virtual-function-changes-unexpectedly" title="Link to this heading">¶</a></h3>
+<p>If a Virtual Function’s MAC address is not assigned in the host, then the VF
+(virtual function) driver will use a random MAC address. This random MAC
+address may change each time the VF driver is reloaded. You can assign a static
+MAC address in the host machine. This static MAC address will survive
+a VF driver reload.</p>
+</section>
+<section id="driver-buffer-overflow-fix">
+<h3>Driver Buffer Overflow Fix<a class="headerlink" href="#driver-buffer-overflow-fix" title="Link to this heading">¶</a></h3>
+<p>The fix to resolve CVE-2016-8105, referenced in Intel SA-00069
+<a class="reference external" href="https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00069.html">https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00069.html</a>
+is included in this and future versions of the driver.</p>
+</section>
+<section id="multiple-interfaces-on-same-ethernet-broadcast-network">
+<h3>Multiple Interfaces on Same Ethernet Broadcast Network<a class="headerlink" href="#multiple-interfaces-on-same-ethernet-broadcast-network" title="Link to this heading">¶</a></h3>
+<p>Due to the default ARP behavior on Linux, it is not possible to have one system
+on two IP networks in the same Ethernet broadcast domain (non-partitioned
+switch) behave as expected. All Ethernet interfaces will respond to IP traffic
+for any IP address assigned to the system. This results in unbalanced receive
+traffic.</p>
+<p>If you have multiple interfaces in a server, either turn on ARP filtering by
+entering:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo 1 &gt; /proc/sys/net/ipv4/conf/all/arp_filter
+</pre></div>
+</div>
+<dl>
+<dt>NOTE:</dt><dd><p>This setting is not saved across reboots. The configuration change can be
+made permanent by adding the following line to the file /etc/sysctl.conf:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>net.ipv4.conf.all.arp_filter = 1
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Another alternative is to install the interfaces in separate broadcast domains
+(either in different switches or in a switch partitioned to VLANs).</p>
+</section>
+<section id="rx-page-allocation-errors">
+<h3>Rx Page Allocation Errors<a class="headerlink" href="#rx-page-allocation-errors" title="Link to this heading">¶</a></h3>
+<p>‘Page allocation failure. order:0’ errors may occur under stress.
+This is caused by the way the Linux kernel reports this stressed condition.</p>
+</section>
+</section>
+<section id="support">
+<h2>Support<a class="headerlink" href="#support" title="Link to this heading">¶</a></h2>
+<p>For general information, go to the Intel support website at:
+<a class="reference external" href="https://support.intel.com">https://support.intel.com</a></p>
+<p>If an issue is identified with the released source code on the supported kernel
+with a supported adapter, email the specific information related to the issue
+to <a class="reference external" href="mailto:intel-wired-lan&#37;&#52;&#48;lists&#46;osuosl&#46;org">intel-wired-lan<span>&#64;</span>lists<span>&#46;</span>osuosl<span>&#46;</span>org</a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux Base Driver for Intel(R) Ethernet Adaptive Virtual Function</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#identifying-your-adapter">Identifying Your Adapter</a></li>
+<li><a class="reference internal" href="#additional-features-and-configurations">Additional Features and Configurations</a><ul>
+<li><a class="reference internal" href="#viewing-link-messages">Viewing Link Messages</a></li>
+<li><a class="reference internal" href="#ethtool">ethtool</a></li>
+<li><a class="reference internal" href="#setting-vlan-tag-stripping">Setting VLAN Tag Stripping</a></li>
+<li><a class="reference internal" href="#adaptive-virtual-function">Adaptive Virtual Function</a></li>
+<li><a class="reference internal" href="#ieee-802-1ad-qinq-support">IEEE 802.1ad (QinQ) Support</a></li>
+<li><a class="reference internal" href="#application-device-queues-adq">Application Device Queues (ADq)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-troubleshooting">Known Issues/Troubleshooting</a><ul>
+<li><a class="reference internal" href="#bonding-fails-with-vfs-bound-to-an-intel-r-ethernet-controller-700-series-device">Bonding fails with VFs bound to an Intel(R) Ethernet Controller 700 series device</a></li>
+<li><a class="reference internal" href="#traffic-is-not-being-passed-between-vm-and-client">Traffic Is Not Being Passed Between VM and Client</a></li>
+<li><a class="reference internal" href="#do-not-unload-port-driver-if-vf-with-active-vm-is-bound-to-it">Do not unload port driver if VF with active VM is bound to it</a></li>
+<li><a class="reference internal" href="#using-four-traffic-classes-fails">Using four traffic classes fails</a></li>
+<li><a class="reference internal" href="#multiple-log-error-messages-on-iavf-driver-removal">Multiple log error messages on iavf driver removal</a></li>
+<li><a class="reference internal" href="#virtual-machine-does-not-get-link">Virtual machine does not get link</a></li>
+<li><a class="reference internal" href="#mac-address-of-virtual-function-changes-unexpectedly">MAC address of Virtual Function changes unexpectedly</a></li>
+<li><a class="reference internal" href="#driver-buffer-overflow-fix">Driver Buffer Overflow Fix</a></li>
+<li><a class="reference internal" href="#multiple-interfaces-on-same-ethernet-broadcast-network">Multiple Interfaces on Same Ethernet Broadcast Network</a></li>
+<li><a class="reference internal" href="#rx-page-allocation-errors">Rx Page Allocation Errors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#support">Support</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="i40e.html">
+                    <span class="icon">&lt;</span><span>Linux Base Driver for the Intel(R) Ethernet Controller 700 Series</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="ice.html"><span>Linux Base Driver for the Intel(R) Ethernet Controller 800 Series</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

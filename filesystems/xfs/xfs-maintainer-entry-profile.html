@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. XFS Maintainer Entry Profile &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DAMON Maintainer Entry Profile" href="../../mm/damon/maintainer-profile.html" />
+    <link rel="prev" title="1. Linux NVMe feature and quirk policy" href="../../nvme/feature-and-quirk-policy.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/feature-and-driver-maintainers.html">Feature and driver maintainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/configure-git.html">Configuring Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/rebasing-and-merging.html">Rebasing and merging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/pull-requests.html">Creating Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/messy-diffstat.html">Handling messy pull-request diffstats</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html">Maintainer Entry Profile</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html#submit-checklist-addendum">Submit Checklist Addendum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html#key-cycle-dates">Key Cycle Dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html#review-cadence">Review Cadence</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../maintainer/maintainer-entry-profile.html#existing-profiles">Existing profiles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../maintainer/modifying-patches.html">Modifying Patches</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/filesystems/xfs/xfs-maintainer-entry-profile.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="xfs-maintainer-entry-profile">
+<h1><span class="section-number">2. </span>XFS Maintainer Entry Profile<a class="headerlink" href="#xfs-maintainer-entry-profile" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2><span class="section-number">2.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>XFS is a well known high-performance filesystem in the Linux kernel.
+The aim of this project is to provide and maintain a robust and
+performant filesystem.</p>
+<p>Patches are generally merged to the for-next branch of the appropriate
+git repository.
+After a testing period, the for-next branch is merged to the master
+branch.</p>
+<p>Kernel code are merged to the xfs-linux tree[0].
+Userspace code are merged to the xfsprogs tree[1].
+Test cases are merged to the xfstests tree[2].
+Ondisk format documentation are merged to the xfs-documentation tree[3].</p>
+<p>All patchsets involving XFS <em>must</em> be cc’d in their entirety to the mailing
+list <a class="reference external" href="mailto:linux-xfs&#37;&#52;&#48;vger&#46;kernel&#46;org">linux-xfs<span>&#64;</span>vger<span>&#46;</span>kernel<span>&#46;</span>org</a>.</p>
+</section>
+<section id="roles">
+<h2><span class="section-number">2.2. </span>Roles<a class="headerlink" href="#roles" title="Link to this heading">¶</a></h2>
+<p>There are eight key roles in the XFS project.
+A person can take on multiple roles, and a role can be filled by
+multiple people.
+Anyone taking on a role is advised to check in with themselves and
+others on a regular basis about burnout.</p>
+<ul>
+<li><p><strong>Outside Contributor</strong>: Anyone who sends a patch but is not involved
+in the XFS project on a regular basis.
+These folks are usually people who work on other filesystems or
+elsewhere in the kernel community.</p></li>
+<li><p><strong>Developer</strong>: Someone who is familiar with the XFS codebase enough to
+write new code, documentation, and tests.</p>
+<p>Developers can often be found in the IRC channel mentioned by the <code class="docutils literal notranslate"><span class="pre">C:</span></code>
+entry in the kernel MAINTAINERS file.</p>
+</li>
+<li><p><strong>Senior Developer</strong>: A developer who is very familiar with at least
+some part of the XFS codebase and/or other subsystems in the kernel.
+These people collectively decide the long term goals of the project
+and nudge the community in that direction.
+They should help prioritize development and review work for each release
+cycle.</p>
+<p>Senior developers tend to be more active participants in the IRC channel.</p>
+</li>
+<li><p><strong>Reviewer</strong>: Someone (most likely also a developer) who reads code
+submissions to decide:</p>
+<ol class="arabic simple" start="0">
+<li><p>Is the idea behind the contribution sound?</p></li>
+<li><p>Does the idea fit the goals of the project?</p></li>
+<li><p>Is the contribution designed correctly?</p></li>
+<li><p>Is the contribution polished?</p></li>
+<li><p>Can the contribution be tested effectively?</p></li>
+</ol>
+<p>Reviewers should identify themselves with an <code class="docutils literal notranslate"><span class="pre">R:</span></code> entry in the kernel
+and fstests MAINTAINERS files.</p>
+</li>
+<li><p><strong>Testing Lead</strong>: This person is responsible for setting the test
+coverage goals of the project, negotiating with developers to decide
+on new tests for new features, and making sure that developers and
+release managers execute on the testing.</p>
+<p>The testing lead should identify themselves with an <code class="docutils literal notranslate"><span class="pre">M:</span></code> entry in
+the XFS section of the fstests MAINTAINERS file.</p>
+</li>
+<li><p><strong>Bug Triager</strong>: Someone who examines incoming bug reports in just
+enough detail to identify the person to whom the report should be
+forwarded.</p>
+<p>The bug triagers should identify themselves with a <code class="docutils literal notranslate"><span class="pre">B:</span></code> entry in
+the kernel MAINTAINERS file.</p>
+</li>
+<li><p><strong>Release Manager</strong>: This person merges reviewed patchsets into an
+integration branch, tests the result locally, pushes the branch to a
+public git repository, and sends pull requests further upstream.
+The release manager is not expected to work on new feature patchsets.
+If a developer and a reviewer fail to reach a resolution on some point,
+the release manager must have the ability to intervene to try to drive a
+resolution.</p>
+<p>The release manager should identify themselves with an <code class="docutils literal notranslate"><span class="pre">M:</span></code> entry in
+the kernel MAINTAINERS file.</p>
+</li>
+<li><p><strong>Community Manager</strong>: This person calls and moderates meetings of as many
+XFS participants as they can get when mailing list discussions prove
+insufficient for collective decisionmaking.
+They may also serve as liaison between managers of the organizations
+sponsoring work on any part of XFS.</p></li>
+<li><p><strong>LTS Maintainer</strong>: Someone who backports and tests bug fixes from
+upstream to the LTS kernels.
+There tend to be six separate LTS trees at any given time.</p>
+<p>The maintainer for a given LTS release should identify themselves with an
+<code class="docutils literal notranslate"><span class="pre">M:</span></code> entry in the MAINTAINERS file for that LTS tree.
+Unmaintained LTS kernels should be marked with status <code class="docutils literal notranslate"><span class="pre">S:</span> <span class="pre">Orphan</span></code> in that
+same file.</p>
+</li>
+</ul>
+</section>
+<section id="submission-checklist-addendum">
+<h2><span class="section-number">2.3. </span>Submission Checklist Addendum<a class="headerlink" href="#submission-checklist-addendum" title="Link to this heading">¶</a></h2>
+<p>Please follow these additional rules when submitting to XFS:</p>
+<ul>
+<li><p>Patches affecting only the filesystem itself should be based against
+the latest -rc or the for-next branch.
+These patches will be merged back to the for-next branch.</p></li>
+<li><p>Authors of patches touching other subsystems need to coordinate with
+the maintainers of XFS and the relevant subsystems to decide how to
+proceed with a merge.</p></li>
+<li><p>Any patchset changing XFS should be cc’d in its entirety to linux-xfs.
+Do not send partial patchsets; that makes analysis of the broader
+context of the changes unnecessarily difficult.</p></li>
+<li><p>Anyone making kernel changes that have corresponding changes to the
+userspace utilities should send the userspace changes as separate
+patchsets immediately after the kernel patchsets.</p></li>
+<li><p>Authors of bug fix patches are expected to use fstests[2] to perform
+an A/B test of the patch to determine that there are no regressions.
+When possible, a new regression test case should be written for
+fstests.</p></li>
+<li><p>Authors of new feature patchsets must ensure that fstests will have
+appropriate functional and input corner-case test cases for the new
+feature.</p></li>
+<li><p>When implementing a new feature, it is strongly suggested that the
+developers write a design document to answer the following questions:</p>
+<ul class="simple">
+<li><p><strong>What</strong> problem is this trying to solve?</p></li>
+<li><p><strong>Who</strong> will benefit from this solution, and <strong>where</strong> will they
+access it?</p></li>
+<li><p><strong>How</strong> will this new feature work?  This should touch on major data
+structures and algorithms supporting the solution at a higher level
+than code comments.</p></li>
+<li><p><strong>What</strong> userspace interfaces are necessary to build off of the new
+features?</p></li>
+<li><p><strong>How</strong> will this work be tested to ensure that it solves the
+problems laid out in the design document without causing new
+problems?</p></li>
+</ul>
+<p>The design document should be committed in the kernel documentation
+directory.
+It may be omitted if the feature is already well known to the
+community.</p>
+</li>
+<li><p>Patchsets for the new tests should be submitted as separate patchsets
+immediately after the kernel and userspace code patchsets.</p></li>
+<li><p>Changes to the on-disk format of XFS must be described in the ondisk
+format document[3] and submitted as a patchset after the fstests
+patchsets.</p></li>
+<li><p>Patchsets implementing bug fixes and further code cleanups should put
+the bug fixes at the beginning of the series to ease backporting.</p></li>
+</ul>
+</section>
+<section id="key-release-cycle-dates">
+<h2><span class="section-number">2.4. </span>Key Release Cycle Dates<a class="headerlink" href="#key-release-cycle-dates" title="Link to this heading">¶</a></h2>
+<p>Bug fixes may be sent at any time, though the release manager may decide to
+defer a patch when the next merge window is close.</p>
+<p>Code submissions targeting the next merge window should be sent between
+-rc1 and -rc6.
+This gives the community time to review the changes, to suggest other changes,
+and for the author to retest those changes.</p>
+<p>Code submissions also requiring changes to fs/iomap and targeting the
+next merge window should be sent between -rc1 and -rc4.
+This allows the broader kernel community adequate time to test the
+infrastructure changes.</p>
+</section>
+<section id="review-cadence">
+<h2><span class="section-number">2.5. </span>Review Cadence<a class="headerlink" href="#review-cadence" title="Link to this heading">¶</a></h2>
+<p>In general, please wait at least one week before pinging for feedback.
+To find reviewers, either consult the MAINTAINERS file, or ask
+developers that have Reviewed-by tags for XFS changes to take a look and
+offer their opinion.</p>
+</section>
+<section id="references">
+<h2><span class="section-number">2.6. </span>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">[0] <a class="reference external" href="https://git.kernel.org/pub/scm/fs/xfs/xfs-linux.git/">https://git.kernel.org/pub/scm/fs/xfs/xfs-linux.git/</a></div>
+<div class="line">[1] <a class="reference external" href="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/">https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/</a></div>
+<div class="line">[2] <a class="reference external" href="https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/">https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/</a></div>
+<div class="line">[3] <a class="reference external" href="https://git.kernel.org/pub/scm/fs/xfs/xfs-documentation.git/">https://git.kernel.org/pub/scm/fs/xfs/xfs-documentation.git/</a></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">2. XFS Maintainer Entry Profile</a><ul>
+<li><a class="reference internal" href="#overview">2.1. Overview</a></li>
+<li><a class="reference internal" href="#roles">2.2. Roles</a></li>
+<li><a class="reference internal" href="#submission-checklist-addendum">2.3. Submission Checklist Addendum</a></li>
+<li><a class="reference internal" href="#key-release-cycle-dates">2.4. Key Release Cycle Dates</a></li>
+<li><a class="reference internal" href="#review-cadence">2.5. Review Cadence</a></li>
+<li><a class="reference internal" href="#references">2.6. References</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="../../nvme/feature-and-quirk-policy.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">1. </span>Linux NVMe feature and quirk policy</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../../mm/damon/maintainer-profile.html"><span>DAMON Maintainer Entry Profile</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

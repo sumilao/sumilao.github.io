@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Spazio dei nomi dei simboli &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Concetti su RCU" href="../RCU/index.html" />
+    <link rel="prev" title="Documentazione dell’API di base" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">La documentazione del kernel Linux</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#avvertenze">Avvertenze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#lavorare-con-la-comunita-di-sviluppo">Lavorare con la comunità di sviluppo</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#manuali-sull-api-interna">Manuali sull’API interna</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#strumenti-e-processi-per-lo-sviluppo">Strumenti e processi per lo sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-per-gli-utenti">Documentazione per gli utenti</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-relativa-ai-firmware">Documentazione relativa ai firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-specifica-per-architettura">Documentazione specifica per architettura</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-varia">Documentazione varia</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/it_IT/core-api/symbol-namespaces.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Italian
+
+<ul>
+
+<li><a href="../../../core-api/symbol-namespaces.html">English</a></li>
+
+<li><a href="../../zh_CN/core-api/symbol-namespaces.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In caso di dubbi sulla correttezza del contenuto di questa traduzione,
+l’unico riferimento valido è la documentazione ufficiale in inglese.
+Per maggiori informazioni consultate le <a class="reference internal" href="../index.html#it-disclaimer"><span class="std std-ref">avvertenze</span></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../core-api/symbol-namespaces.html"><span class="doc">Symbol Namespaces</span></a></p>
+</dd>
+</dl>
+<section id="spazio-dei-nomi-dei-simboli">
+<h1>Spazio dei nomi dei simboli<a class="headerlink" href="#spazio-dei-nomi-dei-simboli" title="Link to this heading">¶</a></h1>
+<p>Questo documento descrive come usare lo spazio dei nomi dei simboli
+per strutturare quello che viene esportato internamente al kernel
+grazie alle macro della famiglia EXPORT_SYMBOL().</p>
+<section id="introduzione">
+<h2>1. Introduzione<a class="headerlink" href="#introduzione" title="Link to this heading">¶</a></h2>
+<p>Lo spazio dei nomi dei simboli è stato introdotto come mezzo per strutturare
+l’API esposta internamente al kernel. Permette ai manutentori di un
+sottosistema di organizzare i simboli esportati in diversi spazi di
+nomi. Questo meccanismo è utile per la documentazione (pensate ad
+esempio allo spazio dei nomi SUBSYSTEM_DEBUG) così come per limitare
+la disponibilità di un gruppo di simboli in altre parti del kernel. Ad
+oggi, i moduli che usano simboli esportati da uno spazio di nomi
+devono prima importare detto spazio. Altrimenti il kernel, a seconda
+della configurazione, potrebbe rifiutare di caricare il modulo o
+avvisare l’utente di un’importazione mancante.</p>
+</section>
+<section id="come-definire-uno-spazio-dei-nomi-dei-simboli">
+<h2>2. Come definire uno spazio dei nomi dei simboli<a class="headerlink" href="#come-definire-uno-spazio-dei-nomi-dei-simboli" title="Link to this heading">¶</a></h2>
+<p>I simboli possono essere esportati in spazi dei nomi usando diversi
+meccanismi.  Tutti questi meccanismi cambiano il modo in cui
+EXPORT_SYMBOL e simili vengono guidati verso la creazione di voci in ksymtab.</p>
+</section>
+<section id="usare-le-macro-export-symbol">
+<h2>2.1 Usare le macro EXPORT_SYMBOL<a class="headerlink" href="#usare-le-macro-export-symbol" title="Link to this heading">¶</a></h2>
+<p>In aggiunta alle macro EXPORT_SYMBOL() e EXPORT_SYMBOL_GPL(), che permettono
+di esportare simboli del kernel nella rispettiva tabella, ci sono
+varianti che permettono di esportare simboli all’interno di uno spazio dei
+nomi: EXPORT_SYMBOL_NS() ed EXPORT_SYMBOL_NS_GPL(). Queste macro richiedono un
+argomento aggiuntivo: lo spazio dei nomi.
+Tenete presente che per via dell’espansione delle macro questo argomento deve
+essere un simbolo di preprocessore. Per esempio per esportare il
+simbolo <code class="docutils literal notranslate"><span class="pre">usb_stor_suspend</span></code> nello spazio dei nomi <code class="docutils literal notranslate"><span class="pre">USB_STORAGE</span></code> usate:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>EXPORT_SYMBOL_NS(usb_stor_suspend, &quot;USB_STORAGE&quot;);
+</pre></div>
+</div>
+<p>Di conseguenza, nella tabella dei simboli del kernel ci sarà una voce
+rappresentata dalla struttura <code class="docutils literal notranslate"><span class="pre">kernel_symbol</span></code> che avrà il campo
+<code class="docutils literal notranslate"><span class="pre">namespace</span></code> (spazio dei nomi) impostato. Un simbolo esportato senza uno spazio
+dei nomi avrà questo campo impostato a <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. Non esiste uno spazio dei nomi
+di base. Il programma <code class="docutils literal notranslate"><span class="pre">modpost</span></code> e il codice in kernel/module/main.c usano lo
+spazio dei nomi, rispettivamente, durante la compilazione e durante il
+caricamento di un modulo.</p>
+</section>
+<section id="usare-il-simbolo-di-preprocessore-default-symbol-namespace">
+<h2>2.2 Usare il simbolo di preprocessore DEFAULT_SYMBOL_NAMESPACE<a class="headerlink" href="#usare-il-simbolo-di-preprocessore-default-symbol-namespace" title="Link to this heading">¶</a></h2>
+<p>Definire lo spazio dei nomi per tutti i simboli di un sottosistema può essere
+logorante e di difficile manutenzione. Perciò è stato fornito un simbolo
+di preprocessore di base (DEFAULT_SYMBOL_NAMESPACE), che, se impostato,
+diventa lo spazio dei simboli di base per tutti gli usi di EXPORT_SYMBOL()
+ed EXPORT_SYMBOL_GPL() che non specificano esplicitamente uno spazio dei nomi.</p>
+<p>Ci sono molti modi per specificare questo simbolo di preprocessore e il loro
+uso dipende dalle preferenze del manutentore di un sottosistema. La prima
+possibilità è quella di definire il simbolo nel <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> del sottosistema.
+Per esempio per esportare tutti i simboli definiti in usb-common nello spazio
+dei nomi USB_COMMON, si può aggiungere la seguente linea in
+drivers/usb/common/Makefile:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=&#39;&quot;USB_COMMON&quot;&#39;
+</pre></div>
+</div>
+<p>Questo cambierà tutte le macro EXPORT_SYMBOL() ed EXPORT_SYMBOL_GPL(). Invece,
+un simbolo esportato con EXPORT_SYMBOL_NS() non verrà cambiato e il simbolo
+verrà esportato nello spazio dei nomi indicato.</p>
+<p>Una seconda possibilità è quella di definire il simbolo di preprocessore
+direttamente nei file da compilare. L’esempio precedente diventerebbe:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#undef  DEFAULT_SYMBOL_NAMESPACE
+#define DEFAULT_SYMBOL_NAMESPACE &quot;USB_COMMON&quot;
+</pre></div>
+</div>
+<p>Questo va messo prima di un qualsiasi uso di EXPORT_SYMBOL.</p>
+</section>
+<section id="come-usare-i-simboli-esportati-attraverso-uno-spazio-dei-nomi">
+<h2>3. Come usare i simboli esportati attraverso uno spazio dei nomi<a class="headerlink" href="#come-usare-i-simboli-esportati-attraverso-uno-spazio-dei-nomi" title="Link to this heading">¶</a></h2>
+<p>Per usare i simboli esportati da uno spazio dei nomi, i moduli del
+kernel devono esplicitamente importare il relativo spazio dei nomi; altrimenti
+il kernel potrebbe rifiutarsi di caricare il modulo. Il codice del
+modulo deve usare la macro MODULE_IMPORT_NS per importare lo spazio
+dei nomi che contiene i simboli desiderati. Per esempio un modulo che
+usa il simbolo usb_stor_suspend deve importare lo spazio dei nomi
+USB_STORAGE usando la seguente dichiarazione:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>MODULE_IMPORT_NS(&quot;USB_STORAGE&quot;);
+</pre></div>
+</div>
+<p>Questo creerà un’etichetta <code class="docutils literal notranslate"><span class="pre">modinfo</span></code> per ogni spazio dei nomi
+importato. Un risvolto di questo fatto è che gli spazi dei
+nomi importati da un modulo possono essere ispezionati tramite
+modinfo:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ modinfo drivers/usb/storage/ums-karma.ko
+[...]
+import_ns:      USB_STORAGE
+[...]
+</pre></div>
+</div>
+<p>Si consiglia di posizionare la dichiarazione MODULE_IMPORT_NS() vicino
+ai metadati del modulo come MODULE_AUTHOR() o MODULE_LICENSE(). Fate
+riferimento alla sezione 5. per creare automaticamente le importazioni
+mancanti.</p>
+</section>
+<section id="caricare-moduli-che-usano-simboli-provenienti-da-spazi-dei-nomi">
+<h2>4. Caricare moduli che usano simboli provenienti da spazi dei nomi<a class="headerlink" href="#caricare-moduli-che-usano-simboli-provenienti-da-spazi-dei-nomi" title="Link to this heading">¶</a></h2>
+<p>Quando un modulo viene caricato (per esempio usando <code class="docutils literal notranslate"><span class="pre">insmod</span></code>), il kernel
+verificherà la disponibilità di ogni simbolo usato e se lo spazio dei nomi
+che potrebbe contenerli è stato importato. Il comportamento di base del kernel
+è di rifiutarsi di caricare quei moduli che non importano tutti gli spazi dei
+nomi necessari. L’errore verrà annotato e il caricamento fallirà con l’errore
+EINVAL. Per caricare i moduli che non soddisfano questo requisito esiste
+un’opzione di configurazione: impostare
+MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS=y caricherà i moduli comunque ma
+emetterà un avviso.</p>
+</section>
+<section id="creare-automaticamente-la-dichiarazione-module-import-ns">
+<h2>5. Creare automaticamente la dichiarazione MODULE_IMPORT_NS<a class="headerlink" href="#creare-automaticamente-la-dichiarazione-module-import-ns" title="Link to this heading">¶</a></h2>
+<p>La mancanza di un’importazione può essere individuata facilmente al momento
+della compilazione. Infatti, modpost emetterà un avviso se il modulo usa
+un simbolo da uno spazio dei nomi che non è stato importato.
+La dichiarazione MODULE_IMPORT_NS() viene solitamente aggiunta in un posto
+ben definito (assieme agli altri metadati del modulo). Per facilitare
+la vita di chi scrive moduli (e i manutentori di sottosistemi), esistono uno
+script e un target make per correggere le importazioni mancanti. Questo può
+essere fatto con:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make nsdeps
+</pre></div>
+</div>
+<p>Lo scenario tipico di chi scrive un modulo potrebbe essere:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- scrivere codice che dipende da un simbolo appartenente ad uno spazio
+  dei nomi non importato
+- eseguire ``make``
+- aver notato un avviso da modpost che parla di un&#39;importazione
+  mancante
+- eseguire ``make nsdeps`` per aggiungere import nel posto giusto
+</pre></div>
+</div>
+<p>Per i manutentori di sottosistemi che vogliono aggiungere uno spazio dei nomi,
+l’approccio è simile. Di nuovo, eseguendo <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">nsdeps</span></code> aggiungerà le
+importazioni mancanti nei moduli inclusi nel kernel:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- spostare o aggiungere simboli ad uno spazio dei nomi (per esempio
+  usando EXPORT_SYMBOL_NS())
+- eseguire ``make`` (preferibilmente con allmodconfig per coprire tutti
+  i moduli del kernel)
+- aver notato un avviso da modpost che parla di un&#39;importazione
+  mancante
+- eseguire ``make nsdeps`` per aggiungere import nel posto giusto
+</pre></div>
+</div>
+<p>Potete anche eseguire nsdeps per moduli esterni. Solitamente si usa così:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make -C &lt;path_to_kernel_src&gt; M=$PWD nsdeps
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Spazio dei nomi dei simboli</a><ul>
+<li><a class="reference internal" href="#introduzione">1. Introduzione</a></li>
+<li><a class="reference internal" href="#come-definire-uno-spazio-dei-nomi-dei-simboli">2. Come definire uno spazio dei nomi dei simboli</a></li>
+<li><a class="reference internal" href="#usare-le-macro-export-symbol">2.1 Usare le macro EXPORT_SYMBOL</a></li>
+<li><a class="reference internal" href="#usare-il-simbolo-di-preprocessore-default-symbol-namespace">2.2 Usare il simbolo di preprocessore DEFAULT_SYMBOL_NAMESPACE</a></li>
+<li><a class="reference internal" href="#come-usare-i-simboli-esportati-attraverso-uno-spazio-dei-nomi">3. Come usare i simboli esportati attraverso uno spazio dei nomi</a></li>
+<li><a class="reference internal" href="#caricare-moduli-che-usano-simboli-provenienti-da-spazi-dei-nomi">4. Caricare moduli che usano simboli provenienti da spazi dei nomi</a></li>
+<li><a class="reference internal" href="#creare-automaticamente-la-dichiarazione-module-import-ns">5. Creare automaticamente la dichiarazione MODULE_IMPORT_NS</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>Documentazione dell’API di base</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../RCU/index.html"><span>Concetti su RCU</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

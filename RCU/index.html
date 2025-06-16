@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>RCU concepts &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Review Checklist for RCU Patches" href="checklist.html" />
+    <link rel="prev" title="The padata parallel execution mechanism" href="../core-api/padata.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../core-api/index.html">Core API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#core-utilities">Core utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#data-structures-and-low-level-utilities">Data structures and low-level utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#low-level-entry-and-exit">Low level entry and exit</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../core-api/index.html#concurrency-primitives">Concurrency primitives</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/refcount-vs-atomic.html">refcount_t API compared to atomic_t</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core-api/irq/index.html">IRQs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core-api/local_ops.html">Semantics and Behavior of Local Atomic Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core-api/padata.html">The padata parallel execution mechanism</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RCU concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core-api/wrappers/memory-barriers.html">Linux kernel memory barriers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#low-level-hardware-management">Low-level hardware management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#memory-management">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#interfaces-for-kernel-debugging">Interfaces for kernel debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core-api/index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/RCU/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/it_IT/RCU/index.html">Italian</a></li>
+
+</ul>
+</div>
+<section id="rcu-concepts">
+<span id="id1"></span><h1>RCU concepts<a class="headerlink" href="#rcu-concepts" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="checklist.html">Review Checklist for RCU Patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lockdep.html">RCU and lockdep checking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lockdep-splat.html">Lockdep-RCU Splat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rcubarrier.html">RCU and Unloadable Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rcubarrier.html#unloading-modules-that-use-call-rcu">Unloading Modules That Use call_rcu()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcubarrier.html#id1">rcu_barrier()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcubarrier.html#implementing-rcu-barrier">Implementing rcu_barrier()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcubarrier.html#rcu-barrier-summary">rcu_barrier() Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcubarrier.html#answers-to-quick-quizzes">Answers to Quick Quizzes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rcu_dereference.html">PROPER CARE AND FEEDING OF RETURN VALUES FROM rcu_dereference()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rcu_dereference.html#example-of-amplified-rcu-usage-bug">EXAMPLE OF AMPLIFIED RCU-USAGE BUG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcu_dereference.html#example-where-the-compiler-knows-too-much">EXAMPLE WHERE THE COMPILER KNOWS TOO MUCH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcu_dereference.html#which-member-of-the-rcu-dereference-family-should-you-use">WHICH MEMBER OF THE rcu_dereference() FAMILY SHOULD YOU USE?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcu_dereference.html#sparse-checking-of-rcu-protected-pointers">SPARSE CHECKING OF RCU-PROTECTED POINTERS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="whatisRCU.html">What is RCU?  --  “Read, Copy, Update”</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#rcu-overview">1.  RCU OVERVIEW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#what-is-rcu-s-core-api">2.  WHAT IS RCU’S CORE API?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#rcu-read-lock">rcu_read_lock()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#rcu-read-unlock">rcu_read_unlock()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#synchronize-rcu">synchronize_rcu()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#rcu-assign-pointer">rcu_assign_pointer()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#rcu-dereference">rcu_dereference()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#what-are-some-example-uses-of-core-rcu-api">3.  WHAT ARE SOME EXAMPLE USES OF CORE RCU API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#what-if-my-updating-thread-cannot-block">4.  WHAT IF MY UPDATING THREAD CANNOT BLOCK?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#what-are-some-simple-implementations-of-rcu">5.  WHAT ARE SOME SIMPLE IMPLEMENTATIONS OF RCU?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#a-toy-implementation-1-locking">5A.  “TOY” IMPLEMENTATION #1: LOCKING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatisRCU.html#b-toy-example-2-classic-rcu">5B.  “TOY” EXAMPLE #2: CLASSIC RCU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#analogy-with-reader-writer-locking">6.  ANALOGY WITH READER-WRITER LOCKING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#analogy-with-reference-counting">7.  ANALOGY WITH REFERENCE COUNTING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#full-list-of-rcu-apis">8.  FULL LIST OF RCU APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatisRCU.html#answers-to-quick-quizzes">9.  ANSWERS TO QUICK QUIZZES</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rcu.html">RCU Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rcu.html#frequently-asked-questions">Frequently Asked Questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rculist_nulls.html">Using RCU hlist_nulls to protect list and objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rculist_nulls.html#using-nulls">Using ‘nulls’</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rculist_nulls.html#lookup-algorithm">1) Lookup algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rculist_nulls.html#insertion-algorithm">2) Insertion algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rculist_nulls.html#removal-algorithm">3) Removal algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rculist_nulls.html#avoiding-extra-smp-rmb">Avoiding extra smp_rmb()</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rculist_nulls.html#id1">1) lookup algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rculist_nulls.html#insert-algorithm">2) Insert algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rcuref.html">Reference-count design for elements of lists/arrays protected by RCU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torture.html">RCU Torture Test Operation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#config-rcu-torture-test">CONFIG_RCU_TORTURE_TEST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#usage-on-specific-kernel-builds">Usage on Specific Kernel Builds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#usage-on-mainline-kernels">Usage on Mainline Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#repeated-runs">Repeated Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torture.html#distributed-runs">Distributed Runs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stallwarn.html">Using RCU’s CPU Stall Detector</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#what-causes-rcu-cpu-stall-warnings">What Causes RCU CPU Stall Warnings?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#fine-tuning-the-rcu-cpu-stall-detector">Fine-Tuning the RCU CPU Stall Detector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="stallwarn.html#config-rcu-cpu-stall-timeout">CONFIG_RCU_CPU_STALL_TIMEOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stallwarn.html#config-rcu-exp-cpu-stall-timeout">CONFIG_RCU_EXP_CPU_STALL_TIMEOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stallwarn.html#rcu-stall-delay-delta">RCU_STALL_DELAY_DELTA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stallwarn.html#rcu-stall-rat-delay">RCU_STALL_RAT_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stallwarn.html#rcupdate-rcu-task-stall-timeout">rcupdate.rcu_task_stall_timeout</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#interpreting-rcu-s-cpu-stall-detector-splats">Interpreting RCU’s CPU Stall-Detector “Splats”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#multiple-warnings-from-one-stall">Multiple Warnings From One Stall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#stall-warnings-for-expedited-grace-periods">Stall Warnings for Expedited Grace Periods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stallwarn.html#rcu-cpu-stall-cputime">RCU_CPU_STALL_CPUTIME</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="listRCU.html">Using RCU to Protect Read-Mostly Linked Lists</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#example-1-read-mostly-list-deferred-destruction">Example 1: Read-mostly list: Deferred Destruction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#example-2-read-side-action-taken-outside-of-lock-no-in-place-updates">Example 2: Read-Side Action Taken Outside of Lock: No In-Place Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#example-3-handling-in-place-updates">Example 3: Handling In-Place Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#example-4-eliminating-stale-data">Example 4: Eliminating Stale Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#example-5-skipping-stale-objects">Example 5: Skipping Stale Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="listRCU.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="NMI-RCU.html">Using RCU to Protect Dynamic NMI Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UP.html">RCU on Uniprocessor Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="UP.html#example-1-softirq-suicide">Example 1: softirq Suicide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UP.html#example-2-function-call-fatality">Example 2: Function-Call Fatality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UP.html#example-3-death-by-deadlock">Example 3: Death by Deadlock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UP.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html">A Tour Through TREE_RCU’s Grace-Period Memory Ordering</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#what-is-tree-rcu-s-grace-period-memory-ordering-guarantee">What Is Tree RCU’s Grace Period Memory Ordering Guarantee?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#tree-rcu-grace-period-memory-ordering-building-blocks">Tree RCU Grace Period Memory Ordering Building Blocks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#tree-rcu-grace-period-memory-ordering-components">Tree RCU Grace Period Memory Ordering Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#putting-it-all-together">Putting It All Together</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Memory-Ordering/Tree-RCU-Memory-Ordering.html#legal-statement">Legal Statement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html">A Tour Through TREE_RCU’s Expedited Grace Periods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#expedited-grace-period-design">Expedited Grace Period Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#rcu-preempt-expedited-grace-periods">RCU-preempt Expedited Grace Periods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#rcu-sched-expedited-grace-periods">RCU-sched Expedited Grace Periods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#expedited-grace-period-and-cpu-hotplug">Expedited Grace Period and CPU Hotplug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Expedited-Grace-Periods/Expedited-Grace-Periods.html#expedited-grace-period-refinements">Expedited Grace Period Refinements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Design/Requirements/Requirements.html">A Tour Through RCU’s Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#fundamental-requirements">Fundamental Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#grace-period-guarantee">Grace-Period Guarantee</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#publish-subscribe-guarantee">Publish/Subscribe Guarantee</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#memory-barrier-guarantees">Memory-Barrier Guarantees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#rcu-primitives-guaranteed-to-execute-unconditionally">RCU Primitives Guaranteed to Execute Unconditionally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#guaranteed-read-to-write-upgrade">Guaranteed Read-to-Write Upgrade</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#fundamental-non-requirements">Fundamental Non-Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#readers-impose-minimal-ordering">Readers Impose Minimal Ordering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#readers-do-not-exclude-updaters">Readers Do Not Exclude Updaters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#updaters-only-wait-for-old-readers">Updaters Only Wait For Old Readers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#grace-periods-don-t-partition-read-side-critical-sections">Grace Periods Don’t Partition Read-Side Critical Sections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#read-side-critical-sections-don-t-partition-grace-periods">Read-Side Critical Sections Don’t Partition Grace Periods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#parallelism-facts-of-life">Parallelism Facts of Life</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#quality-of-implementation-requirements">Quality-of-Implementation Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#specialization">Specialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#performance-and-scalability">Performance and Scalability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#forward-progress">Forward Progress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#composability">Composability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#corner-cases">Corner Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#software-engineering-requirements">Software-Engineering Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#linux-kernel-complications">Linux Kernel Complications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#firmware-interface">Firmware Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#early-boot">Early Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#interrupts-and-nmis">Interrupts and NMIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#loadable-modules">Loadable Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#hotplug-cpu">Hotplug CPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#scheduler-and-rcu">Scheduler and RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#tracing-and-rcu">Tracing and RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#accesses-to-user-memory-and-rcu">Accesses to User Memory and RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#energy-efficiency">Energy Efficiency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#scheduling-clock-interrupts-and-rcu">Scheduling-Clock Interrupts and RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#memory-efficiency">Memory Efficiency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#performance-scalability-response-time-and-reliability">Performance, Scalability, Response Time, and Reliability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#other-rcu-flavors">Other RCU Flavors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#bottom-half-flavor-historical">Bottom-Half Flavor (Historical)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#sched-flavor-historical">Sched Flavor (Historical)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#sleepable-rcu">Sleepable RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#tasks-rcu">Tasks RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#tasks-rude-rcu">Tasks Rude RCU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Requirements/Requirements.html#tasks-trace-rcu">Tasks Trace RCU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#possible-future-changes">Possible Future Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Requirements/Requirements.html#acknowledgments">Acknowledgments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html">A Tour Through TREE_RCU’s Data Structures [LWN.net]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#data-structure-relationships">Data-Structure Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#the-rcu-state-structure">The <code class="docutils literal notranslate"><span class="pre">rcu_state</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#the-rcu-node-structure">The <code class="docutils literal notranslate"><span class="pre">rcu_node</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#the-rcu-segcblist-structure">The <code class="docutils literal notranslate"><span class="pre">rcu_segcblist</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#the-rcu-data-structure">The <code class="docutils literal notranslate"><span class="pre">rcu_data</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#the-rcu-head-structure">The <code class="docutils literal notranslate"><span class="pre">rcu_head</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#rcu-specific-fields-in-the-task-struct-structure">RCU-Specific Fields in the <code class="docutils literal notranslate"><span class="pre">task_struct</span></code> Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#accessor-functions">Accessor Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#acknowledgments">Acknowledgments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Design/Data-Structures/Data-Structures.html#legal-statement">Legal Statement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">RCU concepts</a></li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="../core-api/padata.html">
+                    <span class="icon">&lt;</span><span>The padata parallel execution mechanism</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="checklist.html"><span>Review Checklist for RCU Patches</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

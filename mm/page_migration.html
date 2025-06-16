@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Page migration &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Page fragments" href="page_frags.html" />
+    <link rel="prev" title="Overcommit Accounting" href="overcommit-accounting.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/mm/page_migration.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/mm/page_migration.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="page-migration">
+<h1>Page migration<a class="headerlink" href="#page-migration" title="Link to this heading">¶</a></h1>
+<p>Page migration allows moving the physical location of pages between
+nodes in a NUMA system while the process is running. This means that the
+virtual addresses that the process sees do not change. However, the
+system rearranges the physical location of those pages.</p>
+<p>Also see <a class="reference internal" href="hmm.html"><span class="doc">Heterogeneous Memory Management (HMM)</span></a> for migrating pages to or from device
+private memory.</p>
+<p>The main intent of page migration is to reduce the latency of memory accesses
+by moving pages near to the processor where the process accessing that memory
+is running.</p>
+<p>Page migration allows a process to manually relocate the node on which its
+pages are located through the MF_MOVE and MF_MOVE_ALL options while setting
+a new memory policy via mbind(). The pages of a process can also be relocated
+from another process using the sys_migrate_pages() function call. The
+migrate_pages() function call takes two sets of nodes and moves pages of a
+process that are located on the from nodes to the destination nodes.
+Page migration functions are provided by the numactl package by Andi Kleen
+(a version later than 0.9.3 is required. Get it from
+<a class="reference external" href="https://github.com/numactl/numactl.git">https://github.com/numactl/numactl.git</a>). numactl provides libnuma
+which provides an interface similar to other NUMA functionality for page
+migration.  cat <code class="docutils literal notranslate"><span class="pre">/proc/&lt;pid&gt;/numa_maps</span></code> allows an easy review of where the
+pages of a process are located. See also the numa_maps documentation in the
+proc(5) man page.</p>
+<p>Manual migration is useful if for example the scheduler has relocated
+a process to a processor on a distant node. A batch scheduler or an
+administrator may detect the situation and move the pages of the process
+nearer to the new processor. The kernel itself only provides
+manual page migration support. Automatic page migration may be implemented
+through user space processes that move pages. A special function call
+“move_pages” allows the moving of individual pages within a process.
+For example, A NUMA profiler may obtain a log showing frequent off-node
+accesses and may use the result to move pages to more advantageous
+locations.</p>
+<p>Larger installations usually partition the system using cpusets into
+sections of nodes. Paul Jackson has equipped cpusets with the ability to
+move pages when a task is moved to another cpuset (See
+<a class="reference internal" href="../admin-guide/cgroup-v1/cpusets.html#cpusets"><span class="std std-ref">CPUSETS</span></a>).
+Cpusets allow the automation of process locality. If a task is moved to
+a new cpuset then also all its pages are moved with it so that the
+performance of the process does not sink dramatically. Also the pages
+of processes in a cpuset are moved if the allowed memory nodes of a
+cpuset are changed.</p>
+<p>Page migration allows the preservation of the relative location of pages
+within a group of nodes for all migration techniques which will preserve a
+particular memory allocation pattern generated even after migrating a
+process. This is necessary in order to preserve the memory latencies.
+Processes will run with similar performance after migration.</p>
+<p>Page migration occurs in several steps. First a high level
+description for those trying to use migrate_pages() from the kernel
+(for userspace usage see the Andi Kleen’s numactl package mentioned above)
+and then a low level description of how the low level details work.</p>
+<section id="in-kernel-use-of-migrate-pages">
+<h2>In kernel use of migrate_pages()<a class="headerlink" href="#in-kernel-use-of-migrate-pages" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Remove folios from the LRU.</p>
+<p>Lists of folios to be migrated are generated by scanning over
+folios and moving them into lists. This is done by
+calling <a class="reference internal" href="../core-api/mm-api.html#c.folio_isolate_lru" title="folio_isolate_lru"><code class="xref c c-func docutils literal notranslate"><span class="pre">folio_isolate_lru()</span></code></a>.
+Calling <a class="reference internal" href="../core-api/mm-api.html#c.folio_isolate_lru" title="folio_isolate_lru"><code class="xref c c-func docutils literal notranslate"><span class="pre">folio_isolate_lru()</span></code></a> increases the references to the folio
+so that it cannot vanish while the folio migration occurs.
+It also prevents the swapper or other scans from encountering
+the folio.</p>
+</li>
+<li><p>We need to have a function of type new_folio_t that can be
+passed to migrate_pages(). This function should figure out
+how to allocate the correct new folio given the old folio.</p></li>
+<li><p>The migrate_pages() function is called which attempts
+to do the migration. It will call the function to allocate
+the new folio for each folio that is considered for moving.</p></li>
+</ol>
+</section>
+<section id="how-migrate-pages-works">
+<h2>How migrate_pages() works<a class="headerlink" href="#how-migrate-pages-works" title="Link to this heading">¶</a></h2>
+<p>migrate_pages() does several passes over its list of folios. A folio is moved
+if all references to a folio are removable at the time. The folio has
+already been removed from the LRU via <a class="reference internal" href="../core-api/mm-api.html#c.folio_isolate_lru" title="folio_isolate_lru"><code class="xref c c-func docutils literal notranslate"><span class="pre">folio_isolate_lru()</span></code></a> and the refcount
+is increased so that the folio cannot be freed while folio migration occurs.</p>
+<p>Steps:</p>
+<ol class="arabic simple">
+<li><p>Lock the page to be migrated.</p></li>
+<li><p>Ensure that writeback is complete.</p></li>
+<li><p>Lock the new page that we want to move to. It is locked so that accesses to
+this (not yet up-to-date) page immediately block while the move is in progress.</p></li>
+<li><p>All the page table references to the page are converted to migration
+entries. This decreases the mapcount of a page. If the resulting
+mapcount is not zero then we do not migrate the page. All user space
+processes that attempt to access the page will now wait on the page lock
+or wait for the migration page table entry to be removed.</p></li>
+<li><p>The i_pages lock is taken. This will cause all processes trying
+to access the page via the mapping to block on the spinlock.</p></li>
+<li><p>The refcount of the page is examined and we back out if references remain.
+Otherwise, we know that we are the only one referencing this page.</p></li>
+<li><p>The radix tree is checked and if it does not contain the pointer to this
+page then we back out because someone else modified the radix tree.</p></li>
+<li><p>The new page is prepped with some settings from the old page so that
+accesses to the new page will discover a page with the correct settings.</p></li>
+<li><p>The radix tree is changed to point to the new page.</p></li>
+<li><p>The reference count of the old page is dropped because the address space
+reference is gone. A reference to the new page is established because
+the new page is referenced by the address space.</p></li>
+<li><p>The i_pages lock is dropped. With that lookups in the mapping
+become possible again. Processes will move from spinning on the lock
+to sleeping on the locked new page.</p></li>
+<li><p>The page contents are copied to the new page.</p></li>
+<li><p>The remaining page flags are copied to the new page.</p></li>
+<li><p>The old page flags are cleared to indicate that the page does
+not provide any information anymore.</p></li>
+<li><p>Queued up writeback on the new page is triggered.</p></li>
+<li><p>If migration entries were inserted into the page table, then replace them
+with real ptes. Doing so will enable access for user space processes not
+already waiting for the page lock.</p></li>
+<li><p>The page locks are dropped from the old and new page.
+Processes waiting on the page lock will redo their page faults
+and will reach the new page.</p></li>
+<li><p>The new page is moved to the LRU and can be scanned by the swapper,
+etc. again.</p></li>
+</ol>
+</section>
+<section id="non-lru-page-migration">
+<h2>Non-LRU page migration<a class="headerlink" href="#non-lru-page-migration" title="Link to this heading">¶</a></h2>
+<p>Although migration originally aimed for reducing the latency of memory
+accesses for NUMA, compaction also uses migration to create high-order
+pages.  For compaction purposes, it is also useful to be able to move
+non-LRU pages, such as zsmalloc and virtio-balloon pages.</p>
+<p>If a driver wants to make its pages movable, it should define a <a class="reference internal" href="#c.movable_operations" title="movable_operations"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span>
+<span class="pre">movable_operations</span></code></a>.  It then needs to call __SetPageMovable() on each
+page that it may be able to move.  This uses the <code class="docutils literal notranslate"><span class="pre">page-&gt;mapping</span></code> field,
+so this field is not available for the driver to use for other purposes.</p>
+</section>
+<section id="monitoring-migration">
+<h2>Monitoring Migration<a class="headerlink" href="#monitoring-migration" title="Link to this heading">¶</a></h2>
+<p>The following events (counters) can be used to monitor page migration.</p>
+<ol class="arabic simple">
+<li><p>PGMIGRATE_SUCCESS: Normal page migration success. Each count means that a
+page was migrated. If the page was a non-THP and non-hugetlb page, then
+this counter is increased by one. If the page was a THP or hugetlb, then
+this counter is increased by the number of THP or hugetlb subpages.
+For example, migration of a single 2MB THP that has 4KB-size base pages
+(subpages) will cause this counter to increase by 512.</p></li>
+<li><p>PGMIGRATE_FAIL: Normal page migration failure. Same counting rules as for
+PGMIGRATE_SUCCESS, above: this will be increased by the number of subpages,
+if it was a THP or hugetlb.</p></li>
+<li><p>THP_MIGRATION_SUCCESS: A THP was migrated without being split.</p></li>
+<li><p>THP_MIGRATION_FAIL: A THP could not be migrated nor it could be split.</p></li>
+<li><p>THP_MIGRATION_SPLIT: A THP was migrated, but not as such: first, the THP had
+to be split. After splitting, a migration retry was used for its sub-pages.</p></li>
+</ol>
+<p>THP_MIGRATION_* events also update the appropriate PGMIGRATE_SUCCESS or
+PGMIGRATE_FAIL events. For example, a THP migration failure will cause both
+THP_MIGRATION_FAIL and PGMIGRATE_FAIL to increase.</p>
+<p>Christoph Lameter, May 8, 2006.
+Minchan Kim, Mar 28, 2016.</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.movable_operations">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">movable_operations</span></span></span><a class="headerlink" href="#c.movable_operations" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Driver page migration</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct movable_operations {
+    bool (*isolate_page)(struct page *, isolate_mode_t);
+    int (*migrate_page)(struct page *dst, struct page *src, enum migrate_mode);
+    void (*putback_page)(struct page *);
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">isolate_page</span></code></dt><dd><p>The VM calls this function to prepare the page to be moved.  The page
+is locked and the driver should not unlock it.  The driver should
+return <code class="docutils literal notranslate"><span class="pre">true</span></code> if the page is movable and <code class="docutils literal notranslate"><span class="pre">false</span></code> if it is not
+currently movable.  After this function returns, the VM uses the
+page-&gt;lru field, so the driver must preserve any information which
+is usually stored here.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">migrate_page</span></code></dt><dd><p>After isolation, the VM calls this function with the isolated
+<strong>src</strong> page.  The driver should copy the contents of the
+<strong>src</strong> page to the <strong>dst</strong> page and set up the fields of <strong>dst</strong> page.
+Both pages are locked.
+If page migration is successful, the driver should call
+__ClearPageMovable(<strong>src</strong>) and return MIGRATEPAGE_SUCCESS.
+If the driver cannot migrate the page at the moment, it can return
+-EAGAIN.  The VM interprets this as a temporary migration failure and
+will retry it later.  Any other error value is a permanent migration
+failure and migration will not be retried.
+The driver shouldn’t touch the <strong>src-&gt;lru</strong> field while in the
+migrate_page() function.  It may write to <strong>dst-&gt;lru</strong>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">putback_page</span></code></dt><dd><p>If migration fails on the isolated page, the VM informs the driver
+that the page is no longer a candidate for migration by calling
+this function.  The driver should put the isolated page back into
+its own data structure.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Page migration</a><ul>
+<li><a class="reference internal" href="#in-kernel-use-of-migrate-pages">In kernel use of migrate_pages()</a></li>
+<li><a class="reference internal" href="#how-migrate-pages-works">How migrate_pages() works</a></li>
+<li><a class="reference internal" href="#non-lru-page-migration">Non-LRU page migration</a></li>
+<li><a class="reference internal" href="#monitoring-migration">Monitoring Migration</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="overcommit-accounting.html">
+                    <span class="icon">&lt;</span><span>Overcommit Accounting</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="page_frags.html"><span>Page fragments</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

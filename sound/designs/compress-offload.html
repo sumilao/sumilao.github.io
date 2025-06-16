@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ALSA Compress-Offload API &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ALSA PCM Timestamping" href="timestamping.html" />
+    <link rel="prev" title="ALSA Co-processor Acceleration API" href="compress-accel.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/sound/designs/compress-offload.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="alsa-compress-offload-api">
+<h1>ALSA Compress-Offload API<a class="headerlink" href="#alsa-compress-offload-api" title="Link to this heading">¶</a></h1>
+<p>Pierre-Louis.Bossart &lt;<a class="reference external" href="mailto:pierre-louis&#46;bossart&#37;&#52;&#48;linux&#46;intel&#46;com">pierre-louis<span>&#46;</span>bossart<span>&#64;</span>linux<span>&#46;</span>intel<span>&#46;</span>com</a>&gt;</p>
+<p>Vinod Koul &lt;<a class="reference external" href="mailto:vinod&#46;koul&#37;&#52;&#48;linux&#46;intel&#46;com">vinod<span>&#46;</span>koul<span>&#64;</span>linux<span>&#46;</span>intel<span>&#46;</span>com</a>&gt;</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Since its early days, the ALSA API was defined with PCM support or
+constant bitrates payloads such as IEC61937 in mind. Arguments and
+returned values in frames are the norm, making it a challenge to
+extend the existing API to compressed data streams.</p>
+<p>In recent years, audio digital signal processors (DSP) were integrated
+in system-on-chip designs, and DSPs are also integrated in audio
+codecs. Processing compressed data on such DSPs results in a dramatic
+reduction of power consumption compared to host-based
+processing. Support for such hardware has not been very good in Linux,
+mostly because of a lack of a generic API available in the mainline
+kernel.</p>
+<p>Rather than requiring a compatibility break with an API change of the
+ALSA PCM interface, a new ‘Compressed Data’ API is introduced to
+provide a control and data-streaming interface for audio DSPs.</p>
+<p>The design of this API was inspired by the 2-year experience with the
+Intel Moorestown SOC, with many corrections required to upstream the
+API in the mainline kernel instead of the staging tree and make it
+usable by others.</p>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>The main requirements are:</p>
+<ul class="simple">
+<li><p>separation between byte counts and time. Compressed formats may have
+a header per file, per frame, or no header at all. The payload size
+may vary from frame-to-frame. As a result, it is not possible to
+estimate reliably the duration of audio buffers when handling
+compressed data. Dedicated mechanisms are required to allow for
+reliable audio-video synchronization, which requires precise
+reporting of the number of samples rendered at any given time.</p></li>
+<li><p>Handling of multiple formats. PCM data only requires a specification
+of the sampling rate, number of channels and bits per sample. In
+contrast, compressed data comes in a variety of formats. Audio DSPs
+may also provide support for a limited number of audio encoders and
+decoders embedded in firmware, or may support more choices through
+dynamic download of libraries.</p></li>
+<li><p>Focus on main formats. This API provides support for the most
+popular formats used for audio and video capture and playback. It is
+likely that as audio compression technology advances, new formats
+will be added.</p></li>
+<li><p>Handling of multiple configurations. Even for a given format like
+AAC, some implementations may support AAC multichannel but HE-AAC
+stereo. Likewise WMA10 level M3 may require too much memory and cpu
+cycles. The new API needs to provide a generic way of listing these
+formats.</p></li>
+<li><p>Rendering/Grabbing only. This API does not provide any means of
+hardware acceleration, where PCM samples are provided back to
+user-space for additional processing. This API focuses instead on
+streaming compressed data to a DSP, with the assumption that the
+decoded samples are routed to a physical output or logical back-end.</p></li>
+<li><p>Complexity hiding. Existing user-space multimedia frameworks all
+have existing enums/structures for each compressed format. This new
+API assumes the existence of a platform-specific compatibility layer
+to expose, translate and make use of the capabilities of the audio
+DSP, eg. Android HAL or PulseAudio sinks. By construction, regular
+applications are not supposed to make use of this API.</p></li>
+</ul>
+</section>
+<section id="design">
+<h2>Design<a class="headerlink" href="#design" title="Link to this heading">¶</a></h2>
+<p>The new API shares a number of concepts with the PCM API for flow
+control. Start, pause, resume, drain and stop commands have the same
+semantics no matter what the content is.</p>
+<p>The concept of memory ring buffer divided in a set of fragments is
+borrowed from the ALSA PCM API. However, only sizes in bytes can be
+specified.</p>
+<p>Seeks/trick modes are assumed to be handled by the host.</p>
+<p>The notion of rewinds/forwards is not supported. Data committed to the
+ring buffer cannot be invalidated, except when dropping all buffers.</p>
+<p>The Compressed Data API does not make any assumptions on how the data
+is transmitted to the audio DSP. DMA transfers from main memory to an
+embedded audio cluster or to a SPI interface for external DSPs are
+possible. As in the ALSA PCM case, a core set of routines is exposed;
+each driver implementer will have to write support for a set of
+mandatory routines and possibly make use of optional ones.</p>
+<p>The main additions are</p>
+<dl class="simple">
+<dt>get_caps</dt><dd><p>This routine returns the list of audio formats supported. Querying the
+codecs on a capture stream will return encoders, decoders will be
+listed for playback streams.</p>
+</dd>
+<dt>get_codec_caps</dt><dd><p>For each codec, this routine returns a list of
+capabilities. The intent is to make sure all the capabilities
+correspond to valid settings, and to minimize the risks of
+configuration failures. For example, for a complex codec such as AAC,
+the number of channels supported may depend on a specific profile. If
+the capabilities were exposed with a single descriptor, it may happen
+that a specific combination of profiles/channels/formats may not be
+supported. Likewise, embedded DSPs have limited memory and cpu cycles,
+it is likely that some implementations make the list of capabilities
+dynamic and dependent on existing workloads. In addition to codec
+settings, this routine returns the minimum buffer size handled by the
+implementation. This information can be a function of the DMA buffer
+sizes, the number of bytes required to synchronize, etc, and can be
+used by userspace to define how much needs to be written in the ring
+buffer before playback can start.</p>
+</dd>
+<dt>set_params</dt><dd><p>This routine sets the configuration chosen for a specific codec. The
+most important field in the parameters is the codec type; in most
+cases decoders will ignore other fields, while encoders will strictly
+comply to the settings</p>
+</dd>
+<dt>get_params</dt><dd><p>This routines returns the actual settings used by the DSP. Changes to
+the settings should remain the exception.</p>
+</dd>
+<dt>get_timestamp</dt><dd><p>The timestamp becomes a multiple field structure. It lists the number
+of bytes transferred, the number of samples processed and the number
+of samples rendered/grabbed. All these values can be used to determine
+the average bitrate, figure out if the ring buffer needs to be
+refilled or the delay due to decoding/encoding/io on the DSP.</p>
+</dd>
+</dl>
+<p>Note that the list of codecs/profiles/modes was derived from the
+OpenMAX AL specification instead of reinventing the wheel.
+Modifications include:
+- Addition of FLAC and IEC formats
+- Merge of encoder/decoder capabilities
+- Profiles/modes listed as bitmasks to make descriptors more compact
+- Addition of set_params for decoders (missing in OpenMAX AL)
+- Addition of AMR/AMR-WB encoding modes (missing in OpenMAX AL)
+- Addition of format information for WMA
+- Addition of encoding options when required (derived from OpenMAX IL)
+- Addition of rateControlSupported (missing in OpenMAX AL)</p>
+</section>
+<section id="state-machine">
+<h2>State Machine<a class="headerlink" href="#state-machine" title="Link to this heading">¶</a></h2>
+<p>The compressed audio stream state machine is described below</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                                      +----------+
+                                      |          |
+                                      |   OPEN   |
+                                      |          |
+                                      +----------+
+                                           |
+                                           |
+                                           | compr_set_params()
+                                           |
+                                           v
+       compr_free()                  +----------+
++------------------------------------|          |
+|                                    |   SETUP  |
+|          +-------------------------|          |&lt;-------------------------+
+|          |       compr_write()     +----------+                          |
+|          |                              ^                                |
+|          |                              | compr_drain_notify()           |
+|          |                              |        or                      |
+|          |                              |     compr_stop()               |
+|          |                              |                                |
+|          |                         +----------+                          |
+|          |                         |          |                          |
+|          |                         |   DRAIN  |                          |
+|          |                         |          |                          |
+|          |                         +----------+                          |
+|          |                              ^                                |
+|          |                              |                                |
+|          |                              | compr_drain()                  |
+|          |                              |                                |
+|          v                              |                                |
+|    +----------+                    +----------+                          |
+|    |          |    compr_start()   |          |        compr_stop()      |
+|    | PREPARE  |-------------------&gt;|  RUNNING |--------------------------+
+|    |          |                    |          |                          |
+|    +----------+                    +----------+                          |
+|          |                            |    ^                             |
+|          |compr_free()                |    |                             |
+|          |              compr_pause() |    | compr_resume()              |
+|          |                            |    |                             |
+|          v                            v    |                             |
+|    +----------+                   +----------+                           |
+|    |          |                   |          |         compr_stop()      |
++---&gt;|   FREE   |                   |  PAUSE   |---------------------------+
+     |          |                   |          |
+     +----------+                   +----------+
+</pre></div>
+</div>
+</section>
+<section id="gapless-playback">
+<h2>Gapless Playback<a class="headerlink" href="#gapless-playback" title="Link to this heading">¶</a></h2>
+<p>When playing thru an album, the decoders have the ability to skip the encoder
+delay and padding and directly move from one track content to another. The end
+user can perceive this as gapless playback as we don’t have silence while
+switching from one track to another</p>
+<p>Also, there might be low-intensity noises due to encoding. Perfect gapless is
+difficult to reach with all types of compressed data, but works fine with most
+music content. The decoder needs to know the encoder delay and encoder padding.
+So we need to pass this to DSP. This metadata is extracted from ID3/MP4 headers
+and are not present by default in the bitstream, hence the need for a new
+interface to pass this information to the DSP. Also DSP and userspace needs to
+switch from one track to another and start using data for second track.</p>
+<p>The main additions are:</p>
+<dl class="simple">
+<dt>set_metadata</dt><dd><p>This routine sets the encoder delay and encoder padding. This can be used by
+decoder to strip the silence. This needs to be set before the data in the track
+is written.</p>
+</dd>
+<dt>set_next_track</dt><dd><p>This routine tells DSP that metadata and write operation sent after this would
+correspond to subsequent track</p>
+</dd>
+<dt>partial drain</dt><dd><p>This is called when end of file is reached. The userspace can inform DSP that
+EOF is reached and now DSP can start skipping padding delay. Also next write
+data would belong to next track</p>
+</dd>
+</dl>
+<p>Sequence flow for gapless would be:
+- Open
+- Get caps / codec caps
+- Set params
+- Set metadata of the first track
+- Fill data of the first track
+- Trigger start
+- User-space finished sending all,
+- Indicate next track data by sending set_next_track
+- Set metadata of the next track
+- then call partial_drain to flush most of buffer in DSP
+- Fill data of the next track
+- DSP switches to second track</p>
+<p>(note: order for partial_drain and write for next track can be reversed as well)</p>
+</section>
+<section id="gapless-playback-sm">
+<h2>Gapless Playback SM<a class="headerlink" href="#gapless-playback-sm" title="Link to this heading">¶</a></h2>
+<p>For Gapless, we move from running state to partial drain and back, along
+with setting of meta_data and signalling for next track</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          +----------+
+  compr_drain_notify()    |          |
++------------------------&gt;|  RUNNING |
+|                         |          |
+|                         +----------+
+|                              |
+|                              |
+|                              | compr_next_track()
+|                              |
+|                              V
+|                         +----------+
+|    compr_set_params()   |          |
+|             +-----------|NEXT_TRACK|
+|             |           |          |
+|             |           +--+-------+
+|             |              | |
+|             +--------------+ |
+|                              |
+|                              | compr_partial_drain()
+|                              |
+|                              V
+|                         +----------+
+|                         |          |
++------------------------ | PARTIAL_ |
+                          |  DRAIN   |
+                          +----------+
+</pre></div>
+</div>
+</section>
+<section id="not-supported">
+<h2>Not supported<a class="headerlink" href="#not-supported" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Support for VoIP/circuit-switched calls is not the target of this
+API. Support for dynamic bit-rate changes would require a tight
+coupling between the DSP and the host stack, limiting power savings.</p></li>
+<li><p>Packet-loss concealment is not supported. This would require an
+additional interface to let the decoder synthesize data when frames
+are lost during transmission. This may be added in the future.</p></li>
+<li><p>Volume control/routing is not handled by this API. Devices exposing a
+compressed data interface will be considered as regular ALSA devices;
+volume changes and routing information will be provided with regular
+ALSA kcontrols.</p></li>
+<li><p>Embedded audio effects. Such effects should be enabled in the same
+manner, no matter if the input was PCM or compressed.</p></li>
+<li><p>multichannel IEC encoding. Unclear if this is required.</p></li>
+<li><p>Encoding/decoding acceleration is not supported as mentioned
+above. It is possible to route the output of a decoder to a capture
+stream, or even implement transcoding capabilities. This routing
+would be enabled with ALSA kcontrols.</p></li>
+<li><p>Audio policy/resource management. This API does not provide any
+hooks to query the utilization of the audio DSP, nor any preemption
+mechanisms.</p></li>
+<li><p>No notion of underrun/overrun. Since the bytes written are compressed
+in nature and data written/read doesn’t translate directly to
+rendered output in time, this does not deal with underrun/overrun and
+maybe dealt in user-library</p></li>
+</ul>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Mark Brown and Liam Girdwood for discussions on the need for this API</p></li>
+<li><p>Harsha Priya for her work on intel_sst compressed API</p></li>
+<li><p>Rakesh Ughreja for valuable feedback</p></li>
+<li><p>Sing Nallasellan, Sikkandar Madar and Prasanna Samaga for
+demonstrating and quantifying the benefits of audio offload on a
+real platform.</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">ALSA Compress-Offload API</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#design">Design</a></li>
+<li><a class="reference internal" href="#state-machine">State Machine</a></li>
+<li><a class="reference internal" href="#gapless-playback">Gapless Playback</a></li>
+<li><a class="reference internal" href="#gapless-playback-sm">Gapless Playback SM</a></li>
+<li><a class="reference internal" href="#not-supported">Not supported</a></li>
+<li><a class="reference internal" href="#credits">Credits</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="compress-accel.html">
+                    <span class="icon">&lt;</span><span>ALSA Co-processor Acceleration API</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="timestamping.html"><span>ALSA PCM Timestamping</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

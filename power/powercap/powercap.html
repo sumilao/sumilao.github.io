@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Power Capping Framework &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dynamic Thermal Power Management framework" href="dtpm.html" />
+    <link rel="prev" title="Documentation for userland software suspend interface" href="../userland-swsusp.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/power/powercap/powercap.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="power-capping-framework">
+<h1>Power Capping Framework<a class="headerlink" href="#power-capping-framework" title="Link to this heading">¶</a></h1>
+<p>The power capping framework provides a consistent interface between the kernel
+and the user space that allows power capping drivers to expose the settings to
+user space in a uniform way.</p>
+<section id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Link to this heading">¶</a></h2>
+<p>The framework exposes power capping devices to user space via sysfs in the
+form of a tree of objects. The objects at the root level of the tree represent
+‘control types’, which correspond to different methods of power capping.  For
+example, the intel-rapl control type represents the Intel “Running Average
+Power Limit” (RAPL) technology, whereas the ‘idle-injection’ control type
+corresponds to the use of idle injection for controlling power.</p>
+<p>Power zones represent different parts of the system, which can be controlled and
+monitored using the power capping method determined by the control type the
+given zone belongs to. They each contain attributes for monitoring power, as
+well as controls represented in the form of power constraints.  If the parts of
+the system represented by different power zones are hierarchical (that is, one
+bigger part consists of multiple smaller parts that each have their own power
+controls), those power zones may also be organized in a hierarchy with one
+parent power zone containing multiple subzones and so on to reflect the power
+control topology of the system.  In that case, it is possible to apply power
+capping to a set of devices together using the parent power zone and if more
+fine grained control is required, it can be applied through the subzones.</p>
+<p>Example sysfs interface tree:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/sys/devices/virtual/powercap
+└──intel-rapl
+    ├──intel-rapl:0
+    │   ├──constraint_0_name
+    │   ├──constraint_0_power_limit_uw
+    │   ├──constraint_0_time_window_us
+    │   ├──constraint_1_name
+    │   ├──constraint_1_power_limit_uw
+    │   ├──constraint_1_time_window_us
+    │   ├──device -&gt; ../../intel-rapl
+    │   ├──energy_uj
+    │   ├──intel-rapl:0:0
+    │   │   ├──constraint_0_name
+    │   │   ├──constraint_0_power_limit_uw
+    │   │   ├──constraint_0_time_window_us
+    │   │   ├──constraint_1_name
+    │   │   ├──constraint_1_power_limit_uw
+    │   │   ├──constraint_1_time_window_us
+    │   │   ├──device -&gt; ../../intel-rapl:0
+    │   │   ├──energy_uj
+    │   │   ├──max_energy_range_uj
+    │   │   ├──name
+    │   │   ├──enabled
+    │   │   ├──power
+    │   │   │   ├──async
+    │   │   │   []
+    │   │   ├──subsystem -&gt; ../../../../../../class/power_cap
+    │   │   └──uevent
+    │   ├──intel-rapl:0:1
+    │   │   ├──constraint_0_name
+    │   │   ├──constraint_0_power_limit_uw
+    │   │   ├──constraint_0_time_window_us
+    │   │   ├──constraint_1_name
+    │   │   ├──constraint_1_power_limit_uw
+    │   │   ├──constraint_1_time_window_us
+    │   │   ├──device -&gt; ../../intel-rapl:0
+    │   │   ├──energy_uj
+    │   │   ├──max_energy_range_uj
+    │   │   ├──name
+    │   │   ├──enabled
+    │   │   ├──power
+    │   │   │   ├──async
+    │   │   │   []
+    │   │   ├──subsystem -&gt; ../../../../../../class/power_cap
+    │   │   └──uevent
+    │   ├──max_energy_range_uj
+    │   ├──max_power_range_uw
+    │   ├──name
+    │   ├──enabled
+    │   ├──power
+    │   │   ├──async
+    │   │   []
+    │   ├──subsystem -&gt; ../../../../../class/power_cap
+    │   ├──enabled
+    │   ├──uevent
+    ├──intel-rapl:1
+    │   ├──constraint_0_name
+    │   ├──constraint_0_power_limit_uw
+    │   ├──constraint_0_time_window_us
+    │   ├──constraint_1_name
+    │   ├──constraint_1_power_limit_uw
+    │   ├──constraint_1_time_window_us
+    │   ├──device -&gt; ../../intel-rapl
+    │   ├──energy_uj
+    │   ├──intel-rapl:1:0
+    │   │   ├──constraint_0_name
+    │   │   ├──constraint_0_power_limit_uw
+    │   │   ├──constraint_0_time_window_us
+    │   │   ├──constraint_1_name
+    │   │   ├──constraint_1_power_limit_uw
+    │   │   ├──constraint_1_time_window_us
+    │   │   ├──device -&gt; ../../intel-rapl:1
+    │   │   ├──energy_uj
+    │   │   ├──max_energy_range_uj
+    │   │   ├──name
+    │   │   ├──enabled
+    │   │   ├──power
+    │   │   │   ├──async
+    │   │   │   []
+    │   │   ├──subsystem -&gt; ../../../../../../class/power_cap
+    │   │   └──uevent
+    │   ├──intel-rapl:1:1
+    │   │   ├──constraint_0_name
+    │   │   ├──constraint_0_power_limit_uw
+    │   │   ├──constraint_0_time_window_us
+    │   │   ├──constraint_1_name
+    │   │   ├──constraint_1_power_limit_uw
+    │   │   ├──constraint_1_time_window_us
+    │   │   ├──device -&gt; ../../intel-rapl:1
+    │   │   ├──energy_uj
+    │   │   ├──max_energy_range_uj
+    │   │   ├──name
+    │   │   ├──enabled
+    │   │   ├──power
+    │   │   │   ├──async
+    │   │   │   []
+    │   │   ├──subsystem -&gt; ../../../../../../class/power_cap
+    │   │   └──uevent
+    │   ├──max_energy_range_uj
+    │   ├──max_power_range_uw
+    │   ├──name
+    │   ├──enabled
+    │   ├──power
+    │   │   ├──async
+    │   │   []
+    │   ├──subsystem -&gt; ../../../../../class/power_cap
+    │   ├──uevent
+    ├──power
+    │   ├──async
+    │   []
+    ├──subsystem -&gt; ../../../../class/power_cap
+    ├──enabled
+    └──uevent
+</pre></div>
+</div>
+<p>The above example illustrates a case in which the Intel RAPL technology,
+available in Intel® IA-64 and IA-32 Processor Architectures, is used. There is one
+control type called intel-rapl which contains two power zones, intel-rapl:0 and
+intel-rapl:1, representing CPU packages.  Each of these power zones contains
+two subzones, intel-rapl:j:0 and intel-rapl:j:1 (j = 0, 1), representing the
+“core” and the “uncore” parts of the given CPU package, respectively.  All of
+the zones and subzones contain energy monitoring attributes (energy_uj,
+max_energy_range_uj) and constraint attributes (constraint_*) allowing controls
+to be applied (the constraints in the ‘package’ power zones apply to the whole
+CPU packages and the subzone constraints only apply to the respective parts of
+the given package individually). Since Intel RAPL doesn’t provide instantaneous
+power value, there is no power_uw attribute.</p>
+<p>In addition to that, each power zone contains a name attribute, allowing the
+part of the system represented by that zone to be identified.
+For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/class/power_cap/intel-rapl/intel-rapl:0/name
+</pre></div>
+</div>
+<section id="package-0">
+<h3>package-0<a class="headerlink" href="#package-0" title="Link to this heading">¶</a></h3>
+<p>Depending on different power zones, the Intel RAPL technology allows
+one or multiple constraints like short term, long term and peak power,
+with different time windows to be applied to each power zone.
+All the zones contain attributes representing the constraint names,
+power limits and the sizes of the time windows. Note that time window
+is not applicable to peak power. Here, constraint_j_* attributes
+correspond to the jth constraint (j = 0,1,2).</p>
+<p>For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>constraint_0_name
+constraint_0_power_limit_uw
+constraint_0_time_window_us
+constraint_1_name
+constraint_1_power_limit_uw
+constraint_1_time_window_us
+constraint_2_name
+constraint_2_power_limit_uw
+constraint_2_time_window_us
+</pre></div>
+</div>
+</section>
+</section>
+<section id="power-zone-attributes">
+<h2>Power Zone Attributes<a class="headerlink" href="#power-zone-attributes" title="Link to this heading">¶</a></h2>
+<section id="monitoring-attributes">
+<h3>Monitoring attributes<a class="headerlink" href="#monitoring-attributes" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>energy_uj (rw)</dt><dd><p>Current energy counter in micro joules. Write “0” to reset.
+If the counter can not be reset, then this attribute is read only.</p>
+</dd>
+<dt>max_energy_range_uj (ro)</dt><dd><p>Range of the above energy counter in micro-joules.</p>
+</dd>
+<dt>power_uw (ro)</dt><dd><p>Current power in micro watts.</p>
+</dd>
+<dt>max_power_range_uw (ro)</dt><dd><p>Range of the above power value in micro-watts.</p>
+</dd>
+<dt>name (ro)</dt><dd><p>Name of this power zone.</p>
+</dd>
+</dl>
+<p>It is possible that some domains have both power ranges and energy counter ranges;
+however, only one is mandatory.</p>
+</section>
+<section id="constraints">
+<h3>Constraints<a class="headerlink" href="#constraints" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>constraint_X_power_limit_uw (rw)</dt><dd><p>Power limit in micro watts, which should be applicable for the
+time window specified by “constraint_X_time_window_us”.</p>
+</dd>
+<dt>constraint_X_time_window_us (rw)</dt><dd><p>Time window in micro seconds.</p>
+</dd>
+<dt>constraint_X_name (ro)</dt><dd><p>An optional name of the constraint</p>
+</dd>
+<dt>constraint_X_max_power_uw(ro)</dt><dd><p>Maximum allowed power in micro watts.</p>
+</dd>
+<dt>constraint_X_min_power_uw(ro)</dt><dd><p>Minimum allowed power in micro watts.</p>
+</dd>
+<dt>constraint_X_max_time_window_us(ro)</dt><dd><p>Maximum allowed time window in micro seconds.</p>
+</dd>
+<dt>constraint_X_min_time_window_us(ro)</dt><dd><p>Minimum allowed time window in micro seconds.</p>
+</dd>
+</dl>
+<p>Except power_limit_uw and time_window_us other fields are optional.</p>
+</section>
+<section id="common-zone-and-control-type-attributes">
+<h3>Common zone and control type attributes<a class="headerlink" href="#common-zone-and-control-type-attributes" title="Link to this heading">¶</a></h3>
+<p>enabled (rw): Enable/Disable controls at zone level or for all zones using
+a control type.</p>
+</section>
+</section>
+<section id="power-cap-client-driver-interface">
+<h2>Power Cap Client Driver Interface<a class="headerlink" href="#power-cap-client-driver-interface" title="Link to this heading">¶</a></h2>
+<p>The API summary:</p>
+<p>Call powercap_register_control_type() to register control type object.
+Call powercap_register_zone() to register a power zone (under a given
+control type), either as a top-level power zone or as a subzone of another
+power zone registered earlier.
+The number of constraints in a power zone and the corresponding callbacks have
+to be defined prior to calling powercap_register_zone() to register that zone.</p>
+<p>To Free a power zone call powercap_unregister_zone().
+To free a control type object call powercap_unregister_control_type().
+Detailed API can be generated using kernel-doc on include/linux/powercap.h.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Power Capping Framework</a><ul>
+<li><a class="reference internal" href="#terminology">Terminology</a><ul>
+<li><a class="reference internal" href="#package-0">package-0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#power-zone-attributes">Power Zone Attributes</a><ul>
+<li><a class="reference internal" href="#monitoring-attributes">Monitoring attributes</a></li>
+<li><a class="reference internal" href="#constraints">Constraints</a></li>
+<li><a class="reference internal" href="#common-zone-and-control-type-attributes">Common zone and control type attributes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#power-cap-client-driver-interface">Power Cap Client Driver Interface</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="../userland-swsusp.html">
+                    <span class="icon">&lt;</span><span>Documentation for userland software suspend interface</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="dtpm.html"><span>Dynamic Thermal Power Management framework</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

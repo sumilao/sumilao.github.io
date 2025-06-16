@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PSE Power Interface (PSE PI) Documentation &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to use radiotap headers" href="../radiotap-headers.html" />
+    <link rel="prev" title="Power Sourcing Equipment (PSE) in IEEE 802.3 Standard" href="introduction.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/networking/pse-pd/pse-pi.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="pse-power-interface-pse-pi-documentation">
+<h1>PSE Power Interface (PSE PI) Documentation<a class="headerlink" href="#pse-power-interface-pse-pi-documentation" title="Link to this heading">¶</a></h1>
+<p>The Power Sourcing Equipment Power Interface (PSE PI) plays a pivotal role in
+the architecture of Power over Ethernet (PoE) systems. It is essentially a
+blueprint that outlines how one or multiple power sources are connected to the
+eight-pin modular jack, commonly known as the Ethernet RJ45 port. This
+connection scheme is crucial for enabling the delivery of power alongside data
+over Ethernet cables.</p>
+<section id="documentation-and-standards">
+<h2>Documentation and Standards<a class="headerlink" href="#documentation-and-standards" title="Link to this heading">¶</a></h2>
+<p>The IEEE 802.3 standard provides detailed documentation on the PSE PI.
+Specifically:</p>
+<ul class="simple">
+<li><p>Section “33.2.3 PI pin assignments” covers the pin assignments for PoE
+systems that utilize two pairs for power delivery.</p></li>
+<li><p>Section “145.2.4 PSE PI” addresses the configuration for PoE systems that
+deliver power over all four pairs of an Ethernet cable.</p></li>
+</ul>
+</section>
+<section id="pse-pi-and-single-pair-ethernet">
+<h2>PSE PI and Single Pair Ethernet<a class="headerlink" href="#pse-pi-and-single-pair-ethernet" title="Link to this heading">¶</a></h2>
+<p>Single Pair Ethernet (SPE) represents a different approach to Ethernet
+connectivity, utilizing just one pair of conductors for both data and power
+transmission. Unlike the configurations detailed in the PSE PI for standard
+Ethernet, which can involve multiple power sourcing arrangements across four or
+two pairs of wires, SPE operates on a simpler model due to its single-pair
+design. As a result, the complexities of choosing between alternative pin
+assignments for power delivery, as described in the PSE PI for multi-pair
+Ethernet, are not applicable to SPE.</p>
+</section>
+<section id="understanding-pse-pi">
+<h2>Understanding PSE PI<a class="headerlink" href="#understanding-pse-pi" title="Link to this heading">¶</a></h2>
+<p>The Power Sourcing Equipment Power Interface (PSE PI) is a framework defining
+how Power Sourcing Equipment (PSE) delivers power to Powered Devices (PDs) over
+Ethernet cables. It details two main configurations for power delivery, known
+as Alternative A and Alternative B, which are distinguished not only by their
+method of power transmission but also by the implications for polarity and data
+transmission direction.</p>
+</section>
+<section id="alternative-a-and-b-overview">
+<h2>Alternative A and B Overview<a class="headerlink" href="#alternative-a-and-b-overview" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Alternative A:</strong> Utilizes RJ45 conductors 1, 2, 3 and 6. In either case of
+networks 10/100BaseT or 1G/2G/5G/10GBaseT, the pairs used are carrying data.
+The power delivery’s polarity in this alternative can vary based on the MDI
+(Medium Dependent Interface) or MDI-X (Medium Dependent Interface Crossover)
+configuration.</p></li>
+<li><p><strong>Alternative B:</strong> Utilizes RJ45 conductors 4, 5, 7 and 8. In case of
+10/100BaseT network the pairs used are spare pairs without data and are less
+influenced by data transmission direction. This is not the case for
+1G/2G/5G/10GBaseT network. Alternative B includes two configurations with
+different polarities, known as variant X and variant S, to accommodate
+different network requirements and device specifications.</p></li>
+</ul>
+</section>
+<section id="table-145-3-pse-pinout-alternatives">
+<h2>Table 145-3 PSE Pinout Alternatives<a class="headerlink" href="#table-145-3-pse-pinout-alternatives" title="Link to this heading">¶</a></h2>
+<p>The following table outlines the pin configurations for both Alternative A and
+Alternative B.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Conductor</p></th>
+<th class="head"><dl class="simple">
+<dt>Alternative A</dt><dd><p>(MDI-X)</p>
+</dd>
+</dl>
+</th>
+<th class="head"><dl class="simple">
+<dt>Alternative A</dt><dd><ol class="upperroman simple" start="1501">
+<li></li>
+</ol>
+</dd>
+</dl>
+</th>
+<th class="head"><dl class="simple">
+<dt>Alternative B</dt><dd><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</dd>
+</dl>
+</th>
+<th class="head"><dl class="simple">
+<dt>Alternative B</dt><dd><ol class="upperalpha simple" start="19">
+<li></li>
+</ol>
+</dd>
+</dl>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Negative V</p></td>
+<td><p>Positive V</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Negative V</p></td>
+<td><p>Positive V</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Positive V</p></td>
+<td><p>Negative V</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Negative V</p></td>
+<td><p>Positive V</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Negative V</p></td>
+<td><p>Positive V</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Positive V</p></td>
+<td><p>Negative V</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Positive V</p></td>
+<td><p>Negative V</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Positive V</p></td>
+<td><p>Negative V</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>“Positive V” and “Negative V” indicate the voltage polarity for each pin.</p></li>
+<li><p>“-” indicates that the pin is not used for power delivery in that
+specific configuration.</p></li>
+</ul>
+</div>
+</section>
+<section id="pse-pi-compatibilities">
+<h2>PSE PI compatibilities<a class="headerlink" href="#pse-pi-compatibilities" title="Link to this heading">¶</a></h2>
+<p>The following table outlines the compatibility between the pinout alternative
+and the 1000/2.5G/5G/10GBaseT in the PSE 2 pairs connection.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variant</p></th>
+<th class="head"><p>Alternative
+(A/B)</p></th>
+<th class="head"><p>Power Feeding Type
+(Direct/Phantom)</p></th>
+<th class="head"><p>Compatibility with
+1000/2.5G/5G/10GBaseT</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>A</p></td>
+<td><p>Phantom</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>B</p></td>
+<td><p>Phantom</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>B</p></td>
+<td><p>Direct</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>“Direct” indicate a variant where the power is injected directly to pairs</dt><dd><p>without using magnetics in case of spare pairs.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“Phantom” indicate power path over coils/magnetics as it is done for</dt><dd><p>Alternative A variant.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<p>In case of PSE 4 pairs, a PSE supporting only 10/100BaseT (which mean Direct
+Power on pinout Alternative B) is not compatible with a 4 pairs
+1000/2.5G/5G/10GBaseT.</p>
+</section>
+<section id="pse-power-interface-pse-pi-connection-diagram">
+<h2>PSE Power Interface (PSE PI) Connection Diagram<a class="headerlink" href="#pse-power-interface-pse-pi-connection-diagram" title="Link to this heading">¶</a></h2>
+<p>The diagram below illustrates the connection architecture between the RJ45
+port, the Ethernet PHY (Physical Layer), and the PSE PI (Power Sourcing
+Equipment Power Interface), demonstrating how power and data are delivered
+simultaneously through an Ethernet cable. The RJ45 port serves as the physical
+interface for these connections, with each of its eight pins connected to both
+the Ethernet PHY for data transmission and the PSE PI for power delivery.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------------------------+
+|                          |
+|          RJ45 Port       |
+|                          |
++--+--+--+--+--+--+--+--+--+                +-------------+
+  1| 2| 3| 4| 5| 6| 7| 8|                   |             |
+   |  |  |  |  |  |  |  o-------------------+             |
+   |  |  |  |  |  |  o--|-------------------+             +&lt;--- PSE 1
+   |  |  |  |  |  o--|--|-------------------+             |
+   |  |  |  |  o--|--|--|-------------------+             |
+   |  |  |  o--|--|--|--|-------------------+  PSE PI     |
+   |  |  o--|--|--|--|--|-------------------+             |
+   |  o--|--|--|--|--|--|-------------------+             +&lt;--- PSE 2 (optional)
+   o--|--|--|--|--|--|--|-------------------+             |
+   |  |  |  |  |  |  |  |                   |             |
++--+--+--+--+--+--+--+--+--+                +-------------+
+|                          |
+|       Ethernet PHY       |
+|                          |
++--------------------------+
+</pre></div>
+</div>
+</section>
+<section id="simple-pse-pi-configuration-for-alternative-a">
+<h2>Simple PSE PI Configuration for Alternative A<a class="headerlink" href="#simple-pse-pi-configuration-for-alternative-a" title="Link to this heading">¶</a></h2>
+<p>The diagram below illustrates a straightforward PSE PI (Power Sourcing
+Equipment Power Interface) configuration designed to support the Alternative A
+setup for Power over Ethernet (PoE). This implementation is tailored to provide
+power delivery through the data-carrying pairs of an Ethernet cable, suitable
+for either MDI or MDI-X configurations, albeit supporting one variation at a
+time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        +-------------+
+        |    PSE PI   |
+8  -----+                             +-------------+
+7  -----+                    Rail 1   |
+6  -----+------+----------------------+
+5  -----+      |                      |
+4  -----+      |             Rail 2   |  PSE 1
+3  -----+------/         +------------+
+2  -----+--+-------------/            |
+1  -----+--/                          +-------------+
+        |
+        +-------------+
+</pre></div>
+</div>
+<p>In this configuration:</p>
+<ul class="simple">
+<li><p>Pins 1 and 2, as well as pins 3 and 6, are utilized for power delivery in
+addition to data transmission. This aligns with the standard wiring for
+10/100BaseT Ethernet networks where these pairs are used for data.</p></li>
+<li><p>Rail 1 and Rail 2 represent the positive and negative voltage rails, with
+Rail 1 connected to pins 1 and 2, and Rail 2 connected to pins 3 and 6.
+More advanced PSE PI configurations may include integrated or external
+switches to change the polarity of the voltage rails, allowing for
+compatibility with both MDI and MDI-X configurations.</p></li>
+</ul>
+<p>More complex PSE PI configurations may include additional components, to support
+Alternative B, or to provide additional features such as power management, or
+additional power delivery capabilities such as 2-pair or 4-pair power delivery.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        +-------------+
+        |    PSE PI   |
+        |        +---+
+8  -----+--------+   |                 +-------------+
+7  -----+--------+   |       Rail 1   |
+6  -----+--------+   +-----------------+
+5  -----+--------+   |                |
+4  -----+--------+   |       Rail 2   |  PSE 1
+3  -----+--------+   +----------------+
+2  -----+--------+   |                |
+1  -----+--------+   |                 +-------------+
+        |        +---+
+        +-------------+
+</pre></div>
+</div>
+</section>
+<section id="device-tree-configuration-describing-pse-pi-configurations">
+<h2>Device Tree Configuration: Describing PSE PI Configurations<a class="headerlink" href="#device-tree-configuration-describing-pse-pi-configurations" title="Link to this heading">¶</a></h2>
+<p>The necessity for a separate PSE PI node in the device tree is influenced by
+the intricacy of the Power over Ethernet (PoE) system’s setup. Here are
+descriptions of both simple and complex PSE PI configurations to illustrate
+this decision-making process:</p>
+<p><strong>Simple PSE PI Configuration:</strong>
+In a straightforward scenario, the PSE PI setup involves a direct, one-to-one
+connection between a single PSE controller and an Ethernet port. This setup
+typically supports basic PoE functionality without the need for dynamic
+configuration or management of multiple power delivery modes. For such simple
+configurations, detailing the PSE PI within the existing PSE controller’s node
+may suffice, as the system does not encompass additional complexity that
+warrants a separate node. The primary focus here is on the clear and direct
+association of power delivery to a specific Ethernet port.</p>
+<p><strong>Complex PSE PI Configuration:</strong>
+Contrastingly, a complex PSE PI setup may encompass multiple PSE controllers or
+auxiliary circuits that collectively manage power delivery to one Ethernet
+port. Such configurations might support a range of PoE standards and require
+the capability to dynamically configure power delivery based on the operational
+mode (e.g., PoE2 versus PoE4) or specific requirements of connected devices. In
+these instances, a dedicated PSE PI node becomes essential for accurately
+documenting the system architecture. This node would serve to detail the
+interactions between different PSE controllers, the support for various PoE
+modes, and any additional logic required to coordinate power delivery across
+the network infrastructure.</p>
+<p><strong>Guidance:</strong></p>
+<p>For simple PSE setups, including PSE PI information in the PSE controller node
+might suffice due to the straightforward nature of these systems. However,
+complex configurations, involving multiple components or advanced PoE features,
+benefit from a dedicated PSE PI node. This method adheres to IEEE 802.3
+specifications, improving documentation clarity and ensuring accurate
+representation of the PoE system’s complexity.</p>
+</section>
+<section id="pse-pi-node-essential-information">
+<h2>PSE PI Node: Essential Information<a class="headerlink" href="#pse-pi-node-essential-information" title="Link to this heading">¶</a></h2>
+<p>The PSE PI (Power Sourcing Equipment Power Interface) node in a device tree can
+include several key pieces of information critical for defining the power
+delivery capabilities and configurations of a PoE (Power over Ethernet) system.
+Below is a list of such information, along with explanations for their
+necessity and reasons why they might not be found within a PSE controller node:</p>
+<ol class="arabic simple">
+<li><p><strong>Powered Pairs Configuration</strong></p>
+<ul class="simple">
+<li><p><em>Description:</em> Identifies the pairs used for power delivery in the
+Ethernet cable.</p></li>
+<li><p><em>Necessity:</em> Essential to ensure the correct pairs are powered according
+to the board’s design.</p></li>
+<li><p><em>PSE Controller Node:</em> Typically lacks details on physical pair usage,
+focusing on power regulation.</p></li>
+</ul>
+</li>
+<li><p><strong>Polarity of Powered Pairs</strong></p>
+<ul class="simple">
+<li><p><em>Description:</em> Specifies the polarity (positive or negative) for each
+powered pair.</p></li>
+<li><p><em>Necessity:</em> Critical for safe and effective power transmission to PDs.</p></li>
+<li><p><em>PSE Controller Node:</em> Polarity management may exceed the standard
+functionalities of PSE controllers.</p></li>
+</ul>
+</li>
+<li><p><strong>PSE Cells Association</strong></p>
+<ul class="simple">
+<li><p><em>Description:</em> Details the association of PSE cells with Ethernet ports or
+pairs in multi-cell configurations.</p></li>
+<li><p><em>Necessity:</em> Allows for optimized power resource allocation in complex
+systems.</p></li>
+<li><p><em>PSE Controller Node:</em> Controllers may not manage cell associations
+directly, focusing instead on power flow regulation.</p></li>
+</ul>
+</li>
+<li><p><strong>Support for PoE Standards</strong></p>
+<ul class="simple">
+<li><p><em>Description:</em> Lists the PoE standards and configurations supported by the
+system.</p></li>
+<li><p><em>Necessity:</em> Ensures system compatibility with various PDs and adherence
+to industry standards.</p></li>
+<li><p><em>PSE Controller Node:</em> Specific capabilities may depend on the overall PSE
+PI design rather than the controller alone. Multiple PSE cells per PI
+do not necessarily imply support for multiple PoE standards.</p></li>
+</ul>
+</li>
+<li><p><strong>Protection Mechanisms</strong></p>
+<ul class="simple">
+<li><p><em>Description:</em> Outlines additional protection mechanisms, such as
+overcurrent protection and thermal management.</p></li>
+<li><p><em>Necessity:</em> Provides extra safety and stability, complementing PSE
+controller protections.</p></li>
+<li><p><em>PSE Controller Node:</em> Some protections may be implemented via
+board-specific hardware or algorithms external to the controller.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">PSE Power Interface (PSE PI) Documentation</a><ul>
+<li><a class="reference internal" href="#documentation-and-standards">Documentation and Standards</a></li>
+<li><a class="reference internal" href="#pse-pi-and-single-pair-ethernet">PSE PI and Single Pair Ethernet</a></li>
+<li><a class="reference internal" href="#understanding-pse-pi">Understanding PSE PI</a></li>
+<li><a class="reference internal" href="#alternative-a-and-b-overview">Alternative A and B Overview</a></li>
+<li><a class="reference internal" href="#table-145-3-pse-pinout-alternatives">Table 145-3 PSE Pinout Alternatives</a></li>
+<li><a class="reference internal" href="#pse-pi-compatibilities">PSE PI compatibilities</a></li>
+<li><a class="reference internal" href="#pse-power-interface-pse-pi-connection-diagram">PSE Power Interface (PSE PI) Connection Diagram</a></li>
+<li><a class="reference internal" href="#simple-pse-pi-configuration-for-alternative-a">Simple PSE PI Configuration for Alternative A</a></li>
+<li><a class="reference internal" href="#device-tree-configuration-describing-pse-pi-configurations">Device Tree Configuration: Describing PSE PI Configurations</a></li>
+<li><a class="reference internal" href="#pse-pi-node-essential-information">PSE PI Node: Essential Information</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="introduction.html">
+                    <span class="icon">&lt;</span><span>Power Sourcing Equipment (PSE) in IEEE 802.3 Standard</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../radiotap-headers.html"><span>How to use radiotap headers</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

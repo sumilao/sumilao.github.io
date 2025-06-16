@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.22. V4L2 async kAPI &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.23. V4L2 fwnode kAPI" href="v4l2-fwnode.html" />
+    <link rel="prev" title="2.21. V4L2 Memory to Memory functions and data structures" href="v4l2-mem2mem.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Driver APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-information-for-driver-authors">General information for driver authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#useful-support-libraries">Useful support libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#bus-level-documentation">Bus-level documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#subsystem-specific-apis">Subsystem-specific APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../80211/index.html">Linux 802.11 Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../acpi/index.html">ACPI Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backlight/lp855x-driver.html">Kernel driver lp855x</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../clk.html">The Common Clk Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../console.html">Console Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dmaengine/index.html">DMAEngine documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dpll.html">The Linux kernel dpll subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac.html">Error Detection And Correction (EDAC) Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extcon.html">Extcon Device Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../firmware/index.html">Linux Firmware API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../frame-buffer.html">Frame Buffer Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../aperture.html">Managing Ownership of the Framebuffer Aperture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generic-counter.html">Generic Counter Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">General Purpose Input/Output (GPIO)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hsi.html">High Speed Synchronous Serial Interface (HSI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hte/index.html">The Linux Hardware Timestamping Engine (HTE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c.html">I<sup>2</sup>C and SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband.html">InfiniBand and Remote DMA (RDMA) Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../input.html">Input Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interconnect.html">Generic System Interconnect Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmb.html">IPMB Driver for a Satellite MC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmi.html">The Linux IPMI Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../libata.html">libATA Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mailbox.html">The Common Mailbox Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../md/index.html">RAID</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Media subsystem kernel internal API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mei/index.html">Intel(R) Management Engine Interface (Intel(R) MEI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory-devices/index.html">Memory Controller drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../message-based.html">Message-based devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc_devices.html">Miscellaneous Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html">Parallel Port Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#x50-uart-driver">16x50 UART Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#pulse-width-modulation-pwm">Pulse-Width Modulation (PWM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mmc/index.html">MMC/SD/SDIO card support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtd/index.html">Memory Technology Device (MTD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtdnand.html">MTD NAND Driver Programming Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nfc/index.html">Near Field Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ntb.html">NTB Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvdimm/index.html">Non-Volatile Memory Device (NVDIMM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvmem.html">NVMEM Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parport-lowlevel.html">PARPORT interface documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../phy/index.html">Generic PHY Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pin-control.html">PINCTRL (PIN CONTROL) subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html">PLDM Firmware Flash Update Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html#overview-of-the-pldmfw-library">Overview of the <code class="docutils literal notranslate"><span class="pre">pldmfw</span></code> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pps.html">PPS - Pulse Per Second</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ptp.html">PTP hardware clock infrastructure for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm.html">Pulse Width Modulation (PWM) interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwrseq.html">Power Sequencing API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regulator.html">Voltage and current regulator API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reset.html">Reset controller API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rfkill.html">rfkill - RF kill switch support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../s390-drivers.html">Writing s390 channel device drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi.html">SCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serial/index.html">Support for Serial devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sm501.html">SM501 Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soundwire/index.html">SoundWire Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../surface_aggregator/index.html">Surface System Aggregator Module (SSAM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../switchtec.html">Linux Switchtec Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sync_file.html">Sync File API Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target.html">target and iSCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee.html">TEE (Trusted Execution Environment) driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermal/index.html">Thermal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tty/index.html">TTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wbrf.html">WBRF - Wifi Band RFI Mitigations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi.html">WMI Driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xilinx/index.html">Xilinx FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zorro.html">Writing Device Drivers for Zorro Devices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/driver-api/media/v4l2-async.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="v4l2-async-kapi">
+<h1><span class="section-number">2.22. </span>V4L2 async kAPI<a class="headerlink" href="#v4l2-async-kapi" title="Link to this heading">¶</a></h1>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.v4l2_async_match_type">
+<span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_match_type</span></span></span><a class="headerlink" href="#c.v4l2_async_match_type" title="Link to this definition">¶</a><br /></dt>
+<dd><p>type of asynchronous subdevice logic to be used in order to identify a match</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Constants</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_I2C</span></code></dt><dd><p>Match will check for I2C adapter ID and address</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_FWNODE</span></code></dt><dd><p>Match will use firmware node</p>
+</dd>
+</dl>
+</div>
+<p><strong>Description</strong></p>
+<p>This enum is used by the asynchronous connection logic to define the
+algorithm that will be used to match an asynchronous device.</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_async_match_desc">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_match_desc</span></span></span><a class="headerlink" href="#c.v4l2_async_match_desc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>async connection match information</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_async_match_desc {
+    enum v4l2_async_match_type type;
+    union {
+        struct fwnode_handle *fwnode;
+        struct {
+            int adapter_id;
+            unsigned short address;
+        } i2c;
+    };
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>type of match that will be used</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">{unnamed_union}</span></code></dt><dd><p>anonymous</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fwnode</span></code></dt><dd><p>pointer to <code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fwnode_handle</span></code> to be matched.
+Used if <strong>match_type</strong> is <code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_FWNODE</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">i2c</span></code></dt><dd><p>embedded struct with I2C parameters to be matched.
+Both <strong>match.i2c.adapter_id</strong> and <strong>match.i2c.address</strong>
+should be matched.
+Used if <strong>match_type</strong> is <code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_I2C</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">i2c.adapter_id</span></code></dt><dd><p>I2C adapter ID to be matched.
+Used if <strong>match_type</strong> is <code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_I2C</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">i2c.address</span></code></dt><dd><p>I2C address to be matched.
+Used if <strong>match_type</strong> is <code class="docutils literal notranslate"><span class="pre">V4L2_ASYNC_MATCH_TYPE_I2C</span></code>.</p>
+</dd>
+</dl>
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_async_connection">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_connection</span></span></span><a class="headerlink" href="#c.v4l2_async_connection" title="Link to this definition">¶</a><br /></dt>
+<dd><p>sub-device connection descriptor, as known to a bridge</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_async_connection {
+    struct v4l2_async_match_desc match;
+    struct v4l2_async_notifier *notifier;
+    struct list_head asc_entry;
+    struct list_head asc_subdev_entry;
+    struct v4l2_subdev *sd;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">match</span></code></dt><dd><p>struct of match type and per-bus type matching data sets</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">notifier</span></code></dt><dd><p>the async notifier the connection is related to</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">asc_entry</span></code></dt><dd><p>used to add <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_connection</span></code></a> objects to the
+notifier <strong>waiting_list</strong> or <strong>done_list</strong></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">asc_subdev_entry</span></code></dt><dd><p>entry in struct v4l2_async_subdev.asc_list list</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>the related sub-device</p>
+</dd>
+</dl>
+</div>
+<p><strong>Description</strong></p>
+<p>When this struct is used as a member in a driver specific struct, the driver
+specific struct shall contain the <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_connection</span></code></a> as its first
+member.</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_async_notifier_operations">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_notifier_operations</span></span></span><a class="headerlink" href="#c.v4l2_async_notifier_operations" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Asynchronous V4L2 notifier operations</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_async_notifier_operations {
+    int (*bound)(struct v4l2_async_notifier *notifier,struct v4l2_subdev *subdev, struct v4l2_async_connection *asc);
+    int (*complete)(struct v4l2_async_notifier *notifier);
+    void (*unbind)(struct v4l2_async_notifier *notifier,struct v4l2_subdev *subdev, struct v4l2_async_connection *asc);
+    void (*destroy)(struct v4l2_async_connection *asc);
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">bound</span></code></dt><dd><p>a sub-device has been bound by the given connection</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">complete</span></code></dt><dd><p>All connections have been bound successfully. The complete
+callback is only executed for the root notifier.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unbind</span></code></dt><dd><p>a subdevice is leaving</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">destroy</span></code></dt><dd><p>the asc is about to be freed</p>
+</dd>
+</dl>
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_async_notifier">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_notifier</span></span></span><a class="headerlink" href="#c.v4l2_async_notifier" title="Link to this definition">¶</a><br /></dt>
+<dd><p>v4l2_device notifier data</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_async_notifier {
+    const struct v4l2_async_notifier_operations *ops;
+    struct v4l2_device *v4l2_dev;
+    struct v4l2_subdev *sd;
+    struct v4l2_async_notifier *parent;
+    struct list_head waiting_list;
+    struct list_head done_list;
+    struct list_head notifier_entry;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ops</span></code></dt><dd><p>notifier operations</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p>v4l2_device of the root notifier, NULL otherwise</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>sub-device that registered the notifier, NULL otherwise</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">parent</span></code></dt><dd><p>parent notifier</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">waiting_list</span></code></dt><dd><p>list of <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_connection</span></code></a>, waiting for their
+drivers</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">done_list</span></code></dt><dd><p>list of <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>, already probed</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">notifier_entry</span></code></dt><dd><p>member in a global list of notifiers</p>
+</dd>
+</dl>
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_async_subdev_endpoint">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_subdev_endpoint</span></span></span><a class="headerlink" href="#c.v4l2_async_subdev_endpoint" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Entry in sub-device’s fwnode list</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_async_subdev_endpoint {
+    struct list_head async_subdev_endpoint_entry;
+    struct fwnode_handle *endpoint;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">async_subdev_endpoint_entry</span></code></dt><dd><p>An entry in async_subdev_endpoint_list of
+<a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">endpoint</span></code></dt><dd><p>Endpoint fwnode agains which to match the sub-device</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_debug_init">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_debug_init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">dentry</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">debugfs_dir</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_debug_init" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Initialize debugging tools.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">dentry</span> <span class="pre">*debugfs_dir</span></code></dt><dd><p>pointer to the parent debugfs <code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">dentry</span></code></p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_init">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><span class="n"><span class="pre">v4l2_async_notifier</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">notifier</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-device.html#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_nf_init" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Initialize a notifier.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span> <span class="pre">*notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-device.html#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function initializes the notifier <strong>asc_entry</strong>. It must be called
+before adding a subdevice to a notifier, using one of:
+<a class="reference internal" href="#c.v4l2_async_nf_add_fwnode_remote" title="v4l2_async_nf_add_fwnode_remote"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode_remote()</span></code></a>,
+<a class="reference internal" href="#c.v4l2_async_nf_add_fwnode" title="v4l2_async_nf_add_fwnode"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode()</span></code></a> or
+<a class="reference internal" href="#c.v4l2_async_nf_add_i2c" title="v4l2_async_nf_add_i2c"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_i2c()</span></code></a>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_subdev_nf_init">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_subdev_nf_init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><span class="n"><span class="pre">v4l2_async_notifier</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">notifier</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_subdev_nf_init" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Initialize a sub-device notifier.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span> <span class="pre">*notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function initializes the notifier <strong>asc_list</strong>. It must be called
+before adding a subdevice to a notifier, using one of:
+<a class="reference internal" href="#c.v4l2_async_nf_add_fwnode_remote" title="v4l2_async_nf_add_fwnode_remote"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode_remote()</span></code></a>, <a class="reference internal" href="#c.v4l2_async_nf_add_fwnode" title="v4l2_async_nf_add_fwnode"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode()</span></code></a> or
+<a class="reference internal" href="#c.v4l2_async_nf_add_i2c" title="v4l2_async_nf_add_i2c"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_i2c()</span></code></a>.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_add_fwnode">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_add_fwnode</span></span></span><a class="headerlink" href="#c.v4l2_async_nf_add_fwnode" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode</span> <span class="pre">(notifier,</span> <span class="pre">fwnode,</span> <span class="pre">type)</span></code></p>
+<blockquote>
+<div><p>Allocate and add a fwnode async subdev to the notifier’s master asc_list.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fwnode</span></code></dt><dd><p>fwnode handle of the sub-device to be matched, pointer to
+<code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fwnode_handle</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>Type of the driver’s async sub-device or connection struct. The
+<a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_connection</span></code></a> shall be the first member of the
+driver’s async struct, i.e. both begin at the same memory address.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Allocate a fwnode-matched asc of size asc_struct_size, and add it to the
+notifiers <strong>asc_list</strong>. The function also gets a reference of the fwnode which
+is released later at notifier cleanup time.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_add_fwnode_remote">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_add_fwnode_remote</span></span></span><a class="headerlink" href="#c.v4l2_async_nf_add_fwnode_remote" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode_remote</span> <span class="pre">(notifier,</span> <span class="pre">ep,</span> <span class="pre">type)</span></code></p>
+<blockquote>
+<div><p>Allocate and add a fwnode remote async subdev to the notifier’s master asc_list.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ep</span></code></dt><dd><p>local endpoint pointing to the remote connection to be matched,
+pointer to <code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fwnode_handle</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>Type of the driver’s async connection struct. The <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span>
+<span class="pre">v4l2_async_connection</span></code></a> shall be the first member of the driver’s async
+connection struct, i.e. both begin at the same memory address.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Gets the remote endpoint of a given local endpoint, set it up for fwnode
+matching and adds the async connection to the notifier’s <strong>asc_list</strong>. The
+function also gets a reference of the fwnode which is released later at
+notifier cleanup time.</p>
+<p>This is just like <a class="reference internal" href="#c.v4l2_async_nf_add_fwnode" title="v4l2_async_nf_add_fwnode"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode()</span></code></a>, but with the
+exception that the fwnode refers to a local endpoint, not the remote one.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_add_i2c">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_add_i2c</span></span></span><a class="headerlink" href="#c.v4l2_async_nf_add_i2c" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_async_nf_add_i2c</span> <span class="pre">(notifier,</span> <span class="pre">adapter,</span> <span class="pre">address,</span> <span class="pre">type)</span></code></p>
+<blockquote>
+<div><p>Allocate and add an i2c async subdev to the notifier’s master asc_list.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">adapter</span></code></dt><dd><p>I2C adapter ID to be matched</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">address</span></code></dt><dd><p>I2C address of connection to be matched</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>Type of the driver’s async connection struct. The <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span>
+<span class="pre">v4l2_async_connection</span></code></a> shall be the first member of the driver’s async
+connection struct, i.e. both begin at the same memory address.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Same as <a class="reference internal" href="#c.v4l2_async_nf_add_fwnode" title="v4l2_async_nf_add_fwnode"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode()</span></code></a> but for I2C matched
+connections.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_subdev_endpoint_add">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_subdev_endpoint_add</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">fwnode_handle</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fwnode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_subdev_endpoint_add" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Add an endpoint fwnode to async sub-device matching list</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>the sub-device</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fwnode_handle</span> <span class="pre">*fwnode</span></code></dt><dd><p>the endpoint fwnode to match</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Add a fwnode to the async sub-device’s matching list. This allows registering
+multiple async sub-devices from a single device.</p>
+<p>Note that calling <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_cleanup" title="v4l2_subdev_cleanup"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_subdev_cleanup()</span></code></a> as part of the sub-device’s cleanup
+if endpoints have been added to the sub-device’s fwnode matching list.</p>
+<p>Returns an error on failure, 0 on success.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_connection_unique">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><span class="n"><span class="pre">v4l2_async_connection</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_connection_unique</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_connection_unique" title="Link to this definition">¶</a><br /></dt>
+<dd><p>return a unique <a class="reference internal" href="#c.v4l2_async_connection" title="v4l2_async_connection"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_connection</span></code></a> for a sub-device</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>the sub-device</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Return an async connection for a sub-device, when there is a single
+one only.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_register">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_register</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><span class="n"><span class="pre">v4l2_async_notifier</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">notifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_nf_register" title="Link to this definition">¶</a><br /></dt>
+<dd><p>registers a subdevice asynchronous notifier</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span> <span class="pre">*notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_unregister">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_unregister</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><span class="n"><span class="pre">v4l2_async_notifier</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">notifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_nf_unregister" title="Link to this definition">¶</a><br /></dt>
+<dd><p>unregisters a subdevice asynchronous notifier</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span> <span class="pre">*notifier</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span></code></a></p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_nf_cleanup">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_nf_cleanup</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_async_notifier" title="v4l2_async_notifier"><span class="n"><span class="pre">v4l2_async_notifier</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">notifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_nf_cleanup" title="Link to this definition">¶</a><br /></dt>
+<dd><p>clean up notifier resources</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_async_notifier</span> <span class="pre">*notifier</span></code></dt><dd><p>the notifier the resources of which are to be cleaned up</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Release memory resources related to a notifier, including the async
+connections allocated for the purposes of the notifier but not the notifier
+itself. The user is responsible for calling this function to clean up the
+notifier after calling <a class="reference internal" href="#c.v4l2_async_nf_add_fwnode_remote" title="v4l2_async_nf_add_fwnode_remote"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode_remote()</span></code></a>,
+<a class="reference internal" href="#c.v4l2_async_nf_add_fwnode" title="v4l2_async_nf_add_fwnode"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_fwnode()</span></code></a> or <a class="reference internal" href="#c.v4l2_async_nf_add_i2c" title="v4l2_async_nf_add_i2c"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_add_i2c()</span></code></a>.</p>
+<p>There is no harm from calling <a class="reference internal" href="#c.v4l2_async_nf_cleanup" title="v4l2_async_nf_cleanup"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_nf_cleanup()</span></code></a> in other
+cases as long as its memory has been zeroed after it has been
+allocated.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_async_register_subdev">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_register_subdev</span></span></span><a class="headerlink" href="#c.v4l2_async_register_subdev" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_async_register_subdev</span> <span class="pre">(sd)</span></code></p>
+<blockquote>
+<div><p>registers a sub-device to the asynchronous subdevice framework</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_register_subdev_sensor">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_register_subdev_sensor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_register_subdev_sensor" title="Link to this definition">¶</a><br /></dt>
+<dd><p>registers a sensor sub-device to the asynchronous sub-device framework and parse set up common sensor related devices</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is just like <a class="reference internal" href="#c.v4l2_async_register_subdev" title="v4l2_async_register_subdev"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_register_subdev()</span></code></a> with the exception
+that calling it will also parse firmware interfaces for remote references
+using v4l2_async_nf_parse_fwnode_sensor() and registers the
+async sub-devices. The sub-device is similarly unregistered by calling
+<a class="reference internal" href="#c.v4l2_async_unregister_subdev" title="v4l2_async_unregister_subdev"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_async_unregister_subdev()</span></code></a>.</p>
+<p>While registered, the subdev module is marked as in-use.</p>
+<p>An error is returned if the module is no longer loaded on any attempts
+to register it.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_async_unregister_subdev">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_async_unregister_subdev</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_async_unregister_subdev" title="Link to this definition">¶</a><br /></dt>
+<dd><p>unregisters a sub-device to the asynchronous subdevice framework</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="v4l2-mem2mem.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">2.21. </span>V4L2 Memory to Memory functions and data structures</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="v4l2-fwnode.html"><span><span class="section-number">2.23. </span>V4L2 fwnode kAPI</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

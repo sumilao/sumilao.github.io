@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Netconsole &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Netdev features mess and how to get out from it alive" href="netdev-features.html" />
+    <link rel="prev" title="tcp_sock struct fast path usage breakdown" href="net_cachelines/tcp_sock.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/netconsole.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="netconsole">
+<h1>Netconsole<a class="headerlink" href="#netconsole" title="Link to this heading">¶</a></h1>
+<p>started by Ingo Molnar &lt;<a class="reference external" href="mailto:mingo&#37;&#52;&#48;redhat&#46;com">mingo<span>&#64;</span>redhat<span>&#46;</span>com</a>&gt;, 2001.09.17</p>
+<p>2.6 port and netpoll api by Matt Mackall &lt;<a class="reference external" href="mailto:mpm&#37;&#52;&#48;selenic&#46;com">mpm<span>&#64;</span>selenic<span>&#46;</span>com</a>&gt;, Sep 9 2003</p>
+<p>IPv6 support by Cong Wang &lt;<a class="reference external" href="mailto:xiyou&#46;wangcong&#37;&#52;&#48;gmail&#46;com">xiyou<span>&#46;</span>wangcong<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;, Jan 1 2013</p>
+<p>Extended console support by Tejun Heo &lt;<a class="reference external" href="mailto:tj&#37;&#52;&#48;kernel&#46;org">tj<span>&#64;</span>kernel<span>&#46;</span>org</a>&gt;, May 1 2015</p>
+<p>Release prepend support by Breno Leitao &lt;<a class="reference external" href="mailto:leitao&#37;&#52;&#48;debian&#46;org">leitao<span>&#64;</span>debian<span>&#46;</span>org</a>&gt;, Jul 7 2023</p>
+<p>Userdata append support by Matthew Wood &lt;<a class="reference external" href="mailto:thepacketgeek&#37;&#52;&#48;gmail&#46;com">thepacketgeek<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;, Jan 22 2024</p>
+<p>Sysdata append support by Breno Leitao &lt;<a class="reference external" href="mailto:leitao&#37;&#52;&#48;debian&#46;org">leitao<span>&#64;</span>debian<span>&#46;</span>org</a>&gt;, Jan 15 2025</p>
+<p>Please send bug reports to Matt Mackall &lt;<a class="reference external" href="mailto:mpm&#37;&#52;&#48;selenic&#46;com">mpm<span>&#64;</span>selenic<span>&#46;</span>com</a>&gt;
+Satyam Sharma &lt;<a class="reference external" href="mailto:satyam&#46;sharma&#37;&#52;&#48;gmail&#46;com">satyam<span>&#46;</span>sharma<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;, and Cong Wang &lt;<a class="reference external" href="mailto:xiyou&#46;wangcong&#37;&#52;&#48;gmail&#46;com">xiyou<span>&#46;</span>wangcong<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+<section id="introduction">
+<h2>Introduction:<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>This module logs kernel printk messages over UDP allowing debugging of
+problem where disk logging fails and serial consoles are impractical.</p>
+<p>It can be used either built-in or as a module. As a built-in,
+netconsole initializes immediately after NIC cards and will bring up
+the specified interface as soon as possible. While this doesn’t allow
+capture of early kernel panics, it does capture most of the boot
+process.</p>
+</section>
+<section id="sender-and-receiver-configuration">
+<h2>Sender and receiver configuration:<a class="headerlink" href="#sender-and-receiver-configuration" title="Link to this heading">¶</a></h2>
+<p>It takes a string configuration parameter “netconsole” in the
+following format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>netconsole=[+][r][src-port]@[src-ip]/[&lt;dev&gt;],[tgt-port]@&lt;tgt-ip&gt;/[tgt-macaddr]
+
+  where
+       +             if present, enable extended console support
+       r             if present, prepend kernel version (release) to the message
+       src-port      source for UDP packets (defaults to 6665)
+       src-ip        source IP to use (interface address)
+       dev           network interface name (eth0) or MAC address
+       tgt-port      port for logging agent (6666)
+       tgt-ip        IP address for logging agent
+       tgt-macaddr   ethernet MAC address for logging agent (broadcast)
+</pre></div>
+</div>
+<p>Examples:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>linux netconsole=4444@10.0.0.1/eth1,9353@10.0.0.2/12:34:56:78:9a:bc
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>insmod netconsole netconsole=@/,@10.0.0.2/
+</pre></div>
+</div>
+<p>or using IPv6:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>insmod netconsole netconsole=@/,@fd00:1:2:3::1/
+</pre></div>
+</div>
+<p>or using a MAC address to select the egress interface:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>linux netconsole=4444@10.0.0.1/22:33:44:55:66:77,9353@10.0.0.2/12:34:56:78:9a:bc
+</pre></div>
+</div>
+<p>It also supports logging to multiple remote agents by specifying
+parameters for the multiple agents separated by semicolons and the
+complete string enclosed in “quotes”, thusly:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>modprobe netconsole netconsole=&quot;@/,@10.0.0.2/;@/eth1,6892@10.0.0.3/&quot;
+</pre></div>
+</div>
+<p>Built-in netconsole starts immediately after the TCP stack is
+initialized and attempts to bring up the supplied dev at the supplied
+address.</p>
+<p>The remote host has several options to receive the kernel messages,
+for example:</p>
+<ol class="arabic">
+<li><p>syslogd</p></li>
+<li><p>netcat</p>
+<p>On distributions using a BSD-based netcat version (e.g. Fedora,
+openSUSE and Ubuntu) the listening port must be specified without
+the -p switch:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    nc -u -l -p &lt;port&gt;&#39; / &#39;nc -u -l &lt;port&gt;
+
+or::
+
+    netcat -u -l -p &lt;port&gt;&#39; / &#39;netcat -u -l &lt;port&gt;
+</pre></div>
+</div>
+</li>
+<li><p>socat</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>socat udp-recv:&lt;port&gt; -
+</pre></div>
+</div>
+</section>
+<section id="dynamic-reconfiguration">
+<h2>Dynamic reconfiguration:<a class="headerlink" href="#dynamic-reconfiguration" title="Link to this heading">¶</a></h2>
+<p>Dynamic reconfigurability is a useful addition to netconsole that enables
+remote logging targets to be dynamically added, removed, or have their
+parameters reconfigured at runtime from a configfs-based userspace interface.</p>
+<p>To include this feature, select CONFIG_NETCONSOLE_DYNAMIC when building the
+netconsole module (or kernel, if netconsole is built-in).</p>
+<p>Some examples follow (where configfs is mounted at the /sys/kernel/config
+mountpoint).</p>
+<p>To add a remote logging target (target names can be arbitrary):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /sys/kernel/config/netconsole/
+mkdir target1
+</pre></div>
+</div>
+<p>Note that newly created targets have default parameter values (as mentioned
+above) and are disabled by default -- they must first be enabled by writing
+“1” to the “enabled” attribute (usually after setting parameters accordingly)
+as described below.</p>
+<p>To remove a target:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rmdir /sys/kernel/config/netconsole/othertarget/
+</pre></div>
+</div>
+<p>The interface exposes these parameters of a netconsole target to userspace:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>enabled</p></td>
+<td><p>Is this target currently enabled?</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-even"><td><p>extended</p></td>
+<td><p>Extended mode enabled</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-odd"><td><p>release</p></td>
+<td><p>Prepend kernel release to message</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-even"><td><p>dev_name</p></td>
+<td><p>Local network interface name</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-odd"><td><p>local_port</p></td>
+<td><p>Source UDP port to use</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-even"><td><p>remote_port</p></td>
+<td><p>Remote agent’s UDP port</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-odd"><td><p>local_ip</p></td>
+<td><p>Source IP address to use</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-even"><td><p>remote_ip</p></td>
+<td><p>Remote agent’s IP address</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-odd"><td><p>local_mac</p></td>
+<td><p>Local interface’s MAC address</p></td>
+<td><p>(read-only)</p></td>
+</tr>
+<tr class="row-even"><td><p>remote_mac</p></td>
+<td><p>Remote agent’s MAC address</p></td>
+<td><p>(read-write)</p></td>
+</tr>
+<tr class="row-odd"><td><p>transmit_errors</p></td>
+<td><p>Number of packet send errors</p></td>
+<td><p>(read-only)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The “enabled” attribute is also used to control whether the parameters of
+a target can be updated or not -- you can modify the parameters of only
+disabled targets (i.e. if “enabled” is 0).</p>
+<p>To update a target’s parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat enabled                            # check if enabled is 1
+echo 0 &gt; enabled                       # disable the target (if required)
+echo eth2 &gt; dev_name                   # set local interface
+echo 10.0.0.4 &gt; remote_ip              # update some parameter
+echo cb:a9:87:65:43:21 &gt; remote_mac    # update more parameters
+echo 1 &gt; enabled                       # enable target again
+</pre></div>
+</div>
+<p>You can also update the local interface dynamically. This is especially
+useful if you want to use interfaces that have newly come up (and may not
+have existed when netconsole was loaded / initialized).</p>
+<p>Netconsole targets defined at boot time (or module load time) with the
+<cite>netconsole=</cite> param are assigned the name <cite>cmdline&lt;index&gt;</cite>.  For example, the
+first target in the parameter is named <cite>cmdline0</cite>.  You can control and modify
+these targets by creating configfs directories with the matching name.</p>
+<p>Let’s suppose you have two netconsole targets defined at boot time:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>netconsole=4444@10.0.0.1/eth1,9353@10.0.0.2/12:34:56:78:9a:bc;4444@10.0.0.1/eth1,9353@10.0.0.3/12:34:56:78:9a:bc
+</pre></div>
+</div>
+<p>You can modify these targets in runtime by creating the following targets:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir cmdline0
+cat cmdline0/remote_ip
+10.0.0.2
+
+mkdir cmdline1
+cat cmdline1/remote_ip
+10.0.0.3
+</pre></div>
+</div>
+<section id="append-user-data">
+<h3>Append User Data<a class="headerlink" href="#append-user-data" title="Link to this heading">¶</a></h3>
+<p>Custom user data can be appended to the end of messages with netconsole
+dynamic configuration enabled. User data entries can be modified without
+changing the “enabled” attribute of a target.</p>
+<p>Directories (keys) under <cite>userdata</cite> are limited to 53 character length, and
+data in <cite>userdata/&lt;key&gt;/value</cite> are limited to 200 bytes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /sys/kernel/config/netconsole &amp;&amp; mkdir cmdline0
+cd cmdline0
+mkdir userdata/foo
+echo bar &gt; userdata/foo/value
+mkdir userdata/qux
+echo baz &gt; userdata/qux/value
+</pre></div>
+</div>
+<p>Messages will now include this additional user data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &quot;This is a message&quot; &gt; /dev/kmsg
+</pre></div>
+</div>
+<p>Sends:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>12,607,22085407756,-;This is a message
+ foo=bar
+ qux=baz
+</pre></div>
+</div>
+<p>Preview the userdata that will be appended with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /sys/kernel/config/netconsole/cmdline0/userdata
+for f in `ls userdata`; do echo $f=$(cat userdata/$f/value); done
+</pre></div>
+</div>
+<p>If a <cite>userdata</cite> entry is created but no data is written to the <cite>value</cite> file,
+the entry will be omitted from netconsole messages:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /sys/kernel/config/netconsole &amp;&amp; mkdir cmdline0
+cd cmdline0
+mkdir userdata/foo
+echo bar &gt; userdata/foo/value
+mkdir userdata/qux
+</pre></div>
+</div>
+<p>The <cite>qux</cite> key is omitted since it has no value:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &quot;This is a message&quot; &gt; /dev/kmsg
+12,607,22085407756,-;This is a message
+ foo=bar
+</pre></div>
+</div>
+<p>Delete <cite>userdata</cite> entries with <cite>rmdir</cite>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rmdir /sys/kernel/config/netconsole/cmdline0/userdata/qux
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When writing strings to user data values, input is broken up per line in
+configfs store calls and this can cause confusing behavior:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir userdata/testing
+printf &quot;val1\nval2&quot; &gt; userdata/testing/value
+# userdata store value is called twice, first with &quot;val1\n&quot; then &quot;val2&quot;
+# so &quot;val2&quot; is stored, being the last value stored
+cat userdata/testing/value
+val2
+</pre></div>
+</div>
+<p>It is recommended to not write user data values with newlines.</p>
+</div>
+</section>
+<section id="task-name-auto-population-in-userdata">
+<h3>Task name auto population in userdata<a class="headerlink" href="#task-name-auto-population-in-userdata" title="Link to this heading">¶</a></h3>
+<p>Inside the netconsole configfs hierarchy, there is a file called
+<cite>taskname_enabled</cite> under the <cite>userdata</cite> directory. This file is used to enable
+or disable the automatic task name population feature. This feature
+automatically populates the current task name that is scheduled in the CPU
+sneding the message.</p>
+<p>To enable task name auto-population:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo 1 &gt; /sys/kernel/config/netconsole/target1/userdata/taskname_enabled
+</pre></div>
+</div>
+<p>When this option is enabled, the netconsole messages will include an additional
+line in the userdata field with the format <cite>taskname=&lt;task name&gt;</cite>. This allows
+the receiver of the netconsole messages to easily find which application was
+currently scheduled when that message was generated, providing extra context
+for kernel messages and helping to categorize them.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &quot;This is a message&quot; &gt; /dev/kmsg
+12,607,22085407756,-;This is a message
+ taskname=echo
+</pre></div>
+</div>
+<p>In this example, the message was generated while “echo” was the current
+scheduled process.</p>
+</section>
+<section id="kernel-release-auto-population-in-userdata">
+<h3>Kernel release auto population in userdata<a class="headerlink" href="#kernel-release-auto-population-in-userdata" title="Link to this heading">¶</a></h3>
+<p>Within the netconsole configfs hierarchy, there is a file named <cite>release_enabled</cite>
+located in the <cite>userdata</cite> directory. This file controls the kernel release
+(version) auto-population feature, which appends the kernel release information
+to userdata dictionary in every message sent.</p>
+<p>To enable the release auto-population:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo 1 &gt; /sys/kernel/config/netconsole/target1/userdata/release_enabled
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &quot;This is a message&quot; &gt; /dev/kmsg
+12,607,22085407756,-;This is a message
+ release=6.14.0-rc6-01219-g3c027fbd941d
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature provides the same data as the “release prepend” feature.
+However, in this case, the release information is appended to the userdata
+dictionary rather than being included in the message header.</p>
+</div>
+</section>
+<section id="cpu-number-auto-population-in-userdata">
+<h3>CPU number auto population in userdata<a class="headerlink" href="#cpu-number-auto-population-in-userdata" title="Link to this heading">¶</a></h3>
+<p>Inside the netconsole configfs hierarchy, there is a file called
+<cite>cpu_nr</cite> under the <cite>userdata</cite> directory. This file is used to enable or disable
+the automatic CPU number population feature. This feature automatically
+populates the CPU number that is sending the message.</p>
+<p>To enable the CPU number auto-population:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo 1 &gt; /sys/kernel/config/netconsole/target1/userdata/cpu_nr
+</pre></div>
+</div>
+<p>When this option is enabled, the netconsole messages will include an additional
+line in the userdata field with the format <cite>cpu=&lt;cpu_number&gt;</cite>. This allows the
+receiver of the netconsole messages to easily differentiate and demultiplex
+messages originating from different CPUs, which is particularly useful when
+dealing with parallel log output.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &quot;This is a message&quot; &gt; /dev/kmsg
+12,607,22085407756,-;This is a message
+ cpu=42
+</pre></div>
+</div>
+<p>In this example, the message was sent by CPU 42.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the user has set a conflicting <cite>cpu</cite> key in the userdata dictionary,
+both keys will be reported, with the kernel-populated entry appearing after
+the user one. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># User-defined CPU entry
+mkdir -p /sys/kernel/config/netconsole/target1/userdata/cpu
+echo &quot;1&quot; &gt; /sys/kernel/config/netconsole/target1/userdata/cpu/value
+</pre></div>
+</div>
+<p>Output might look like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>12,607,22085407756,-;This is a message
+ cpu=1
+ cpu=42    # kernel-populated value
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="extended-console">
+<h2>Extended console:<a class="headerlink" href="#extended-console" title="Link to this heading">¶</a></h2>
+<p>If ‘+’ is prefixed to the configuration line or “extended” config file
+is set to 1, extended console support is enabled. An example boot
+param follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>linux netconsole=+4444@10.0.0.1/eth1,9353@10.0.0.2/12:34:56:78:9a:bc
+</pre></div>
+</div>
+<p>Log messages are transmitted with extended metadata header in the
+following format which is the same as /dev/kmsg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;level&gt;,&lt;sequnum&gt;,&lt;timestamp&gt;,&lt;contflag&gt;;&lt;message text&gt;
+</pre></div>
+</div>
+<p>If ‘r’ (release) feature is enabled, the kernel release version is
+prepended to the start of the message. Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>6.4.0,6,444,501151268,-;netconsole: network logging started
+</pre></div>
+</div>
+<p>Non printable characters in &lt;message text&gt; are escaped using “xff”
+notation. If the message contains optional dictionary, verbatim
+newline is used as the delimiter.</p>
+<p>If a message doesn’t fit in certain number of bytes (currently 1000),
+the message is split into multiple fragments by netconsole. These
+fragments are transmitted with “ncfrag” header field added:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ncfrag=&lt;byte-offset&gt;/&lt;total-bytes&gt;
+</pre></div>
+</div>
+<p>For example, assuming a lot smaller chunk size, a message “the first
+chunk, the 2nd chunk.” may be split as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>6,416,1758426,-,ncfrag=0/31;the first chunk,
+6,416,1758426,-,ncfrag=16/31; the 2nd chunk.
+</pre></div>
+</div>
+</section>
+<section id="miscellaneous-notes">
+<h2>Miscellaneous notes:<a class="headerlink" href="#miscellaneous-notes" title="Link to this heading">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>the default target ethernet setting uses the broadcast
+ethernet address to send packets, which can cause increased load on
+other systems on the same ethernet segment.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>some LAN switches may be configured to suppress ethernet broadcasts
+so it is advised to explicitly specify the remote agents’ MAC addresses
+from the config parameters passed to netconsole.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>to find out the MAC address of, say, 10.0.0.2, you may try using:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ping -c 1 10.0.0.2 ; /sbin/arp -n | grep 10.0.0.2
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>in case the remote logging agent is on a separate LAN subnet than
+the sender, it is suggested to try specifying the MAC address of the
+default gateway (you may use /sbin/route -n to find it out) as the
+remote MAC address instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the network device (eth1 in the above case) can run any kind
+of other network traffic, netconsole is not intrusive. Netconsole
+might cause slight delays in other traffic if the volume of kernel
+messages is high, but should have no other impact.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>if you find that the remote logging agent is not receiving or
+printing all messages from the sender, it is likely that you have set
+the “console_loglevel” parameter (on the sender) to only send high
+priority messages to the console. You can change this at runtime using:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmesg -n 8
+</pre></div>
+</div>
+<p>or by specifying “debug” on the kernel command line at boot, to send
+all kernel messages to the console. A specific value for this parameter
+can also be set using the “loglevel” kernel boot option. See the
+dmesg(8) man page and <a class="reference internal" href="../admin-guide/kernel-parameters.html"><span class="doc">The kernel’s command-line parameters</span></a>
+for details.</p>
+</div>
+<p>Netconsole was designed to be as instantaneous as possible, to
+enable the logging of even the most critical kernel bugs. It works
+from IRQ contexts as well, and does not enable interrupts while
+sending packets. Due to these unique needs, configuration cannot
+be more automatic, and some fundamental limitations will remain:
+only IP networks, UDP packets and ethernet devices are supported.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Netconsole</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction:</a></li>
+<li><a class="reference internal" href="#sender-and-receiver-configuration">Sender and receiver configuration:</a></li>
+<li><a class="reference internal" href="#dynamic-reconfiguration">Dynamic reconfiguration:</a><ul>
+<li><a class="reference internal" href="#append-user-data">Append User Data</a></li>
+<li><a class="reference internal" href="#task-name-auto-population-in-userdata">Task name auto population in userdata</a></li>
+<li><a class="reference internal" href="#kernel-release-auto-population-in-userdata">Kernel release auto population in userdata</a></li>
+<li><a class="reference internal" href="#cpu-number-auto-population-in-userdata">CPU number auto population in userdata</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extended-console">Extended console:</a></li>
+<li><a class="reference internal" href="#miscellaneous-notes">Miscellaneous notes:</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="net_cachelines/tcp_sock.html">
+                    <span class="icon">&lt;</span><span>tcp_sock struct fast path usage breakdown</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="netdev-features.html"><span>Netdev features mess and how to get out from it alive</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

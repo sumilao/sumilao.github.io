@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Family rt-neigh netlink specification &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Family rt-route netlink specification" href="rt_route.html" />
+    <link rel="prev" title="Family rt-link netlink specification" href="rt_link.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/networking/netlink_spec/rt_neigh.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="family-rt-neigh-netlink-specification">
+<h1><a class="toc-backref" href="#id3" role="doc-backlink">Family <code class="docutils literal notranslate"><span class="pre">rt-neigh</span></code> netlink specification</a><a class="headerlink" href="#family-rt-neigh-netlink-specification" title="Link to this heading">¶</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#family-rt-neigh-netlink-specification" id="id3">Family <code class="docutils literal notranslate"><span class="pre">rt-neigh</span></code> netlink specification</a></p>
+<ul>
+<li><p><a class="reference internal" href="#summary" id="id4">Summary</a></p></li>
+<li><p><a class="reference internal" href="#operations" id="id5">Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#newneigh" id="id6">newneigh</a></p></li>
+<li><p><a class="reference internal" href="#delneigh" id="id7">delneigh</a></p></li>
+<li><p><a class="reference internal" href="#delneigh-ntf" id="id8">delneigh-ntf</a></p></li>
+<li><p><a class="reference internal" href="#getneigh" id="id9">getneigh</a></p></li>
+<li><p><a class="reference internal" href="#newneigh-ntf" id="id10">newneigh-ntf</a></p></li>
+<li><p><a class="reference internal" href="#getneightbl" id="id11">getneightbl</a></p></li>
+<li><p><a class="reference internal" href="#setneightbl" id="id12">setneightbl</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#multicast-groups" id="id13">Multicast groups</a></p></li>
+<li><p><a class="reference internal" href="#definitions" id="id14">Definitions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ndmsg" id="id15">ndmsg</a></p></li>
+<li><p><a class="reference internal" href="#ndtmsg" id="id16">ndtmsg</a></p></li>
+<li><p><a class="reference internal" href="#nud-state" id="id17">nud-state</a></p></li>
+<li><p><a class="reference internal" href="#ntf-flags" id="id18">ntf-flags</a></p></li>
+<li><p><a class="reference internal" href="#ntf-ext-flags" id="id19">ntf-ext-flags</a></p></li>
+<li><p><a class="reference internal" href="#rtm-type" id="id20">rtm-type</a></p></li>
+<li><p><a class="reference internal" href="#nda-cacheinfo" id="id21">nda-cacheinfo</a></p></li>
+<li><p><a class="reference internal" href="#ndt-config" id="id22">ndt-config</a></p></li>
+<li><p><a class="reference internal" href="#ndt-stats" id="id23">ndt-stats</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#attribute-sets" id="id24">Attribute sets</a></p>
+<ul>
+<li><p><a class="reference internal" href="#neighbour-attrs" id="id25">neighbour-attrs</a></p></li>
+<li><p><a class="reference internal" href="#ndt-attrs" id="id26">ndt-attrs</a></p></li>
+<li><p><a class="reference internal" href="#ndtpa-attrs" id="id27">ndtpa-attrs</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="summary">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>IP neighbour management over rtnetlink.</p>
+</section>
+<section id="operations">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Operations</a><a class="headerlink" href="#operations" title="Link to this heading">¶</a></h2>
+<section id="newneigh">
+<span id="rt-neigh-operation-newneigh"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">newneigh</a><a class="headerlink" href="#newneigh" title="Link to this heading">¶</a></h3>
+<p>Add new neighbour entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndmsg"><span class="std std-ref">ndmsg</span></a></p>
+</dd>
+<dt class="field-even">attribute-set<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#rt-neigh-attribute-set-neighbour-attrs"><span class="std std-ref">neighbour-attrs</span></a></p>
+</dd>
+<dt class="field-odd">do<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">dst</span></code>, <code class="docutils literal notranslate"><span class="pre">lladdr</span></code>, <code class="docutils literal notranslate"><span class="pre">probes</span></code>, <code class="docutils literal notranslate"><span class="pre">vlan</span></code>, <code class="docutils literal notranslate"><span class="pre">port</span></code>, <code class="docutils literal notranslate"><span class="pre">vni</span></code>, <code class="docutils literal notranslate"><span class="pre">ifindex</span></code>, <code class="docutils literal notranslate"><span class="pre">master</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">nh-id</span></code>, <code class="docutils literal notranslate"><span class="pre">flags-ext</span></code>, <code class="docutils literal notranslate"><span class="pre">fdb-ext-attrs</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="delneigh">
+<span id="rt-neigh-operation-delneigh"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">delneigh</a><a class="headerlink" href="#delneigh" title="Link to this heading">¶</a></h3>
+<p>Remove an existing neighbour entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndmsg"><span class="std std-ref">ndmsg</span></a></p>
+</dd>
+<dt class="field-even">attribute-set<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#rt-neigh-attribute-set-neighbour-attrs"><span class="std std-ref">neighbour-attrs</span></a></p>
+</dd>
+<dt class="field-odd">do<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">dst</span></code>, <code class="docutils literal notranslate"><span class="pre">ifindex</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="delneigh-ntf">
+<span id="rt-neigh-operation-delneigh-ntf"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">delneigh-ntf</a><a class="headerlink" href="#delneigh-ntf" title="Link to this heading">¶</a></h3>
+<p>Notify a neighbour deletion</p>
+<dl class="field-list simple">
+<dt class="field-odd">value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>29</p>
+</dd>
+<dt class="field-even">notify<span class="colon">:</span></dt>
+<dd class="field-even"><p>delneigh</p>
+</dd>
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndmsg"><span class="std std-ref">ndmsg</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="getneigh">
+<span id="rt-neigh-operation-getneigh"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">getneigh</a><a class="headerlink" href="#getneigh" title="Link to this heading">¶</a></h3>
+<p>Get or dump neighbour entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndmsg"><span class="std std-ref">ndmsg</span></a></p>
+</dd>
+<dt class="field-even">attribute-set<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#rt-neigh-attribute-set-neighbour-attrs"><span class="std std-ref">neighbour-attrs</span></a></p>
+</dd>
+<dt class="field-odd">do<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">dst</span></code>]</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">dst</span></code>, <code class="docutils literal notranslate"><span class="pre">lladdr</span></code>, <code class="docutils literal notranslate"><span class="pre">probes</span></code>, <code class="docutils literal notranslate"><span class="pre">vlan</span></code>, <code class="docutils literal notranslate"><span class="pre">port</span></code>, <code class="docutils literal notranslate"><span class="pre">vni</span></code>, <code class="docutils literal notranslate"><span class="pre">ifindex</span></code>, <code class="docutils literal notranslate"><span class="pre">master</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">nh-id</span></code>, <code class="docutils literal notranslate"><span class="pre">flags-ext</span></code>, <code class="docutils literal notranslate"><span class="pre">fdb-ext-attrs</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">dump<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">ifindex</span></code>, <code class="docutils literal notranslate"><span class="pre">master</span></code>]</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">dst</span></code>, <code class="docutils literal notranslate"><span class="pre">lladdr</span></code>, <code class="docutils literal notranslate"><span class="pre">probes</span></code>, <code class="docutils literal notranslate"><span class="pre">vlan</span></code>, <code class="docutils literal notranslate"><span class="pre">port</span></code>, <code class="docutils literal notranslate"><span class="pre">vni</span></code>, <code class="docutils literal notranslate"><span class="pre">ifindex</span></code>, <code class="docutils literal notranslate"><span class="pre">master</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">nh-id</span></code>, <code class="docutils literal notranslate"><span class="pre">flags-ext</span></code>, <code class="docutils literal notranslate"><span class="pre">fdb-ext-attrs</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="newneigh-ntf">
+<span id="rt-neigh-operation-newneigh-ntf"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">newneigh-ntf</a><a class="headerlink" href="#newneigh-ntf" title="Link to this heading">¶</a></h3>
+<p>Notify a neighbour creation</p>
+<dl class="field-list simple">
+<dt class="field-odd">value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>28</p>
+</dd>
+<dt class="field-even">notify<span class="colon">:</span></dt>
+<dd class="field-even"><p>getneigh</p>
+</dd>
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndmsg"><span class="std std-ref">ndmsg</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="getneightbl">
+<span id="rt-neigh-operation-getneightbl"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">getneightbl</a><a class="headerlink" href="#getneightbl" title="Link to this heading">¶</a></h3>
+<p>Get or dump neighbour tables</p>
+<dl class="field-list">
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndtmsg"><span class="std std-ref">ndtmsg</span></a></p>
+</dd>
+<dt class="field-even">attribute-set<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#rt-neigh-attribute-set-ndt-attrs"><span class="std std-ref">ndt-attrs</span></a></p>
+</dd>
+<dt class="field-odd">dump<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong></p>
+<dl class="simple">
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh1</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh2</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh3</span></code>, <code class="docutils literal notranslate"><span class="pre">config</span></code>, <code class="docutils literal notranslate"><span class="pre">parms</span></code>, <code class="docutils literal notranslate"><span class="pre">stats</span></code>, <code class="docutils literal notranslate"><span class="pre">gc-interval</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="setneightbl">
+<span id="rt-neigh-operation-setneightbl"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">setneightbl</a><a class="headerlink" href="#setneightbl" title="Link to this heading">¶</a></h3>
+<p>Set neighbour tables</p>
+<dl class="field-list simple">
+<dt class="field-odd">fixed-header<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndtmsg"><span class="std std-ref">ndtmsg</span></a></p>
+</dd>
+<dt class="field-even">attribute-set<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#rt-neigh-attribute-set-ndt-attrs"><span class="std std-ref">ndt-attrs</span></a></p>
+</dd>
+<dt class="field-odd">do<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh1</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh2</span></code>, <code class="docutils literal notranslate"><span class="pre">thresh3</span></code>, <code class="docutils literal notranslate"><span class="pre">parms</span></code>, <code class="docutils literal notranslate"><span class="pre">gc-interval</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+<section id="multicast-groups">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Multicast groups</a><a class="headerlink" href="#multicast-groups" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>rtnlgrp-neigh</p></li>
+</ul>
+</section>
+<section id="definitions">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Definitions</a><a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<section id="ndmsg">
+<span id="rt-neigh-definition-ndmsg"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">ndmsg</a><a class="headerlink" href="#ndmsg" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">ndm-family (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">ndm-pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">ndm-ifindex (<code class="docutils literal notranslate"><span class="pre">s32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">ndm-state (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">ndm-flags (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">ndm-type (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="ndtmsg">
+<span id="rt-neigh-definition-ndtmsg"></span><h3><a class="toc-backref" href="#id16" role="doc-backlink">ndtmsg</a><a class="headerlink" href="#ndtmsg" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">family (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="nud-state">
+<span id="rt-neigh-definition-nud-state"></span><h3><a class="toc-backref" href="#id17" role="doc-backlink">nud-state</a><a class="headerlink" href="#nud-state" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flags</p>
+</dd>
+<dt class="field-even">entries<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">incomplete</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reachable</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delay</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">probe</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">noarp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">permanent</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ntf-flags">
+<span id="rt-neigh-definition-ntf-flags"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">ntf-flags</a><a class="headerlink" href="#ntf-flags" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flags</p>
+</dd>
+<dt class="field-even">entries<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">master</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">proxy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ext-learned</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offloaded</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sticky</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">router</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ntf-ext-flags">
+<span id="rt-neigh-definition-ntf-ext-flags"></span><h3><a class="toc-backref" href="#id19" role="doc-backlink">ntf-ext-flags</a><a class="headerlink" href="#ntf-ext-flags" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flags</p>
+</dd>
+<dt class="field-even">entries<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">managed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">locked</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="rtm-type">
+<span id="rt-neigh-definition-rtm-type"></span><h3><a class="toc-backref" href="#id20" role="doc-backlink">rtm-type</a><a class="headerlink" href="#rtm-type" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>enum</p>
+</dd>
+<dt class="field-even">entries<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">unspec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unicast</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">broadcast</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">anycast</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multicast</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blackhole</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unreachable</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prohibit</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">throw</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nat</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xresolve</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="nda-cacheinfo">
+<span id="rt-neigh-definition-nda-cacheinfo"></span><h3><a class="toc-backref" href="#id21" role="doc-backlink">nda-cacheinfo</a><a class="headerlink" href="#nda-cacheinfo" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">confirmed (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">used (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">updated (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">refcnt (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="ndt-config">
+<span id="rt-neigh-definition-ndt-config"></span><h3><a class="toc-backref" href="#id22" role="doc-backlink">ndt-config</a><a class="headerlink" href="#ndt-config" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">key-len (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">entry-size (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">entries (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">last-flush (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">last-rand (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">hash-rnd (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">hash-mask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">hash-chain-gc (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">proxy-qlen (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="ndt-stats">
+<span id="rt-neigh-definition-ndt-stats"></span><h3><a class="toc-backref" href="#id23" role="doc-backlink">ndt-stats</a><a class="headerlink" href="#ndt-stats" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">allocs (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">destroys (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">hash-grows (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">res-failed (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">lookups (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">hits (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">rcv-probes-mcast (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">rcv-probes-ucast (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">periodic-gc-runs (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">forced-gc-runs (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">table-fulls (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+<section id="attribute-sets">
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">Attribute sets</a><a class="headerlink" href="#attribute-sets" title="Link to this heading">¶</a></h2>
+<section id="neighbour-attrs">
+<span id="rt-neigh-attribute-set-neighbour-attrs"></span><h3><a class="toc-backref" href="#id25" role="doc-backlink">neighbour-attrs</a><a class="headerlink" href="#neighbour-attrs" title="Link to this heading">¶</a></h3>
+<section id="unspec-binary">
+<h4>unspec (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#unspec-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0</p>
+</dd>
+</dl>
+</section>
+<section id="dst-binary">
+<h4>dst (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#dst-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ipv4</p>
+</dd>
+</dl>
+</section>
+<section id="lladdr-binary">
+<h4>lladdr (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#lladdr-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mac</p>
+</dd>
+</dl>
+</section>
+<section id="cacheinfo-binary">
+<h4>cacheinfo (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#cacheinfo-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-nda-cacheinfo"><span class="std std-ref">nda-cacheinfo</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="probes-u32">
+<h4>probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#probes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="vlan-u16">
+<h4>vlan (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#vlan-u16" title="Link to this heading">¶</a></h4>
+</section>
+<section id="port-u16">
+<h4>port (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#port-u16" title="Link to this heading">¶</a></h4>
+</section>
+<section id="vni-u32">
+<h4>vni (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#vni-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="ifindex-u32">
+<h4>ifindex (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#ifindex-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="master-u32">
+<h4>master (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#master-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="link-netnsid-s32">
+<h4>link-netnsid (<code class="docutils literal notranslate"><span class="pre">s32</span></code>)<a class="headerlink" href="#link-netnsid-s32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="src-vni-u32">
+<h4>src-vni (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#src-vni-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="protocol-u8">
+<h4>protocol (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#protocol-u8" title="Link to this heading">¶</a></h4>
+</section>
+<section id="nh-id-u32">
+<h4>nh-id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#nh-id-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="fdb-ext-attrs-binary">
+<h4>fdb-ext-attrs (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#fdb-ext-attrs-binary" title="Link to this heading">¶</a></h4>
+</section>
+<section id="flags-ext-u32">
+<h4>flags-ext (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#flags-ext-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">enum<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ntf-ext-flags"><span class="std std-ref">ntf-ext-flags</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="ndm-state-mask-u16">
+<h4>ndm-state-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#ndm-state-mask-u16" title="Link to this heading">¶</a></h4>
+</section>
+<section id="ndm-flags-mask-u8">
+<h4>ndm-flags-mask (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#ndm-flags-mask-u8" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+<section id="ndt-attrs">
+<span id="rt-neigh-attribute-set-ndt-attrs"></span><h3><a class="toc-backref" href="#id26" role="doc-backlink">ndt-attrs</a><a class="headerlink" href="#ndt-attrs" title="Link to this heading">¶</a></h3>
+<section id="name-string">
+<h4>name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)<a class="headerlink" href="#name-string" title="Link to this heading">¶</a></h4>
+</section>
+<section id="thresh1-u32">
+<h4>thresh1 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#thresh1-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="thresh2-u32">
+<h4>thresh2 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#thresh2-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="thresh3-u32">
+<h4>thresh3 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#thresh3-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="config-binary">
+<h4>config (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#config-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndt-config"><span class="std std-ref">ndt-config</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="parms-nest">
+<h4>parms (<code class="docutils literal notranslate"><span class="pre">nest</span></code>)<a class="headerlink" href="#parms-nest" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">nested-attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-attribute-set-ndtpa-attrs"><span class="std std-ref">ndtpa-attrs</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="stats-binary">
+<h4>stats (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#stats-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-neigh-definition-ndt-stats"><span class="std std-ref">ndt-stats</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="gc-interval-u64">
+<h4>gc-interval (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#gc-interval-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="pad-pad">
+<h4>pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#pad-pad" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+<section id="ndtpa-attrs">
+<span id="rt-neigh-attribute-set-ndtpa-attrs"></span><h3><a class="toc-backref" href="#id27" role="doc-backlink">ndtpa-attrs</a><a class="headerlink" href="#ndtpa-attrs" title="Link to this heading">¶</a></h3>
+<section id="id1">
+<h4>ifindex (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+</section>
+<section id="refcnt-u32">
+<h4>refcnt (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#refcnt-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="reachable-time-u64">
+<h4>reachable-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#reachable-time-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="base-reachable-time-u64">
+<h4>base-reachable-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#base-reachable-time-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="retrans-time-u64">
+<h4>retrans-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#retrans-time-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="gc-staletime-u64">
+<h4>gc-staletime (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#gc-staletime-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="delay-probe-time-u64">
+<h4>delay-probe-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#delay-probe-time-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="queue-len-u32">
+<h4>queue-len (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#queue-len-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="app-probes-u32">
+<h4>app-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#app-probes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="ucast-probes-u32">
+<h4>ucast-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#ucast-probes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="mcast-probes-u32">
+<h4>mcast-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#mcast-probes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="anycast-delay-u64">
+<h4>anycast-delay (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#anycast-delay-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="proxy-delay-u64">
+<h4>proxy-delay (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#proxy-delay-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="proxy-qlen-u32">
+<h4>proxy-qlen (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#proxy-qlen-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="locktime-u64">
+<h4>locktime (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#locktime-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="queue-lenbytes-u32">
+<h4>queue-lenbytes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#queue-lenbytes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="mcast-reprobes-u32">
+<h4>mcast-reprobes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#mcast-reprobes-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="id2">
+<h4>pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+</section>
+<section id="interval-probe-time-ms-u64">
+<h4>interval-probe-time-ms (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#interval-probe-time-ms-u64" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Family <code class="docutils literal notranslate"><span class="pre">rt-neigh</span></code> netlink specification</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#operations">Operations</a><ul>
+<li><a class="reference internal" href="#newneigh">newneigh</a></li>
+<li><a class="reference internal" href="#delneigh">delneigh</a></li>
+<li><a class="reference internal" href="#delneigh-ntf">delneigh-ntf</a></li>
+<li><a class="reference internal" href="#getneigh">getneigh</a></li>
+<li><a class="reference internal" href="#newneigh-ntf">newneigh-ntf</a></li>
+<li><a class="reference internal" href="#getneightbl">getneightbl</a></li>
+<li><a class="reference internal" href="#setneightbl">setneightbl</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multicast-groups">Multicast groups</a></li>
+<li><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li><a class="reference internal" href="#ndmsg">ndmsg</a></li>
+<li><a class="reference internal" href="#ndtmsg">ndtmsg</a></li>
+<li><a class="reference internal" href="#nud-state">nud-state</a></li>
+<li><a class="reference internal" href="#ntf-flags">ntf-flags</a></li>
+<li><a class="reference internal" href="#ntf-ext-flags">ntf-ext-flags</a></li>
+<li><a class="reference internal" href="#rtm-type">rtm-type</a></li>
+<li><a class="reference internal" href="#nda-cacheinfo">nda-cacheinfo</a></li>
+<li><a class="reference internal" href="#ndt-config">ndt-config</a></li>
+<li><a class="reference internal" href="#ndt-stats">ndt-stats</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-sets">Attribute sets</a><ul>
+<li><a class="reference internal" href="#neighbour-attrs">neighbour-attrs</a><ul>
+<li><a class="reference internal" href="#unspec-binary">unspec (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#dst-binary">dst (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#lladdr-binary">lladdr (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#cacheinfo-binary">cacheinfo (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#probes-u32">probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#vlan-u16">vlan (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#port-u16">port (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#vni-u32">vni (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#ifindex-u32">ifindex (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#master-u32">master (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#link-netnsid-s32">link-netnsid (<code class="docutils literal notranslate"><span class="pre">s32</span></code>)</a></li>
+<li><a class="reference internal" href="#src-vni-u32">src-vni (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#protocol-u8">protocol (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+<li><a class="reference internal" href="#nh-id-u32">nh-id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#fdb-ext-attrs-binary">fdb-ext-attrs (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#flags-ext-u32">flags-ext (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#ndm-state-mask-u16">ndm-state-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#ndm-flags-mask-u8">ndm-flags-mask (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ndt-attrs">ndt-attrs</a><ul>
+<li><a class="reference internal" href="#name-string">name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)</a></li>
+<li><a class="reference internal" href="#thresh1-u32">thresh1 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#thresh2-u32">thresh2 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#thresh3-u32">thresh3 (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#config-binary">config (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#parms-nest">parms (<code class="docutils literal notranslate"><span class="pre">nest</span></code>)</a></li>
+<li><a class="reference internal" href="#stats-binary">stats (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#gc-interval-u64">gc-interval (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#pad-pad">pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ndtpa-attrs">ndtpa-attrs</a><ul>
+<li><a class="reference internal" href="#id1">ifindex (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#refcnt-u32">refcnt (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#reachable-time-u64">reachable-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#base-reachable-time-u64">base-reachable-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#retrans-time-u64">retrans-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#gc-staletime-u64">gc-staletime (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#delay-probe-time-u64">delay-probe-time (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#queue-len-u32">queue-len (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#app-probes-u32">app-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#ucast-probes-u32">ucast-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#mcast-probes-u32">mcast-probes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#anycast-delay-u64">anycast-delay (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#proxy-delay-u64">proxy-delay (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#proxy-qlen-u32">proxy-qlen (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#locktime-u64">locktime (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#queue-lenbytes-u32">queue-lenbytes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#mcast-reprobes-u32">mcast-reprobes (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#id2">pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#interval-probe-time-ms-u64">interval-probe-time-ms (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="rt_link.html">
+                    <span class="icon">&lt;</span><span>Family <code class="docutils literal notranslate"><span class="pre">rt-link</span></code> netlink specification</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="rt_route.html"><span>Family <code class="docutils literal notranslate"><span class="pre">rt-route</span></code> netlink specification</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

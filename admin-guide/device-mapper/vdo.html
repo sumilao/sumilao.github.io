@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dm-vdo &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="dm-verity" href="verity.html" />
+    <link rel="prev" title="Design of dm-vdo" href="vdo-design.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bcache.html">A block layer cache (bcache)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../binderfs.html">The Android binderfs Filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../blockdev/index.html">Block Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cifs/index.html">CIFS</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Device Mapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ext4.html">ext4 General Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem-monitoring.html">File system Monitoring with fanotify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nfs/index.html">NFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iostats.html">I/O statistics fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jfs.html">IBM’s Journaled File System (JFS) for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../md.html">RAID arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ufs.html">Using UFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xfs.html">The SGI XFS Filesystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/admin-guide/device-mapper/vdo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="dm-vdo">
+<h1>dm-vdo<a class="headerlink" href="#dm-vdo" title="Link to this heading">¶</a></h1>
+<p>The dm-vdo (virtual data optimizer) device mapper target provides
+block-level deduplication, compression, and thin provisioning. As a device
+mapper target, it can add these features to the storage stack, compatible
+with any file system. The vdo target does not protect against data
+corruption, relying instead on integrity protection of the storage below
+it. It is strongly recommended that lvm be used to manage vdo volumes. See
+lvmvdo(7).</p>
+</section>
+<section id="userspace-component">
+<h1>Userspace component<a class="headerlink" href="#userspace-component" title="Link to this heading">¶</a></h1>
+<p>Formatting a vdo volume requires the use of the ‘vdoformat’ tool, available
+at:</p>
+<p><a class="reference external" href="https://github.com/dm-vdo/vdo/">https://github.com/dm-vdo/vdo/</a></p>
+<p>In most cases, a vdo target will recover from a crash automatically the
+next time it is started. In cases where it encountered an unrecoverable
+error (either during normal operation or crash recovery) the target will
+enter or come up in read-only mode. Because read-only mode is indicative of
+data-loss, a positive action must be taken to bring vdo out of read-only
+mode. The ‘vdoforcerebuild’ tool, available from the same repo, is used to
+prepare a read-only vdo to exit read-only mode. After running this tool,
+the vdo target will rebuild its metadata the next time it is
+started. Although some data may be lost, the rebuilt vdo’s metadata will be
+internally consistent and the target will be writable again.</p>
+<p>The repo also contains additional userspace tools which can be used to
+inspect a vdo target’s on-disk metadata. Fortunately, these tools are
+rarely needed except by dm-vdo developers.</p>
+</section>
+<section id="metadata-requirements">
+<h1>Metadata requirements<a class="headerlink" href="#metadata-requirements" title="Link to this heading">¶</a></h1>
+<p>Each vdo volume reserves 3GB of space for metadata, or more depending on
+its configuration. It is helpful to check that the space saved by
+deduplication and compression is not cancelled out by the metadata
+requirements. An estimation of the space saved for a specific dataset can
+be computed with the vdo estimator tool, which is available at:</p>
+<p><a class="reference external" href="https://github.com/dm-vdo/vdoestimator/">https://github.com/dm-vdo/vdoestimator/</a></p>
+</section>
+<section id="target-interface">
+<h1>Target interface<a class="headerlink" href="#target-interface" title="Link to this heading">¶</a></h1>
+<section id="table-line">
+<h2>Table line<a class="headerlink" href="#table-line" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;offset&gt; &lt;logical device size&gt; vdo V4 &lt;storage device&gt;
+&lt;storage device size&gt; &lt;minimum I/O size&gt; &lt;block map cache size&gt;
+&lt;block map era length&gt; [optional arguments]
+</pre></div>
+</div>
+<p>Required parameters:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>offset:</dt><dd><p>The offset, in sectors, at which the vdo volume’s logical
+space begins.</p>
+</dd>
+<dt>logical device size:</dt><dd><p>The size of the device which the vdo volume will service,
+in sectors. Must match the current logical size of the vdo
+volume.</p>
+</dd>
+<dt>storage device:</dt><dd><p>The device holding the vdo volume’s data and metadata.</p>
+</dd>
+<dt>storage device size:</dt><dd><p>The size of the device holding the vdo volume, as a number
+of 4096-byte blocks. Must match the current size of the vdo
+volume.</p>
+</dd>
+<dt>minimum I/O size:</dt><dd><p>The minimum I/O size for this vdo volume to accept, in
+bytes. Valid values are 512 or 4096. The recommended value
+is 4096.</p>
+</dd>
+<dt>block map cache size:</dt><dd><p>The size of the block map cache, as a number of 4096-byte
+blocks. The minimum and recommended value is 32768 blocks.
+If the logical thread count is non-zero, the cache size
+must be at least 4096 blocks per logical thread.</p>
+</dd>
+<dt>block map era length:</dt><dd><p>The speed with which the block map cache writes out
+modified block map pages. A smaller era length is likely to
+reduce the amount of time spent rebuilding, at the cost of
+increased block map writes during normal operation. The
+maximum and recommended value is 16380; the minimum value
+is 1.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="optional-parameters">
+<h2>Optional parameters:<a class="headerlink" href="#optional-parameters" title="Link to this heading">¶</a></h2>
+<p>Some or all of these parameters may be specified as &lt;key&gt; &lt;value&gt; pairs.</p>
+<p>Thread related parameters:</p>
+<p>Different categories of work are assigned to separate thread groups, and
+the number of threads in each group can be configured separately.</p>
+<p>If &lt;hash&gt;, &lt;logical&gt;, and &lt;physical&gt; are all set to 0, the work handled by
+all three thread types will be handled by a single thread. If any of these
+values are non-zero, all of them must be non-zero.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ack:</dt><dd><p>The number of threads used to complete bios. Since
+completing a bio calls an arbitrary completion function
+outside the vdo volume, threads of this type allow the vdo
+volume to continue processing requests even when bio
+completion is slow. The default is 1.</p>
+</dd>
+<dt>bio:</dt><dd><p>The number of threads used to issue bios to the underlying
+storage. Threads of this type allow the vdo volume to
+continue processing requests even when bio submission is
+slow. The default is 4.</p>
+</dd>
+<dt>bioRotationInterval:</dt><dd><p>The number of bios to enqueue on each bio thread before
+switching to the next thread. The value must be greater
+than 0 and not more than 1024; the default is 64.</p>
+</dd>
+<dt>cpu:</dt><dd><p>The number of threads used to do CPU-intensive work, such
+as hashing and compression. The default is 1.</p>
+</dd>
+<dt>hash:</dt><dd><p>The number of threads used to manage data comparisons for
+deduplication based on the hash value of data blocks. The
+default is 0.</p>
+</dd>
+<dt>logical:</dt><dd><p>The number of threads used to manage caching and locking
+based on the logical address of incoming bios. The default
+is 0; the maximum is 60.</p>
+</dd>
+<dt>physical:</dt><dd><p>The number of threads used to manage administration of the
+underlying storage device. At format time, a slab size for
+the vdo is chosen; the vdo storage device must be large
+enough to have at least 1 slab per physical thread. The
+default is 0; the maximum is 16.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Miscellaneous parameters:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>maxDiscard:</dt><dd><p>The maximum size of discard bio accepted, in 4096-byte
+blocks. I/O requests to a vdo volume are normally split
+into 4096-byte blocks, and processed up to 2048 at a time.
+However, discard requests to a vdo volume can be
+automatically split to a larger size, up to &lt;maxDiscard&gt;
+4096-byte blocks in a single bio, and are limited to 1500
+at a time. Increasing this value may provide better overall
+performance, at the cost of increased latency for the
+individual discard requests. The default and minimum is 1;
+the maximum is UINT_MAX / 4096.</p>
+</dd>
+<dt>deduplication:</dt><dd><p>Whether deduplication is enabled. The default is ‘on’; the
+acceptable values are ‘on’ and ‘off’.</p>
+</dd>
+<dt>compression:</dt><dd><p>Whether compression is enabled. The default is ‘off’; the
+acceptable values are ‘on’ and ‘off’.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="device-modification">
+<h2>Device modification<a class="headerlink" href="#device-modification" title="Link to this heading">¶</a></h2>
+<p>A modified table may be loaded into a running, non-suspended vdo volume.
+The modifications will take effect when the device is next resumed. The
+modifiable parameters are &lt;logical device size&gt;, &lt;physical device size&gt;,
+&lt;maxDiscard&gt;, &lt;compression&gt;, and &lt;deduplication&gt;.</p>
+<p>If the logical device size or physical device size are changed, upon
+successful resume vdo will store the new values and require them on future
+startups. These two parameters may not be decreased. The logical device
+size may not exceed 4 PB. The physical device size must increase by at
+least 32832 4096-byte blocks if at all, and must not exceed the size of the
+underlying storage device. Additionally, when formatting the vdo device, a
+slab size is chosen: the physical device size may never increase above the
+size which provides 8192 slabs, and each increase must be large enough to
+add at least one new slab.</p>
+<p>Examples:</p>
+<p>Start a previously-formatted vdo volume with 1 GB logical space and 1 GB
+physical space, storing to /dev/dm-1 which has more than 1 GB of space.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup create vdo0 --table \
+&quot;0 2097152 vdo V4 /dev/dm-1 262144 4096 32768 16380&quot;
+</pre></div>
+</div>
+<p>Grow the logical size to 4 GB.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup reload vdo0 --table \
+&quot;0 8388608 vdo V4 /dev/dm-1 262144 4096 32768 16380&quot;
+dmsetup resume vdo0
+</pre></div>
+</div>
+<p>Grow the physical size to 2 GB.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup reload vdo0 --table \
+&quot;0 8388608 vdo V4 /dev/dm-1 524288 4096 32768 16380&quot;
+dmsetup resume vdo0
+</pre></div>
+</div>
+<p>Grow the physical size by 1 GB more and increase max discard sectors.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup reload vdo0 --table \
+&quot;0 10485760 vdo V4 /dev/dm-1 786432 4096 32768 16380 maxDiscard 8&quot;
+dmsetup resume vdo0
+</pre></div>
+</div>
+<p>Stop the vdo volume.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup remove vdo0
+</pre></div>
+</div>
+<p>Start the vdo volume again. Note that the logical and physical device sizes
+must still match, but other parameters can change.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup create vdo1 --table \
+&quot;0 10485760 vdo V4 /dev/dm-1 786432 512 65550 5000 hash 1 logical 3 physical 2&quot;
+</pre></div>
+</div>
+</section>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading">¶</a></h2>
+<p>All vdo devices accept messages in the form:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dmsetup message &lt;target-name&gt; 0 &lt;message-name&gt; &lt;message-parameters&gt;
+</pre></div>
+</div>
+<p>The messages are:</p>
+<blockquote>
+<div><dl>
+<dt>stats:</dt><dd><p>Outputs the current view of the vdo statistics. Mostly used
+by the vdostats userspace program to interpret the output
+buffer.</p>
+</dd>
+<dt>config:</dt><dd><p>Outputs useful vdo configuration information. Mostly used
+by users who want to recreate a similar VDO volume and
+want to know the creation configuration used.</p>
+</dd>
+<dt>dump:</dt><dd><p>Dumps many internal structures to the system log. This is
+not always safe to run, so it should only be used to debug
+a hung vdo. Optional parameters to specify structures to
+dump are:</p>
+<blockquote>
+<div><p>viopool: The pool of I/O requests incoming bios
+pools: A synonym of ‘viopool’
+vdo: Most of the structures managing on-disk data
+queues: Basic information about each vdo thread
+threads: A synonym of ‘queues’
+default: Equivalent to ‘queues vdo’
+all: All of the above.</p>
+</div></blockquote>
+</dd>
+<dt>dump-on-shutdown:</dt><dd><p>Perform a default dump next time vdo shuts down.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="status">
+<h2>Status<a class="headerlink" href="#status" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;device&gt; &lt;operating mode&gt; &lt;in recovery&gt; &lt;index state&gt;
+&lt;compression state&gt; &lt;physical blocks used&gt; &lt;total physical blocks&gt;
+
+    device:
+            The name of the vdo volume.
+
+    operating mode:
+            The current operating mode of the vdo volume; values may be
+            &#39;normal&#39;, &#39;recovering&#39; (the volume has detected an issue
+            with its metadata and is attempting to repair itself), and
+            &#39;read-only&#39; (an error has occurred that forces the vdo
+            volume to only support read operations and not writes).
+
+    in recovery:
+            Whether the vdo volume is currently in recovery mode;
+            values may be &#39;recovering&#39; or &#39;-&#39; which indicates not
+            recovering.
+
+    index state:
+            The current state of the deduplication index in the vdo
+            volume; values may be &#39;closed&#39;, &#39;closing&#39;, &#39;error&#39;,
+            &#39;offline&#39;, &#39;online&#39;, &#39;opening&#39;, and &#39;unknown&#39;.
+
+    compression state:
+            The current state of compression in the vdo volume; values
+            may be &#39;offline&#39; and &#39;online&#39;.
+
+    used physical blocks:
+            The number of physical blocks in use by the vdo volume.
+
+    total physical blocks:
+            The total number of physical blocks the vdo volume may use;
+            the difference between this value and the
+            &lt;used physical blocks&gt; is the number of blocks the vdo
+            volume has left before being full.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="memory-requirements">
+<h1>Memory Requirements<a class="headerlink" href="#memory-requirements" title="Link to this heading">¶</a></h1>
+<p>A vdo target requires a fixed 38 MB of RAM along with the following amounts
+that scale with the target:</p>
+<ul class="simple">
+<li><p>1.15 MB of RAM for each 1 MB of configured block map cache size. The
+block map cache requires a minimum of 150 MB.</p></li>
+<li><p>1.6 MB of RAM for each 1 TB of logical space.</p></li>
+<li><p>268 MB of RAM for each 1 TB of physical storage managed by the volume.</p></li>
+</ul>
+<p>The deduplication index requires additional memory which scales with the
+size of the deduplication window. For dense indexes, the index requires 1
+GB of RAM per 1 TB of window. For sparse indexes, the index requires 1 GB
+of RAM per 10 TB of window. The index configuration is set when the target
+is formatted and may not be modified.</p>
+</section>
+<section id="module-parameters">
+<h1>Module Parameters<a class="headerlink" href="#module-parameters" title="Link to this heading">¶</a></h1>
+<p>The vdo driver has a numeric parameter ‘log_level’ which controls the
+verbosity of logging from the driver. The default setting is 6
+(LOGLEVEL_INFO and more severe messages).</p>
+</section>
+<section id="run-time-usage">
+<h1>Run-time Usage<a class="headerlink" href="#run-time-usage" title="Link to this heading">¶</a></h1>
+<p>When using dm-vdo, it is important to be aware of the ways in which its
+behavior differs from other storage targets.</p>
+<ul class="simple">
+<li><p>There is no guarantee that over-writes of existing blocks will succeed.
+Because the underlying storage may be multiply referenced, over-writing
+an existing block generally requires a vdo to have a free block
+available.</p></li>
+<li><p>When blocks are no longer in use, sending a discard request for those
+blocks lets the vdo release references for those blocks. If the vdo is
+thinly provisioned, discarding unused blocks is essential to prevent the
+target from running out of space. However, due to the sharing of
+duplicate blocks, no discard request for any given logical block is
+guaranteed to reclaim space.</p></li>
+<li><p>Assuming the underlying storage properly implements flush requests, vdo
+is resilient against crashes, however, unflushed writes may or may not
+persist after a crash.</p></li>
+<li><p>Each write to a vdo target entails a significant amount of processing.
+However, much of the work is paralellizable. Therefore, vdo targets
+achieve better throughput at higher I/O depths, and can support up 2048
+requests in parallel.</p></li>
+</ul>
+</section>
+<section id="tuning">
+<h1>Tuning<a class="headerlink" href="#tuning" title="Link to this heading">¶</a></h1>
+<p>The vdo device has many options, and it can be difficult to make optimal
+choices without perfect knowledge of the workload. Additionally, most
+configuration options must be set when a vdo target is started, and cannot
+be changed without shutting it down completely; the configuration cannot be
+changed while the target is active. Ideally, tuning with simulated
+workloads should be performed before deploying vdo in production
+environments.</p>
+<p>The most important value to adjust is the block map cache size. In order to
+service a request for any logical address, a vdo must load the portion of
+the block map which holds the relevant mapping. These mappings are cached.
+Performance will suffer when the working set does not fit in the cache. By
+default, a vdo allocates 128 MB of metadata cache in RAM to support
+efficient access to 100 GB of logical space at a time. It should be scaled
+up proportionally for larger working sets.</p>
+<p>The logical and physical thread counts should also be adjusted. A logical
+thread controls a disjoint section of the block map, so additional logical
+threads increase parallelism and can increase throughput. Physical threads
+control a disjoint section of the data blocks, so additional physical
+threads can also increase throughput. However, excess threads can waste
+resources and increase contention.</p>
+<p>Bio submission threads control the parallelism involved in sending I/O to
+the underlying storage; fewer threads mean there is more opportunity to
+reorder I/O requests for performance benefit, but also that each I/O
+request has to wait longer before being submitted.</p>
+<p>Bio acknowledgment threads are used for finishing I/O requests. This is
+done on dedicated threads since the amount of work required to execute a
+bio’s callback can not be controlled by the vdo itself. Usually one thread
+is sufficient but additional threads may be beneficial, particularly when
+bios have CPU-heavy callbacks.</p>
+<p>CPU threads are used for hashing and for compression; in workloads with
+compression enabled, more threads may result in higher throughput.</p>
+<p>Hash threads are used to sort active requests by hash and determine whether
+they should deduplicate; the most CPU intensive actions done by these
+threads are comparison of 4096-byte data blocks. In most cases, a single
+hash thread is sufficient.</p>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">dm-vdo</a></li>
+<li><a class="reference internal" href="#userspace-component">Userspace component</a></li>
+<li><a class="reference internal" href="#metadata-requirements">Metadata requirements</a></li>
+<li><a class="reference internal" href="#target-interface">Target interface</a><ul>
+<li><a class="reference internal" href="#table-line">Table line</a></li>
+<li><a class="reference internal" href="#optional-parameters">Optional parameters:</a></li>
+<li><a class="reference internal" href="#device-modification">Device modification</a></li>
+<li><a class="reference internal" href="#messages">Messages</a></li>
+<li><a class="reference internal" href="#status">Status</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#memory-requirements">Memory Requirements</a></li>
+<li><a class="reference internal" href="#module-parameters">Module Parameters</a></li>
+<li><a class="reference internal" href="#run-time-usage">Run-time Usage</a></li>
+<li><a class="reference internal" href="#tuning">Tuning</a></li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="vdo-design.html">
+                    <span class="icon">&lt;</span><span>Design of dm-vdo</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="verity.html"><span>dm-verity</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

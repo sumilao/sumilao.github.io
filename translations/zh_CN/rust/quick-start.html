@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>快速入门 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="基本信息" href="general-information.html" />
+    <link rel="prev" title="Rust" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/rust/quick-start.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../rust/quick-start.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../rust/quick-start.html"><span class="doc">Quick Start</span></a></p>
+</dd>
+<dt class="field-even">翻译<span class="colon">:</span></dt>
+<dd class="field-even"><p>司延腾 Yanteng Si &lt;<a class="reference external" href="mailto:siyanteng&#37;&#52;&#48;loongson&#46;cn">siyanteng<span>&#64;</span>loongson<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="id1">
+<h1>快速入门<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>本文介绍了如何开始使用Rust进行内核开发。</p>
+<section id="id2">
+<h2>构建依赖<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>本节描述了如何获取构建所需的工具。</p>
+<p>其中一些依赖也许可以从Linux发行版中获得，包名可能是 <code class="docutils literal notranslate"><span class="pre">rustc</span></code> , <code class="docutils literal notranslate"><span class="pre">rust-src</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">rust-bindgen</span></code> 等。然而，在写这篇文章的时候，它们很可能还不够新，除非发行版跟踪最
+新的版本。</p>
+<p>为了方便检查是否满足要求，可以使用以下目标:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make LLVM=1 rustavailable
+</pre></div>
+</div>
+<p>这会触发与Kconfig用来确定是否应该启用 <code class="docutils literal notranslate"><span class="pre">RUST_IS_AVAILABLE</span></code> 相同的逻辑；不过，如
+果Kconfig认为不该启用，它会列出未满足的条件。</p>
+<section id="rustc">
+<h3>rustc<a class="headerlink" href="#rustc" title="Link to this heading">¶</a></h3>
+<p>需要一个特定版本的Rust编译器。较新的版本可能会也可能不会工作，因为就目前而言，内核依赖
+于一些不稳定的Rust特性。</p>
+<p>如果使用的是 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，请进入内核编译目录（或者用 <code class="docutils literal notranslate"><span class="pre">--path=&lt;build-dir&gt;</span></code> 参数
+来 <code class="docutils literal notranslate"><span class="pre">设置</span></code> sub-command)并运行:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rustup override set $(scripts/min-tool-version.sh rustc)
+</pre></div>
+</div>
+<p>+这将配置你的工作目录使用正确版本的 <code class="docutils literal notranslate"><span class="pre">rustc</span></code>，而不影响你的默认工具链。</p>
+<p>请注意覆盖应用当前的工作目录（和它的子目录）。</p>
+<p>如果你使用 <code class="docutils literal notranslate"><span class="pre">rustup</span></code>， 可以从下面的链接拉取一个单独的安装程序:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://forge.rust-lang.org/infra/other-installation-methods.html#standalone">https://forge.rust-lang.org/infra/other-installation-methods.html#standalone</a></p>
+</div></blockquote>
+</section>
+<section id="rust">
+<h3>Rust标准库源代码<a class="headerlink" href="#rust" title="Link to this heading">¶</a></h3>
+<p>Rust标准库的源代码是必需的，因为构建系统会交叉编译 <code class="docutils literal notranslate"><span class="pre">core</span></code> 和 <code class="docutils literal notranslate"><span class="pre">alloc</span></code> 。</p>
+<p>如果正在使用 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，请运行:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rustup component add rust-src
+</pre></div>
+</div>
+<p>这些组件是按工具链安装的，因此以后升级Rust编译器版本需要重新添加组件。</p>
+<p>否则，如果使用独立的安装程序，可以将Rust源码树下载到安装工具链的文件夹中:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>curl -L &quot;https://static.rust-lang.org/dist/rust-src-$(scripts/min-tool-version.sh rustc).tar.gz&quot; |
+        tar -xzf - -C &quot;$(rustc --print sysroot)/lib&quot; \
+        &quot;rust-src-$(scripts/min-tool-version.sh rustc)/rust-src/lib/&quot; \
+        --strip-components=3
+</pre></div>
+</div>
+<p>在这种情况下，以后升级Rust编译器版本需要手动更新这个源代码树（这可以通过移除
+<code class="docutils literal notranslate"><span class="pre">$(rustc</span> <span class="pre">--print</span> <span class="pre">sysroot)/lib/rustlib/src/rust</span></code> ，然后重新执行上
+面的命令做到）。</p>
+</section>
+<section id="libclang">
+<h3>libclang<a class="headerlink" href="#libclang" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">bindgen</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">libclang</span></code> （LLVM的一部分）来理解内核中的C代码，这意味着需要安
+装LLVM；同在开启``LLVM=1`` 时编译内核一样。</p>
+<p>Linux发行版中可能会有合适的包，所以最好先检查一下。</p>
+<p>适用于部分系统和架构的二进制文件也可到以下网址下载：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://releases.llvm.org/download.html">https://releases.llvm.org/download.html</a></p>
+</div></blockquote>
+<p>或者自行构建LLVM，这需要相当长的时间，但并不是一个复杂的过程：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm">https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm</a></p>
+</div></blockquote>
+<p>请参阅 <a class="reference internal" href="../../../kbuild/llvm.html"><span class="doc">Building Linux with Clang/LLVM</span></a> 了解更多信息，以及获取预构建版本和发行包
+的进一步方法。</p>
+</section>
+<section id="bindgen">
+<h3>bindgen<a class="headerlink" href="#bindgen" title="Link to this heading">¶</a></h3>
+<p>内核的C端绑定是在构建时使用 <code class="docutils literal notranslate"><span class="pre">bindgen</span></code> 工具生成的。这需要特定的版本。</p>
+<p>通过以下方式安装它（注意，这将从源码下载并构建该工具）:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen-cli
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">bindgen</span></code> 需要找到合适的 <code class="docutils literal notranslate"><span class="pre">libclang</span></code> 才能工作。如果没有找到（或者找到的
+<code class="docutils literal notranslate"><span class="pre">libclang</span></code> 与应该使用的 <code class="docutils literal notranslate"><span class="pre">libclang</span></code> 不同），则可以使用 <code class="docutils literal notranslate"><span class="pre">clang-sys</span></code>
+理解的环境变量（Rust绑定创建的 <code class="docutils literal notranslate"><span class="pre">bindgen</span></code> 用来访问 <code class="docutils literal notranslate"><span class="pre">libclang</span></code>）:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">LLVM_CONFIG_PATH</span></code> 可以指向一个 <code class="docutils literal notranslate"><span class="pre">llvm-config</span></code> 可执行文件。</p></li>
+<li><p>或者 <code class="docutils literal notranslate"><span class="pre">LIBCLANG_PATH</span></code> 可以指向 <code class="docutils literal notranslate"><span class="pre">libclang</span></code> 共享库或包含它的目录。</p></li>
+<li><p>或者 <code class="docutils literal notranslate"><span class="pre">CLANG_PATH</span></code> 可以指向 <code class="docutils literal notranslate"><span class="pre">clang</span></code> 可执行文件。</p></li>
+</ul>
+<p>详情请参阅 <code class="docutils literal notranslate"><span class="pre">clang-sys</span></code> 的文档:</p>
+</section>
+</section>
+<section id="id3">
+<h2>开发依赖<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>本节解释了如何获取开发所需的工具。也就是说，在构建内核时不需要这些工具。</p>
+<section id="rustfmt">
+<h3>rustfmt<a class="headerlink" href="#rustfmt" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">rustfmt</span></code> 工具被用来自动格式化所有的Rust内核代码，包括生成的C绑定（详情请见
+<a class="reference internal" href="coding-guidelines.html"><span class="doc">编码指南</span></a> ）。</p>
+<p>如果使用的是 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，它的 <code class="docutils literal notranslate"><span class="pre">默认</span></code> 配置文件已经安装了这个工具，因此不需要做什么。
+如果使用的是其他配置文件，可以手动安装该组件:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rustup component add rustfmt
+</pre></div>
+</div>
+<p>独立的安装程序也带有 <code class="docutils literal notranslate"><span class="pre">rustfmt</span></code> 。</p>
+</section>
+<section id="clippy">
+<h3>clippy<a class="headerlink" href="#clippy" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">clippy</span></code> 是一个Rust linter。运行它可以为Rust代码提供额外的警告。它可以通过向 <code class="docutils literal notranslate"><span class="pre">make</span></code>
+传递 <code class="docutils literal notranslate"><span class="pre">CLIPPY=1</span></code> 来运行（关于细节，详见 <a class="reference internal" href="general-information.html"><span class="doc">基本信息</span></a> ）。</p>
+<p>如果正在使用 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，它的 <code class="docutils literal notranslate"><span class="pre">默认</span></code> 配置文件已经安装了这个工具，因此不需要做什么。
+如果使用的是另一个配置文件，该组件可以被手动安装:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rustup component add clippy
+</pre></div>
+</div>
+<p>独立的安装程序也带有 <code class="docutils literal notranslate"><span class="pre">clippy</span></code> 。</p>
+</section>
+<section id="cargo">
+<h3>cargo<a class="headerlink" href="#cargo" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cargo</span></code> 是Rust的本地构建系统。目前需要它来运行测试，因为它被用来构建一个自定义的标准
+库，其中包含了内核中自定义 <code class="docutils literal notranslate"><span class="pre">alloc</span></code> 所提供的设施。测试可以使用 <code class="docutils literal notranslate"><span class="pre">rusttest</span></code> Make 目标
+来运行。</p>
+<p>如果使用的是 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，所有的配置文件都已经安装了该工具，因此不需要再做什么。</p>
+<p>独立的安装程序也带有 <code class="docutils literal notranslate"><span class="pre">cargo</span></code> 。</p>
+</section>
+<section id="rustdoc">
+<h3>rustdoc<a class="headerlink" href="#rustdoc" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> 是Rust的文档工具。它为Rust代码生成漂亮的HTML文档（详情请见 <a class="reference internal" href="general-information.html"><span class="doc">基本信息</span></a> ）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> 也被用来测试文档化的Rust代码中提供的例子（称为doctests或文档测试）。
+<code class="docutils literal notranslate"><span class="pre">rusttest</span></code> 是本功能的Make目标。</p>
+<p>如果使用的是 <code class="docutils literal notranslate"><span class="pre">rustup</span></code> ，所有的配置文件都已经安装了这个工具，因此不需要做什么。</p>
+<p>独立的安装程序也带有 <code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> 。</p>
+</section>
+<section id="rust-analyzer">
+<h3>rust-analyzer<a class="headerlink" href="#rust-analyzer" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://rust-analyzer.github.io/">rust-analyzer</a> 语言服务器可以和许多编辑器
+一起使用，以实现语法高亮、补全、转到定义和其他功能。</p>
+<p><code class="docutils literal notranslate"><span class="pre">rust-analyzer</span></code> 需要一个配置文件， <code class="docutils literal notranslate"><span class="pre">rust-project.json</span></code>, 它可以由 <code class="docutils literal notranslate"><span class="pre">rust-analyzer</span></code>
+Make 目标生成:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make LLVM=1 rust-analyzer
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>配置<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<p>Rust支持（CONFIG_RUST）需要在 <code class="docutils literal notranslate"><span class="pre">General</span> <span class="pre">setup</span></code> 菜单中启用。在其他要求得到满足的情
+况下，该选项只有在找到合适的Rust工具链时才会显示（见上文）。相应的，这将使依赖Rust的其
+他选项可见。</p>
+<p>之后，进入:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Kernel hacking
+    -&gt; Sample kernel code
+        -&gt; Rust samples
+</pre></div>
+</div>
+<p>并启用一些内置或可加载的样例模块。</p>
+</section>
+<section id="id6">
+<h2>构建<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>用完整的LLVM工具链构建内核是目前支持的最佳设置。即:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make LLVM=1
+</pre></div>
+</div>
+<p>使用GCC对某些配置也是可行的，但目前它是非常试验性的。</p>
+</section>
+<section id="id7">
+<h2>折腾<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>要想深入了解，请看 <code class="docutils literal notranslate"><span class="pre">samples/rust/</span></code> 下的样例源代码、 <code class="docutils literal notranslate"><span class="pre">rust/</span></code> 下的Rust支持代码和
+<code class="docutils literal notranslate"><span class="pre">Kernel</span> <span class="pre">hacking</span></code> 下的 <code class="docutils literal notranslate"><span class="pre">Rust</span> <span class="pre">hacking</span></code> 菜单。</p>
+<p>如果使用的是GDB/Binutils，而Rust符号没有被demangled，原因是工具链还不支持Rust的新v0
+mangling方案。有几个办法可以解决：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>安装一个较新的版本（GDB &gt;= 10.2, Binutils &gt;= 2.36）。</p></li>
+<li><p>一些版本的GDB（例如vanilla GDB 10.1）能够使用嵌入在调试信息(<code class="docutils literal notranslate"><span class="pre">CONFIG_DEBUG_INFO</span></code>)
+中的pre-demangled的名字。</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">快速入门</a><ul>
+<li><a class="reference internal" href="#id2">构建依赖</a><ul>
+<li><a class="reference internal" href="#rustc">rustc</a></li>
+<li><a class="reference internal" href="#rust">Rust标准库源代码</a></li>
+<li><a class="reference internal" href="#libclang">libclang</a></li>
+<li><a class="reference internal" href="#bindgen">bindgen</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">开发依赖</a><ul>
+<li><a class="reference internal" href="#rustfmt">rustfmt</a></li>
+<li><a class="reference internal" href="#clippy">clippy</a></li>
+<li><a class="reference internal" href="#cargo">cargo</a></li>
+<li><a class="reference internal" href="#rustdoc">rustdoc</a></li>
+<li><a class="reference internal" href="#rust-analyzer">rust-analyzer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">配置</a></li>
+<li><a class="reference internal" href="#id6">构建</a></li>
+<li><a class="reference internal" href="#id7">折腾</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>Rust</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="general-information.html"><span>基本信息</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

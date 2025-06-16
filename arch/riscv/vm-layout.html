@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Virtual Memory Layout on RISC-V Linux &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RISC-V Hardware Probing Interface" href="hwprobe.html" />
+    <link rel="prev" title="Boot image header in RISC-V Linux" href="boot-image-header.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">CPU architectures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../arc/index.html">ARC architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arm/index.html">ARM Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arm64/index.html">ARM64 Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../loongarch/index.html">LoongArch Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../m68k/index.html">m68k Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mips/index.html">MIPS-specific Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nios2/index.html">Nios II Specific Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../openrisc/index.html">OpenRISC Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../parisc/index.html">PA-RISC Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerpc/index.html">powerpc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">RISC-V architecture</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="acpi.html">ACPI on RISC-V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot.html">RISC-V Kernel Boot Requirements and Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot-image-header.html">Boot image header in RISC-V Linux</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Virtual Memory Layout on RISC-V Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hwprobe.html">RISC-V Hardware Probing Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="patch-acceptance.html">arch/riscv maintenance guidelines for developers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uabi.html">RISC-V Linux User ABI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vector.html">Vector Extension Support for RISC-V Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmodx.html">Concurrent Modification and Execution of Instructions (CMODX) for RISC-V Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features.html">Feature status on riscv architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../s390/index.html">s390 Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sh/index.html">SuperH Interfaces Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparc/index.html">Sparc Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../x86/index.html">x86-specific Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xtensa/index.html">Xtensa Architecture</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/arch/riscv/vm-layout.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../../translations/zh_CN/arch/riscv/vm-layout.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="virtual-memory-layout-on-risc-v-linux">
+<h1>Virtual Memory Layout on RISC-V Linux<a class="headerlink" href="#virtual-memory-layout-on-risc-v-linux" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Alexandre Ghiti &lt;<a class="reference external" href="mailto:alex&#37;&#52;&#48;ghiti&#46;fr">alex<span>&#64;</span>ghiti<span>&#46;</span>fr</a>&gt;</p>
+</dd>
+<dt class="field-even">Date<span class="colon">:</span></dt>
+<dd class="field-even"><p>12 February 2021</p>
+</dd>
+</dl>
+<p>This document describes the virtual memory layout used by the RISC-V Linux
+Kernel.</p>
+<section id="risc-v-linux-kernel-32bit">
+<h2>RISC-V Linux Kernel 32bit<a class="headerlink" href="#risc-v-linux-kernel-32bit" title="Link to this heading">¶</a></h2>
+<section id="risc-v-linux-kernel-sv32">
+<h3>RISC-V Linux Kernel SV32<a class="headerlink" href="#risc-v-linux-kernel-sv32" title="Link to this heading">¶</a></h3>
+<p>TODO</p>
+</section>
+</section>
+<section id="risc-v-linux-kernel-64bit">
+<h2>RISC-V Linux Kernel 64bit<a class="headerlink" href="#risc-v-linux-kernel-64bit" title="Link to this heading">¶</a></h2>
+<p>The RISC-V privileged architecture document states that the 64bit addresses
+“must have bits 63–48 all equal to bit 47, or else a page-fault exception will
+occur.”: that splits the virtual address space into 2 halves separated by a very
+big hole, the lower half is where the userspace resides, the upper half is where
+the RISC-V Linux Kernel resides.</p>
+<section id="risc-v-linux-kernel-sv39">
+<h3>RISC-V Linux Kernel SV39<a class="headerlink" href="#risc-v-linux-kernel-sv39" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>========================================================================================================================
+    Start addr    |   Offset   |     End addr     |  Size   | VM area description
+========================================================================================================================
+                  |            |                  |         |
+ 0000000000000000 |    0       | 0000003fffffffff |  256 GB | user-space virtual memory, different per mm
+__________________|____________|__________________|_________|___________________________________________________________
+                  |            |                  |         |
+ 0000004000000000 | +256    GB | ffffffbfffffffff | ~16M TB | ... huge, almost 64 bits wide hole of non-canonical
+                  |            |                  |         |     virtual memory addresses up to the -256 GB
+                  |            |                  |         |     starting offset of kernel mappings.
+__________________|____________|__________________|_________|___________________________________________________________
+                                                            |
+                                                            | Kernel-space virtual memory, shared between all processes:
+____________________________________________________________|___________________________________________________________
+                  |            |                  |         |
+ ffffffc4fea00000 | -236    GB | ffffffc4feffffff |    6 MB | fixmap
+ ffffffc4ff000000 | -236    GB | ffffffc4ffffffff |   16 MB | PCI io
+ ffffffc500000000 | -236    GB | ffffffc5ffffffff |    4 GB | vmemmap
+ ffffffc600000000 | -232    GB | ffffffd5ffffffff |   64 GB | vmalloc/ioremap space
+ ffffffd600000000 | -168    GB | fffffff5ffffffff |  128 GB | direct mapping of all physical memory
+                  |            |                  |         |
+ fffffff700000000 |  -36    GB | fffffffeffffffff |   32 GB | kasan
+__________________|____________|__________________|_________|____________________________________________________________
+                                                            |
+                                                            |
+____________________________________________________________|____________________________________________________________
+                  |            |                  |         |
+ ffffffff00000000 |   -4    GB | ffffffff7fffffff |    2 GB | modules, BPF
+ ffffffff80000000 |   -2    GB | ffffffffffffffff |    2 GB | kernel
+__________________|____________|__________________|_________|____________________________________________________________
+</pre></div>
+</div>
+</section>
+<section id="risc-v-linux-kernel-sv48">
+<h3>RISC-V Linux Kernel SV48<a class="headerlink" href="#risc-v-linux-kernel-sv48" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>========================================================================================================================
+     Start addr    |   Offset   |     End addr     |  Size   | VM area description
+========================================================================================================================
+                   |            |                  |         |
+  0000000000000000 |    0       | 00007fffffffffff |  128 TB | user-space virtual memory, different per mm
+ __________________|____________|__________________|_________|___________________________________________________________
+                   |            |                  |         |
+  0000800000000000 | +128    TB | ffff7fffffffffff | ~16M TB | ... huge, almost 64 bits wide hole of non-canonical
+                   |            |                  |         | virtual memory addresses up to the -128 TB
+                   |            |                  |         | starting offset of kernel mappings.
+ __________________|____________|__________________|_________|___________________________________________________________
+                                                             |
+                                                             | Kernel-space virtual memory, shared between all processes:
+ ____________________________________________________________|___________________________________________________________
+                   |            |                  |         |
+  ffff8d7ffea00000 |  -114.5 TB | ffff8d7ffeffffff |    6 MB | fixmap
+  ffff8d7fff000000 |  -114.5 TB | ffff8d7fffffffff |   16 MB | PCI io
+  ffff8d8000000000 |  -114.5 TB | ffff8f7fffffffff |    2 TB | vmemmap
+  ffff8f8000000000 |  -112.5 TB | ffffaf7fffffffff |   32 TB | vmalloc/ioremap space
+  ffffaf8000000000 |  -80.5  TB | ffffef7fffffffff |   64 TB | direct mapping of all physical memory
+  ffffef8000000000 |  -16.5  TB | fffffffeffffffff | 16.5 TB | kasan
+ __________________|____________|__________________|_________|____________________________________________________________
+                                                             |
+                                                             | Identical layout to the 39-bit one from here on:
+ ____________________________________________________________|____________________________________________________________
+                   |            |                  |         |
+  ffffffff00000000 |   -4    GB | ffffffff7fffffff |    2 GB | modules, BPF
+  ffffffff80000000 |   -2    GB | ffffffffffffffff |    2 GB | kernel
+ __________________|____________|__________________|_________|____________________________________________________________
+</pre></div>
+</div>
+</section>
+<section id="risc-v-linux-kernel-sv57">
+<h3>RISC-V Linux Kernel SV57<a class="headerlink" href="#risc-v-linux-kernel-sv57" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>========================================================================================================================
+     Start addr    |   Offset   |     End addr     |  Size   | VM area description
+========================================================================================================================
+                   |            |                  |         |
+  0000000000000000 |   0        | 00ffffffffffffff |   64 PB | user-space virtual memory, different per mm
+ __________________|____________|__________________|_________|___________________________________________________________
+                   |            |                  |         |
+  0100000000000000 | +64     PB | feffffffffffffff | ~16K PB | ... huge, almost 64 bits wide hole of non-canonical
+                   |            |                  |         | virtual memory addresses up to the -64 PB
+                   |            |                  |         | starting offset of kernel mappings.
+ __________________|____________|__________________|_________|___________________________________________________________
+                                                             |
+                                                             | Kernel-space virtual memory, shared between all processes:
+ ____________________________________________________________|___________________________________________________________
+                   |            |                  |         |
+  ff1bfffffea00000 | -57     PB | ff1bfffffeffffff |    6 MB | fixmap
+  ff1bffffff000000 | -57     PB | ff1bffffffffffff |   16 MB | PCI io
+  ff1c000000000000 | -57     PB | ff1fffffffffffff |    1 PB | vmemmap
+  ff20000000000000 | -56     PB | ff5fffffffffffff |   16 PB | vmalloc/ioremap space
+  ff60000000000000 | -40     PB | ffdeffffffffffff |   32 PB | direct mapping of all physical memory
+  ffdf000000000000 |  -8     PB | fffffffeffffffff |    8 PB | kasan
+ __________________|____________|__________________|_________|____________________________________________________________
+                                                             |
+                                                             | Identical layout to the 39-bit one from here on:
+ ____________________________________________________________|____________________________________________________________
+                   |            |                  |         |
+  ffffffff00000000 |  -4     GB | ffffffff7fffffff |    2 GB | modules, BPF
+  ffffffff80000000 |  -2     GB | ffffffffffffffff |    2 GB | kernel
+ __________________|____________|__________________|_________|____________________________________________________________
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Virtual Memory Layout on RISC-V Linux</a><ul>
+<li><a class="reference internal" href="#risc-v-linux-kernel-32bit">RISC-V Linux Kernel 32bit</a><ul>
+<li><a class="reference internal" href="#risc-v-linux-kernel-sv32">RISC-V Linux Kernel SV32</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#risc-v-linux-kernel-64bit">RISC-V Linux Kernel 64bit</a><ul>
+<li><a class="reference internal" href="#risc-v-linux-kernel-sv39">RISC-V Linux Kernel SV39</a></li>
+<li><a class="reference internal" href="#risc-v-linux-kernel-sv48">RISC-V Linux Kernel SV48</a></li>
+<li><a class="reference internal" href="#risc-v-linux-kernel-sv57">RISC-V Linux Kernel SV57</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="boot-image-header.html">
+                    <span class="icon">&lt;</span><span>Boot image header in RISC-V Linux</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="hwprobe.html"><span>RISC-V Hardware Probing Interface</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6pack Protocol &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ARCnet Hardware" href="arcnet-hardware.html" />
+    <link rel="prev" title="Netdev private dataroom for 6lowpan interfaces" href="6lowpan.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/6pack.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="pack-protocol">
+<h1>6pack Protocol<a class="headerlink" href="#pack-protocol" title="Link to this heading">¶</a></h1>
+<p>This is the 6pack-mini-HOWTO, written by</p>
+<p>Andreas Könsgen DG3KQ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Internet<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="mailto:ajk&#37;&#52;&#48;comnets&#46;uni-bremen&#46;de">ajk<span>&#64;</span>comnets<span>&#46;</span>uni-bremen<span>&#46;</span>de</a></p>
+</dd>
+<dt class="field-even">AMPR-net<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="mailto:dg3kq&#37;&#52;&#48;db0pra&#46;ampr&#46;org">dg3kq<span>&#64;</span>db0pra<span>&#46;</span>ampr<span>&#46;</span>org</a></p>
+</dd>
+<dt class="field-odd">AX.25<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="mailto:dg3kq&#37;&#52;&#48;db0ach&#46;#nrw&#46;deu&#46;eu">dg3kq<span>&#64;</span>db0ach<span>&#46;</span>#nrw<span>&#46;</span>deu<span>&#46;</span>eu</a></p>
+</dd>
+</dl>
+<p>Last update: April 7, 1998</p>
+<section id="what-is-6pack-and-what-are-the-advantages-to-kiss">
+<h2>1. What is 6pack, and what are the advantages to KISS?<a class="headerlink" href="#what-is-6pack-and-what-are-the-advantages-to-kiss" title="Link to this heading">¶</a></h2>
+<p>6pack is a transmission protocol for data exchange between the PC and
+the TNC over a serial line. It can be used as an alternative to KISS.</p>
+<p>6pack has two major advantages:</p>
+<ul class="simple">
+<li><p>The PC is given full control over the radio
+channel. Special control data is exchanged between the PC and the TNC so
+that the PC knows at any time if the TNC is receiving data, if a TNC
+buffer underrun or overrun has occurred, if the PTT is
+set and so on. This control data is processed at a higher priority than
+normal data, so a data stream can be interrupted at any time to issue an
+important event. This helps to improve the channel access and timing
+algorithms as everything is computed in the PC. It would even be possible
+to experiment with something completely different from the known CSMA and
+DAMA channel access methods.
+This kind of real-time control is especially important to supply several
+TNCs that are connected between each other and the PC by a daisy chain
+(however, this feature is not supported yet by the Linux 6pack driver).</p></li>
+<li><p>Each packet transferred over the serial line is supplied with a checksum,
+so it is easy to detect errors due to problems on the serial line.
+Received packets that are corrupt are not passed on to the AX.25 layer.
+Damaged packets that the TNC has received from the PC are not transmitted.</p></li>
+</ul>
+<p>More details about 6pack are described in the file 6pack.ps that is located
+in the doc directory of the AX.25 utilities package.</p>
+</section>
+<section id="who-has-developed-the-6pack-protocol">
+<h2>2. Who has developed the 6pack protocol?<a class="headerlink" href="#who-has-developed-the-6pack-protocol" title="Link to this heading">¶</a></h2>
+<p>The 6pack protocol has been developed by Ekki Plicht DF4OR, Henning Rech
+DF9IC and Gunter Jost DK7WJ. A driver for 6pack, written by Gunter Jost and
+Matthias Welwarsky DG2FEF, comes along with the PC version of FlexNet.
+They have also written a firmware for TNCs to perform the 6pack
+protocol (see section 4 below).</p>
+</section>
+<section id="where-can-i-get-the-latest-version-of-6pack-for-linux">
+<h2>3. Where can I get the latest version of 6pack for LinuX?<a class="headerlink" href="#where-can-i-get-the-latest-version-of-6pack-for-linux" title="Link to this heading">¶</a></h2>
+<p>At the moment, the 6pack stuff can obtained via anonymous ftp from
+db0bm.automation.fh-aachen.de. In the directory /incoming/dg3kq,
+there is a file named 6pack.tgz.</p>
+</section>
+<section id="preparing-the-tnc-for-6pack-operation">
+<h2>4. Preparing the TNC for 6pack operation<a class="headerlink" href="#preparing-the-tnc-for-6pack-operation" title="Link to this heading">¶</a></h2>
+<p>To be able to use 6pack, a special firmware for the TNC is needed. The EPROM
+of a newly bought TNC does not contain 6pack, so you will have to
+program an EPROM yourself. The image file for 6pack EPROMs should be
+available on any packet radio box where PC/FlexNet can be found. The name of
+the file is 6pack.bin. This file is copyrighted and maintained by the FlexNet
+team. It can be used under the terms of the license that comes along
+with PC/FlexNet. Please do not ask me about the internals of this file as I
+don’t know anything about it. I used a textual description of the 6pack
+protocol to program the Linux driver.</p>
+<p>TNCs contain a 64kByte EPROM, the lower half of which is used for
+the firmware/KISS. The upper half is either empty or is sometimes
+programmed with software called TAPR. In the latter case, the TNC
+is supplied with a DIP switch so you can easily change between the
+two systems. When programming a new EPROM, one of the systems is replaced
+by 6pack. It is useful to replace TAPR, as this software is rarely used
+nowadays. If your TNC is not equipped with the switch mentioned above, you
+can build in one yourself that switches over the highest address pin
+of the EPROM between HIGH and LOW level. After having inserted the new EPROM
+and switched to 6pack, apply power to the TNC for a first test. The connect
+and the status LED are lit for about a second if the firmware initialises
+the TNC correctly.</p>
+</section>
+<section id="building-and-installing-the-6pack-driver">
+<h2>5. Building and installing the 6pack driver<a class="headerlink" href="#building-and-installing-the-6pack-driver" title="Link to this heading">¶</a></h2>
+<p>The driver has been tested with kernel version 2.1.90. Use with older
+kernels may lead to a compilation error because the interface to a kernel
+function has been changed in the 2.1.8x kernels.</p>
+</section>
+<section id="how-to-turn-on-6pack-support">
+<h2>How to turn on 6pack support:<a class="headerlink" href="#how-to-turn-on-6pack-support" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>In the linux kernel configuration program, select the code maturity level
+options menu and turn on the prompting for development drivers.</p></li>
+<li><p>Select the amateur radio support menu and turn on the serial port 6pack
+driver.</p></li>
+<li><p>Compile and install the kernel and the modules.</p></li>
+</ul>
+<p>To use the driver, the kissattach program delivered with the AX.25 utilities
+has to be modified.</p>
+<ul>
+<li><p>Do a cd to the directory that holds the kissattach sources. Edit the
+kissattach.c file. At the top, insert the following lines:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#ifndef N_6PACK
+#define N_6PACK (N_AX25+1)
+#endif
+</pre></div>
+</div>
+<p>Then find the line:</p>
+<blockquote>
+<div><p>int disc = N_AX25;</p>
+</div></blockquote>
+<p>and replace N_AX25 by N_6PACK.</p>
+</li>
+<li><p>Recompile kissattach. Rename it to spattach to avoid confusions.</p></li>
+</ul>
+<section id="installing-the-driver">
+<h3>Installing the driver:<a class="headerlink" href="#installing-the-driver" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Do an insmod 6pack. Look at your /var/log/messages file to check if the
+module has printed its initialization message.</p></li>
+<li><p>Do a spattach as you would launch kissattach when starting a KISS port.
+Check if the kernel prints the message ‘6pack: TNC found’.</p></li>
+<li><p>From here, everything should work as if you were setting up a KISS port.
+The only difference is that the network device that represents
+the 6pack port is called sp instead of sl or ax. So, sp0 would be the
+first 6pack port.</p></li>
+</ul>
+<p>Although the driver has been tested on various platforms, I still declare it
+ALPHA. BE CAREFUL! Sync your disks before insmoding the 6pack module
+and spattaching. Watch out if your computer behaves strangely. Read section
+6 of this file about known problems.</p>
+<p>Note that the connect and status LEDs of the TNC are controlled in a
+different way than they are when the TNC is used with PC/FlexNet. When using
+FlexNet, the connect LED is on if there is a connection; the status LED is
+on if there is data in the buffer of the PC’s AX.25 engine that has to be
+transmitted. Under Linux, the 6pack layer is beyond the AX.25 layer,
+so the 6pack driver doesn’t know anything about connects or data that
+has not yet been transmitted. Therefore the LEDs are controlled
+as they are in KISS mode: The connect LED is turned on if data is transferred
+from the PC to the TNC over the serial line, the status LED if data is
+sent to the PC.</p>
+</section>
+</section>
+<section id="known-problems">
+<h2>6. Known problems<a class="headerlink" href="#known-problems" title="Link to this heading">¶</a></h2>
+<p>When testing the driver with 2.0.3x kernels and
+operating with data rates on the radio channel of 9600 Baud or higher,
+the driver may, on certain systems, sometimes print the message ‘6pack:
+bad checksum’, which is due to data loss if the other station sends two
+or more subsequent packets. I have been told that this is due to a problem
+with the serial driver of 2.0.3x kernels. I don’t know yet if the problem
+still exists with 2.1.x kernels, as I have heard that the serial driver
+code has been changed with 2.1.x.</p>
+<p>When shutting down the sp interface with ifconfig, the kernel crashes if
+there is still an AX.25 connection left over which an IP connection was
+running, even if that IP connection is already closed. The problem does not
+occur when there is a bare AX.25 connection still running. I don’t know if
+this is a problem of the 6pack driver or something else in the kernel.</p>
+<p>The driver has been tested as a module, not yet as a kernel-builtin driver.</p>
+<p>The 6pack protocol supports daisy-chaining of TNCs in a token ring, which is
+connected to one serial port of the PC. This feature is not implemented
+and at least at the moment I won’t be able to do it because I do not have
+the opportunity to build a TNC daisy-chain and test it.</p>
+<p>Some of the comments in the source code are inaccurate. They are left from
+the SLIP/KISS driver, from which the 6pack driver has been derived.
+I haven’t modified or removed them yet -- sorry! The code itself needs
+some cleaning and optimizing. This will be done in a later release.</p>
+<p>If you encounter a bug or if you have a question or suggestion concerning the
+driver, feel free to mail me, using the addresses given at the beginning of
+this file.</p>
+<p>Have fun!</p>
+<p>Andreas</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">6pack Protocol</a><ul>
+<li><a class="reference internal" href="#what-is-6pack-and-what-are-the-advantages-to-kiss">1. What is 6pack, and what are the advantages to KISS?</a></li>
+<li><a class="reference internal" href="#who-has-developed-the-6pack-protocol">2. Who has developed the 6pack protocol?</a></li>
+<li><a class="reference internal" href="#where-can-i-get-the-latest-version-of-6pack-for-linux">3. Where can I get the latest version of 6pack for LinuX?</a></li>
+<li><a class="reference internal" href="#preparing-the-tnc-for-6pack-operation">4. Preparing the TNC for 6pack operation</a></li>
+<li><a class="reference internal" href="#building-and-installing-the-6pack-driver">5. Building and installing the 6pack driver</a></li>
+<li><a class="reference internal" href="#how-to-turn-on-6pack-support">How to turn on 6pack support:</a><ul>
+<li><a class="reference internal" href="#installing-the-driver">Installing the driver:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-problems">6. Known problems</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="6lowpan.html">
+                    <span class="icon">&lt;</span><span>Netdev private dataroom for 6lowpan interfaces</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="arcnet-hardware.html"><span>ARCnet Hardware</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

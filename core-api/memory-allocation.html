@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Memory Allocation Guide &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unaligned Memory Accesses" href="unaligned-memory-access.html" />
+    <link rel="prev" title="Memory Protection Keys" href="protection-keys.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-utilities">Core utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#data-structures-and-low-level-utilities">Data structures and low-level utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-entry-and-exit">Low level entry and exit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#concurrency-primitives">Concurrency primitives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-hardware-management">Low-level hardware management</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#memory-management">Memory management</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Memory Allocation Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unaligned-memory-access.html">Unaligned Memory Accesses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dma-api.html">Dynamic DMA mapping using the generic device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dma-api-howto.html">Dynamic DMA mapping Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dma-attributes.html">DMA attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dma-isa-lpc.html">DMA with ISA and LPC devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="swiotlb.html">DMA and swiotlb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mm-api.html">Memory Management APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgroup.html">Cgroup Kernel APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="genalloc.html">The genalloc/genpool subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pin_user_pages.html">pin_user_pages() and related calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot-time-mm.html">Boot time memory management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gfp_mask-from-fs-io.html">GFP masks used from FS/IO context</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#interfaces-for-kernel-debugging">Interfaces for kernel debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/core-api/memory-allocation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/core-api/memory-allocation.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/it_IT/core-api/memory-allocation.html">Italian</a></li>
+
+</ul>
+</div>
+<section id="memory-allocation-guide">
+<span id="memory-allocation"></span><h1>Memory Allocation Guide<a class="headerlink" href="#memory-allocation-guide" title="Link to this heading">¶</a></h1>
+<p>Linux provides a variety of APIs for memory allocation. You can
+allocate small chunks using <cite>kmalloc</cite> or <cite>kmem_cache_alloc</cite> families,
+large virtually contiguous areas using <cite>vmalloc</cite> and its derivatives,
+or you can directly request pages from the page allocator with
+<cite>alloc_pages</cite>. It is also possible to use more specialized allocators,
+for instance <cite>cma_alloc</cite> or <cite>zs_malloc</cite>.</p>
+<p>Most of the memory allocation APIs use GFP flags to express how that
+memory should be allocated. The GFP acronym stands for “get free
+pages”, the underlying memory allocation function.</p>
+<p>Diversity of the allocation APIs combined with the numerous GFP flags
+makes the question “How should I allocate memory?” not that easy to
+answer, although very likely you should use</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kzalloc(&lt;size&gt;, GFP_KERNEL);
+</pre></div>
+</div>
+<p>Of course there are cases when other allocation APIs and different GFP
+flags must be used.</p>
+<section id="get-free-page-flags">
+<h2>Get Free Page flags<a class="headerlink" href="#get-free-page-flags" title="Link to this heading">¶</a></h2>
+<p>The GFP flags control the allocators behavior. They tell what memory
+zones can be used, how hard the allocator should try to find free
+memory, whether the memory can be accessed by the userspace etc. The
+<a class="reference internal" href="mm-api.html#mm-api-gfp-flags"><span class="std std-ref">Documentation/core-api/mm-api.rst</span></a> provides
+reference documentation for the GFP flags and their combinations and
+here we briefly outline their recommended usage:</p>
+<blockquote>
+<div><ul>
+<li><p>Most of the time <code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span></code> is what you need. Memory for the
+kernel data structures, DMAable memory, inode cache, all these and
+many other allocations types can use <code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span></code>. Note, that
+using <code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span></code> implies <code class="docutils literal notranslate"><span class="pre">GFP_RECLAIM</span></code>, which means that
+direct reclaim may be triggered under memory pressure; the calling
+context must be allowed to sleep.</p></li>
+<li><p>If the allocation is performed from an atomic context, e.g interrupt
+handler, use <code class="docutils literal notranslate"><span class="pre">GFP_NOWAIT</span></code>. This flag prevents direct reclaim and
+IO or filesystem operations. Consequently, under memory pressure
+<code class="docutils literal notranslate"><span class="pre">GFP_NOWAIT</span></code> allocation is likely to fail. Users of this flag need
+to provide a suitable fallback to cope with such failures where
+appropriate.</p></li>
+<li><p>If you think that accessing memory reserves is justified and the kernel
+will be stressed unless allocation succeeds, you may use <code class="docutils literal notranslate"><span class="pre">GFP_ATOMIC</span></code>.</p></li>
+<li><p>Untrusted allocations triggered from userspace should be a subject
+of kmem accounting and must have <code class="docutils literal notranslate"><span class="pre">__GFP_ACCOUNT</span></code> bit set. There
+is the handy <code class="docutils literal notranslate"><span class="pre">GFP_KERNEL_ACCOUNT</span></code> shortcut for <code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span></code>
+allocations that should be accounted.</p></li>
+<li><p>Userspace allocations should use either of the <code class="docutils literal notranslate"><span class="pre">GFP_USER</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GFP_HIGHUSER</span></code> or <code class="docutils literal notranslate"><span class="pre">GFP_HIGHUSER_MOVABLE</span></code> flags. The longer
+the flag name the less restrictive it is.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GFP_HIGHUSER_MOVABLE</span></code> does not require that allocated memory
+will be directly accessible by the kernel and implies that the
+data is movable.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GFP_HIGHUSER</span></code> means that the allocated memory is not movable,
+but it is not required to be directly accessible by the kernel. An
+example may be a hardware allocation that maps data directly into
+userspace but has no addressing limitations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GFP_USER</span></code> means that the allocated memory is not movable and it
+must be directly accessible by the kernel.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>You may notice that quite a few allocations in the existing code
+specify <code class="docutils literal notranslate"><span class="pre">GFP_NOIO</span></code> or <code class="docutils literal notranslate"><span class="pre">GFP_NOFS</span></code>. Historically, they were used to
+prevent recursion deadlocks caused by direct memory reclaim calling
+back into the FS or IO paths and blocking on already held
+resources. Since 4.12 the preferred way to address this issue is to
+use new scope APIs described in
+<a class="reference internal" href="gfp_mask-from-fs-io.html#gfp-mask-from-fs-io"><span class="std std-ref">Documentation/core-api/gfp_mask-from-fs-io.rst</span></a>.</p>
+<p>Other legacy GFP flags are <code class="docutils literal notranslate"><span class="pre">GFP_DMA</span></code> and <code class="docutils literal notranslate"><span class="pre">GFP_DMA32</span></code>. They are
+used to ensure that the allocated memory is accessible by hardware
+with limited addressing capabilities. So unless you are writing a
+driver for a device with such restrictions, avoid using these flags.
+And even with hardware with restrictions it is preferable to use
+<cite>dma_alloc*</cite> APIs.</p>
+<section id="gfp-flags-and-reclaim-behavior">
+<h3>GFP flags and reclaim behavior<a class="headerlink" href="#gfp-flags-and-reclaim-behavior" title="Link to this heading">¶</a></h3>
+<p>Memory allocations may trigger direct or background reclaim and it is
+useful to understand how hard the page allocator will try to satisfy that
+or another request.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span> <span class="pre">&amp;</span> <span class="pre">~__GFP_RECLAIM</span></code> - optimistic allocation without _any_
+attempt to free memory at all. The most light weight mode which even
+doesn’t kick the background reclaim. Should be used carefully because it
+might deplete the memory and the next user might hit the more aggressive
+reclaim.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span> <span class="pre">&amp;</span> <span class="pre">~__GFP_DIRECT_RECLAIM</span></code> (or <code class="docutils literal notranslate"><span class="pre">GFP_NOWAIT</span></code>)- optimistic
+allocation without any attempt to free memory from the current
+context but can wake kswapd to reclaim memory if the zone is below
+the low watermark. Can be used from either atomic contexts or when
+the request is a performance optimization and there is another
+fallback for a slow path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(GFP_KERNEL|__GFP_HIGH)</span> <span class="pre">&amp;</span> <span class="pre">~__GFP_DIRECT_RECLAIM</span></code> (aka <code class="docutils literal notranslate"><span class="pre">GFP_ATOMIC</span></code>) -
+non sleeping allocation with an expensive fallback so it can access
+some portion of memory reserves. Usually used from interrupt/bottom-half
+context with an expensive slow path fallback.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span></code> - both background and direct reclaim are allowed and the
+<strong>default</strong> page allocator behavior is used. That means that not costly
+allocation requests are basically no-fail but there is no guarantee of
+that behavior so failures have to be checked properly by callers
+(e.g. OOM killer victim is allowed to fail currently).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span> <span class="pre">|</span> <span class="pre">__GFP_NORETRY</span></code> - overrides the default allocator behavior
+and all allocation requests fail early rather than cause disruptive
+reclaim (one round of reclaim in this implementation). The OOM killer
+is not invoked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span> <span class="pre">|</span> <span class="pre">__GFP_RETRY_MAYFAIL</span></code> - overrides the default allocator
+behavior and all allocation requests try really hard. The request
+will fail if the reclaim cannot make any progress. The OOM killer
+won’t be triggered.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GFP_KERNEL</span> <span class="pre">|</span> <span class="pre">__GFP_NOFAIL</span></code> - overrides the default allocator behavior
+and all allocation requests will loop endlessly until they succeed.
+This might be really dangerous especially for larger orders.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="selecting-memory-allocator">
+<h2>Selecting memory allocator<a class="headerlink" href="#selecting-memory-allocator" title="Link to this heading">¶</a></h2>
+<p>The most straightforward way to allocate memory is to use a function
+from the <a class="reference internal" href="mm-api.html#c.kmalloc" title="kmalloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmalloc()</span></code></a> family. And, to be on the safe side it’s best to use
+routines that set memory to zero, like <a class="reference internal" href="mm-api.html#c.kzalloc" title="kzalloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">kzalloc()</span></code></a>. If you need to
+allocate memory for an array, there are <a class="reference internal" href="mm-api.html#c.kmalloc_array" title="kmalloc_array"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmalloc_array()</span></code></a> and <a class="reference internal" href="mm-api.html#c.kcalloc" title="kcalloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">kcalloc()</span></code></a>
+helpers. The helpers <a class="reference internal" href="kernel-api.html#c.struct_size" title="struct_size"><code class="xref c c-func docutils literal notranslate"><span class="pre">struct_size()</span></code></a>, <a class="reference internal" href="kernel-api.html#c.array_size" title="array_size"><code class="xref c c-func docutils literal notranslate"><span class="pre">array_size()</span></code></a> and <a class="reference internal" href="kernel-api.html#c.array3_size" title="array3_size"><code class="xref c c-func docutils literal notranslate"><span class="pre">array3_size()</span></code></a> can
+be used to safely calculate object sizes without overflowing.</p>
+<p>The maximal size of a chunk that can be allocated with <cite>kmalloc</cite> is
+limited. The actual limit depends on the hardware and the kernel
+configuration, but it is a good practice to use <cite>kmalloc</cite> for objects
+smaller than page size.</p>
+<p>The address of a chunk allocated with <cite>kmalloc</cite> is aligned to at least
+ARCH_KMALLOC_MINALIGN bytes. For sizes which are a power of two, the
+alignment is also guaranteed to be at least the respective size. For other
+sizes, the alignment is guaranteed to be at least the largest power-of-two
+divisor of the size.</p>
+<p>Chunks allocated with <a class="reference internal" href="mm-api.html#c.kmalloc" title="kmalloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmalloc()</span></code></a> can be resized with krealloc(). Similarly
+to <a class="reference internal" href="mm-api.html#c.kmalloc_array" title="kmalloc_array"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmalloc_array()</span></code></a>: a helper for resizing arrays is provided in the form of
+<a class="reference internal" href="mm-api.html#c.krealloc_array" title="krealloc_array"><code class="xref c c-func docutils literal notranslate"><span class="pre">krealloc_array()</span></code></a>.</p>
+<p>For large allocations you can use vmalloc() and vzalloc(), or directly
+request pages from the page allocator. The memory allocated by <cite>vmalloc</cite>
+and related functions is not physically contiguous.</p>
+<p>If you are not sure whether the allocation size is too large for
+<cite>kmalloc</cite>, it is possible to use kvmalloc() and its derivatives. It will
+try to allocate memory with <cite>kmalloc</cite> and if the allocation fails it
+will be retried with <cite>vmalloc</cite>. There are restrictions on which GFP
+flags can be used with <cite>kvmalloc</cite>; please see kvmalloc_node() reference
+documentation. Note that <cite>kvmalloc</cite> may return memory that is not
+physically contiguous.</p>
+<p>If you need to allocate many identical objects you can use the slab
+cache allocator. The cache should be set up with <a class="reference internal" href="mm-api.html#c.kmem_cache_create" title="kmem_cache_create"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmem_cache_create()</span></code></a> or
+<a class="reference internal" href="mm-api.html#c.kmem_cache_create_usercopy" title="kmem_cache_create_usercopy"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmem_cache_create_usercopy()</span></code></a> before it can be used. The second function
+should be used if a part of the cache might be copied to the userspace.
+After the cache is created <a class="reference internal" href="mm-api.html#c.kmem_cache_alloc" title="kmem_cache_alloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">kmem_cache_alloc()</span></code></a> and its convenience
+wrappers can allocate memory from that cache.</p>
+<p>When the allocated memory is no longer needed it must be freed.</p>
+<p>Objects allocated by <cite>kmalloc</cite> can be freed by <cite>kfree</cite> or <cite>kvfree</cite>. Objects
+allocated by <cite>kmem_cache_alloc</cite> can be freed with <cite>kmem_cache_free</cite>, <cite>kfree</cite>
+or <cite>kvfree</cite>, where the latter two might be more convenient thanks to not
+needing the kmem_cache pointer.</p>
+<p>The same rules apply to _bulk and _rcu flavors of freeing functions.</p>
+<p>Memory allocated by <cite>vmalloc</cite> can be freed with <cite>vfree</cite> or <cite>kvfree</cite>.
+Memory allocated by <cite>kvmalloc</cite> can be freed with <cite>kvfree</cite>.
+Caches created by <cite>kmem_cache_create</cite> should be freed with
+<cite>kmem_cache_destroy</cite> only after freeing all the allocated objects first.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Memory Allocation Guide</a><ul>
+<li><a class="reference internal" href="#get-free-page-flags">Get Free Page flags</a><ul>
+<li><a class="reference internal" href="#gfp-flags-and-reclaim-behavior">GFP flags and reclaim behavior</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#selecting-memory-allocator">Selecting memory allocator</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="protection-keys.html">
+                    <span class="icon">&lt;</span><span>Memory Protection Keys</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="unaligned-memory-access.html"><span>Unaligned Memory Accesses</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

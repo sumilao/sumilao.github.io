@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>10. Iforce Protocol &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="11. Parallel Port Joystick Drivers" href="joystick-parport.html" />
+    <link rel="prev" title="9. Elantech Touchpad Driver" href="elantech.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/input/devices/iforce-protocol.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="iforce-protocol">
+<h1><span class="section-number">10. </span>Iforce Protocol<a class="headerlink" href="#iforce-protocol" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Johann Deneux &lt;<a class="reference external" href="mailto:johann&#46;deneux&#37;&#52;&#48;gmail&#46;com">johann<span>&#46;</span>deneux<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+</dd>
+</dl>
+<p>Home page at <a class="reference external" href="http://web.archive.org/web/*/http://www.esil.univ-mrs.fr">http://web.archive.org/web/*/http://www.esil.univ-mrs.fr</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Additions<span class="colon">:</span></dt>
+<dd class="field-odd"><p>by Vojtech Pavlik.</p>
+</dd>
+</dl>
+<section id="introduction">
+<h2><span class="section-number">10.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>This document describes what I managed to discover about the protocol used to
+specify force effects to I-Force 2.0 devices.  None of this information comes
+from Immerse. That’s why you should not trust what is written in this
+document. This document is intended to help understanding the protocol.
+This is not a reference. Comments and corrections are welcome.  To contact me,
+send an email to: <a class="reference external" href="mailto:johann&#46;deneux&#37;&#52;&#48;gmail&#46;com">johann<span>&#46;</span>deneux<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>I shall not be held responsible for any damage or harm caused if you try to
+send data to your I-Force device based on what you read in this document.</p>
+</div>
+</section>
+<section id="preliminary-notes">
+<h2><span class="section-number">10.2. </span>Preliminary Notes<a class="headerlink" href="#preliminary-notes" title="Link to this heading">¶</a></h2>
+<p>All values are hexadecimal with big-endian encoding (msb on the left). Beware,
+values inside packets are encoded using little-endian.  Bytes whose roles are
+unknown are marked ???  Information that needs deeper inspection is marked (?)</p>
+<section id="general-form-of-a-packet">
+<h3><span class="section-number">10.2.1. </span>General form of a packet<a class="headerlink" href="#general-form-of-a-packet" title="Link to this heading">¶</a></h3>
+<p>This is how packets look when the device uses the rs232 to communicate.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>2B</p></td>
+<td><p>OP</p></td>
+<td><p>LEN</p></td>
+<td><p>DATA</p></td>
+<td><p>CS</p></td>
+</tr>
+</tbody>
+</table>
+<p>CS is the checksum. It is equal to the exclusive or of all bytes.</p>
+<p>When using USB:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>OP</p></td>
+<td><p>DATA</p></td>
+</tr>
+</tbody>
+</table>
+<p>The 2B, LEN and CS fields have disappeared, probably because USB handles
+frames and data corruption is handled or insignificant.</p>
+<p>First, I describe effects that are sent by the device to the computer</p>
+</section>
+</section>
+<section id="device-input-state">
+<h2><span class="section-number">10.3. </span>Device input state<a class="headerlink" href="#device-input-state" title="Link to this heading">¶</a></h2>
+<p>This packet is used to indicate the state of each button and the value of each
+axis:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP= 01 for a joystick, 03 for a wheel
+LEN= Varies from device to device
+00 X-Axis lsb
+01 X-Axis msb
+02 Y-Axis lsb, or gas pedal for a wheel
+03 Y-Axis msb, or brake pedal for a wheel
+04 Throttle
+05 Buttons
+06 Lower 4 bits: Buttons
+   Upper 4 bits: Hat
+07 Rudder
+</pre></div>
+</div>
+</section>
+<section id="device-effects-states">
+<h2><span class="section-number">10.4. </span>Device effects states<a class="headerlink" href="#device-effects-states" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP= 02
+LEN= Varies
+00 ? Bit 1 (Value 2) is the value of the deadman switch
+01 Bit 8 is set if the effect is playing. Bits 0 to 7 are the effect id.
+02 ??
+03 Address of parameter block changed (lsb)
+04 Address of parameter block changed (msb)
+05 Address of second parameter block changed (lsb)
+... depending on the number of parameter blocks updated
+</pre></div>
+</div>
+<section id="force-effect">
+<h3><span class="section-number">10.4.1. </span>Force effect<a class="headerlink" href="#force-effect" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  01
+LEN= 0e
+00 Channel (when playing several effects at the same time, each must
+            be assigned a channel)
+01 Wave form
+        Val 00 Constant
+        Val 20 Square
+        Val 21 Triangle
+        Val 22 Sine
+        Val 23 Sawtooth up
+        Val 24 Sawtooth down
+        Val 40 Spring (Force = f(pos))
+        Val 41 Friction (Force = f(velocity)) and Inertia
+               (Force = f(acceleration))
+
+
+02 Axes affected and trigger
+        Bits 4-7: Val 2 = effect along one axis. Byte 05 indicates direction
+                Val 4 = X axis only. Byte 05 must contain 5a
+                Val 8 = Y axis only. Byte 05 must contain b4
+                Val c = X and Y axes. Bytes 05 must contain 60
+        Bits 0-3: Val 0 = No trigger
+                Val x+1 = Button x triggers the effect
+        When the whole byte is 0, cancel the previously set trigger
+
+03-04 Duration of effect (little endian encoding, in ms)
+
+05 Direction of effect, if applicable. Else, see 02 for value to assign.
+
+06-07 Minimum time between triggering.
+
+08-09 Address of periodicity or magnitude parameters
+0a-0b Address of attack and fade parameters, or ffff if none.
+*or*
+08-09 Address of interactive parameters for X-axis,
+      or ffff if not applicable
+0a-0b Address of interactive parameters for Y-axis,
+      or ffff if not applicable
+
+0c-0d Delay before execution of effect (little endian encoding, in ms)
+</pre></div>
+</div>
+</section>
+<section id="time-based-parameters">
+<h3><span class="section-number">10.4.2. </span>Time based parameters<a class="headerlink" href="#time-based-parameters" title="Link to this heading">¶</a></h3>
+<section id="attack-and-fade">
+<h4><span class="section-number">10.4.2.1. </span>Attack and fade<a class="headerlink" href="#attack-and-fade" title="Link to this heading">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  02
+LEN= 08
+00-01 Address where to store the parameters
+02-03 Duration of attack (little endian encoding, in ms)
+04 Level at end of attack. Signed byte.
+05-06 Duration of fade.
+07 Level at end of fade.
+</pre></div>
+</div>
+</section>
+<section id="magnitude">
+<h4><span class="section-number">10.4.2.2. </span>Magnitude<a class="headerlink" href="#magnitude" title="Link to this heading">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  03
+LEN= 03
+00-01 Address
+02 Level. Signed byte.
+</pre></div>
+</div>
+</section>
+<section id="periodicity">
+<h4><span class="section-number">10.4.2.3. </span>Periodicity<a class="headerlink" href="#periodicity" title="Link to this heading">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  04
+LEN= 07
+00-01 Address
+02 Magnitude. Signed byte.
+03 Offset. Signed byte.
+04 Phase. Val 00 = 0 deg, Val 40 = 90 degs.
+05-06 Period (little endian encoding, in ms)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="interactive-parameters">
+<h3><span class="section-number">10.4.3. </span>Interactive parameters<a class="headerlink" href="#interactive-parameters" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  05
+LEN= 0a
+00-01 Address
+02 Positive Coeff
+03 Negative Coeff
+04+05 Offset (center)
+06+07 Dead band (Val 01F4 = 5000 (decimal))
+08 Positive saturation (Val 0a = 1000 (decimal) Val 64 = 10000 (decimal))
+09 Negative saturation
+</pre></div>
+</div>
+<p>The encoding is a bit funny here: For coeffs, these are signed values. The
+maximum value is 64 (100 decimal), the min is 9c.
+For the offset, the minimum value is FE0C, the maximum value is 01F4.
+For the deadband, the minimum value is 0, the max is 03E8.</p>
+</section>
+<section id="controls">
+<h3><span class="section-number">10.4.4. </span>Controls<a class="headerlink" href="#controls" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  41
+LEN= 03
+00 Channel
+01 Start/Stop
+        Val 00: Stop
+        Val 01: Start and play once.
+        Val 41: Start and play n times (See byte 02 below)
+02 Number of iterations n.
+</pre></div>
+</div>
+</section>
+<section id="init">
+<h3><span class="section-number">10.4.5. </span>Init<a class="headerlink" href="#init" title="Link to this heading">¶</a></h3>
+<section id="querying-features">
+<h4><span class="section-number">10.4.5.1. </span>Querying features<a class="headerlink" href="#querying-features" title="Link to this heading">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  ff
+Query command. Length varies according to the query type.
+The general format of this packet is:
+ff 01 QUERY [INDEX] CHECKSUM
+responses are of the same form:
+FF LEN QUERY VALUE_QUERIED CHECKSUM2
+where LEN = 1 + length(VALUE_QUERIED)
+</pre></div>
+</div>
+<section id="query-ram-size">
+<h5><span class="section-number">10.4.5.1.1. </span>Query ram size<a class="headerlink" href="#query-ram-size" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 42 (&#39;B&#39;uffer size)
+</pre></div>
+</div>
+<p>The device should reply with the same packet plus two additional bytes
+containing the size of the memory:
+ff 03 42 03 e8 CS would mean that the device has 1000 bytes of ram available.</p>
+</section>
+<section id="query-number-of-effects">
+<h5><span class="section-number">10.4.5.1.2. </span>Query number of effects<a class="headerlink" href="#query-number-of-effects" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 4e (&#39;N&#39;umber of effects)
+</pre></div>
+</div>
+<p>The device should respond by sending the number of effects that can be played
+at the same time (one byte)
+ff 02 4e 14 CS would stand for 20 effects.</p>
+</section>
+<section id="vendor-s-id">
+<h5><span class="section-number">10.4.5.1.3. </span>Vendor’s id<a class="headerlink" href="#vendor-s-id" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 4d (&#39;M&#39;anufacturer)
+</pre></div>
+</div>
+<p>Query the vendors’id (2 bytes)</p>
+</section>
+<section id="product-id">
+<h5><span class="section-number">10.4.5.1.4. </span>Product id<a class="headerlink" href="#product-id" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 50 (&#39;P&#39;roduct)
+</pre></div>
+</div>
+<p>Query the product id (2 bytes)</p>
+</section>
+<section id="open-device">
+<h5><span class="section-number">10.4.5.1.5. </span>Open device<a class="headerlink" href="#open-device" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 4f (&#39;O&#39;pen)
+</pre></div>
+</div>
+<p>No data returned.</p>
+</section>
+<section id="close-device">
+<h5><span class="section-number">10.4.5.1.6. </span>Close device<a class="headerlink" href="#close-device" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 43 (&#39;C&#39;)lose
+</pre></div>
+</div>
+<p>No data returned.</p>
+</section>
+<section id="query-effect">
+<h5><span class="section-number">10.4.5.1.7. </span>Query effect<a class="headerlink" href="#query-effect" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 45 (&#39;E&#39;)
+</pre></div>
+</div>
+<p>Send effect type.
+Returns nonzero if supported (2 bytes)</p>
+</section>
+<section id="firmware-version">
+<h5><span class="section-number">10.4.5.1.8. </span>Firmware Version<a class="headerlink" href="#firmware-version" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>QUERY = 56 (&#39;V&#39;ersion)
+</pre></div>
+</div>
+<p>Sends back 3 bytes - major, minor, subminor</p>
+</section>
+</section>
+<section id="initialisation-of-the-device">
+<h4><span class="section-number">10.4.5.2. </span>Initialisation of the device<a class="headerlink" href="#initialisation-of-the-device" title="Link to this heading">¶</a></h4>
+<section id="set-control">
+<h5><span class="section-number">10.4.5.2.1. </span>Set Control<a class="headerlink" href="#set-control" title="Link to this heading">¶</a></h5>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Device dependent, can be different on different models!</p>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  40 &lt;idx&gt; &lt;val&gt; [&lt;val&gt;]
+LEN= 2 or 3
+00 Idx
+   Idx 00 Set dead zone (0..2048)
+   Idx 01 Ignore Deadman sensor (0..1)
+   Idx 02 Enable comm watchdog (0..1)
+   Idx 03 Set the strength of the spring (0..100)
+   Idx 04 Enable or disable the spring (0/1)
+   Idx 05 Set axis saturation threshold (0..2048)
+</pre></div>
+</div>
+</section>
+<section id="set-effect-state">
+<h5><span class="section-number">10.4.5.2.2. </span>Set Effect State<a class="headerlink" href="#set-effect-state" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  42 &lt;val&gt;
+LEN= 1
+00 State
+   Bit 3 Pause force feedback
+   Bit 2 Enable force feedback
+   Bit 0 Stop all effects
+</pre></div>
+</div>
+</section>
+<section id="set-overall">
+<h5><span class="section-number">10.4.5.2.3. </span>Set overall<a class="headerlink" href="#set-overall" title="Link to this heading">¶</a></h5>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OP=  43 &lt;val&gt;
+LEN= 1
+00 Gain
+   Val 00 = 0%
+   Val 40 = 50%
+   Val 80 = 100%
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="parameter-memory">
+<h3><span class="section-number">10.4.6. </span>Parameter memory<a class="headerlink" href="#parameter-memory" title="Link to this heading">¶</a></h3>
+<p>Each device has a certain amount of memory to store parameters of effects.
+The amount of RAM may vary, I encountered values from 200 to 1000 bytes. Below
+is the amount of memory apparently needed for every set of parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>period : 0c</p></li>
+<li><p>magnitude : 02</p></li>
+<li><p>attack and fade : 0e</p></li>
+<li><p>interactive : 08</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="appendix-how-to-study-the-protocol">
+<h2><span class="section-number">10.5. </span>Appendix: How to study the protocol?<a class="headerlink" href="#appendix-how-to-study-the-protocol" title="Link to this heading">¶</a></h2>
+<p>1. Generate effects using the force editor provided with the DirectX SDK, or
+use Immersion Studio (freely available at their web site in the developer section:
+www.immersion.com)
+2. Start a soft spying RS232 or USB (depending on where you connected your
+joystick/wheel). I used ComPortSpy from fCoder (alpha version!)
+3. Play the effect, and watch what happens on the spy screen.</p>
+<p>A few words about ComPortSpy:
+At first glance, this software seems, hum, well... buggy. In fact, data appear with a
+few seconds latency. Personally, I restart it every time I play an effect.
+Remember it’s free (as in free beer) and alpha!</p>
+</section>
+<section id="urls">
+<h2><span class="section-number">10.6. </span>URLS<a class="headerlink" href="#urls" title="Link to this heading">¶</a></h2>
+<p>Check <a class="reference external" href="http://www.immerse.com">http://www.immerse.com</a> for Immersion Studio,
+and <a class="reference external" href="http://www.fcoder.com">http://www.fcoder.com</a> for ComPortSpy.</p>
+<p>I-Force is trademark of Immersion Corp.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">10. Iforce Protocol</a><ul>
+<li><a class="reference internal" href="#introduction">10.1. Introduction</a></li>
+<li><a class="reference internal" href="#preliminary-notes">10.2. Preliminary Notes</a><ul>
+<li><a class="reference internal" href="#general-form-of-a-packet">10.2.1. General form of a packet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#device-input-state">10.3. Device input state</a></li>
+<li><a class="reference internal" href="#device-effects-states">10.4. Device effects states</a><ul>
+<li><a class="reference internal" href="#force-effect">10.4.1. Force effect</a></li>
+<li><a class="reference internal" href="#time-based-parameters">10.4.2. Time based parameters</a><ul>
+<li><a class="reference internal" href="#attack-and-fade">10.4.2.1. Attack and fade</a></li>
+<li><a class="reference internal" href="#magnitude">10.4.2.2. Magnitude</a></li>
+<li><a class="reference internal" href="#periodicity">10.4.2.3. Periodicity</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interactive-parameters">10.4.3. Interactive parameters</a></li>
+<li><a class="reference internal" href="#controls">10.4.4. Controls</a></li>
+<li><a class="reference internal" href="#init">10.4.5. Init</a><ul>
+<li><a class="reference internal" href="#querying-features">10.4.5.1. Querying features</a><ul>
+<li><a class="reference internal" href="#query-ram-size">10.4.5.1.1. Query ram size</a></li>
+<li><a class="reference internal" href="#query-number-of-effects">10.4.5.1.2. Query number of effects</a></li>
+<li><a class="reference internal" href="#vendor-s-id">10.4.5.1.3. Vendor’s id</a></li>
+<li><a class="reference internal" href="#product-id">10.4.5.1.4. Product id</a></li>
+<li><a class="reference internal" href="#open-device">10.4.5.1.5. Open device</a></li>
+<li><a class="reference internal" href="#close-device">10.4.5.1.6. Close device</a></li>
+<li><a class="reference internal" href="#query-effect">10.4.5.1.7. Query effect</a></li>
+<li><a class="reference internal" href="#firmware-version">10.4.5.1.8. Firmware Version</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#initialisation-of-the-device">10.4.5.2. Initialisation of the device</a><ul>
+<li><a class="reference internal" href="#set-control">10.4.5.2.1. Set Control</a></li>
+<li><a class="reference internal" href="#set-effect-state">10.4.5.2.2. Set Effect State</a></li>
+<li><a class="reference internal" href="#set-overall">10.4.5.2.3. Set overall</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parameter-memory">10.4.6. Parameter memory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix-how-to-study-the-protocol">10.5. Appendix: How to study the protocol?</a></li>
+<li><a class="reference internal" href="#urls">10.6. URLS</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="elantech.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">9. </span>Elantech Touchpad Driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="joystick-parport.html"><span><span class="section-number">11. </span>Parallel Port Joystick Drivers</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

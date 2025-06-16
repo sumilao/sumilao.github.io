@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Fiemap Ioctl &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="File management in the Linux kernel" href="files.html" />
+    <link rel="prev" title="Linux Directory Notification" href="dnotify.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Filesystems in the Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../block/index.html">Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdrom/index.html">CD-ROM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi/index.html">SCSI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target/index.html">TCM Virtual Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvme/index.html">NVMe Subsystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/filesystems/fiemap.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="fiemap-ioctl">
+<h1>Fiemap Ioctl<a class="headerlink" href="#fiemap-ioctl" title="Link to this heading">¶</a></h1>
+<p>The fiemap ioctl is an efficient method for userspace to get file
+extent mappings. Instead of block-by-block mapping (such as bmap), fiemap
+returns a list of extents.</p>
+<section id="request-basics">
+<h2>Request Basics<a class="headerlink" href="#request-basics" title="Link to this heading">¶</a></h2>
+<p>A fiemap request is encoded within <a class="reference internal" href="#c.fiemap" title="fiemap"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fiemap</span></code></a>:</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.fiemap">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fiemap</span></span></span><a class="headerlink" href="#c.fiemap" title="Link to this definition">¶</a><br /></dt>
+<dd><p>file extent mappings</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct fiemap {
+    __u64 fm_start;
+    __u64 fm_length;
+    __u32 fm_flags;
+    __u32 fm_mapped_extents;
+    __u32 fm_extent_count;
+    struct fiemap_extent fm_extents[];
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">fm_start</span></code></dt><dd><p>byte offset (inclusive) at which to start mapping (in)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fm_length</span></code></dt><dd><p>logical length of mapping which userspace wants (in)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fm_flags</span></code></dt><dd><p>FIEMAP_FLAG_* flags for request (in/out)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fm_mapped_extents</span></code></dt><dd><p>number of extents that were mapped (out)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fm_extent_count</span></code></dt><dd><p>size of fm_extents array (in)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fm_extents</span></code></dt><dd><p>array of mapped extents (out)</p>
+</dd>
+</dl>
+</div>
+<p>fm_start, and fm_length specify the logical range within the file
+which the process would like mappings for. Extents returned mirror
+those on disk - that is, the logical offset of the 1st returned extent
+may start before fm_start, and the range covered by the last returned
+extent may end after fm_length. All offsets and lengths are in bytes.</p>
+<p>Certain flags to modify the way in which mappings are looked up can be
+set in fm_flags. If the kernel doesn’t understand some particular
+flags, it will return EBADR and the contents of fm_flags will contain
+the set of flags which caused the error. If the kernel is compatible
+with all flags passed, the contents of fm_flags will be unmodified.
+It is up to userspace to determine whether rejection of a particular
+flag is fatal to its operation. This scheme is intended to allow the
+fiemap interface to grow in the future but without losing
+compatibility with old software.</p>
+<p>fm_extent_count specifies the number of elements in the fm_extents[] array
+that can be used to return extents.  If fm_extent_count is zero, then the
+fm_extents[] array is ignored (no extents will be returned), and the
+fm_mapped_extents count will hold the number of extents needed in
+fm_extents[] to hold the file’s current mapping.  Note that there is
+nothing to prevent the file from changing between calls to FIEMAP.</p>
+<p>The following flags can be set in fm_flags:</p>
+<dl class="simple">
+<dt>FIEMAP_FLAG_SYNC</dt><dd><p>If this flag is set, the kernel will sync the file before mapping extents.</p>
+</dd>
+<dt>FIEMAP_FLAG_XATTR</dt><dd><p>If this flag is set, the extents returned will describe the inodes
+extended attribute lookup tree, instead of its data tree.</p>
+</dd>
+<dt>FIEMAP_FLAG_CACHE</dt><dd><p>This flag requests caching of the extents.</p>
+</dd>
+</dl>
+</section>
+<section id="extent-mapping">
+<h2>Extent Mapping<a class="headerlink" href="#extent-mapping" title="Link to this heading">¶</a></h2>
+<p>Extent information is returned within the embedded fm_extents array
+which userspace must allocate along with the fiemap structure. The
+number of elements in the fiemap_extents[] array should be passed via
+fm_extent_count. The number of extents mapped by kernel will be
+returned via fm_mapped_extents. If the number of fiemap_extents
+allocated is less than would be required to map the requested range,
+the maximum number of extents that can be mapped in the fm_extent[]
+array will be returned and fm_mapped_extents will be equal to
+fm_extent_count. In that case, the last extent in the array will not
+complete the requested range and will not have the FIEMAP_EXTENT_LAST
+flag set (see the next section on extent flags).</p>
+<p>Each extent is described by a single fiemap_extent structure as
+returned in fm_extents:</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.fiemap_extent">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fiemap_extent</span></span></span><a class="headerlink" href="#c.fiemap_extent" title="Link to this definition">¶</a><br /></dt>
+<dd><p>description of one fiemap extent</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct fiemap_extent {
+    __u64 fe_logical;
+    __u64 fe_physical;
+    __u64 fe_length;
+    __u32 fe_flags;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">fe_logical</span></code></dt><dd><p>byte offset of the extent in the file</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fe_physical</span></code></dt><dd><p>byte offset of extent on disk</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fe_length</span></code></dt><dd><p>length in bytes for this extent</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fe_flags</span></code></dt><dd><p>FIEMAP_EXTENT_* flags for this extent</p>
+</dd>
+</dl>
+</div>
+<p>All offsets and lengths are in bytes and mirror those on disk.  It is valid
+for an extents logical offset to start before the request or its logical
+length to extend past the request.  Unless FIEMAP_EXTENT_NOT_ALIGNED is
+returned, fe_logical, fe_physical, and fe_length will be aligned to the
+block size of the file system.  With the exception of extents flagged as
+FIEMAP_EXTENT_MERGED, adjacent extents will not be merged.</p>
+<p>The fe_flags field contains flags which describe the extent returned.
+A special flag, FIEMAP_EXTENT_LAST is always set on the last extent in
+the file so that the process making fiemap calls can determine when no
+more extents are available, without having to call the ioctl again.</p>
+<p>Some flags are intentionally vague and will always be set in the
+presence of other more specific flags. This way a program looking for
+a general property does not have to know all existing and future flags
+which imply that property.</p>
+<p>For example, if FIEMAP_EXTENT_DATA_INLINE or FIEMAP_EXTENT_DATA_TAIL
+are set, FIEMAP_EXTENT_NOT_ALIGNED will also be set. A program looking
+for inline or tail-packed data can key on the specific flag. Software
+which simply cares not to try operating on non-aligned extents
+however, can just key on FIEMAP_EXTENT_NOT_ALIGNED, and not have to
+worry about all present and future flags which might imply unaligned
+data. Note that the opposite is not true - it would be valid for
+FIEMAP_EXTENT_NOT_ALIGNED to appear alone.</p>
+<dl>
+<dt>FIEMAP_EXTENT_LAST</dt><dd><p>This is generally the last extent in the file. A mapping attempt past
+this extent may return nothing. Some implementations set this flag to
+indicate this extent is the last one in the range queried by the user
+(via fiemap-&gt;fm_length).</p>
+</dd>
+<dt>FIEMAP_EXTENT_UNKNOWN</dt><dd><p>The location of this extent is currently unknown. This may indicate
+the data is stored on an inaccessible volume or that no storage has
+been allocated for the file yet.</p>
+</dd>
+<dt>FIEMAP_EXTENT_DELALLOC</dt><dd><p>This will also set FIEMAP_EXTENT_UNKNOWN.</p>
+<p>Delayed allocation - while there is data for this extent, its
+physical location has not been allocated yet.</p>
+</dd>
+<dt>FIEMAP_EXTENT_ENCODED</dt><dd><p>This extent does not consist of plain filesystem blocks but is
+encoded (e.g. encrypted or compressed).  Reading the data in this
+extent via I/O to the block device will have undefined results.</p>
+</dd>
+</dl>
+<p>Note that it is <em>always</em> undefined to try to update the data
+in-place by writing to the indicated location without the
+assistance of the filesystem, or to access the data using the
+information returned by the FIEMAP interface while the filesystem
+is mounted.  In other words, user applications may only read the
+extent data via I/O to the block device while the filesystem is
+unmounted, and then only if the FIEMAP_EXTENT_ENCODED flag is
+clear; user applications must not try reading or writing to the
+filesystem via the block device under any other circumstances.</p>
+<dl class="simple">
+<dt>FIEMAP_EXTENT_DATA_ENCRYPTED</dt><dd><p>This will also set FIEMAP_EXTENT_ENCODED
+The data in this extent has been encrypted by the file system.</p>
+</dd>
+<dt>FIEMAP_EXTENT_NOT_ALIGNED</dt><dd><p>Extent offsets and length are not guaranteed to be block aligned.</p>
+</dd>
+<dt>FIEMAP_EXTENT_DATA_INLINE</dt><dd><p>This will also set FIEMAP_EXTENT_NOT_ALIGNED
+Data is located within a meta data block.</p>
+</dd>
+<dt>FIEMAP_EXTENT_DATA_TAIL</dt><dd><p>This will also set FIEMAP_EXTENT_NOT_ALIGNED
+Data is packed into a block with data from other files.</p>
+</dd>
+<dt>FIEMAP_EXTENT_UNWRITTEN</dt><dd><p>Unwritten extent - the extent is allocated but its data has not been
+initialized.  This indicates the extent’s data will be all zero if read
+through the filesystem but the contents are undefined if read directly from
+the device.</p>
+</dd>
+<dt>FIEMAP_EXTENT_MERGED</dt><dd><p>This will be set when a file does not support extents, i.e., it uses a block
+based addressing scheme.  Since returning an extent for each block back to
+userspace would be highly inefficient, the kernel will try to merge most
+adjacent blocks into ‘extents’.</p>
+</dd>
+<dt>FIEMAP_EXTENT_SHARED</dt><dd><p>This flag is set to request that space be shared with other files.</p>
+</dd>
+</dl>
+</section>
+<section id="vfs-file-system-implementation">
+<h2>VFS -&gt; File System Implementation<a class="headerlink" href="#vfs-file-system-implementation" title="Link to this heading">¶</a></h2>
+<p>File systems wishing to support fiemap must implement a -&gt;fiemap callback on
+their inode_operations structure. The fs -&gt;fiemap call is responsible for
+defining its set of supported fiemap flags, and calling a helper function on
+each discovered extent:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct inode_operations {
+     ...
+
+     int (*fiemap)(struct inode *, struct fiemap_extent_info *, u64 start,
+                   u64 len);
+</pre></div>
+</div>
+<p>-&gt;fiemap is passed <a class="reference internal" href="#c.fiemap_extent_info" title="fiemap_extent_info"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">fiemap_extent_info</span></code></a> which describes the
+fiemap request:</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.fiemap_extent_info">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fiemap_extent_info</span></span></span><a class="headerlink" href="#c.fiemap_extent_info" title="Link to this definition">¶</a><br /></dt>
+<dd><p>fiemap request to a filesystem</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct fiemap_extent_info {
+    unsigned int fi_flags;
+    unsigned int fi_extents_mapped;
+    unsigned int fi_extents_max;
+    struct fiemap_extent __user *fi_extents_start;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">fi_flags</span></code></dt><dd><p>Flags as passed from user</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fi_extents_mapped</span></code></dt><dd><p>Number of mapped extents</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fi_extents_max</span></code></dt><dd><p>Size of fiemap_extent array</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fi_extents_start</span></code></dt><dd><p>Start of fiemap_extent array</p>
+</dd>
+</dl>
+</div>
+<p>It is intended that the file system should not need to access any of this
+structure directly. Filesystem handlers should be tolerant to signals and return
+EINTR once fatal signal received.</p>
+<p>Flag checking should be done at the beginning of the -&gt;fiemap callback via the
+fiemap_prep() helper:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int fiemap_prep(struct inode *inode, struct fiemap_extent_info *fieinfo,
+                u64 start, u64 *len, u32 supported_flags);
+</pre></div>
+</div>
+<p>The struct fieinfo should be passed in as received from ioctl_fiemap(). The
+set of fiemap flags which the fs understands should be passed via fs_flags. If
+fiemap_prep finds invalid user flags, it will place the bad values in
+fieinfo-&gt;fi_flags and return -EBADR. If the file system gets -EBADR, from
+fiemap_prep(), it should immediately exit, returning that error back to
+ioctl_fiemap().  Additionally the range is validate against the supported
+maximum file size.</p>
+<p>For each extent in the request range, the file system should call
+the helper function, fiemap_fill_next_extent():</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int fiemap_fill_next_extent(struct fiemap_extent_info *info, u64 logical,
+                            u64 phys, u64 len, u32 flags, u32 dev);
+</pre></div>
+</div>
+<p>fiemap_fill_next_extent() will use the passed values to populate the
+next free extent in the fm_extents array. ‘General’ extent flags will
+automatically be set from specific flags on behalf of the calling file
+system so that the userspace API is not broken.</p>
+<p>fiemap_fill_next_extent() returns 0 on success, and 1 when the
+user-supplied fm_extents array is full. If an error is encountered
+while copying the extent to user memory, -EFAULT will be returned.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Fiemap Ioctl</a><ul>
+<li><a class="reference internal" href="#request-basics">Request Basics</a></li>
+<li><a class="reference internal" href="#extent-mapping">Extent Mapping</a></li>
+<li><a class="reference internal" href="#vfs-file-system-implementation">VFS -&gt; File System Implementation</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="dnotify.html">
+                    <span class="icon">&lt;</span><span>Linux Directory Notification</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="files.html"><span>File management in the Linux kernel</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

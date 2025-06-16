@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.14. Raspberry Pi PiSP Back End Memory-to-Memory ISP (pisp-be) &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.15. Renesas R-Car Fine Display Processor (FDP1) Driver" href="rcar-fdp1.html" />
+    <link rel="prev" title="7.13. Qualcomm Camera Subsystem driver" href="qcom_camss.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#device-specific-guides">Device-specific guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../acpi/index.html">ACPI Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../aoe/index.html">ATA over Ethernet (AoE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auxdisplay/index.html">Auxiliary Display Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../braille-console.html">Linux Braille Console</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../btmrvl.html">btmrvl driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dell_rbu.html">Dell Remote BIOS Update driver (dell_rbu)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edid.html">EDID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hw_random.html">Hardware random number generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../laptops/index.html">Laptop Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd-panel-cgram.html">Parallel port LCD/Keypad Panel support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Media subsystem admin and user guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvme-multipath.html">Linux NVMe multipath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parport.html">Parport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pnp.html">Linux Plug and Play Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rapidio.html">RapidIO Subsystem Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc.html">Real Time Clock (RTC) Drivers for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serial-console.html">Linux Serial Console</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../svga.html">Video Mode Selection Support 2.13</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermal/index.html">Thermal Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thunderbolt.html">USB4 and Thunderbolt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vga-softcursor.html">Software cursor for VGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video-output.html">Video Output Switcher Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/admin-guide/media/raspberrypi-pisp-be.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="raspberry-pi-pisp-back-end-memory-to-memory-isp-pisp-be">
+<h1><span class="section-number">7.14. </span>Raspberry Pi PiSP Back End Memory-to-Memory ISP (pisp-be)<a class="headerlink" href="#raspberry-pi-pisp-back-end-memory-to-memory-isp-pisp-be" title="Link to this heading">¶</a></h1>
+<section id="the-pisp-back-end">
+<h2><span class="section-number">7.14.1. </span>The PiSP Back End<a class="headerlink" href="#the-pisp-back-end" title="Link to this heading">¶</a></h2>
+<p>The PiSP Back End is a memory-to-memory Image Signal Processor (ISP) which reads
+image data from DRAM memory and performs image processing as specified by the
+application through the parameters in a configuration buffer, before writing
+pixel data back to memory through two distinct output channels.</p>
+<p>The ISP registers and programming model are documented in the <a class="reference external" href="https://datasheets.raspberrypi.com/camera/raspberry-pi-image-signal-processor-specification.pdf">Raspberry Pi
+Image Signal Processor (PiSP) Specification document</a></p>
+<p>The PiSP Back End ISP processes images in tiles. The handling of image
+tessellation and the computation of low-level configuration parameters is
+realized by a free software library called <a class="reference external" href="https://github.com/raspberrypi/libpisp">libpisp</a>.</p>
+<p>The full image processing pipeline, which involves capturing RAW Bayer data from
+an image sensor through a MIPI CSI-2 compatible capture interface, storing them
+in DRAM memory and processing them in the PiSP Back End to obtain images usable
+by an application is implemented in <a class="reference external" href="https://libcamera.org">libcamera</a> as
+part of the Raspberry Pi platform support.</p>
+</section>
+<section id="the-pisp-be-driver">
+<h2><span class="section-number">7.14.2. </span>The pisp-be driver<a class="headerlink" href="#the-pisp-be-driver" title="Link to this heading">¶</a></h2>
+<p>The Raspberry Pi PiSP Back End (pisp-be) driver is located under
+drivers/media/platform/raspberrypi/pisp-be. It uses the <cite>V4L2 API</cite> to register
+a number of video capture and output devices, the <cite>V4L2 subdev API</cite> to register
+a subdevice for the ISP that connects the video devices in a single media graph
+realized using the <cite>Media Controller (MC) API</cite>.</p>
+<p>The media topology registered by the <cite>pisp-be</cite> driver is represented below:</p>
+<figure class="align-center">
+<img alt="Diagram of the default media pipeline topology" src="../../_images/raspberrypi-pisp-be.svg" />
+</figure>
+<p>The media graph registers the following video device nodes:</p>
+<ul class="simple">
+<li><p>pispbe-input: output device for images to be submitted to the ISP for
+processing.</p></li>
+<li><p>pispbe-tdn_input: output device for temporal denoise.</p></li>
+<li><p>pispbe-stitch_input: output device for image stitching (HDR).</p></li>
+<li><p>pispbe-output0: first capture device for processed images.</p></li>
+<li><p>pispbe-output1: second capture device for processed images.</p></li>
+<li><p>pispbe-tdn_output: capture device for temporal denoise.</p></li>
+<li><p>pispbe-stitch_output: capture device for image stitching (HDR).</p></li>
+<li><p>pispbe-config: output device for ISP configuration parameters.</p></li>
+</ul>
+<section id="pispbe-input">
+<h3><span class="section-number">7.14.2.1. </span>pispbe-input<a class="headerlink" href="#pispbe-input" title="Link to this heading">¶</a></h3>
+<p>Images to be processed by the ISP are queued to the <cite>pispbe-input</cite> output device
+node. For a list of image formats supported as input to the ISP refer to the
+<a class="reference external" href="https://datasheets.raspberrypi.com/camera/raspberry-pi-image-signal-processor-specification.pdf">Raspberry Pi Image Signal Processor (PiSP) Specification document</a>.</p>
+</section>
+<section id="pispbe-tdn-input-pispbe-tdn-output">
+<h3><span class="section-number">7.14.2.2. </span>pispbe-tdn_input, pispbe-tdn_output<a class="headerlink" href="#pispbe-tdn-input-pispbe-tdn-output" title="Link to this heading">¶</a></h3>
+<p>The <cite>pispbe-tdn_input</cite> output video device receives images to be processed by
+the temporal denoise block which are captured from the <cite>pispbe-tdn_output</cite>
+capture video device. Userspace is responsible for maintaining queues on both
+devices, and ensuring that buffers completed on the output are queued to the
+input.</p>
+</section>
+<section id="pispbe-stitch-input-pispbe-stitch-output">
+<h3><span class="section-number">7.14.2.3. </span>pispbe-stitch_input, pispbe-stitch_output<a class="headerlink" href="#pispbe-stitch-input-pispbe-stitch-output" title="Link to this heading">¶</a></h3>
+<p>To realize HDR (high dynamic range) image processing the image stitching and
+tonemapping blocks are used. The <cite>pispbe-stitch_output</cite> writes images to memory
+and the <cite>pispbe-stitch_input</cite> receives the previously written frame to process
+it along with the current input image. Userspace is responsible for maintaining
+queues on both devices, and ensuring that buffers completed on the output are
+queued to the input.</p>
+</section>
+<section id="pispbe-output0-pispbe-output1">
+<h3><span class="section-number">7.14.2.4. </span>pispbe-output0, pispbe-output1<a class="headerlink" href="#pispbe-output0-pispbe-output1" title="Link to this heading">¶</a></h3>
+<p>The two capture devices write to memory the pixel data as processed by the ISP.</p>
+</section>
+<section id="pispbe-config">
+<h3><span class="section-number">7.14.2.5. </span>pispbe-config<a class="headerlink" href="#pispbe-config" title="Link to this heading">¶</a></h3>
+<p>The <cite>pispbe-config</cite> output video devices receives a buffer of configuration
+parameters that define the desired image processing to be performed by the ISP.</p>
+<p>The format of the ISP configuration parameter is defined by
+<a class="reference internal" href="../../userspace-api/media/v4l/metafmt-pisp-be.html#c.pisp_be_tiles_config" title="pisp_be_tiles_config"><code class="xref c c-type docutils literal notranslate"><span class="pre">pisp_be_tiles_config</span></code></a> C structure and the meaning of each parameter is
+described in the <a class="reference external" href="https://datasheets.raspberrypi.com/camera/raspberry-pi-image-signal-processor-specification.pdf">Raspberry Pi Image Signal Processor (PiSP) Specification
+document</a>.</p>
+</section>
+</section>
+<section id="isp-configuration">
+<h2><span class="section-number">7.14.3. </span>ISP configuration<a class="headerlink" href="#isp-configuration" title="Link to this heading">¶</a></h2>
+<p>The ISP configuration is described solely by the content of the parameters
+buffer. The only parameter that userspace needs to configure using the V4L2 API
+is the image format on the output and capture video devices for validation of
+the content of the parameters buffer.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">7.14. Raspberry Pi PiSP Back End Memory-to-Memory ISP (pisp-be)</a><ul>
+<li><a class="reference internal" href="#the-pisp-back-end">7.14.1. The PiSP Back End</a></li>
+<li><a class="reference internal" href="#the-pisp-be-driver">7.14.2. The pisp-be driver</a><ul>
+<li><a class="reference internal" href="#pispbe-input">7.14.2.1. pispbe-input</a></li>
+<li><a class="reference internal" href="#pispbe-tdn-input-pispbe-tdn-output">7.14.2.2. pispbe-tdn_input, pispbe-tdn_output</a></li>
+<li><a class="reference internal" href="#pispbe-stitch-input-pispbe-stitch-output">7.14.2.3. pispbe-stitch_input, pispbe-stitch_output</a></li>
+<li><a class="reference internal" href="#pispbe-output0-pispbe-output1">7.14.2.4. pispbe-output0, pispbe-output1</a></li>
+<li><a class="reference internal" href="#pispbe-config">7.14.2.5. pispbe-config</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#isp-configuration">7.14.3. ISP configuration</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="qcom_camss.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">7.13. </span>Qualcomm Camera Subsystem driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="rcar-fdp1.html"><span><span class="section-number">7.15. </span>Renesas R-Car Fine Display Processor (FDP1) Driver</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

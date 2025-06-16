@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DWARF module versioning &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bash completion for Kbuild" href="bash-completion.html" />
+    <link rel="prev" title="Building Linux with Clang/LLVM" href="llvm.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Build system</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kconfig-language.html">Kconfig Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kconfig-macro-language.html">Kconfig macro language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kbuild.html">Kbuild</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kconfig.html">Configuration targets and editors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefiles.html">Linux Kernel Makefiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Building External Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="headers_install.html">Exporting kernel headers for use by userspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html">Recursion issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reproducible-builds.html">Reproducible builds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gcc-plugins.html">GCC plugin infrastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llvm.html">Building Linux with Clang/LLVM</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DWARF module versioning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">1. Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">1.1. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-information-availability">2. Type information availability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#symtypes-output-format">3. Symtypes output format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maintaining-a-stable-kabi">4. Maintaining a stable kABI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kabi-rules">4.1. kABI rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#managing-definition-visibility">4.1.1. Managing definition visibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-enumerators">4.1.2. Adding enumerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-structure-members">4.3. Adding structure members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reserving-space-and-replacing-members">4.3.1. Reserving space and replacing members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hiding-members">4.3.2. Hiding members</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash-completion.html">Bash completion for Kbuild</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/kbuild/gendwarfksyms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="dwarf-module-versioning">
+<h1>DWARF module versioning<a class="headerlink" href="#dwarf-module-versioning" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>When CONFIG_MODVERSIONS is enabled, symbol versions for modules
+are typically calculated from preprocessed source code using the
+<strong>genksyms</strong> tool.  However, this is incompatible with languages such
+as Rust, where the source code has insufficient information about
+the resulting ABI. With CONFIG_GENDWARFKSYMS (and CONFIG_DEBUG_INFO)
+selected, <strong>gendwarfksyms</strong> is used instead to calculate symbol versions
+from the DWARF debugging information, which contains the necessary
+details about the final module ABI.</p>
+</section>
+<section id="usage">
+<h2>1.1. Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>gendwarfksyms accepts a list of object files on the command line, and a
+list of symbol names (one per line) in standard input:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Usage: gendwarfksyms [options] elf-object-file ... &lt; symbol-list
+
+Options:
+  -d, --debug          Print debugging information
+      --dump-dies      Dump DWARF DIE contents
+      --dump-die-map   Print debugging information about die_map changes
+      --dump-types     Dump type strings
+      --dump-versions  Dump expanded type strings used for symbol versions
+  -s, --stable         Support kABI stability features
+  -T, --symtypes file  Write a symtypes file
+  -h, --help           Print this message
+</pre></div>
+</div>
+</section>
+<section id="type-information-availability">
+<h2>2. Type information availability<a class="headerlink" href="#type-information-availability" title="Link to this heading">¶</a></h2>
+<p>While symbols are typically exported in the same translation unit (TU)
+where they’re defined, it’s also perfectly fine for a TU to export
+external symbols. For example, this is done when calculating symbol
+versions for exports in stand-alone assembly code.</p>
+<p>To ensure the compiler emits the necessary DWARF type information in the
+TU where symbols are actually exported, gendwarfksyms adds a pointer
+to exported symbols in the <cite>EXPORT_SYMBOL()</cite> macro using the following
+macro:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define __GENDWARFKSYMS_EXPORT(sym)                             \
+        static typeof(sym) *__gendwarfksyms_ptr_##sym __used    \
+                __section(&quot;.discard.gendwarfksyms&quot;) = &amp;sym;
+</pre></div>
+</div>
+<p>When a symbol pointer is found in DWARF, gendwarfksyms can use its
+type for calculating symbol versions even if the symbol is defined
+elsewhere. The name of the symbol pointer is expected to start with
+<cite>__gendwarfksyms_ptr_</cite>, followed by the name of the exported symbol.</p>
+</section>
+<section id="symtypes-output-format">
+<h2>3. Symtypes output format<a class="headerlink" href="#symtypes-output-format" title="Link to this heading">¶</a></h2>
+<p>Similarly to genksyms, gendwarfksyms supports writing a symtypes
+file for each processed object that contain types for exported
+symbols and each referenced type that was used in calculating symbol
+versions. These files can be useful when trying to determine what
+exactly caused symbol versions to change between builds. To generate
+symtypes files during a kernel build, set <cite>KBUILD_SYMTYPES=1</cite>.</p>
+<p>Matching the existing format, the first column of each line contains
+either a type reference or a symbol name. Type references have a
+one-letter prefix followed by “#” and the name of the type. Four
+reference types are supported:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>e#&lt;type&gt; = enum
+s#&lt;type&gt; = struct
+t#&lt;type&gt; = typedef
+u#&lt;type&gt; = union
+</pre></div>
+</div>
+<p>Type names with spaces in them are wrapped in single quotes, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>s#&#39;core::result::Result&lt;u8, core::num::error::ParseIntError&gt;&#39;
+</pre></div>
+</div>
+<p>The rest of the line contains a type string. Unlike with genksyms that
+produces C-style type strings, gendwarfksyms uses the same simple parsed
+DWARF format produced by <strong>--dump-dies</strong>, but with type references
+instead of fully expanded strings.</p>
+</section>
+<section id="maintaining-a-stable-kabi">
+<h2>4. Maintaining a stable kABI<a class="headerlink" href="#maintaining-a-stable-kabi" title="Link to this heading">¶</a></h2>
+<p>Distribution maintainers often need the ability to make ABI compatible
+changes to kernel data structures due to LTS updates or backports. Using
+the traditional <cite>#ifndef __GENKSYMS__</cite> to hide these changes from symbol
+versioning won’t work when processing object files. To support this
+use case, gendwarfksyms provides kABI stability features designed to
+hide changes that won’t affect the ABI when calculating versions. These
+features are all gated behind the <strong>--stable</strong> command line flag and are
+not used in the mainline kernel. To use stable features during a kernel
+build, set <cite>KBUILD_GENDWARFKSYMS_STABLE=1</cite>.</p>
+<p>Examples for using these features are provided in the
+<strong>scripts/gendwarfksyms/examples</strong> directory, including helper macros
+for source code annotation. Note that as these features are only used to
+transform the inputs for symbol versioning, the user is responsible for
+ensuring that their changes actually won’t break the ABI.</p>
+</section>
+<section id="kabi-rules">
+<h2>4.1. kABI rules<a class="headerlink" href="#kabi-rules" title="Link to this heading">¶</a></h2>
+<p>kABI rules allow distributions to fine-tune certain parts
+of gendwarfksyms output and thus control how symbol
+versions are calculated. These rules are defined in the
+<cite>.discard.gendwarfksyms.kabi_rules</cite> section of the object file and
+consist of simple null-terminated strings with the following structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>version\0type\0target\0value\0
+</pre></div>
+</div>
+<p>This string sequence is repeated as many times as needed to express all
+the rules. The fields are as follows:</p>
+<ul class="simple">
+<li><p><cite>version</cite>: Ensures backward compatibility for future changes to the
+structure. Currently expected to be “1”.</p></li>
+<li><p><cite>type</cite>: Indicates the type of rule being applied.</p></li>
+<li><p><cite>target</cite>: Specifies the target of the rule, typically the fully
+qualified name of the DWARF Debugging Information Entry (DIE).</p></li>
+<li><p><cite>value</cite>: Provides rule-specific data.</p></li>
+</ul>
+<p>The following helper macro, for example, can be used to specify rules
+in the source code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define __KABI_RULE(hint, target, value)                             \
+        static const char __PASTE(__gendwarfksyms_rule_,             \
+                                  __COUNTER__)[] __used __aligned(1) \
+                __section(&quot;.discard.gendwarfksyms.kabi_rules&quot;) =     \
+                        &quot;1\0&quot; #hint &quot;\0&quot; #target &quot;\0&quot; #value
+</pre></div>
+</div>
+<p>Currently, only the rules discussed in this section are supported, but
+the format is extensible enough to allow further rules to be added as
+need arises.</p>
+</section>
+<section id="managing-definition-visibility">
+<h2>4.1.1. Managing definition visibility<a class="headerlink" href="#managing-definition-visibility" title="Link to this heading">¶</a></h2>
+<p>A declaration can change into a full definition when additional includes
+are pulled into the translation unit. This changes the versions of any
+symbol that references the type even if the ABI remains unchanged. As
+it may not be possible to drop includes without breaking the build, the
+<cite>declonly</cite> rule can be used to specify a type as declaration-only, even
+if the debugging information contains the full definition.</p>
+<p>The rule fields are expected to be as follows:</p>
+<ul class="simple">
+<li><p><cite>type</cite>: “declonly”</p></li>
+<li><p><cite>target</cite>: The fully qualified name of the target data structure
+(as shown in <strong>--dump-dies</strong> output).</p></li>
+<li><p><cite>value</cite>: This field is ignored.</p></li>
+</ul>
+<p>Using the <cite>__KABI_RULE</cite> macro, this rule can be defined as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define KABI_DECLONLY(fqn) __KABI_RULE(declonly, fqn, )
+</pre></div>
+</div>
+<p>Example usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        /* definition */
+};
+
+KABI_DECLONLY(s);
+</pre></div>
+</div>
+</section>
+<section id="adding-enumerators">
+<h2>4.1.2. Adding enumerators<a class="headerlink" href="#adding-enumerators" title="Link to this heading">¶</a></h2>
+<p>For enums, all enumerators and their values are included in calculating
+symbol versions, which becomes a problem if we later need to add more
+enumerators without changing symbol versions. The <cite>enumerator_ignore</cite>
+rule allows us to hide named enumerators from the input.</p>
+<p>The rule fields are expected to be as follows:</p>
+<ul class="simple">
+<li><p><cite>type</cite>: “enumerator_ignore”</p></li>
+<li><p><cite>target</cite>: The fully qualified name of the target enum
+(as shown in <strong>--dump-dies</strong> output) and the name of the
+enumerator field separated by a space.</p></li>
+<li><p><cite>value</cite>: This field is ignored.</p></li>
+</ul>
+<p>Using the <cite>__KABI_RULE</cite> macro, this rule can be defined as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define KABI_ENUMERATOR_IGNORE(fqn, field) \
+        __KABI_RULE(enumerator_ignore, fqn field, )
+</pre></div>
+</div>
+<p>Example usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>enum e {
+        A, B, C, D,
+};
+
+KABI_ENUMERATOR_IGNORE(e, B);
+KABI_ENUMERATOR_IGNORE(e, C);
+</pre></div>
+</div>
+<p>If the enum additionally includes an end marker and new values must
+be added in the middle, we may need to use the old value for the last
+enumerator when calculating versions. The <cite>enumerator_value</cite> rule allows
+us to override the value of an enumerator for version calculation:</p>
+<ul class="simple">
+<li><p><cite>type</cite>: “enumerator_value”</p></li>
+<li><p><cite>target</cite>: The fully qualified name of the target enum
+(as shown in <strong>--dump-dies</strong> output) and the name of the
+enumerator field separated by a space.</p></li>
+<li><p><cite>value</cite>: Integer value used for the field.</p></li>
+</ul>
+<p>Using the <cite>__KABI_RULE</cite> macro, this rule can be defined as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define KABI_ENUMERATOR_VALUE(fqn, field, value) \
+        __KABI_RULE(enumerator_value, fqn field, value)
+</pre></div>
+</div>
+<p>Example usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>enum e {
+        A, B, C, LAST,
+};
+
+KABI_ENUMERATOR_IGNORE(e, C);
+KABI_ENUMERATOR_VALUE(e, LAST, 2);
+</pre></div>
+</div>
+</section>
+<section id="adding-structure-members">
+<h2>4.3. Adding structure members<a class="headerlink" href="#adding-structure-members" title="Link to this heading">¶</a></h2>
+<p>Perhaps the most common ABI compatible change is adding a member to a
+kernel data structure. When changes to a structure are anticipated,
+distribution maintainers can pre-emptively reserve space in the
+structure and take it into use later without breaking the ABI. If
+changes are needed to data structures without reserved space, existing
+alignment holes can potentially be used instead. While kABI rules could
+be added for these type of changes, using unions is typically a more
+natural method. This section describes gendwarfksyms support for using
+reserved space in data structures and hiding members that don’t change
+the ABI when calculating symbol versions.</p>
+</section>
+<section id="reserving-space-and-replacing-members">
+<h2>4.3.1. Reserving space and replacing members<a class="headerlink" href="#reserving-space-and-replacing-members" title="Link to this heading">¶</a></h2>
+<p>Space is typically reserved for later use by appending integer types, or
+arrays, to the end of the data structure, but any type can be used. Each
+reserved member needs a unique name, but as the actual purpose is usually
+not known at the time the space is reserved, for convenience, names that
+start with <cite>__kabi_</cite> are left out when calculating symbol versions:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        long a;
+        long __kabi_reserved_0; /* reserved for future use */
+};
+</pre></div>
+</div>
+<p>The reserved space can be taken into use by wrapping the member in a
+union, which includes the original type and the replacement member:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        long a;
+        union {
+                long __kabi_reserved_0; /* original type */
+                struct b b; /* replaced field */
+        };
+};
+</pre></div>
+</div>
+<p>If the <cite>__kabi_</cite> naming scheme was used when reserving space, the name
+of the first member of the union must start with <cite>__kabi_reserved</cite>. This
+ensures the original type is used when calculating versions, but the name
+is again left out. The rest of the union is ignored.</p>
+<p>If we’re replacing a member that doesn’t follow this naming convention,
+we also need to preserve the original name to avoid changing versions,
+which we can do by changing the first union member’s name to start with
+<cite>__kabi_renamed</cite> followed by the original name.</p>
+<p>The examples include <cite>KABI_(RESERVE|USE|REPLACE)*</cite> macros that help
+simplify the process and also ensure the replacement member is correctly
+aligned and its size won’t exceed the reserved space.</p>
+</section>
+<section id="hiding-members">
+<h2>4.3.2. Hiding members<a class="headerlink" href="#hiding-members" title="Link to this heading">¶</a></h2>
+<p>Predicting which structures will require changes during the support
+timeframe isn’t always possible, in which case one might have to resort
+to placing new members into existing alignment holes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        int a;
+        /* a 4-byte alignment hole */
+        unsigned long b;
+};
+</pre></div>
+</div>
+<p>While this won’t change the size of the data structure, one needs to
+be able to hide the added members from symbol versioning. Similarly
+to reserved fields, this can be accomplished by wrapping the added
+member to a union where one of the fields has a name starting with
+<cite>__kabi_ignored</cite>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        int a;
+        union {
+                char __kabi_ignored_0;
+                int n;
+        };
+        unsigned long b;
+};
+</pre></div>
+</div>
+<p>With <strong>--stable</strong>, both versions produce the same symbol version.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">DWARF module versioning</a><ul>
+<li><a class="reference internal" href="#introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#usage">1.1. Usage</a></li>
+<li><a class="reference internal" href="#type-information-availability">2. Type information availability</a></li>
+<li><a class="reference internal" href="#symtypes-output-format">3. Symtypes output format</a></li>
+<li><a class="reference internal" href="#maintaining-a-stable-kabi">4. Maintaining a stable kABI</a></li>
+<li><a class="reference internal" href="#kabi-rules">4.1. kABI rules</a></li>
+<li><a class="reference internal" href="#managing-definition-visibility">4.1.1. Managing definition visibility</a></li>
+<li><a class="reference internal" href="#adding-enumerators">4.1.2. Adding enumerators</a></li>
+<li><a class="reference internal" href="#adding-structure-members">4.3. Adding structure members</a></li>
+<li><a class="reference internal" href="#reserving-space-and-replacing-members">4.3.1. Reserving space and replacing members</a></li>
+<li><a class="reference internal" href="#hiding-members">4.3.2. Hiding members</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="llvm.html">
+                    <span class="icon">&lt;</span><span>Building Linux with Clang/LLVM</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="bash-completion.html"><span>Bash completion for Kbuild</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Brief Notes on C-Media 8338/8738/8768/8770 Driver &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Sound Blaster Live mixer / default DSP code" href="sb-live-mixer.html" />
+    <link rel="prev" title="Analog Joystick Support on ALSA Drivers" href="joystick.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/sound/cards/cmipci.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="brief-notes-on-c-media-8338-8738-8768-8770-driver">
+<h1>Brief Notes on C-Media 8338/8738/8768/8770 Driver<a class="headerlink" href="#brief-notes-on-c-media-8338-8738-8768-8770-driver" title="Link to this heading">¶</a></h1>
+<p>Takashi Iwai &lt;<a class="reference external" href="mailto:tiwai&#37;&#52;&#48;suse&#46;de">tiwai<span>&#64;</span>suse<span>&#46;</span>de</a>&gt;</p>
+<section id="front-rear-multi-channel-playback">
+<h2>Front/Rear Multi-channel Playback<a class="headerlink" href="#front-rear-multi-channel-playback" title="Link to this heading">¶</a></h2>
+<p>CM8x38 chip can use ADC as the second DAC so that two different stereo
+channels can be used for front/rear playbacks.  Since there are two
+DACs, both streams are handled independently unlike the 4/6ch multi-
+channel playbacks in the section below.</p>
+<p>As default, ALSA driver assigns the first PCM device (i.e. hw:0,0 for
+card#0) for front and 4/6ch playbacks, while the second PCM device
+(hw:0,1) is assigned to the second DAC for rear playback.</p>
+<p>There are slight differences between the two DACs:</p>
+<ul class="simple">
+<li><p>The first DAC supports U8 and S16LE formats, while the second DAC
+supports only S16LE.</p></li>
+<li><p>The second DAC supports only two channel stereo.</p></li>
+</ul>
+<p>Please note that the CM8x38 DAC doesn’t support continuous playback
+rate but only fixed rates: 5512, 8000, 11025, 16000, 22050, 32000,
+44100 and 48000 Hz.</p>
+<p>The rear output can be heard only when “Four Channel Mode” switch is
+disabled.  Otherwise no signal will be routed to the rear speakers.
+As default it’s turned on.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When “Four Channel Mode” switch is off, the output from rear speakers
+will be FULL VOLUME regardless of Master and PCM volumes <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
+This might damage your audio equipment.  Please disconnect speakers
+before your turn off this switch.</p>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Well.. I once got the output with correct volume (i.e. same with the
+front one) and was so excited.  It was even with “Four Channel” bit
+on and “double DAC” mode.  Actually I could hear separate 4 channels
+from front and rear speakers!  But.. after reboot, all was gone.
+It’s a very pity that I didn’t save the register dump at that
+time..  Maybe there is an unknown register to achieve this...</p>
+</aside>
+</aside>
+<p>If your card has an extra output jack for the rear output, the rear
+playback should be routed there as default.  If not, there is a
+control switch in the driver “Line-In As Rear”, which you can change
+via alsamixer or somewhat else.  When this switch is on, line-in jack
+is used as rear output.</p>
+<p>There are two more controls regarding to the rear output.
+The “Exchange DAC” switch is used to exchange front and rear playback
+routes, i.e. the 2nd DAC is output from front output.</p>
+</section>
+<section id="multi-channel-playback">
+<h2>4/6 Multi-Channel Playback<a class="headerlink" href="#multi-channel-playback" title="Link to this heading">¶</a></h2>
+<p>The recent CM8738 chips support for the 4/6 multi-channel playback
+function.  This is useful especially for AC3 decoding.</p>
+<p>When the multi-channel is supported, the driver name has a suffix
+“-MC” such like “CMI8738-MC6”.  You can check this name from
+/proc/asound/cards.</p>
+<p>When the 4/6-ch output is enabled, the second DAC accepts up to 6 (or
+4) channels.  While the dual DAC supports two different rates or
+formats, the 4/6-ch playback supports only the same condition for all
+channels.  Since the multi-channel playback mode uses both DACs, you
+cannot operate with full-duplex.</p>
+<p>The 4.0 and 5.1 modes are defined as the pcm “surround40” and “surround51”
+in alsa-lib.  For example, you can play a WAV file with 6 channels like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% aplay -Dsurround51 sixchannels.wav
+</pre></div>
+</div>
+<p>For programming the 4/6 channel playback, you need to specify the PCM
+channels as you like and set the format S16LE.  For example, for playback
+with 4 channels,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>snd_pcm_hw_params_set_access(pcm, hw, SND_PCM_ACCESS_RW_INTERLEAVED);
+    // or mmap if you like
+snd_pcm_hw_params_set_format(pcm, hw, SND_PCM_FORMAT_S16_LE);
+snd_pcm_hw_params_set_channels(pcm, hw, 4);
+</pre></div>
+</div>
+<p>and use the interleaved 4 channel data.</p>
+<p>There are some control switches affecting to the speaker connections:</p>
+<dl class="simple">
+<dt>Line-In Mode</dt><dd><p>an enum control to change the behavior of line-in
+jack.  Either “Line-In”, “Rear Output” or “Bass Output” can
+be selected.  The last item is available only with model 039
+or newer.
+When “Rear Output” is chosen, the surround channels 3 and 4
+are output to line-in jack.</p>
+</dd>
+<dt>Mic-In Mode</dt><dd><p>an enum control to change the behavior of mic-in
+jack.  Either “Mic-In” or “Center/LFE Output” can be
+selected.
+When “Center/LFE Output” is chosen, the center and bass
+channels (channels 5 and 6) are output to mic-in jack.</p>
+</dd>
+</dl>
+</section>
+<section id="digital-i-o">
+<h2>Digital I/O<a class="headerlink" href="#digital-i-o" title="Link to this heading">¶</a></h2>
+<p>The CM8x38 provides the excellent SPDIF capability with very cheap
+price (yes, that’s the reason I bought the card :)</p>
+<p>The SPDIF playback and capture are done via the third PCM device
+(hw:0,2).  Usually this is assigned to the PCM device “spdif”.
+The available rates are 44100 and 48000 Hz.
+For playback with aplay, you can run like below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% aplay -Dhw:0,2 foo.wav
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% aplay -Dspdif foo.wav
+</pre></div>
+</div>
+<p>24bit format is also supported experimentally.</p>
+<p>The playback and capture over SPDIF use normal DAC and ADC,
+respectively, so you cannot playback both analog and digital streams
+simultaneously.</p>
+<p>To enable SPDIF output, you need to turn on “IEC958 Output Switch”
+control via mixer or alsactl (“IEC958” is the official name of
+so-called S/PDIF).  Then you’ll see the red light on from the card so
+you know that’s working obviously :)
+The SPDIF input is always enabled, so you can hear SPDIF input data
+from line-out with “IEC958 In Monitor” switch at any time (see
+below).</p>
+<p>You can play via SPDIF even with the first device (hw:0,0),
+but SPDIF is enabled only when the proper format (S16LE), sample rate
+(441100 or 48000) and channels (2) are used.  Otherwise it’s turned
+off.  (Also don’t forget to turn on “IEC958 Output Switch”, too.)</p>
+<p>Additionally there are relevant control switches:</p>
+<dl>
+<dt>IEC958 Mix Analog</dt><dd><p>Mix analog PCM playback and FM-OPL/3 streams and
+output through SPDIF.  This switch appears only on old chip
+models (CM8738 033 and 037).</p>
+<p>Note: without this control you can output PCM to SPDIF.
+This is “mixing” of streams, so e.g. it’s not for AC3 output
+(see the next section).</p>
+</dd>
+<dt>IEC958 In Select</dt><dd><p>Select SPDIF input, the internal CD-in (false)
+and the external input (true).</p>
+</dd>
+<dt>IEC958 Loop</dt><dd><p>SPDIF input data is loop back into SPDIF
+output (aka bypass)</p>
+</dd>
+<dt>IEC958 Copyright</dt><dd><p>Set the copyright bit.</p>
+</dd>
+<dt>IEC958 5V</dt><dd><p>Select 0.5V (coax) or 5V (optical) interface.
+On some cards this doesn’t work and you need to change the
+configuration with hardware dip-switch.</p>
+</dd>
+<dt>IEC958 In Monitor</dt><dd><p>SPDIF input is routed to DAC.</p>
+</dd>
+<dt>IEC958 In Phase Inverse</dt><dd><p>Set SPDIF input format as inverse.
+[FIXME: this doesn’t work on all chips..]</p>
+</dd>
+<dt>IEC958 In Valid</dt><dd><p>Set input validity flag detection.</p>
+</dd>
+</dl>
+<p>Note: When “PCM Playback Switch” is on, you’ll hear the digital output
+stream through analog line-out.</p>
+</section>
+<section id="the-ac3-raw-digital-output">
+<h2>The AC3 (RAW DIGITAL) OUTPUT<a class="headerlink" href="#the-ac3-raw-digital-output" title="Link to this heading">¶</a></h2>
+<p>The driver supports raw digital (typically AC3) i/o over SPDIF.  This
+can be toggled via IEC958 playback control, but usually you need to
+access it via alsa-lib.  See alsa-lib documents for more details.</p>
+<p>On the raw digital mode, the “PCM Playback Switch” is automatically
+turned off so that non-audio data is heard from the analog line-out.
+Similarly the following switches are off: “IEC958 Mix Analog” and
+“IEC958 Loop”.  The switches are resumed after closing the SPDIF PCM
+device automatically to the previous state.</p>
+<p>On the model 033, AC3 is implemented by the software conversion in
+the alsa-lib.  If you need to bypass the software conversion of IEC958
+subframes, pass the “soft_ac3=0” module option.  This doesn’t matter
+on the newer models.</p>
+</section>
+<section id="analog-mixer-interface">
+<h2>ANALOG MIXER INTERFACE<a class="headerlink" href="#analog-mixer-interface" title="Link to this heading">¶</a></h2>
+<p>The mixer interface on CM8x38 is similar to SB16.
+There are Master, PCM, Synth, CD, Line, Mic and PC Speaker playback
+volumes.  Synth, CD, Line and Mic have playback and capture switches,
+too, as well as SB16.</p>
+<p>In addition to the standard SB mixer, CM8x38 provides more functions.
+- PCM playback switch
+- PCM capture switch (to capture the data sent to DAC)
+- Mic Boost switch
+- Mic capture volume
+- Aux playback volume/switch and capture switch
+- 3D control switch</p>
+</section>
+<section id="midi-controller">
+<h2>MIDI CONTROLLER<a class="headerlink" href="#midi-controller" title="Link to this heading">¶</a></h2>
+<p>With CMI8338 chips, the MPU401-UART interface is disabled as default.
+You need to set the module option “mpu_port” to a valid I/O port address
+to enable MIDI support.  Valid I/O ports are 0x300, 0x310, 0x320 and
+0x330.  Choose a value that doesn’t conflict with other cards.</p>
+<p>With CMI8738 and newer chips, the MIDI interface is enabled by default
+and the driver automatically chooses a port address.</p>
+<p>There is <em>no</em> hardware wavetable function on this chip (except for
+OPL3 synth below).
+What’s said as MIDI synth on Windows is a software synthesizer
+emulation.  On Linux use TiMidity or other softsynth program for
+playing MIDI music.</p>
+</section>
+<section id="fm-opl-3-synth">
+<h2>FM OPL/3 Synth<a class="headerlink" href="#fm-opl-3-synth" title="Link to this heading">¶</a></h2>
+<p>The FM OPL/3 is also enabled as default only for the first card.
+Set “fm_port” module option for more cards.</p>
+<p>The output quality of FM OPL/3 is, however, very weird.
+I don’t know why..</p>
+<p>CMI8768 and newer chips do not have the FM synth.</p>
+</section>
+<section id="joystick-and-modem">
+<h2>Joystick and Modem<a class="headerlink" href="#joystick-and-modem" title="Link to this heading">¶</a></h2>
+<p>The legacy joystick is supported.  To enable the joystick support, pass
+joystick_port=1 module option.  The value 1 means the auto-detection.
+If the auto-detection fails, try to pass the exact I/O address.</p>
+<p>The modem is enabled dynamically via a card control switch “Modem”.</p>
+</section>
+<section id="debugging-information">
+<h2>Debugging Information<a class="headerlink" href="#debugging-information" title="Link to this heading">¶</a></h2>
+<p>The registers are shown in /proc/asound/cardX/cmipci.  If you have any
+problem (especially unexpected behavior of mixer), please attach the
+output of this proc file together with the bug report.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Brief Notes on C-Media 8338/8738/8768/8770 Driver</a><ul>
+<li><a class="reference internal" href="#front-rear-multi-channel-playback">Front/Rear Multi-channel Playback</a></li>
+<li><a class="reference internal" href="#multi-channel-playback">4/6 Multi-Channel Playback</a></li>
+<li><a class="reference internal" href="#digital-i-o">Digital I/O</a></li>
+<li><a class="reference internal" href="#the-ac3-raw-digital-output">The AC3 (RAW DIGITAL) OUTPUT</a></li>
+<li><a class="reference internal" href="#analog-mixer-interface">ANALOG MIXER INTERFACE</a></li>
+<li><a class="reference internal" href="#midi-controller">MIDI CONTROLLER</a></li>
+<li><a class="reference internal" href="#fm-opl-3-synth">FM OPL/3 Synth</a></li>
+<li><a class="reference internal" href="#joystick-and-modem">Joystick and Modem</a></li>
+<li><a class="reference internal" href="#debugging-information">Debugging Information</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="joystick.html">
+                    <span class="icon">&lt;</span><span>Analog Joystick Support on ALSA Drivers</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="sb-live-mixer.html"><span>Sound Blaster Live mixer / default DSP code</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

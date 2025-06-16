@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>XFRM device - offloading the IPsec computations &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="XFRM proc - /proc/net/xfrm_* files" href="xfrm_proc.html" />
+    <link rel="prev" title="X.25 Device Driver Interface" href="x25-iface.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/xfrm_device.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="xfrm-device-offloading-the-ipsec-computations">
+<span id="xfrm-device"></span><h1>XFRM device - offloading the IPsec computations<a class="headerlink" href="#xfrm-device-offloading-the-ipsec-computations" title="Link to this heading">¶</a></h1>
+<p>Shannon Nelson &lt;<a class="reference external" href="mailto:shannon&#46;nelson&#37;&#52;&#48;oracle&#46;com">shannon<span>&#46;</span>nelson<span>&#64;</span>oracle<span>&#46;</span>com</a>&gt;
+Leon Romanovsky &lt;<a class="reference external" href="mailto:leonro&#37;&#52;&#48;nvidia&#46;com">leonro<span>&#64;</span>nvidia<span>&#46;</span>com</a>&gt;</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>IPsec is a useful feature for securing network traffic, but the
+computational cost is high: a 10Gbps link can easily be brought down
+to under 1Gbps, depending on the traffic and link configuration.
+Luckily, there are NICs that offer a hardware based IPsec offload which
+can radically increase throughput and decrease CPU utilization.  The XFRM
+Device interface allows NIC drivers to offer to the stack access to the
+hardware offload.</p>
+<dl class="simple">
+<dt>Right now, there are two types of hardware offload that kernel supports.</dt><dd><ul class="simple">
+<li><p>IPsec crypto offload:
+* NIC performs encrypt/decrypt
+* Kernel does everything else</p></li>
+<li><p>IPsec packet offload:
+* NIC performs encrypt/decrypt
+* NIC does encapsulation
+* Kernel and NIC have SA and policy in-sync
+* NIC handles the SA and policies states
+* The Kernel talks to the keymanager</p></li>
+</ul>
+</dd>
+</dl>
+<p>Userland access to the offload is typically through a system such as
+libreswan or KAME/raccoon, but the iproute2 ‘ip xfrm’ command set can
+be handy when experimenting.  An example command might look something
+like this for crypto offload:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ip x s add proto esp dst 14.0.0.70 src 14.0.0.52 spi 0x07 mode transport </dt><dd><p>reqid 0x07 replay-window 32 aead ‘rfc4106(gcm(aes))’ 0x44434241343332312423222114131211f4f3f2f1 128 sel src 14.0.0.52/24 dst 14.0.0.70/24 proto tcp offload dev eth4 dir in</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>and for packet offload</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ip x s add proto esp dst 14.0.0.70 src 14.0.0.52 spi 0x07 mode transport </dt><dd><p>reqid 0x07 replay-window 32 aead ‘rfc4106(gcm(aes))’ 0x44434241343332312423222114131211f4f3f2f1 128 sel src 14.0.0.52/24 dst 14.0.0.70/24 proto tcp offload packet dev eth4 dir in</p>
+</dd>
+</dl>
+<p>ip x p add src 14.0.0.70 dst 14.0.0.52 offload packet dev eth4 dir in
+tmpl src 14.0.0.70 dst 14.0.0.52 proto esp reqid 10000 mode transport</p>
+</div></blockquote>
+<p>Yes, that’s ugly, but that’s what shell scripts and/or libreswan are for.</p>
+</section>
+<section id="callbacks-to-implement">
+<h2>Callbacks to implement<a class="headerlink" href="#callbacks-to-implement" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* from include/linux/netdevice.h */
+struct xfrmdev_ops {
+      /* Crypto and Packet offload callbacks */
+      int     (*xdo_dev_state_add) (struct xfrm_state *x, struct netlink_ext_ack *extack);
+      void    (*xdo_dev_state_delete) (struct xfrm_state *x);
+      void    (*xdo_dev_state_free) (struct xfrm_state *x);
+      bool    (*xdo_dev_offload_ok) (struct sk_buff *skb,
+                                     struct xfrm_state *x);
+      void    (*xdo_dev_state_advance_esn) (struct xfrm_state *x);
+      void    (*xdo_dev_state_update_stats) (struct xfrm_state *x);
+
+      /* Solely packet offload callbacks */
+      int     (*xdo_dev_policy_add) (struct xfrm_policy *x, struct netlink_ext_ack *extack);
+      void    (*xdo_dev_policy_delete) (struct xfrm_policy *x);
+      void    (*xdo_dev_policy_free) (struct xfrm_policy *x);
+};
+</pre></div>
+</div>
+<p>The NIC driver offering ipsec offload will need to implement callbacks
+relevant to supported offload to make the offload available to the network
+stack’s XFRM subsystem. Additionally, the feature bits NETIF_F_HW_ESP and
+NETIF_F_HW_ESP_TX_CSUM will signal the availability of the offload.</p>
+</section>
+<section id="flow">
+<h2>Flow<a class="headerlink" href="#flow" title="Link to this heading">¶</a></h2>
+<p>At probe time and before the call to <a class="reference internal" href="kapi.html#c.register_netdev" title="register_netdev"><code class="xref c c-func docutils literal notranslate"><span class="pre">register_netdev()</span></code></a>, the driver should
+set up local data structures and XFRM callbacks, and set the feature bits.
+The XFRM code’s listener will finish the setup on NETDEV_REGISTER.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>adapter-&gt;netdev-&gt;xfrmdev_ops = &amp;ixgbe_xfrmdev_ops;
+adapter-&gt;netdev-&gt;features |= NETIF_F_HW_ESP;
+adapter-&gt;netdev-&gt;hw_enc_features |= NETIF_F_HW_ESP;
+</pre></div>
+</div>
+<p>When new SAs are set up with a request for “offload” feature, the
+driver’s xdo_dev_state_add() will be given the new SA to be offloaded
+and an indication of whether it is for Rx or Tx.  The driver should</p>
+<blockquote>
+<div><ul>
+<li><p>verify the algorithm is supported for offloads</p></li>
+<li><p>store the SA information (key, salt, target-ip, protocol, etc)</p></li>
+<li><p>enable the HW offload of the SA</p></li>
+<li><p>return status value:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>success</p></td>
+</tr>
+<tr class="row-even"><td><p>-EOPNETSUPP</p></td>
+<td><p>offload not supported, try SW IPsec,
+not applicable for packet offload mode</p></td>
+</tr>
+<tr class="row-odd"><td><p>other</p></td>
+<td><p>fail the request</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The driver can also set an offload_handle in the SA, an opaque void pointer
+that can be used to convey context into the fast-path offload requests:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xs-&gt;xso.offload_handle = context;
+</pre></div>
+</div>
+<p>When the network stack is preparing an IPsec packet for an SA that has
+been setup for offload, it first calls into xdo_dev_offload_ok() with
+the skb and the intended offload state to ask the driver if the offload
+will serviceable.  This can check the packet information to be sure the
+offload can be supported (e.g. IPv4 or IPv6, no IPv4 options, etc) and
+return true or false to signify its support. In case driver doesn’t implement
+this callback, the stack provides reasonable defaults.</p>
+<p>Crypto offload mode:
+When ready to send, the driver needs to inspect the Tx packet for the
+offload information, including the opaque context, and set up the packet
+send accordingly:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xs = xfrm_input_state(skb);
+context = xs-&gt;xso.offload_handle;
+set up HW for send
+</pre></div>
+</div>
+<p>The stack has already inserted the appropriate IPsec headers in the
+packet data, the offload just needs to do the encryption and fix up the
+header values.</p>
+<p>When a packet is received and the HW has indicated that it offloaded a
+decryption, the driver needs to add a reference to the decoded SA into
+the packet’s skb.  At this point the data should be decrypted but the
+IPsec headers are still in the packet data; they are removed later up
+the stack in xfrm_input().</p>
+<blockquote>
+<div><p>find and hold the SA that was used to the Rx skb:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>get spi, protocol, and destination IP from packet headers
+xs = find xs from (spi, protocol, dest_IP)
+xfrm_state_hold(xs);
+</pre></div>
+</div>
+<p>store the state information into the skb:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sp = secpath_set(skb);
+if (!sp) return;
+sp-&gt;xvec[sp-&gt;len++] = xs;
+sp-&gt;olen++;
+</pre></div>
+</div>
+<p>indicate the success and/or error status of the offload:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xo = xfrm_offload(skb);
+xo-&gt;flags = CRYPTO_DONE;
+xo-&gt;status = crypto_status;
+</pre></div>
+</div>
+<p>hand the packet to napi_gro_receive() as usual</p>
+</div></blockquote>
+<p>In ESN mode, xdo_dev_state_advance_esn() is called from
+xfrm_replay_advance_esn() for RX, and xfrm_replay_overflow_offload_esn for TX.
+Driver will check packet seq number and update HW ESN state machine if needed.</p>
+<p>Packet offload mode:
+HW adds and deletes XFRM headers. So in RX path, XFRM stack is bypassed if HW
+reported success. In TX path, the packet lefts kernel without extra header
+and not encrypted, the HW is responsible to perform it.</p>
+<p>When the SA is removed by the user, the driver’s xdo_dev_state_delete()
+and xdo_dev_policy_delete() are asked to disable the offload.  Later,
+xdo_dev_state_free() and xdo_dev_policy_free() are called from a garbage
+collection routine after all reference counts to the state and policy
+have been removed and any remaining resources can be cleared for the
+offload state.  How these are used by the driver will depend on specific
+hardware needs.</p>
+<p>As a netdev is set to DOWN the XFRM stack’s netdev listener will call
+xdo_dev_state_delete(), xdo_dev_policy_delete(), xdo_dev_state_free() and
+xdo_dev_policy_free() on any remaining offloaded states.</p>
+<p>Outcome of HW handling packets, the XFRM core can’t count hard, soft limits.
+The HW/driver are responsible to perform it and provide accurate data when
+xdo_dev_state_update_stats() is called. In case of one of these limits
+occuried, the driver needs to call to xfrm_state_check_expire() to make sure
+that XFRM performs rekeying sequence.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">XFRM device - offloading the IPsec computations</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#callbacks-to-implement">Callbacks to implement</a></li>
+<li><a class="reference internal" href="#flow">Flow</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="x25-iface.html">
+                    <span class="icon">&lt;</span><span>X.25 Device Driver Interface</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="xfrm_proc.html"><span>XFRM proc - /proc/net/xfrm_* files</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

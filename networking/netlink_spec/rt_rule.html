@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Family rt-rule netlink specification &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Family tc netlink specification" href="tc.html" />
+    <link rel="prev" title="Family rt-route netlink specification" href="rt_route.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/networking/netlink_spec/rt_rule.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="family-rt-rule-netlink-specification">
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">Family <code class="docutils literal notranslate"><span class="pre">rt-rule</span></code> netlink specification</a><a class="headerlink" href="#family-rt-rule-netlink-specification" title="Link to this heading">¶</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#family-rt-rule-netlink-specification" id="id1">Family <code class="docutils literal notranslate"><span class="pre">rt-rule</span></code> netlink specification</a></p>
+<ul>
+<li><p><a class="reference internal" href="#summary" id="id2">Summary</a></p></li>
+<li><p><a class="reference internal" href="#operations" id="id3">Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#newrule" id="id4">newrule</a></p></li>
+<li><p><a class="reference internal" href="#newrule-ntf" id="id5">newrule-ntf</a></p></li>
+<li><p><a class="reference internal" href="#delrule" id="id6">delrule</a></p></li>
+<li><p><a class="reference internal" href="#delrule-ntf" id="id7">delrule-ntf</a></p></li>
+<li><p><a class="reference internal" href="#getrule" id="id8">getrule</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#multicast-groups" id="id9">Multicast groups</a></p></li>
+<li><p><a class="reference internal" href="#definitions" id="id10">Definitions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rtgenmsg" id="id11">rtgenmsg</a></p></li>
+<li><p><a class="reference internal" href="#fib-rule-hdr" id="id12">fib-rule-hdr</a></p></li>
+<li><p><a class="reference internal" href="#fr-act" id="id13">fr-act</a></p></li>
+<li><p><a class="reference internal" href="#fib-rule-port-range" id="id14">fib-rule-port-range</a></p></li>
+<li><p><a class="reference internal" href="#fib-rule-uid-range" id="id15">fib-rule-uid-range</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#attribute-sets" id="id16">Attribute sets</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fib-rule-attrs" id="id17">fib-rule-attrs</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="summary">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>FIB rule management over rtnetlink.</p>
+</section>
+<section id="operations">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Operations</a><a class="headerlink" href="#operations" title="Link to this heading">¶</a></h2>
+<section id="newrule">
+<span id="rt-rule-operation-newrule"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">newrule</a><a class="headerlink" href="#newrule" title="Link to this heading">¶</a></h3>
+<p>Add new FIB rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">attribute-set<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-attribute-set-fib-rule-attrs"><span class="std std-ref">fib-rule-attrs</span></a></p>
+</dd>
+<dt class="field-even">do<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">iifname</span></code>, <code class="docutils literal notranslate"><span class="pre">oifname</span></code>, <code class="docutils literal notranslate"><span class="pre">priority</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmark</span></code>, <code class="docutils literal notranslate"><span class="pre">flow</span></code>, <code class="docutils literal notranslate"><span class="pre">tun-id</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmask</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-prefixlen</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-ifgroup</span></code>, <code class="docutils literal notranslate"><span class="pre">goto</span></code>, <code class="docutils literal notranslate"><span class="pre">l3mdev</span></code>, <code class="docutils literal notranslate"><span class="pre">uid-range</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">ip-proto</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp-mask</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="newrule-ntf">
+<span id="rt-rule-operation-newrule-ntf"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">newrule-ntf</a><a class="headerlink" href="#newrule-ntf" title="Link to this heading">¶</a></h3>
+<p>Notify a rule creation</p>
+<dl class="field-list simple">
+<dt class="field-odd">value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>32</p>
+</dd>
+<dt class="field-even">notify<span class="colon">:</span></dt>
+<dd class="field-even"><p>newrule</p>
+</dd>
+</dl>
+</section>
+<section id="delrule">
+<span id="rt-rule-operation-delrule"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">delrule</a><a class="headerlink" href="#delrule" title="Link to this heading">¶</a></h3>
+<p>Remove an existing FIB rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">attribute-set<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-attribute-set-fib-rule-attrs"><span class="std std-ref">fib-rule-attrs</span></a></p>
+</dd>
+<dt class="field-even">do<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">iifname</span></code>, <code class="docutils literal notranslate"><span class="pre">oifname</span></code>, <code class="docutils literal notranslate"><span class="pre">priority</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmark</span></code>, <code class="docutils literal notranslate"><span class="pre">flow</span></code>, <code class="docutils literal notranslate"><span class="pre">tun-id</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmask</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-prefixlen</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-ifgroup</span></code>, <code class="docutils literal notranslate"><span class="pre">goto</span></code>, <code class="docutils literal notranslate"><span class="pre">l3mdev</span></code>, <code class="docutils literal notranslate"><span class="pre">uid-range</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">ip-proto</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp-mask</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="delrule-ntf">
+<span id="rt-rule-operation-delrule-ntf"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">delrule-ntf</a><a class="headerlink" href="#delrule-ntf" title="Link to this heading">¶</a></h3>
+<p>Notify a rule deletion</p>
+<dl class="field-list simple">
+<dt class="field-odd">value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>33</p>
+</dd>
+<dt class="field-even">notify<span class="colon">:</span></dt>
+<dd class="field-even"><p>delrule</p>
+</dd>
+</dl>
+</section>
+<section id="getrule">
+<span id="rt-rule-operation-getrule"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">getrule</a><a class="headerlink" href="#getrule" title="Link to this heading">¶</a></h3>
+<p>Dump all FIB rules</p>
+<dl class="field-list">
+<dt class="field-odd">attribute-set<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-attribute-set-fib-rule-attrs"><span class="std std-ref">fib-rule-attrs</span></a></p>
+</dd>
+<dt class="field-even">dump<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>request</strong></p>
+<dl class="simple">
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">iifname</span></code>, <code class="docutils literal notranslate"><span class="pre">oifname</span></code>, <code class="docutils literal notranslate"><span class="pre">priority</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmark</span></code>, <code class="docutils literal notranslate"><span class="pre">flow</span></code>, <code class="docutils literal notranslate"><span class="pre">tun-id</span></code>, <code class="docutils literal notranslate"><span class="pre">fwmask</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-prefixlen</span></code>, <code class="docutils literal notranslate"><span class="pre">suppress-ifgroup</span></code>, <code class="docutils literal notranslate"><span class="pre">goto</span></code>, <code class="docutils literal notranslate"><span class="pre">l3mdev</span></code>, <code class="docutils literal notranslate"><span class="pre">uid-range</span></code>, <code class="docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="docutils literal notranslate"><span class="pre">ip-proto</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-range</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">flowlabel-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">sport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dport-mask</span></code>, <code class="docutils literal notranslate"><span class="pre">dscp-mask</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+<section id="multicast-groups">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Multicast groups</a><a class="headerlink" href="#multicast-groups" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>rtnlgrp-ipv4-rule</p></li>
+<li><p>rtnlgrp-ipv6-rule</p></li>
+</ul>
+</section>
+<section id="definitions">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Definitions</a><a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<section id="rtgenmsg">
+<span id="rt-rule-definition-rtgenmsg"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">rtgenmsg</a><a class="headerlink" href="#rtgenmsg" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">family (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="fib-rule-hdr">
+<span id="rt-rule-definition-fib-rule-hdr"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">fib-rule-hdr</a><a class="headerlink" href="#fib-rule-hdr" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">family (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">dst-len (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">src-len (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">tos (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">table (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">res1 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">res2 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">action (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">flags (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="fr-act">
+<span id="rt-rule-definition-fr-act"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">fr-act</a><a class="headerlink" href="#fr-act" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>enum</p>
+</dd>
+<dt class="field-even">entries<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">unspec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to-tbl</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goto</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nop</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res4</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blackhole</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unreachable</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prohibit</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="fib-rule-port-range">
+<span id="rt-rule-definition-fib-rule-port-range"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">fib-rule-port-range</a><a class="headerlink" href="#fib-rule-port-range" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">start (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">end (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="fib-rule-uid-range">
+<span id="rt-rule-definition-fib-rule-uid-range"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">fib-rule-uid-range</a><a class="headerlink" href="#fib-rule-uid-range" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>struct</p>
+</dd>
+<dt class="field-even">members<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="field-list simple">
+<dt class="field-odd">start (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">end (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+<section id="attribute-sets">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Attribute sets</a><a class="headerlink" href="#attribute-sets" title="Link to this heading">¶</a></h2>
+<section id="fib-rule-attrs">
+<span id="rt-rule-attribute-set-fib-rule-attrs"></span><h3><a class="toc-backref" href="#id17" role="doc-backlink">fib-rule-attrs</a><a class="headerlink" href="#fib-rule-attrs" title="Link to this heading">¶</a></h3>
+<section id="dst-u32">
+<h4>dst (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#dst-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="src-u32">
+<h4>src (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#src-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="iifname-string">
+<h4>iifname (<code class="docutils literal notranslate"><span class="pre">string</span></code>)<a class="headerlink" href="#iifname-string" title="Link to this heading">¶</a></h4>
+</section>
+<section id="goto-u32">
+<h4>goto (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#goto-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="unused2-pad">
+<h4>unused2 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#unused2-pad" title="Link to this heading">¶</a></h4>
+</section>
+<section id="priority-u32">
+<h4>priority (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#priority-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="unused3-pad">
+<h4>unused3 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#unused3-pad" title="Link to this heading">¶</a></h4>
+</section>
+<section id="unused4-pad">
+<h4>unused4 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#unused4-pad" title="Link to this heading">¶</a></h4>
+</section>
+<section id="unused5-pad">
+<h4>unused5 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#unused5-pad" title="Link to this heading">¶</a></h4>
+</section>
+<section id="fwmark-u32">
+<h4>fwmark (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#fwmark-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="flow-u32">
+<h4>flow (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#flow-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="tun-id-u64">
+<h4>tun-id (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#tun-id-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="suppress-ifgroup-u32">
+<h4>suppress-ifgroup (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#suppress-ifgroup-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="suppress-prefixlen-u32">
+<h4>suppress-prefixlen (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#suppress-prefixlen-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="table-u32">
+<h4>table (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#table-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="fwmask-u32">
+<h4>fwmask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#fwmask-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="oifname-string">
+<h4>oifname (<code class="docutils literal notranslate"><span class="pre">string</span></code>)<a class="headerlink" href="#oifname-string" title="Link to this heading">¶</a></h4>
+</section>
+<section id="pad-pad">
+<h4>pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#pad-pad" title="Link to this heading">¶</a></h4>
+</section>
+<section id="l3mdev-u8">
+<h4>l3mdev (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#l3mdev-u8" title="Link to this heading">¶</a></h4>
+</section>
+<section id="uid-range-binary">
+<h4>uid-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#uid-range-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-definition-fib-rule-uid-range"><span class="std std-ref">fib-rule-uid-range</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="protocol-u8">
+<h4>protocol (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#protocol-u8" title="Link to this heading">¶</a></h4>
+</section>
+<section id="ip-proto-u8">
+<h4>ip-proto (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#ip-proto-u8" title="Link to this heading">¶</a></h4>
+</section>
+<section id="sport-range-binary">
+<h4>sport-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#sport-range-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-definition-fib-rule-port-range"><span class="std std-ref">fib-rule-port-range</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="dport-range-binary">
+<h4>dport-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)<a class="headerlink" href="#dport-range-binary" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">struct<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rt-rule-definition-fib-rule-port-range"><span class="std std-ref">fib-rule-port-range</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="dscp-u8">
+<h4>dscp (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#dscp-u8" title="Link to this heading">¶</a></h4>
+</section>
+<section id="flowlabel-u32">
+<h4>flowlabel (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#flowlabel-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">byte-order<span class="colon">:</span></dt>
+<dd class="field-odd"><p>big-endian</p>
+</dd>
+<dt class="field-even">display-hint<span class="colon">:</span></dt>
+<dd class="field-even"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="flowlabel-mask-u32">
+<h4>flowlabel-mask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#flowlabel-mask-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">byte-order<span class="colon">:</span></dt>
+<dd class="field-odd"><p>big-endian</p>
+</dd>
+<dt class="field-even">display-hint<span class="colon">:</span></dt>
+<dd class="field-even"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="sport-mask-u16">
+<h4>sport-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#sport-mask-u16" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="dport-mask-u16">
+<h4>dport-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#dport-mask-u16" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+<section id="dscp-mask-u8">
+<h4>dscp-mask (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)<a class="headerlink" href="#dscp-mask-u8" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">display-hint<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Family <code class="docutils literal notranslate"><span class="pre">rt-rule</span></code> netlink specification</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#operations">Operations</a><ul>
+<li><a class="reference internal" href="#newrule">newrule</a></li>
+<li><a class="reference internal" href="#newrule-ntf">newrule-ntf</a></li>
+<li><a class="reference internal" href="#delrule">delrule</a></li>
+<li><a class="reference internal" href="#delrule-ntf">delrule-ntf</a></li>
+<li><a class="reference internal" href="#getrule">getrule</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multicast-groups">Multicast groups</a></li>
+<li><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li><a class="reference internal" href="#rtgenmsg">rtgenmsg</a></li>
+<li><a class="reference internal" href="#fib-rule-hdr">fib-rule-hdr</a></li>
+<li><a class="reference internal" href="#fr-act">fr-act</a></li>
+<li><a class="reference internal" href="#fib-rule-port-range">fib-rule-port-range</a></li>
+<li><a class="reference internal" href="#fib-rule-uid-range">fib-rule-uid-range</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-sets">Attribute sets</a><ul>
+<li><a class="reference internal" href="#fib-rule-attrs">fib-rule-attrs</a><ul>
+<li><a class="reference internal" href="#dst-u32">dst (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#src-u32">src (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#iifname-string">iifname (<code class="docutils literal notranslate"><span class="pre">string</span></code>)</a></li>
+<li><a class="reference internal" href="#goto-u32">goto (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#unused2-pad">unused2 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#priority-u32">priority (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#unused3-pad">unused3 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#unused4-pad">unused4 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#unused5-pad">unused5 (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#fwmark-u32">fwmark (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#flow-u32">flow (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#tun-id-u64">tun-id (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#suppress-ifgroup-u32">suppress-ifgroup (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#suppress-prefixlen-u32">suppress-prefixlen (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#table-u32">table (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#fwmask-u32">fwmask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#oifname-string">oifname (<code class="docutils literal notranslate"><span class="pre">string</span></code>)</a></li>
+<li><a class="reference internal" href="#pad-pad">pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+<li><a class="reference internal" href="#l3mdev-u8">l3mdev (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+<li><a class="reference internal" href="#uid-range-binary">uid-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#protocol-u8">protocol (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+<li><a class="reference internal" href="#ip-proto-u8">ip-proto (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+<li><a class="reference internal" href="#sport-range-binary">sport-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#dport-range-binary">dport-range (<code class="docutils literal notranslate"><span class="pre">binary</span></code>)</a></li>
+<li><a class="reference internal" href="#dscp-u8">dscp (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+<li><a class="reference internal" href="#flowlabel-u32">flowlabel (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#flowlabel-mask-u32">flowlabel-mask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#sport-mask-u16">sport-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#dport-mask-u16">dport-mask (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#dscp-mask-u8">dscp-mask (<code class="docutils literal notranslate"><span class="pre">u8</span></code>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="rt_route.html">
+                    <span class="icon">&lt;</span><span>Family <code class="docutils literal notranslate"><span class="pre">rt-route</span></code> netlink specification</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="tc.html"><span>Family <code class="docutils literal notranslate"><span class="pre">tc</span></code> netlink specification</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

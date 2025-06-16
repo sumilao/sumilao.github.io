@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Testing BPF on s390 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1 Clang implementation notes" href="clang-notes.html" />
+    <link rel="prev" title="BPF drgn tools" href="drgn.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/bpf/s390.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="testing-bpf-on-s390">
+<h1>Testing BPF on s390<a class="headerlink" href="#testing-bpf-on-s390" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>IBM Z are mainframe computers, which are descendants of IBM System/360 from
+year 1964. They are supported by the Linux kernel under the name “s390”. This
+document describes how to test BPF in an s390 QEMU guest.</p>
+</section>
+<section id="one-time-setup">
+<h2>2. One-time setup<a class="headerlink" href="#one-time-setup" title="Link to this heading">¶</a></h2>
+<p>The following is required to build and run the test suite:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>s390 GCC</p></li>
+<li><p>s390 development headers and libraries</p></li>
+<li><p>Clang with BPF support</p></li>
+<li><p>QEMU with s390 support</p></li>
+<li><p>Disk image with s390 rootfs</p></li>
+</ul>
+</div></blockquote>
+<p>Debian supports installing compiler and libraries for s390 out of the box.
+Users of other distros may use debootstrap in order to set up a Debian chroot:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo debootstrap \
+  --variant=minbase \
+  --include=sudo \
+  testing \
+  ./s390-toolchain
+sudo mount --rbind /dev ./s390-toolchain/dev
+sudo mount --rbind /proc ./s390-toolchain/proc
+sudo mount --rbind /sys ./s390-toolchain/sys
+sudo chroot ./s390-toolchain
+</pre></div>
+</div>
+<p>Once on Debian, the build prerequisites can be installed as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo dpkg --add-architecture s390x
+sudo apt-get update
+sudo apt-get install \
+  bc \
+  bison \
+  cmake \
+  debootstrap \
+  dwarves \
+  flex \
+  g++ \
+  gcc \
+  g++-s390x-linux-gnu \
+  gcc-s390x-linux-gnu \
+  gdb-multiarch \
+  git \
+  make \
+  python3 \
+  qemu-system-misc \
+  qemu-utils \
+  rsync \
+  libcap-dev:s390x \
+  libelf-dev:s390x \
+  libncurses-dev
+</pre></div>
+</div>
+<p>Latest Clang targeting BPF can be installed as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/llvm/llvm-project.git
+ln -s ../../clang llvm-project/llvm/tools/
+mkdir llvm-project-build
+cd llvm-project-build
+cmake \
+  -DLLVM_TARGETS_TO_BUILD=BPF \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/opt/clang-bpf \
+  ../llvm-project/llvm
+make
+sudo make install
+export PATH=/opt/clang-bpf/bin:$PATH
+</pre></div>
+</div>
+<p>The disk image can be prepared using a loopback mount and debootstrap:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>qemu-img create -f raw ./s390.img 1G
+sudo losetup -f ./s390.img
+sudo mkfs.ext4 /dev/loopX
+mkdir ./s390.rootfs
+sudo mount /dev/loopX ./s390.rootfs
+sudo debootstrap \
+  --foreign \
+  --arch=s390x \
+  --variant=minbase \
+  --include=&quot; \
+    iproute2, \
+    iputils-ping, \
+    isc-dhcp-client, \
+    kmod, \
+    libcap2, \
+    libelf1, \
+    netcat, \
+    procps&quot; \
+  testing \
+  ./s390.rootfs
+sudo umount ./s390.rootfs
+sudo losetup -d /dev/loopX
+</pre></div>
+</div>
+</section>
+<section id="compilation">
+<h2>3. Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
+<p>In addition to the usual Kconfig options required to run the BPF test suite, it
+is also helpful to select:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_NET_9P=y
+CONFIG_9P_FS=y
+CONFIG_NET_9P_VIRTIO=y
+CONFIG_VIRTIO_PCI=y
+</pre></div>
+</div>
+<p>as that would enable a very easy way to share files with the s390 virtual
+machine.</p>
+<p>Compiling kernel, modules and testsuite, as well as preparing gdb scripts to
+simplify debugging, can be done using the following commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- menuconfig
+make ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- bzImage modules scripts_gdb
+make ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- \
+  -C tools/testing/selftests \
+  TARGETS=bpf \
+  INSTALL_PATH=$PWD/tools/testing/selftests/kselftest_install \
+  install
+</pre></div>
+</div>
+</section>
+<section id="running-the-test-suite">
+<h2>4. Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Link to this heading">¶</a></h2>
+<p>The virtual machine can be started as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>qemu-system-s390x \
+  -cpu max,zpci=on \
+  -smp 2 \
+  -m 4G \
+  -kernel linux/arch/s390/boot/compressed/vmlinux \
+  -drive file=./s390.img,if=virtio,format=raw \
+  -nographic \
+  -append &#39;root=/dev/vda rw console=ttyS1&#39; \
+  -virtfs local,path=./linux,security_model=none,mount_tag=linux \
+  -object rng-random,filename=/dev/urandom,id=rng0 \
+  -device virtio-rng-ccw,rng=rng0 \
+  -netdev user,id=net0 \
+  -device virtio-net-ccw,netdev=net0
+</pre></div>
+</div>
+<p>When using this on a real IBM Z, <code class="docutils literal notranslate"><span class="pre">-enable-kvm</span></code> may be added for better
+performance. When starting the virtual machine for the first time, disk image
+setup must be finalized using the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/debootstrap/debootstrap --second-stage
+</pre></div>
+</div>
+<p>Directory with the code built on the host as well as <code class="docutils literal notranslate"><span class="pre">/proc</span></code> and <code class="docutils literal notranslate"><span class="pre">/sys</span></code>
+need to be mounted as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir -p /linux
+mount -t 9p linux /linux
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+</pre></div>
+</div>
+<p>After that, the test suite can be run using the following commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /linux/tools/testing/selftests/kselftest_install
+./run_kselftest.sh
+</pre></div>
+</div>
+<p>As usual, tests can be also run individually:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /linux/tools/testing/selftests/bpf
+./test_verifier
+</pre></div>
+</div>
+</section>
+<section id="debugging">
+<h2>5. Debugging<a class="headerlink" href="#debugging" title="Link to this heading">¶</a></h2>
+<p>It is possible to debug the s390 kernel using QEMU GDB stub, which is activated
+by passing <code class="docutils literal notranslate"><span class="pre">-s</span></code> to QEMU.</p>
+<p>It is preferable to turn KASLR off, so that gdb would know where to find the
+kernel image in memory, by building the kernel with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>RANDOMIZE_BASE=n
+</pre></div>
+</div>
+<p>GDB can then be attached using the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gdb-multiarch -ex &#39;target remote localhost:1234&#39; ./vmlinux
+</pre></div>
+</div>
+</section>
+<section id="network">
+<h2>6. Network<a class="headerlink" href="#network" title="Link to this heading">¶</a></h2>
+<p>In case one needs to use the network in the virtual machine in order to e.g.
+install additional packages, it can be configured using:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dhclient eth0
+</pre></div>
+</div>
+</section>
+<section id="links">
+<h2>7. Links<a class="headerlink" href="#links" title="Link to this heading">¶</a></h2>
+<p>This document is a compilation of techniques, whose more comprehensive
+descriptions can be found by following these links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wiki.debian.org/EmDebian/CrossDebootstrap">Debootstrap</a></p></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/Multiarch/HOWTO">Multiarch</a></p></li>
+<li><p><a class="reference external" href="https://llvm.org/docs/CMake.html">Building LLVM</a></p></li>
+<li><p><a class="reference external" href="https://wiki.gentoo.org/wiki/Embedded_Handbook/General/Cross-compiling_the_kernel">Cross-compiling the kernel</a></p></li>
+<li><p><a class="reference external" href="https://wiki.qemu.org/Documentation/Platforms/S390X">QEMU s390x Guest Support</a></p></li>
+<li><p><a class="reference external" href="https://wiki.qemu.org/Documentation/9psetup">Plan 9 folder sharing over Virtio</a></p></li>
+<li><p><a class="reference external" href="https://wiki.osdev.org/Kernel_Debugging#Use_GDB_with_QEMU">Using GDB with QEMU</a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Testing BPF on s390</a><ul>
+<li><a class="reference internal" href="#introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#one-time-setup">2. One-time setup</a></li>
+<li><a class="reference internal" href="#compilation">3. Compilation</a></li>
+<li><a class="reference internal" href="#running-the-test-suite">4. Running the test suite</a></li>
+<li><a class="reference internal" href="#debugging">5. Debugging</a></li>
+<li><a class="reference internal" href="#network">6. Network</a></li>
+<li><a class="reference internal" href="#links">7. Links</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="drgn.html">
+                    <span class="icon">&lt;</span><span>BPF drgn tools</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="clang-notes.html"><span><span class="sectnum">1 </span>Clang implementation notes</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

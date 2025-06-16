@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Asynchronous VM_BIND &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VM_BIND locking" href="drm-vm-bind-locking.html" />
+    <link rel="prev" title="Misc DRM driver uAPI- and feature implementation guidelines" href="implementation_guidelines.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/gpu/drm-vm-bind-async.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="asynchronous-vm-bind">
+<h1>Asynchronous VM_BIND<a class="headerlink" href="#asynchronous-vm-bind" title="Link to this heading">¶</a></h1>
+<section id="nomenclature">
+<h2>Nomenclature:<a class="headerlink" href="#nomenclature" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VRAM</span></code>: On-device memory. Sometimes referred to as device local memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpu_vm</span></code>: A virtual GPU address space. Typically per process, but
+can be shared by multiple processes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VM_BIND</span></code>: An operation or a list of operations to modify a gpu_vm using
+an IOCTL. The operations include mapping and unmapping system- or
+VRAM memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">syncobj</span></code>: A container that abstracts synchronization objects. The
+synchronization objects can be either generic, like dma-fences or
+driver specific. A syncobj typically indicates the type of the
+underlying synchronization object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">in-syncobj</span></code>: Argument to a VM_BIND IOCTL, the VM_BIND operation waits
+for these before starting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">out-syncobj</span></code>: Argument to a VM_BIND_IOCTL, the VM_BIND operation
+signals these when the bind operation is complete.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dma-fence</span></code>: A cross-driver synchronization object. A basic
+understanding of dma-fences is required to digest this
+document. Please refer to the <code class="docutils literal notranslate"><span class="pre">DMA</span> <span class="pre">Fences</span></code> section of the
+<a class="reference internal" href="../driver-api/dma-buf.html"><span class="doc">dma-buf doc</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span> <span class="pre">fence</span></code>: A synchronization object, different from a dma-fence.
+A memory fence uses the value of a specified memory location to determine
+signaled status. A memory fence can be awaited and signaled by both
+the GPU and CPU. Memory fences are sometimes referred to as
+user-fences, userspace-fences or gpu futexes and do not necessarily obey
+the dma-fence rule of signaling within a “reasonable amount of time”.
+The kernel should thus avoid waiting for memory fences with locks held.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long-running</span> <span class="pre">workload</span></code>: A workload that may take more than the
+current stipulated dma-fence maximum signal delay to complete and
+which therefore needs to set the gpu_vm or the GPU execution context in
+a certain mode that disallows completion dma-fences.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exec</span> <span class="pre">function</span></code>: An exec function is a function that revalidates all
+affected gpu_vmas, submits a GPU command batch and registers the
+dma_fence representing the GPU command’s activity with all affected
+dma_resvs. For completeness, although not covered by this document,
+it’s worth mentioning that an exec function may also be the
+revalidation worker that is used by some drivers in compute /
+long-running mode.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bind</span> <span class="pre">context</span></code>: A context identifier used for the VM_BIND
+operation. VM_BIND operations that use the same bind context can be
+assumed, where it matters, to complete in order of submission. No such
+assumptions can be made for VM_BIND operations using separate bind contexts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UMD</span></code>: User-mode driver.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KMD</span></code>: Kernel-mode driver.</p></li>
+</ul>
+</section>
+<section id="synchronous-asynchronous-vm-bind-operation">
+<h2>Synchronous / Asynchronous VM_BIND operation<a class="headerlink" href="#synchronous-asynchronous-vm-bind-operation" title="Link to this heading">¶</a></h2>
+<section id="synchronous-vm-bind">
+<h3>Synchronous VM_BIND<a class="headerlink" href="#synchronous-vm-bind" title="Link to this heading">¶</a></h3>
+<p>With Synchronous VM_BIND, the VM_BIND operations all complete before the
+IOCTL returns. A synchronous VM_BIND takes neither in-fences nor
+out-fences. Synchronous VM_BIND may block and wait for GPU operations;
+for example swap-in or clearing, or even previous binds.</p>
+</section>
+<section id="id1">
+<h3>Asynchronous VM_BIND<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Asynchronous VM_BIND accepts both in-syncobjs and out-syncobjs. While the
+IOCTL may return immediately, the VM_BIND operations wait for the in-syncobjs
+before modifying the GPU page-tables, and signal the out-syncobjs when
+the modification is done in the sense that the next exec function that
+awaits for the out-syncobjs will see the change. Errors are reported
+synchronously.
+In low-memory situations the implementation may block, performing the
+VM_BIND synchronously, because there might not be enough memory
+immediately available for preparing the asynchronous operation.</p>
+<p>If the VM_BIND IOCTL takes a list or an array of operations as an argument,
+the in-syncobjs needs to signal before the first operation starts to
+execute, and the out-syncobjs signal after the last operation
+completes. Operations in the operation list can be assumed, where it
+matters, to complete in order.</p>
+<p>Since asynchronous VM_BIND operations may use dma-fences embedded in
+out-syncobjs and internally in KMD to signal bind completion,  any
+memory fences given as VM_BIND in-fences need to be awaited
+synchronously before the VM_BIND ioctl returns, since dma-fences,
+required to signal in a reasonable amount of time, can never be made
+to depend on memory fences that don’t have such a restriction.</p>
+<p>The purpose of an Asynchronous VM_BIND operation is for user-mode
+drivers to be able to pipeline interleaved gpu_vm modifications and
+exec functions. For long-running workloads, such pipelining of a bind
+operation is not allowed and any in-fences need to be awaited
+synchronously. The reason for this is twofold. First, any memory
+fences gated by a long-running workload and used as in-syncobjs for the
+VM_BIND operation will need to be awaited synchronously anyway (see
+above). Second, any dma-fences used as in-syncobjs for VM_BIND
+operations for long-running workloads will not allow for pipelining
+anyway since long-running workloads don’t allow for dma-fences as
+out-syncobjs, so while theoretically possible the use of them is
+questionable and should be rejected until there is a valuable use-case.
+Note that this is not a limitation imposed by dma-fence rules, but
+rather a limitation imposed to keep KMD implementation simple. It does
+not affect using dma-fences as dependencies for the long-running
+workload itself, which is allowed by dma-fence rules, but rather for
+the VM_BIND operation only.</p>
+<p>An asynchronous VM_BIND operation may take substantial time to
+complete and signal the out_fence. In particular if the operation is
+deeply pipelined behind other VM_BIND operations and workloads
+submitted using exec functions. In that case, UMD might want to avoid a
+subsequent VM_BIND operation to be queued behind the first one if
+there are no explicit dependencies. In order to circumvent such a queue-up, a
+VM_BIND implementation may allow for VM_BIND contexts to be
+created. For each context, VM_BIND operations will be guaranteed to
+complete in the order they were submitted, but that is not the case
+for VM_BIND operations executing on separate VM_BIND contexts. Instead
+KMD will attempt to execute such VM_BIND operations in parallel but
+leaving no guarantee that they will actually be executed in
+parallel. There may be internal implicit dependencies that only KMD knows
+about, for example page-table structure changes. A way to attempt
+to avoid such internal dependencies is to have different VM_BIND
+contexts use separate regions of a VM.</p>
+<p>Also for VM_BINDS for long-running gpu_vms the user-mode driver should typically
+select memory fences as out-fences since that gives greater flexibility for
+the kernel mode driver to inject other operations into the bind /
+unbind operations. Like for example inserting breakpoints into batch
+buffers. The workload execution can then easily be pipelined behind
+the bind completion using the memory out-fence as the signal condition
+for a GPU semaphore embedded by UMD in the workload.</p>
+<p>There is no difference in the operations supported or in
+multi-operation support between asynchronous VM_BIND and synchronous VM_BIND.</p>
+</section>
+</section>
+<section id="multi-operation-vm-bind-ioctl-error-handling-and-interrupts">
+<h2>Multi-operation VM_BIND IOCTL error handling and interrupts<a class="headerlink" href="#multi-operation-vm-bind-ioctl-error-handling-and-interrupts" title="Link to this heading">¶</a></h2>
+<p>The VM_BIND operations of the IOCTL may error for various reasons, for
+example due to lack of resources to complete and due to interrupted
+waits.
+In these situations UMD should preferably restart the IOCTL after
+taking suitable action.
+If UMD has over-committed a memory resource, an -ENOSPC error will be
+returned, and UMD may then unbind resources that are not used at the
+moment and rerun the IOCTL. On -EINTR, UMD should simply rerun the
+IOCTL and on -ENOMEM user-space may either attempt to free known
+system memory resources or fail. In case of UMD deciding to fail a
+bind operation, due to an error return, no additional action is needed
+to clean up the failed operation, and the VM is left in the same state
+as it was before the failing IOCTL.
+Unbind operations are guaranteed not to return any errors due to
+resource constraints, but may return errors due to, for example,
+invalid arguments or the gpu_vm being banned.
+In the case an unexpected error happens during the asynchronous bind
+process, the gpu_vm will be banned, and attempts to use it after banning
+will return -ENOENT.</p>
+</section>
+<section id="example-the-xe-vm-bind-uapi">
+<h2>Example: The Xe VM_BIND uAPI<a class="headerlink" href="#example-the-xe-vm-bind-uapi" title="Link to this heading">¶</a></h2>
+<p>Starting with the VM_BIND operation struct, the IOCTL call can take
+zero, one or many such operations. A zero number means only the
+synchronization part of the IOCTL is carried out: an asynchronous
+VM_BIND updates the syncobjects, whereas a sync VM_BIND waits for the
+implicit dependencies to be fulfilled.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">drm_xe_vm_bind_op</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/**</span>
+<span class="cm">      * @obj: GEM object to operate on, MBZ for MAP_USERPTR, MBZ for UNMAP</span>
+<span class="cm">      */</span>
+<span class="w">     </span><span class="n">__u32</span><span class="w"> </span><span class="n">obj</span><span class="p">;</span>
+
+<span class="w">     </span><span class="cm">/** @pad: MBZ */</span>
+<span class="w">     </span><span class="n">__u32</span><span class="w"> </span><span class="n">pad</span><span class="p">;</span>
+
+<span class="w">     </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="cm">/**</span>
+<span class="cm">              * @obj_offset: Offset into the object for MAP.</span>
+<span class="cm">              */</span>
+<span class="w">             </span><span class="n">__u64</span><span class="w"> </span><span class="n">obj_offset</span><span class="p">;</span>
+
+<span class="w">             </span><span class="cm">/** @userptr: user virtual address for MAP_USERPTR */</span>
+<span class="w">             </span><span class="n">__u64</span><span class="w"> </span><span class="n">userptr</span><span class="p">;</span>
+<span class="w">     </span><span class="p">};</span>
+
+<span class="w">     </span><span class="cm">/**</span>
+<span class="cm">      * @range: Number of bytes from the object to bind to addr, MBZ for UNMAP_ALL</span>
+<span class="cm">      */</span>
+<span class="w">     </span><span class="n">__u64</span><span class="w"> </span><span class="n">range</span><span class="p">;</span>
+
+<span class="w">     </span><span class="cm">/** @addr: Address to operate on, MBZ for UNMAP_ALL */</span>
+<span class="w">     </span><span class="n">__u64</span><span class="w"> </span><span class="n">addr</span><span class="p">;</span>
+
+<span class="w">     </span><span class="cm">/**</span>
+<span class="cm">      * @tile_mask: Mask for which tiles to create binds for, 0 == All tiles,</span>
+<span class="cm">      * only applies to creating new VMAs</span>
+<span class="cm">      */</span>
+<span class="w">     </span><span class="n">__u64</span><span class="w"> </span><span class="n">tile_mask</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* Map (parts of) an object into the GPU virtual address range.</span>
+<span class="cm"> #define XE_VM_BIND_OP_MAP           0x0</span>
+<span class="cm">     /* Unmap a GPU virtual address range */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_OP_UNMAP         0x1</span>
+<span class="w">     </span><span class="cm">/*</span>
+<span class="cm">      * Map a CPU virtual address range into a GPU virtual</span>
+<span class="cm">      * address range.</span>
+<span class="cm">      */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_OP_MAP_USERPTR   0x2</span>
+<span class="w">     </span><span class="cm">/* Unmap a gem object from the VM. */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_OP_UNMAP_ALL     0x3</span>
+<span class="w">     </span><span class="cm">/*</span>
+<span class="cm">      * Make the backing memory of an address range resident if</span>
+<span class="cm">      * possible. Note that this doesn&#39;t pin backing memory.</span>
+<span class="cm">      */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_OP_PREFETCH      0x4</span>
+
+<span class="w">     </span><span class="cm">/* Make the GPU map readonly. */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_FLAG_READONLY    (0x1 &lt;&lt; 16)</span>
+<span class="w">     </span><span class="cm">/*</span>
+<span class="cm">      * Valid on a faulting VM only, do the MAP operation immediately rather</span>
+<span class="cm">      * than deferring the MAP to the page fault handler.</span>
+<span class="cm">      */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_FLAG_IMMEDIATE   (0x1 &lt;&lt; 17)</span>
+<span class="w">     </span><span class="cm">/*</span>
+<span class="cm">      * When the NULL flag is set, the page tables are setup with a special</span>
+<span class="cm">      * bit which indicates writes are dropped and all reads return zero.  In</span>
+<span class="cm">      * the future, the NULL flags will only be valid for XE_VM_BIND_OP_MAP</span>
+<span class="cm">      * operations, the BO handle MBZ, and the BO offset MBZ. This flag is</span>
+<span class="cm">      * intended to implement VK sparse bindings.</span>
+<span class="cm">      */</span>
+<span class="w"> </span><span class="cp">#define XE_VM_BIND_FLAG_NULL        (0x1 &lt;&lt; 18)</span>
+<span class="w">     </span><span class="cm">/** @op: Operation to perform (lower 16 bits) and flags (upper 16 bits) */</span>
+<span class="w">     </span><span class="n">__u32</span><span class="w"> </span><span class="n">op</span><span class="p">;</span>
+
+<span class="w">     </span><span class="cm">/** @mem_region: Memory region to prefetch VMA to, instance not a mask */</span>
+<span class="w">     </span><span class="n">__u32</span><span class="w"> </span><span class="n">region</span><span class="p">;</span>
+
+<span class="w">     </span><span class="cm">/** @reserved: Reserved */</span>
+<span class="w">     </span><span class="n">__u64</span><span class="w"> </span><span class="n">reserved</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The VM_BIND IOCTL argument itself, looks like follows. Note that for
+synchronous VM_BIND, the num_syncs and syncs fields must be zero. Here
+the <code class="docutils literal notranslate"><span class="pre">exec_queue_id</span></code> field is the VM_BIND context discussed previously
+that is used to facilitate out-of-order VM_BINDs.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">drm_xe_vm_bind</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/** @extensions: Pointer to the first extension struct, if any */</span>
+<span class="w">    </span><span class="n">__u64</span><span class="w"> </span><span class="n">extensions</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/** @vm_id: The ID of the VM to bind to */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">vm_id</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * @exec_queue_id: exec_queue_id, must be of class DRM_XE_ENGINE_CLASS_VM_BIND</span>
+<span class="cm">     * and exec queue must have same vm_id. If zero, the default VM bind engine</span>
+<span class="cm">     * is used.</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">exec_queue_id</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/** @num_binds: number of binds in this IOCTL */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">num_binds</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/* If set, perform an async VM_BIND, if clear a sync VM_BIND */</span>
+<span class="cp">#define XE_VM_BIND_IOCTL_FLAG_ASYNC (0x1 &lt;&lt; 0)</span>
+
+<span class="w">    </span><span class="cm">/** @flag: Flags controlling all operations in this ioctl. */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">flags</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="cm">/** @bind: used if num_binds == 1 */</span>
+<span class="w">            </span><span class="k">struct</span><span class="w"> </span><span class="nc">drm_xe_vm_bind_op</span><span class="w"> </span><span class="n">bind</span><span class="p">;</span>
+
+<span class="w">            </span><span class="cm">/**</span>
+<span class="cm">             * @vector_of_binds: userptr to array of struct</span>
+<span class="cm">             * drm_xe_vm_bind_op if num_binds &gt; 1</span>
+<span class="cm">             */</span>
+<span class="w">            </span><span class="n">__u64</span><span class="w"> </span><span class="n">vector_of_binds</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="cm">/** @num_syncs: amount of syncs to wait for or to signal on completion. */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">num_syncs</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/** @pad2: MBZ */</span>
+<span class="w">    </span><span class="n">__u32</span><span class="w"> </span><span class="n">pad2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/** @syncs: pointer to struct drm_xe_sync array */</span>
+<span class="w">    </span><span class="n">__u64</span><span class="w"> </span><span class="n">syncs</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/** @reserved: Reserved */</span>
+<span class="w">    </span><span class="n">__u64</span><span class="w"> </span><span class="n">reserved</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Asynchronous VM_BIND</a><ul>
+<li><a class="reference internal" href="#nomenclature">Nomenclature:</a></li>
+<li><a class="reference internal" href="#synchronous-asynchronous-vm-bind-operation">Synchronous / Asynchronous VM_BIND operation</a><ul>
+<li><a class="reference internal" href="#synchronous-vm-bind">Synchronous VM_BIND</a></li>
+<li><a class="reference internal" href="#id1">Asynchronous VM_BIND</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multi-operation-vm-bind-ioctl-error-handling-and-interrupts">Multi-operation VM_BIND IOCTL error handling and interrupts</a></li>
+<li><a class="reference internal" href="#example-the-xe-vm-bind-uapi">Example: The Xe VM_BIND uAPI</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="implementation_guidelines.html">
+                    <span class="icon">&lt;</span><span>Misc DRM driver uAPI- and feature implementation guidelines</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="drm-vm-bind-locking.html"><span>VM_BIND locking</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

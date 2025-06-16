@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Overview of Amiga Filesystems &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kAFS: AFS FILESYSTEM" href="afs.html" />
+    <link rel="prev" title="Acorn Disc Filing System - ADFS" href="adfs.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Filesystems in the Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../block/index.html">Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdrom/index.html">CD-ROM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi/index.html">SCSI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target/index.html">TCM Virtual Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvme/index.html">NVMe Subsystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/filesystems/affs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="overview-of-amiga-filesystems">
+<h1>Overview of Amiga Filesystems<a class="headerlink" href="#overview-of-amiga-filesystems" title="Link to this heading">¶</a></h1>
+<p>Not all varieties of the Amiga filesystems are supported for reading and
+writing. The Amiga currently knows six different filesystems:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>DOS0</p></td>
+<td><p>The old or original filesystem, not really suited for
+hard disks and normally not used on them, either.
+Supported read/write.</p></td>
+</tr>
+<tr class="row-even"><td><p>DOS1</p></td>
+<td><p>The original Fast File System. Supported read/write.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DOS2</p></td>
+<td><p>The old “international” filesystem. International means that
+a bug has been fixed so that accented (“international”) letters
+in file names are case-insensitive, as they ought to be.
+Supported read/write.</p></td>
+</tr>
+<tr class="row-even"><td><p>DOS3</p></td>
+<td><p>The “international” Fast File System.  Supported read/write.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DOS4</p></td>
+<td><p>The original filesystem with directory cache. The directory
+cache speeds up directory accesses on floppies considerably,
+but slows down file creation/deletion. Doesn’t make much
+sense on hard disks. Supported read only.</p></td>
+</tr>
+<tr class="row-even"><td><p>DOS5</p></td>
+<td><p>The Fast File System with directory cache. Supported read only.</p></td>
+</tr>
+</tbody>
+</table>
+<p>All of the above filesystems allow block sizes from 512 to 32K bytes.
+Supported block sizes are: 512, 1024, 2048 and 4096 bytes. Larger blocks
+speed up almost everything at the expense of wasted disk space. The speed
+gain above 4K seems not really worth the price, so you don’t lose too
+much here, either.</p>
+<p>The muFS (multi user File System) equivalents of the above file systems
+are supported, too.</p>
+<section id="mount-options-for-the-affs">
+<h2>Mount options for the AFFS<a class="headerlink" href="#mount-options-for-the-affs" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>protect</dt><dd><p>If this option is set, the protection bits cannot be altered.</p>
+</dd>
+<dt>setuid[=uid]</dt><dd><p>This sets the owner of all files and directories in the file
+system to uid or the uid of the current user, respectively.</p>
+</dd>
+<dt>setgid[=gid]</dt><dd><p>Same as above, but for gid.</p>
+</dd>
+<dt>mode=mode</dt><dd><p>Sets the mode flags to the given (octal) value, regardless
+of the original permissions. Directories will get an x
+permission if the corresponding r bit is set.
+This is useful since most of the plain AmigaOS files
+will map to 600.</p>
+</dd>
+<dt>nofilenametruncate</dt><dd><p>The file system will return an error when filename exceeds
+standard maximum filename length (30 characters).</p>
+</dd>
+<dt>reserved=num</dt><dd><p>Sets the number of reserved blocks at the start of the
+partition to num. You should never need this option.
+Default is 2.</p>
+</dd>
+<dt>root=block</dt><dd><p>Sets the block number of the root block. This should never
+be necessary.</p>
+</dd>
+<dt>bs=blksize</dt><dd><p>Sets the blocksize to blksize. Valid block sizes are 512,
+1024, 2048 and 4096. Like the root option, this should
+never be necessary, as the affs can figure it out itself.</p>
+</dd>
+<dt>quiet</dt><dd><p>The file system will not return an error for disallowed
+mode changes.</p>
+</dd>
+<dt>verbose</dt><dd><p>The volume name, file system type and block size will
+be written to the syslog when the filesystem is mounted.</p>
+</dd>
+<dt>mufs</dt><dd><p>The filesystem is really a muFS, also it doesn’t
+identify itself as one. This option is necessary if
+the filesystem wasn’t formatted as muFS, but is used
+as one.</p>
+</dd>
+<dt>prefix=path</dt><dd><p>Path will be prefixed to every absolute path name of
+symbolic links on an AFFS partition. Default = “/”.
+(See below.)</p>
+</dd>
+<dt>volume=name</dt><dd><p>When symbolic links with an absolute path are created
+on an AFFS partition, name will be prepended as the
+volume name. Default = “” (empty string).
+(See below.)</p>
+</dd>
+</dl>
+</section>
+<section id="handling-of-the-users-groups-and-protection-flags">
+<h2>Handling of the Users/Groups and protection flags<a class="headerlink" href="#handling-of-the-users-groups-and-protection-flags" title="Link to this heading">¶</a></h2>
+<p>Amiga -&gt; Linux:</p>
+<p>The Amiga protection flags RWEDRWEDHSPARWED are handled as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>R maps to r for user, group and others. On directories, R implies x.</p></li>
+<li><p>W maps to w.</p></li>
+<li><p>E maps to x.</p></li>
+<li><p>D is ignored.</p></li>
+<li><p>H, S and P are always retained and ignored under Linux.</p></li>
+<li><p>A is cleared when a file is written to.</p></li>
+</ul>
+</div></blockquote>
+<p>User id and group id will be used unless set[gu]id are given as mount
+options. Since most of the Amiga file systems are single user systems
+they will be owned by root. The root directory (the mount point) of the
+Amiga filesystem will be owned by the user who actually mounts the
+filesystem (the root directory doesn’t have uid/gid fields).</p>
+<p>Linux -&gt; Amiga:</p>
+<p>The Linux rwxrwxrwx file mode is handled as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>r permission will allow R for user, group and others.</p></li>
+<li><p>w permission will allow W for user, group and others.</p></li>
+<li><p>x permission of the user will allow E for plain files.</p></li>
+<li><p>D will be allowed for user, group and others.</p></li>
+<li><p>All other flags (suid, sgid, ...) are ignored and will
+not be retained.</p></li>
+</ul>
+</div></blockquote>
+<p>Newly created files and directories will get the user and group ID
+of the current user and a mode according to the umask.</p>
+</section>
+<section id="symbolic-links">
+<h2>Symbolic links<a class="headerlink" href="#symbolic-links" title="Link to this heading">¶</a></h2>
+<p>Although the Amiga and Linux file systems resemble each other, there
+are some, not always subtle, differences. One of them becomes apparent
+with symbolic links. While Linux has a file system with exactly one
+root directory, the Amiga has a separate root directory for each
+file system (for example, partition, floppy disk, ...). With the Amiga,
+these entities are called “volumes”. They have symbolic names which
+can be used to access them. Thus, symbolic links can point to a
+different volume. AFFS turns the volume name into a directory name
+and prepends the prefix path (see prefix option) to it.</p>
+<p>Example:
+You mount all your Amiga partitions under /amiga/&lt;volume&gt; (where
+&lt;volume&gt; is the name of the volume), and you give the option
+“prefix=/amiga/” when mounting all your AFFS partitions. (They
+might be “User”, “WB” and “Graphics”, the mount points /amiga/User,
+/amiga/WB and /amiga/Graphics). A symbolic link referring to
+“User:sc/include/dos/dos.h” will be followed to
+“/amiga/User/sc/include/dos/dos.h”.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Command line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount  Archive/Amiga/Workbench3.1.adf /mnt -t affs -o loop,verbose
+mount  /dev/sda3 /Amiga -t affs
+</pre></div>
+</div>
+<p>/etc/fstab entry:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/dev/sdb5   /amiga/Workbench    affs    noauto,user,exec,verbose 0 0
+</pre></div>
+</div>
+</section>
+<section id="important-note">
+<h2>IMPORTANT NOTE<a class="headerlink" href="#important-note" title="Link to this heading">¶</a></h2>
+<p>If you boot Windows 95 (don’t know about 3.x, 98 and NT) while you
+have an Amiga harddisk connected to your PC, it will overwrite
+the bytes 0x00dc..0x00df of block 0 with garbage, thus invalidating
+the Rigid Disk Block. Sheer luck has it that this is an unused
+area of the RDB, so only the checksum doesn’t match anymore.
+Linux will ignore this garbage and recognize the RDB anyway, but
+before you connect that drive to your Amiga again, you must
+restore or repair your RDB. So please do make a backup copy of it
+before booting Windows!</p>
+<p>If the damage is already done, the following should fix the RDB
+(where &lt;disk&gt; is the device name).</p>
+<p>DO AT YOUR OWN RISK:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dd if=/dev/&lt;disk&gt; of=rdb.tmp count=1
+cp rdb.tmp rdb.fixed
+dd if=/dev/zero of=rdb.fixed bs=1 seek=220 count=4
+dd if=rdb.fixed of=/dev/&lt;disk&gt;
+</pre></div>
+</div>
+</section>
+<section id="bugs-restrictions-caveats">
+<h2>Bugs, Restrictions, Caveats<a class="headerlink" href="#bugs-restrictions-caveats" title="Link to this heading">¶</a></h2>
+<p>Quite a few things may not work as advertised. Not everything is
+tested, though several hundred MB have been read and written using
+this fs. For a most up-to-date list of bugs please consult
+fs/affs/Changes.</p>
+<p>By default, filenames are truncated to 30 characters without warning.
+‘nofilenametruncate’ mount option can change that behavior.</p>
+<p>Case is ignored by the affs in filename matching, but Linux shells
+do care about the case. Example (with /wb being an affs mounted fs):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rm /wb/WRONGCASE
+</pre></div>
+</div>
+<p>will remove /mnt/wrongcase, but:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rm /wb/WR*
+</pre></div>
+</div>
+<p>will not since the names are matched by the shell.</p>
+<p>The block allocation is designed for hard disk partitions. If more
+than 1 process writes to a (small) diskette, the blocks are allocated
+in an ugly way (but the real AFFS doesn’t do much better). This
+is also true when space gets tight.</p>
+<p>You cannot execute programs on an OFS (Old File System), since the
+program files cannot be memory mapped due to the 488 byte blocks.
+For the same reason you cannot mount an image on such a filesystem
+via the loopback device.</p>
+<p>The bitmap valid flag in the root block may not be accurate when the
+system crashes while an affs partition is mounted. There’s currently
+no way to fix a garbled filesystem without an Amiga (disk validator)
+or manually (who would do this?). Maybe later.</p>
+<p>If you mount affs partitions on system startup, you may want to tell
+fsck that the fs should not be checked (place a ‘0’ in the sixth field
+of /etc/fstab).</p>
+<p>It’s not possible to read floppy disks with a normal PC or workstation
+due to an incompatibility with the Amiga floppy controller.</p>
+<p>If you are interested in an Amiga Emulator for Linux, look at</p>
+<p><a class="reference external" href="http://web.archive.org/web/%2E/http://www.freiburg.linux.de/~uae/">http://web.archive.org/web/%2E/http://www.freiburg.linux.de/~uae/</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Overview of Amiga Filesystems</a><ul>
+<li><a class="reference internal" href="#mount-options-for-the-affs">Mount options for the AFFS</a></li>
+<li><a class="reference internal" href="#handling-of-the-users-groups-and-protection-flags">Handling of the Users/Groups and protection flags</a></li>
+<li><a class="reference internal" href="#symbolic-links">Symbolic links</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#important-note">IMPORTANT NOTE</a></li>
+<li><a class="reference internal" href="#bugs-restrictions-caveats">Bugs, Restrictions, Caveats</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="adfs.html">
+                    <span class="icon">&lt;</span><span>Acorn Disc Filing System - ADFS</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="afs.html"><span>kAFS: AFS FILESYSTEM</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

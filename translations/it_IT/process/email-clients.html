@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Informazioni sui programmi di posta elettronica per Linux &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Applicare patch al kernel Linux" href="applying-patches.html" />
+    <link rel="prev" title="La guida a PGP per manutentori del kernel" href="maintainer-pgp-guide.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">La documentazione del kernel Linux</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#avvertenze">Avvertenze</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#lavorare-con-la-comunita-di-sviluppo">Lavorare con la comunità di sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#manuali-sull-api-interna">Manuali sull’API interna</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#strumenti-e-processi-per-lo-sviluppo">Strumenti e processi per lo sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-per-gli-utenti">Documentazione per gli utenti</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-relativa-ai-firmware">Documentazione relativa ai firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-specifica-per-architettura">Documentazione specifica per architettura</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-varia">Documentazione varia</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/it_IT/process/email-clients.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Italian
+
+<ul>
+
+<li><a href="../../../process/email-clients.html">English</a></li>
+
+<li><a href="../../zh_CN/process/email-clients.html">Chinese (Simplified)</a></li>
+
+<li><a href="../../zh_TW/process/email-clients.html">Chinese (Traditional)</a></li>
+
+<li><a href="../../sp_SP/process/email-clients.html">Spanish</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In caso di dubbi sulla correttezza del contenuto di questa traduzione,
+l’unico riferimento valido è la documentazione ufficiale in inglese.
+Per maggiori informazioni consultate le <a class="reference internal" href="../index.html#it-disclaimer"><span class="std std-ref">avvertenze</span></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../process/email-clients.html"><span class="doc">Email clients info for Linux</span></a></p>
+</dd>
+<dt class="field-even">Translator<span class="colon">:</span></dt>
+<dd class="field-even"><p>Alessia Mantegazza &lt;<a class="reference external" href="mailto:amantegazza&#37;&#52;&#48;vaga&#46;pv&#46;it">amantegazza<span>&#64;</span>vaga<span>&#46;</span>pv<span>&#46;</span>it</a>&gt;</p>
+</dd>
+</dl>
+<section id="informazioni-sui-programmi-di-posta-elettronica-per-linux">
+<span id="it-email-clients"></span><h1>Informazioni sui programmi di posta elettronica per Linux<a class="headerlink" href="#informazioni-sui-programmi-di-posta-elettronica-per-linux" title="Link to this heading">¶</a></h1>
+<section id="git">
+<h2>Git<a class="headerlink" href="#git" title="Link to this heading">¶</a></h2>
+<p>Oggigiorno, la maggior parte degli sviluppatori utilizza <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">send-email</span></code>
+al posto dei classici programmi di posta elettronica.  Le pagine man sono
+abbastanza buone. Dal lato del ricevente, i manutentori utilizzano <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span></code>
+per applicare le patch.</p>
+<p>Se siete dei novelli utilizzatori di <code class="docutils literal notranslate"><span class="pre">git</span></code> allora inviate la patch a voi
+stessi. Salvatela come testo includendo tutte le intestazioni. Poi eseguite
+il comando <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span> <span class="pre">messaggio-formato-testo.txt</span></code> e revisionatene il risultato
+con <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>. Quando tutto funziona correttamente, allora potete inviare
+la patch alla lista di discussione più appropriata.</p>
+</section>
+<section id="panoramica-delle-opzioni">
+<h2>Panoramica delle opzioni<a class="headerlink" href="#panoramica-delle-opzioni" title="Link to this heading">¶</a></h2>
+<p>Le patch per il kernel vengono inviate per posta elettronica, preferibilmente
+come testo integrante del messaggio.  Alcuni manutentori accettano gli
+allegati, ma in questo caso gli allegati devono avere il <em>content-type</em>
+impostato come <code class="docutils literal notranslate"><span class="pre">text/plain</span></code>.  Tuttavia, generalmente gli allegati non sono
+ben apprezzati perché rende più difficile citare porzioni di patch durante il
+processo di revisione.</p>
+<p>Inoltre, è vivamente raccomandato l’uso di puro testo nel corpo del
+messaggio, sia per la patch che per qualsiasi altro messaggio. Il sito
+<a class="reference external" href="https://useplaintext.email/">https://useplaintext.email/</a> può esservi d’aiuto per configurare il
+vostro programma di posta elettronica.</p>
+<p>I programmi di posta elettronica che vengono usati per inviare le patch per il
+kernel Linux dovrebbero inviarle senza alterazioni.  Per esempio, non
+dovrebbero modificare o rimuovere tabulazioni o spazi, nemmeno all’inizio o
+alla fine delle righe.</p>
+<p>Non inviate patch con <code class="docutils literal notranslate"><span class="pre">format=flowed</span></code>.  Questo potrebbe introdurre
+interruzioni di riga inaspettate e indesiderate.</p>
+<p>Non lasciate che il vostro programma di posta vada a capo automaticamente.
+Questo può corrompere le patch.</p>
+<p>I programmi di posta non dovrebbero modificare la codifica dei caratteri nel
+testo.  Le patch inviate per posta elettronica dovrebbero essere codificate in
+ASCII o UTF-8.
+Se configurate il vostro programma per inviare messaggi codificati con UTF-8
+eviterete possibili problemi di codifica.</p>
+<p>I programmi di posta dovrebbero generare e mantenere le intestazioni
+“References” o “In-Reply-To:” cosicché la discussione non venga interrotta.</p>
+<p>Di solito, il copia-e-incolla (o taglia-e-incolla) non funziona con le patch
+perché le tabulazioni vengono convertite in spazi.  Usando xclipboard, xclip
+e/o xcutsel potrebbe funzionare, ma è meglio che lo verifichiate o meglio
+ancora: non usate il copia-e-incolla.</p>
+<p>Non usate firme PGP/GPG nei messaggi che contengono delle patch.  Questo
+impedisce il corretto funzionamento di alcuni script per leggere o applicare
+patch (questo si dovrebbe poter correggere).</p>
+<p>Prima di inviare le patch sulle liste di discussione Linux, può essere una
+buona idea quella di inviare la patch a voi stessi, salvare il messaggio
+ricevuto, e applicarlo ai sorgenti con successo.</p>
+</section>
+<section id="alcuni-suggerimenti-per-i-programmi-di-posta-elettronica-mua">
+<h2>Alcuni suggerimenti per i programmi di posta elettronica (MUA)<a class="headerlink" href="#alcuni-suggerimenti-per-i-programmi-di-posta-elettronica-mua" title="Link to this heading">¶</a></h2>
+<p>Qui troverete alcuni suggerimenti per configurare i vostri MUA allo scopo
+di modificare ed inviare patch per il kernel Linux.  Tuttavia, questi
+suggerimenti non sono da considerarsi come un riassunto di una configurazione
+completa.</p>
+<p>Legenda:</p>
+<ul class="simple">
+<li><p>TUI = interfaccia utente testuale (<em>text-based user interface</em>)</p></li>
+<li><p>GUI = interfaccia utente grafica (<em>graphical user interface</em>)</p></li>
+</ul>
+<section id="alpine-tui">
+<h3>Alpine (TUI)<a class="headerlink" href="#alpine-tui" title="Link to this heading">¶</a></h3>
+<p>Opzioni per la configurazione:</p>
+<p>Nella sezione <span class="menuselection">Sending Preferences</span>:</p>
+<ul class="simple">
+<li><p><span class="menuselection">Do Not Send Flowed Text</span> deve essere <code class="docutils literal notranslate"><span class="pre">enabled</span></code></p></li>
+<li><p><span class="menuselection">Strip Whitespace Before Sending</span> deve essere <code class="docutils literal notranslate"><span class="pre">disabled</span></code></p></li>
+</ul>
+<p>Quando state scrivendo un messaggio, il cursore dev’essere posizionato
+dove volete che la patch inizi, poi premendo <cite>CTRL-R</cite> vi verrà chiesto
+di selezionare il file patch da inserire nel messaggio.</p>
+</section>
+<section id="claws-mail-gui">
+<h3>Claws Mail (GUI)<a class="headerlink" href="#claws-mail-gui" title="Link to this heading">¶</a></h3>
+<p>Funziona. Alcune persone riescono ad usarlo con successo per inviare le patch.</p>
+<p>Per inserire una patch usate <span class="menuselection">Messaggio‣Inserisci file</span>
+(<cite>CTRL-I</cite>) oppure un editor esterno.</p>
+<p>Se la patch che avete inserito dev’essere modificata usando la finestra di
+scrittura di Claws, allora assicuratevi che l‘“auto-interruzione” sia
+disabilitata <span class="menuselection">Configurazione‣Preferenze‣Composizione‣Interruzione riga</span>.</p>
+</section>
+<section id="evolution-gui">
+<h3>Evolution (GUI)<a class="headerlink" href="#evolution-gui" title="Link to this heading">¶</a></h3>
+<p>Alcune persone riescono ad usarlo con successo per inviare le patch.</p>
+<dl class="simple">
+<dt>Quando state scrivendo una lettera selezionate: Preformattato</dt><dd><p>da <span class="menuselection">Formato‣Stile del paragrafo‣Preformattato</span>
+(<cite>CTRL-7</cite>) o dalla barra degli strumenti</p>
+</dd>
+</dl>
+<p>Poi per inserire la patch usate:
+<span class="menuselection">Inserisci‣ File di testo...</span> (<cite>ALT-N x</cite>)</p>
+<p>Potete anche eseguire <code class="docutils literal notranslate"><span class="pre">diff</span> <span class="pre">-Nru</span> <span class="pre">old.c</span> <span class="pre">new.c</span> <span class="pre">|</span> <span class="pre">xclip</span></code>, selezionare
+<span class="menuselection">Preformattato</span>, e poi usare il tasto centrale del mouse.</p>
+</section>
+<section id="kmail-gui">
+<h3>Kmail (GUI)<a class="headerlink" href="#kmail-gui" title="Link to this heading">¶</a></h3>
+<p>Alcune persone riescono ad usarlo con successo per inviare le patch.</p>
+<p>La configurazione base che disabilita la composizione di messaggi HTML è
+corretta; non abilitatela.</p>
+<p>Quando state scrivendo un messaggio, nel menu opzioni, togliete la selezione a
+“A capo automatico”. L’unico svantaggio sarà che qualsiasi altra cosa scriviate
+nel messaggio non verrà mandata a capo in automatico ma dovrete farlo voi.
+Il modo più semplice per ovviare a questo problema è quello di scrivere il
+messaggio con l’opzione abilitata e poi di salvarlo nelle bozze. Riaprendo ora
+il messaggio dalle bozze le andate a capo saranno parte integrante del
+messaggio, per cui togliendo l’opzione “A capo automatico” non perderete nulla.</p>
+<p>Alla fine del vostro messaggio, appena prima di inserire la vostra patch,
+aggiungete il delimitatore di patch: tre trattini (<code class="docutils literal notranslate"><span class="pre">---</span></code>).</p>
+<p>Ora, dal menu <span class="menuselection">Messaggio</span>, selezionate <span class="menuselection">Inserisci file di testo...</span>
+quindi scegliete la vostra patch.
+Come soluzione aggiuntiva potreste personalizzare la vostra barra degli
+strumenti aggiungendo un’icona per <span class="menuselection">Inserisci file di testo...</span>.</p>
+<p>Allargate la finestra di scrittura abbastanza da evitare andate a capo.
+Questo perché in Kmail 1.13.5 (KDE 4.5.4), Kmail aggiunge andate a capo
+automaticamente al momento dell’invio per tutte quelle righe che graficamente,
+nella vostra finestra di composizione, si sono estete su una riga successiva.
+Disabilitare l’andata a capo automatica non è sufficiente. Dunque, se la vostra
+patch contiene delle righe molto lunghe, allora dovrete allargare la finestra
+di composizione per evitare che quelle righe vadano a capo. Vedere:
+<a class="reference external" href="https://bugs.kde.org/show_bug.cgi?id=174034">https://bugs.kde.org/show_bug.cgi?id=174034</a></p>
+<p>Potete firmare gli allegati con GPG, ma per le patch si preferisce aggiungerle
+al testo del messaggio per cui non usate la firma GPG.  Firmare le patch
+inserite come testo del messaggio le rende più difficili da estrarre dalla loro
+codifica a 7-bit.</p>
+<p>Se dovete assolutamente inviare delle patch come allegati invece di integrarle
+nel testo del messaggio, allora premete il tasto destro sull’allegato e
+selezionate <span class="menuselection">Proprietà</span>, e poi attivate
+<span class="menuselection">Suggerisci visualizzazione automatica</span> per far si che
+l’allegato sia più leggibile venendo visualizzato come parte del messaggio.</p>
+<p>Per salvare le patch inviate come parte di un messaggio, selezionate il
+messaggio che la contiene, premete il tasto destro e selezionate
+<span class="menuselection">Salva come</span>. Se il messaggio fu ben preparato, allora potrete
+usarlo interamente senza alcuna modifica.
+I messaggi vengono salvati con permessi di lettura-scrittura solo per l’utente,
+nel caso in cui vogliate copiarli altrove per renderli disponibili ad altri
+gruppi o al mondo, ricordatevi di usare <code class="docutils literal notranslate"><span class="pre">chmod</span></code> per cambiare i permessi.</p>
+</section>
+<section id="lotus-notes-gui">
+<h3>Lotus Notes (GUI)<a class="headerlink" href="#lotus-notes-gui" title="Link to this heading">¶</a></h3>
+<p>Scappate finché potete.</p>
+</section>
+<section id="ibm-verse-web-gui">
+<h3>IBM Verse (Web GUI)<a class="headerlink" href="#ibm-verse-web-gui" title="Link to this heading">¶</a></h3>
+<p>Vedi il commento per Lotus Notes.</p>
+</section>
+<section id="mutt-tui">
+<h3>Mutt (TUI)<a class="headerlink" href="#mutt-tui" title="Link to this heading">¶</a></h3>
+<p>Un sacco di sviluppatori Linux usano <code class="docutils literal notranslate"><span class="pre">mutt</span></code>, per cui deve funzionare
+abbastanza bene.</p>
+<p>Mutt non ha un proprio editor, quindi qualunque sia il vostro editor dovrete
+configurarlo per non aggiungere automaticamente le andate a capo.  Molti
+editor hanno un’opzione <span class="menuselection">Inserisci file</span> che inserisce il
+contenuto di un file senza alterarlo.</p>
+<p>Per usare <code class="docutils literal notranslate"><span class="pre">vim</span></code> come editor per mutt:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set editor=&quot;vi&quot;
+</pre></div>
+</div>
+<p>Se per inserire la patch nel messaggio usate xclip, scrivete il comando:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:set paste
+</pre></div>
+</div>
+<p>prima di premere il tasto centrale o shift-insert. Oppure usate il
+comando:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:r filename
+</pre></div>
+</div>
+<p>(a)llega funziona bene senza <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">paste</span></code></p>
+<p>Potete generare le patch con <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">format-patch</span></code> e usare Mutt per inviarle:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mutt -H 0001-some-bug-fix.patch
+</pre></div>
+</div>
+<p>Opzioni per la configurazione:</p>
+<p>Tutto dovrebbe funzionare già nella configurazione base.
+Tuttavia, è una buona idea quella di impostare <code class="docutils literal notranslate"><span class="pre">send_charset</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set send_charset=&quot;us-ascii:utf-8&quot;
+</pre></div>
+</div>
+<p>Mutt è molto personalizzabile. Qui di seguito trovate la configurazione minima
+per iniziare ad usare Mutt per inviare patch usando Gmail:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># .muttrc
+# ================  IMAP  ====================
+set imap_user = &#39;yourusername@gmail.com&#39;
+set imap_pass = &#39;yourpassword&#39;
+set spoolfile = imaps://imap.gmail.com/INBOX
+set folder = imaps://imap.gmail.com/
+set record=&quot;imaps://imap.gmail.com/[Gmail]/Sent Mail&quot;
+set postponed=&quot;imaps://imap.gmail.com/[Gmail]/Drafts&quot;
+set mbox=&quot;imaps://imap.gmail.com/[Gmail]/All Mail&quot;
+
+# ================  SMTP  ====================
+set smtp_url = &quot;smtp://username@smtp.gmail.com:587/&quot;
+set smtp_pass = $imap_pass
+set ssl_force_tls = yes # Require encrypted connection
+
+# ================  Composition  ====================
+set editor = `echo \$EDITOR`
+set edit_headers = yes  # See the headers when editing
+set charset = UTF-8     # value of $LANG; also fallback for send_charset
+# Sender, email address, and sign-off line must match
+unset use_domain        # because joe@localhost is just embarrassing
+set realname = &quot;YOUR NAME&quot;
+set from = &quot;username@gmail.com&quot;
+set use_from = yes
+</pre></div>
+</div>
+<p>La documentazione di Mutt contiene molte più informazioni:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail">https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail</a></p>
+<p><a class="reference external" href="http://www.mutt.org/doc/manual/">http://www.mutt.org/doc/manual/</a></p>
+</div></blockquote>
+</section>
+<section id="pine-tui">
+<h3>Pine (TUI)<a class="headerlink" href="#pine-tui" title="Link to this heading">¶</a></h3>
+<p>Pine aveva alcuni problemi con gli spazi vuoti, ma questi dovrebbero essere
+stati risolti.</p>
+<p>Se potete usate alpine (il successore di pine).</p>
+<p>Opzioni di configurazione:</p>
+<ul class="simple">
+<li><p>Nelle versioni più recenti è necessario avere <code class="docutils literal notranslate"><span class="pre">quell-flowed-text</span></code></p></li>
+<li><p>l’opzione <code class="docutils literal notranslate"><span class="pre">no-strip-whitespace-before-send</span></code> è necessaria</p></li>
+</ul>
+</section>
+<section id="sylpheed-gui">
+<h3>Sylpheed (GUI)<a class="headerlink" href="#sylpheed-gui" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>funziona bene per aggiungere testo in linea (o usando allegati)</p></li>
+<li><p>permette di utilizzare editor esterni</p></li>
+<li><p>è lento su cartelle grandi</p></li>
+<li><p>non farà l’autenticazione TSL SMTP su una connessione non SSL</p></li>
+<li><p>ha un utile righello nella finestra di scrittura</p></li>
+<li><p>la rubrica non comprende correttamente il nome da visualizzare e
+l’indirizzo associato</p></li>
+</ul>
+</section>
+<section id="thunderbird-gui">
+<h3>Thunderbird (GUI)<a class="headerlink" href="#thunderbird-gui" title="Link to this heading">¶</a></h3>
+<p>Thunderbird è un clone di Outlook a cui piace maciullare il testo, ma esistono
+modi per impedirglielo.</p>
+<p>Dopo la configurazione, inclusa l’installazione delle estenzioni, dovrete
+riavviare Thunderbird.</p>
+<ul>
+<li><p>permettere l’uso di editor esterni:</p>
+<p>La cosa più semplice da fare con Thunderbird e le patch è quello di usare
+estensioni che permettano di aprire il vostro editor preferito.</p>
+<p>Di seguito alcune estensioni che possono essere utili al caso.</p>
+<ul>
+<li><p>“External Editor Revived”</p>
+<p><a class="reference external" href="https://github.com/Frederick888/external-editor-revived">https://github.com/Frederick888/external-editor-revived</a></p>
+<p><a class="reference external" href="https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/">https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/</a></p>
+<p>L’estensione richiede l’installazione di “native messaging host”. Date
+un’occhiata alla seguente wiki:
+<a class="reference external" href="https://github.com/Frederick888/external-editor-revived/wiki">https://github.com/Frederick888/external-editor-revived/wiki</a></p>
+</li>
+<li><p>“External Editor”</p>
+<p><a class="reference external" href="https://github.com/exteditor/exteditor">https://github.com/exteditor/exteditor</a></p>
+<p>Per usarlo, scaricate ed installate l’applicazione. Poi aprite la finestra
+<span class="menuselection">Scrivi</span> e a seguire aggiungete un bottone per eseguirlo
+<cite>Visualizza--&gt;Barra degli strumenti--&gt;Personalizza...</cite>. Infine, premente
+questo nuovo bottone tutte le volte che volete usare l’editor esterno.</p>
+<p>Tenete presente che “external editor” richiede che il vostro editor non
+faccia alcun fork, in altre parole, l’editor non deve ritornare prima di
+essere stato chiuso.  Potreste dover passare dei parametri aggiuntivi al
+vostro editor oppure cambiargli la configurazione.  Per esempio, usando
+gvim dovrete aggiungere l’opzione -f <code class="docutils literal notranslate"><span class="pre">/usr/bin/gvim</span> <span class="pre">-f</span></code> (Se il binario
+si trova in <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code>) nell’apposito campo nell’interfaccia di
+configurazione di  <span class="menuselection">external editor</span>.  Se usate altri editor
+consultate il loro  manuale per sapere come configurarli.``)``</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Per rendere l’editor interno un po’ più sensato, fate così:</p>
+<ul class="simple">
+<li><p>Modificate le impostazioni di Thunderbird per far si che non usi <code class="docutils literal notranslate"><span class="pre">format=flowed</span></code>!
+Andate sulla finestra principale e cercate il bottone per il menu a tendina principale.
+Poi <span class="menuselection">Modifica‣Preferenze‣Avanzate‣Editor di configurazione</span>
+per invocare il registro delle impostazioni.</p>
+<ul>
+<li><p>impostate <code class="docutils literal notranslate"><span class="pre">mailnews.send_plaintext_flowed</span></code> a <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>impostate <code class="docutils literal notranslate"><span class="pre">mailnews.wraplength</span></code> da <code class="docutils literal notranslate"><span class="pre">72</span></code> a <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</li>
+<li><p>Non scrivete messaggi HTML! Andate sulla finestra principale ed aprite la
+schermata <span class="menuselection">Menu principale‣Impostazioni account‣nome&#64;unserver.ovunque‣Composizioni e indirizzi</span>.
+Qui potrete disabilitare l’opzione “Componi i messaggi in HTML”</p></li>
+<li><p>Aprite i messaggi solo in formato testo! Andate sulla finestra principale e
+selezionate
+<span class="menuselection">Menu principale‣Visualizza‣Copro del messaggio come‣Testo semplice</span></p></li>
+</ul>
+</section>
+<section id="tkrat-gui">
+<h3>TkRat (GUI)<a class="headerlink" href="#tkrat-gui" title="Link to this heading">¶</a></h3>
+<p>Funziona. Usare “Inserisci file...” o un editor esterno.</p>
+</section>
+<section id="gmail-web-gui">
+<h3>Gmail (Web GUI)<a class="headerlink" href="#gmail-web-gui" title="Link to this heading">¶</a></h3>
+<p>Non funziona per inviare le patch.</p>
+<p>Il programma web Gmail converte automaticamente i tab in spazi.</p>
+<p>Allo stesso tempo aggiunge andata a capo ogni 78 caratteri. Comunque
+il problema della conversione fra spazi e tab può essere risolto usando
+un editor esterno.</p>
+<p>Un altro problema è che Gmail usa la codifica base64 per tutti quei messaggi
+che contengono caratteri non ASCII. Questo include cose tipo i nomi europei.</p>
+</section>
+<section id="hackermail-tui">
+<h3>HacKerMaiL (TUI)<a class="headerlink" href="#hackermail-tui" title="Link to this heading">¶</a></h3>
+<p>HacKerMaiL (hkml) è una semplice casella pubblica per la gestione dei messaggi
+di posta che non richiede alcuna sottoscrizione ad una lista di discussione.
+Viene sviluppato e mantenuto dal manutentore di DAMON e si pone come obiettivo
+quello di gestire il processo di sviluppo semplice come quello di DAMON e più in
+generale i sottosistemi del kernel. Per maggiori dettagli, fate riferimento al
+documento README (<a class="reference external" href="https://github.com/sjp38/hackermail/blob/master/README.md">https://github.com/sjp38/hackermail/blob/master/README.md</a>).</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Informazioni sui programmi di posta elettronica per Linux</a><ul>
+<li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#panoramica-delle-opzioni">Panoramica delle opzioni</a></li>
+<li><a class="reference internal" href="#alcuni-suggerimenti-per-i-programmi-di-posta-elettronica-mua">Alcuni suggerimenti per i programmi di posta elettronica (MUA)</a><ul>
+<li><a class="reference internal" href="#alpine-tui">Alpine (TUI)</a></li>
+<li><a class="reference internal" href="#claws-mail-gui">Claws Mail (GUI)</a></li>
+<li><a class="reference internal" href="#evolution-gui">Evolution (GUI)</a></li>
+<li><a class="reference internal" href="#kmail-gui">Kmail (GUI)</a></li>
+<li><a class="reference internal" href="#lotus-notes-gui">Lotus Notes (GUI)</a></li>
+<li><a class="reference internal" href="#ibm-verse-web-gui">IBM Verse (Web GUI)</a></li>
+<li><a class="reference internal" href="#mutt-tui">Mutt (TUI)</a></li>
+<li><a class="reference internal" href="#pine-tui">Pine (TUI)</a></li>
+<li><a class="reference internal" href="#sylpheed-gui">Sylpheed (GUI)</a></li>
+<li><a class="reference internal" href="#thunderbird-gui">Thunderbird (GUI)</a></li>
+<li><a class="reference internal" href="#tkrat-gui">TkRat (GUI)</a></li>
+<li><a class="reference internal" href="#gmail-web-gui">Gmail (Web GUI)</a></li>
+<li><a class="reference internal" href="#hackermail-tui">HacKerMaiL (TUI)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="maintainer-pgp-guide.html">
+                    <span class="icon">&lt;</span><span>La guida a PGP per manutentori del kernel</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="applying-patches.html"><span>Applicare patch al kernel Linux</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

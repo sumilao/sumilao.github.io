@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Funzionamento del test Kernel Lock Torture &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Documentazione dei sottosistemi del kernel" href="../subsystem-apis.html" />
+    <link rel="prev" title="Statistiche sui blocchi" href="lockstat.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">La documentazione del kernel Linux</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#avvertenze">Avvertenze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#lavorare-con-la-comunita-di-sviluppo">Lavorare con la comunità di sviluppo</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#manuali-sull-api-interna">Manuali sull’API interna</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#strumenti-e-processi-per-lo-sviluppo">Strumenti e processi per lo sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-per-gli-utenti">Documentazione per gli utenti</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-relativa-ai-firmware">Documentazione relativa ai firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-specifica-per-architettura">Documentazione specifica per architettura</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-varia">Documentazione varia</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/it_IT/locking/locktorture.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Italian
+
+<ul>
+
+<li><a href="../../../locking/locktorture.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In caso di dubbi sulla correttezza del contenuto di questa traduzione,
+l’unico riferimento valido è la documentazione ufficiale in inglese.
+Per maggiori informazioni consultate le <a class="reference internal" href="../index.html#it-disclaimer"><span class="std std-ref">avvertenze</span></a>.</p>
+</div>
+<section id="funzionamento-del-test-kernel-lock-torture">
+<h1>Funzionamento del test <em>Kernel Lock Torture</em><a class="headerlink" href="#funzionamento-del-test-kernel-lock-torture" title="Link to this heading">¶</a></h1>
+<section id="config-lock-torture-test">
+<h2>CONFIG_LOCK_TORTURE_TEST<a class="headerlink" href="#config-lock-torture-test" title="Link to this heading">¶</a></h2>
+<p>L’opzione di configurazione CONFIG_LOCK_TORTURE_TEST fornisce un
+modulo kernel che esegue delle verifiche che <em>torturano</em> le primitive di
+sincronizzazione del kernel. Se dovesse servire, il modulo kernel,
+‘locktorture’, può essere generato successivamente su un kernel che
+volete verificare. Periodicamente le verifiche stampano messaggi tramite
+<code class="docutils literal notranslate"><span class="pre">printk()</span></code> e che quindi possono essere letti tramite <code class="docutils literal notranslate"><span class="pre">dmesg</span></code> (magari
+filtrate l’output con <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">&quot;torture&quot;</span></code>). La verifica inizia quando
+il modulo viene caricato e termina quando viene rimosso. Questo
+programma si basa sulle modalità di verifica di RCU tramite rcutorture.</p>
+<p>Questa verifica consiste nella creazione di un certo numero di thread
+del kernel che acquisiscono un blocco e lo trattengono per una certa
+quantità di tempo così da simulare diversi comportamenti nelle sezioni
+critiche. La quantità di contese su un blocco può essere simulata
+allargando la sezione critica e/o creando più thread.</p>
+</section>
+<section id="parametri-del-modulo">
+<h2>Parametri del modulo<a class="headerlink" href="#parametri-del-modulo" title="Link to this heading">¶</a></h2>
+<p>Questo modulo ha i seguenti parametri:</p>
+<section id="specifici-di-locktorture">
+<h3>Specifici di locktorture<a class="headerlink" href="#specifici-di-locktorture" title="Link to this heading">¶</a></h3>
+<dl>
+<dt>nwriters_stress</dt><dd><p>Numero di thread del kernel che stresseranno l’acquisizione
+esclusiva dei blocchi (scrittori). Il valore di base è il
+doppio del numero di processori attivi presenti.</p>
+</dd>
+<dt>nreaders_stress</dt><dd><p>Numero di thread del kernel che stresseranno l’acquisizione
+condivisa dei blocchi (lettori). Il valore di base è lo stesso
+di nwriters_stress. Se l’utente non ha specificato
+nwriters_stress, allora entrambe i valori corrisponderanno
+al numero di processori attivi presenti.</p>
+</dd>
+<dt>torture_type</dt><dd><p>Tipo di blocco da verificare. Di base, solo gli spinlock
+verranno verificati. Questo modulo può verificare anche
+i seguenti tipi di blocchi:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>“lock_busted”:</dt><dd><p>Simula un’incorretta implementazione del
+blocco.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“spin_lock”:</dt><dd><p>coppie di spin_lock() e spin_unlock().</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“spin_lock_irq”:</dt><dd><p>coppie di spin_lock_irq() e spin_unlock_irq().</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rw_lock”:</dt><dd><p>coppie di rwlock read/write lock() e unlock().</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rw_lock_irq”:</dt><dd><p>copie di rwlock read/write lock_irq() e
+unlock_irq().</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“mutex_lock”:</dt><dd><p>coppie di <a class="reference internal" href="../../../kernel-hacking/locking.html#c.mutex_lock" title="mutex_lock"><code class="xref c c-func docutils literal notranslate"><span class="pre">mutex_lock()</span></code></a> e <a class="reference internal" href="../../../kernel-hacking/locking.html#c.mutex_unlock" title="mutex_unlock"><code class="xref c c-func docutils literal notranslate"><span class="pre">mutex_unlock()</span></code></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rtmutex_lock”:</dt><dd><p>coppie di rtmutex_lock() e rtmutex_unlock().
+Il kernel deve avere CONFIG_RT_MUTEXES=y.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rwsem_lock”:</dt><dd><p>coppie di semafori read/write down() e up().</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</section>
+<section id="generici-dell-ambiente-di-sviluppo-torture-rcu-locking">
+<h3>Generici dell’ambiente di sviluppo ‘torture’ (RCU + locking)<a class="headerlink" href="#generici-dell-ambiente-di-sviluppo-torture-rcu-locking" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>shutdown_secs</dt><dd><p>Numero di secondi prima che la verifica termini e il sistema
+venga spento.  Il valore di base è zero, il che disabilita
+la possibilità di terminare e spegnere. Questa funzionalità
+può essere utile per verifiche automatizzate.</p>
+</dd>
+<dt>onoff_interval</dt><dd><p>Numero di secondi fra ogni tentativo di esecuzione di
+un’operazione casuale di CPU-hotplug. Di base è zero, il
+che disabilita la funzionalità di CPU-hotplug. Nei kernel
+con CONFIG_HOTPLUG_CPU=n, locktorture si rifiuterà, senza
+dirlo, di effettuare una qualsiasi operazione di
+CPU-hotplug indipendentemente dal valore specificato in
+onoff_interval.</p>
+</dd>
+<dt>onoff_holdoff</dt><dd><p>Numero di secondi da aspettare prima di iniziare le
+operazioni di CPU-hotplug.  Normalmente questo verrebbe
+usato solamente quando locktorture è compilato come parte
+integrante del kernel ed eseguito automaticamente all’avvio,
+in questo caso è utile perché permette di non confondere
+l’avvio con i processori che vanno e vengono. Questo
+parametro è utile sono se CONFIG_HOTPLUG_CPU è abilitato.</p>
+</dd>
+<dt>stat_interval</dt><dd><p>Numero di secondi fra una stampa (<a class="reference internal" href="../../../core-api/printk-basics.html#c.printk" title="printk"><code class="xref c c-func docutils literal notranslate"><span class="pre">printk()</span></code></a>) delle
+statistiche e l’altra. Di base, locktorture riporta le
+statistiche ogni 60 secondi. Impostando l’intervallo a 0
+ha l’effetto di stampare le statistiche -solo- quando il
+modulo viene rimosso.</p>
+</dd>
+<dt>stutter</dt><dd><p>Durata della verifica prima di effettuare una pausa di
+eguale durata. Di base “stutter=5”, quindi si eseguono
+verifiche e pause di (circa) cinque secondi.
+L’impostazione di “stutter=0” fa si che la verifica
+venga eseguita continuamente senza fermarsi.</p>
+</dd>
+<dt>shuffle_interval</dt><dd><p>Il numero di secondi per cui un thread debba mantenere
+l’affinità con un sottoinsieme di processori, di base è
+3 secondi. Viene usato assieme a test_no_idle_hz.</p>
+</dd>
+<dt>verbose</dt><dd><p>Abilita le stampe di debug, via <a class="reference internal" href="../../../core-api/printk-basics.html#c.printk" title="printk"><code class="xref c c-func docutils literal notranslate"><span class="pre">printk()</span></code></a>. Di base è
+abilitato. Queste informazioni aggiuntive sono per la
+maggior parte relative ad errori di alto livello e resoconti
+da parte dell’struttura ‘torture’.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="statistiche">
+<h2>Statistiche<a class="headerlink" href="#statistiche" title="Link to this heading">¶</a></h2>
+<p>Le statistiche vengono stampate secondo il seguente formato:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spin_lock-torture: Writes:  Total: 93746064  Max/Min: 0/0   Fail: 0
+   (A)                    (B)            (C)            (D)          (E)
+
+(A): tipo di lock sotto verifica -- parametro torture_type.
+
+(B): Numero di acquisizione del blocco in scrittura. Se si ha a che fare
+     con una primitiva di lettura/scrittura apparirà di seguito anche una
+     seconda voce &quot;Reads&quot;
+
+(C): Numero di volte che il blocco è stato acquisito
+
+(D): Numero minimo e massimo di volte che un thread ha fallito
+     nell&#39;acquisire il blocco
+
+(E): valori true/false nel caso di errori durante l&#39;acquisizione del blocco.
+     Questo dovrebbe dare un riscontro positivo -solo- se c&#39;è un baco
+     nell&#39;implementazione delle primitive di sincronizzazione. Altrimenti un
+     blocco non dovrebbe mai fallire (per esempio, spin_lock()).
+     Ovviamente lo stesso si applica per (C). Un semplice esempio è il tipo
+     &quot;lock_busted&quot;.
+</pre></div>
+</div>
+</section>
+<section id="uso">
+<h2>Uso<a class="headerlink" href="#uso" title="Link to this heading">¶</a></h2>
+<p>Il seguente script può essere utilizzato per verificare i blocchi:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+
+modprobe locktorture
+sleep 3600
+rmmod locktorture
+dmesg | grep torture:
+</pre></div>
+</div>
+<p>L’output può essere manualmente ispezionato cercando il marcatore d’errore
+“!!!”. Ovviamente potreste voler creare degli script più elaborati che
+verificano automaticamente la presenza di errori. Il comando “rmmod” forza la
+stampa (usando <a class="reference internal" href="../../../core-api/printk-basics.html#c.printk" title="printk"><code class="xref c c-func docutils literal notranslate"><span class="pre">printk()</span></code></a>) di “SUCCESS”, “FAILURE”, oppure “RCU_HOTPLUG”. I primi
+due si piegano da soli, mentre l’ultimo indica che non stati trovati problemi di
+sincronizzazione, tuttavia ne sono stati trovati in CPU-hotplug.</p>
+<p>Consultate anche: <a class="reference internal" href="../RCU/torture.html"><span class="doc">Le operazioni RCU per le verifiche torture</span></a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Funzionamento del test <em>Kernel Lock Torture</em></a><ul>
+<li><a class="reference internal" href="#config-lock-torture-test">CONFIG_LOCK_TORTURE_TEST</a></li>
+<li><a class="reference internal" href="#parametri-del-modulo">Parametri del modulo</a><ul>
+<li><a class="reference internal" href="#specifici-di-locktorture">Specifici di locktorture</a></li>
+<li><a class="reference internal" href="#generici-dell-ambiente-di-sviluppo-torture-rcu-locking">Generici dell’ambiente di sviluppo ‘torture’ (RCU + locking)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#statistiche">Statistiche</a></li>
+<li><a class="reference internal" href="#uso">Uso</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="lockstat.html">
+                    <span class="icon">&lt;</span><span>Statistiche sui blocchi</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../subsystem-apis.html"><span>Documentazione dei sottosistemi del kernel</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

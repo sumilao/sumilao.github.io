@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>this_cpu operations &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ktime accessors" href="timekeeping.html" />
+    <link rel="prev" title="Generic bitfield packing and unpacking functions" href="packing.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-utilities">Core utilities</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#data-structures-and-low-level-utilities">Data structures and low-level utilities</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="kobject.html">Everything you never wanted to know about kobjects, ksets, and ktypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kref.html">Adding reference counters (krefs) to kernel objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cleanup.html">Scope-based Cleanup Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assoc_array.html">Generic Associative Array Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="folio_queue.html">Folio Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xarray.html">XArray</a></li>
+<li class="toctree-l3"><a class="reference internal" href="maple_tree.html">Maple Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idr.html">ID Allocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="circular-buffers.html">Circular Buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rbtree.html">Red-black Trees (rbtree) in Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generic-radix-tree.html">Generic radix trees/sparse arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packing.html">Generic bitfield packing and unpacking functions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">this_cpu operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timekeeping.html">ktime accessors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errseq.html">The errseq_t datatype</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrappers/atomic_t.html">Atomic types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrappers/atomic_bitops.html">Atomic bitops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="floating-point.html">Floating-point API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="union_find.html">Union-Find in Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="min_heap.html">Min Heap API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parser.html">Generic parser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-entry-and-exit">Low level entry and exit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#concurrency-primitives">Concurrency primitives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-hardware-management">Low-level hardware management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#memory-management">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#interfaces-for-kernel-debugging">Interfaces for kernel debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/core-api/this_cpu_ops.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/core-api/this_cpu_ops.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="this-cpu-operations">
+<h1>this_cpu operations<a class="headerlink" href="#this-cpu-operations" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Christoph Lameter, August 4th, 2014</p>
+</dd>
+<dt class="field-even">Author<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pranith Kumar, Aug 2nd, 2014</p>
+</dd>
+</dl>
+<p>this_cpu operations are a way of optimizing access to per cpu
+variables associated with the <em>currently</em> executing processor. This is
+done through the use of segment registers (or a dedicated register where
+the cpu permanently stored the beginning of the per cpu area for a
+specific processor).</p>
+<p>this_cpu operations add a per cpu variable offset to the processor
+specific per cpu base and encode that operation in the instruction
+operating on the per cpu variable.</p>
+<p>This means that there are no atomicity issues between the calculation of
+the offset and the operation on the data. Therefore it is not
+necessary to disable preemption or interrupts to ensure that the
+processor is not changed between the calculation of the address and
+the operation on the data.</p>
+<p>Read-modify-write operations are of particular interest. Frequently
+processors have special lower latency instructions that can operate
+without the typical synchronization overhead, but still provide some
+sort of relaxed atomicity guarantees. The x86, for example, can execute
+RMW (Read Modify Write) instructions like inc/dec/cmpxchg without the
+lock prefix and the associated latency penalty.</p>
+<p>Access to the variable without the lock prefix is not synchronized but
+synchronization is not necessary since we are dealing with per cpu
+data specific to the currently executing processor. Only the current
+processor should be accessing that variable and therefore there are no
+concurrency issues with other processors in the system.</p>
+<p>Please note that accesses by remote processors to a per cpu area are
+exceptional situations and may impact performance and/or correctness
+(remote write operations) of local RMW operations via this_cpu_*.</p>
+<p>The main use of the this_cpu operations has been to optimize counter
+operations.</p>
+<p>The following this_cpu() operations with implied preemption protection
+are defined. These operations can be used without worrying about
+preemption and interrupts:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_read(pcp)
+this_cpu_write(pcp, val)
+this_cpu_add(pcp, val)
+this_cpu_and(pcp, val)
+this_cpu_or(pcp, val)
+this_cpu_add_return(pcp, val)
+this_cpu_xchg(pcp, nval)
+this_cpu_cmpxchg(pcp, oval, nval)
+this_cpu_sub(pcp, val)
+this_cpu_inc(pcp)
+this_cpu_dec(pcp)
+this_cpu_sub_return(pcp, val)
+this_cpu_inc_return(pcp)
+this_cpu_dec_return(pcp)
+</pre></div>
+</div>
+<section id="inner-working-of-this-cpu-operations">
+<h2>Inner working of this_cpu operations<a class="headerlink" href="#inner-working-of-this-cpu-operations" title="Link to this heading">¶</a></h2>
+<p>On x86 the fs: or the gs: segment registers contain the base of the
+per cpu area. It is then possible to simply use the segment override
+to relocate a per cpu relative address to the proper per cpu area for
+the processor. So the relocation to the per cpu base is encoded in the
+instruction via a segment register prefix.</p>
+<p>For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(int, x);
+int z;
+
+z = this_cpu_read(x);
+</pre></div>
+</div>
+<p>results in a single instruction:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mov ax, gs:[x]
+</pre></div>
+</div>
+<p>instead of a sequence of calculation of the address and then a fetch
+from that address which occurs with the per cpu operations. Before
+this_cpu_ops such sequence also required preempt disable/enable to
+prevent the kernel from moving the thread to a different processor
+while the calculation is performed.</p>
+<p>Consider the following this_cpu operation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_inc(x)
+</pre></div>
+</div>
+<p>The above results in the following single instruction (no lock prefix!):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inc gs:[x]
+</pre></div>
+</div>
+<p>instead of the following operations required if there is no segment
+register:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int *y;
+int cpu;
+
+cpu = get_cpu();
+y = per_cpu_ptr(&amp;x, cpu);
+(*y)++;
+put_cpu();
+</pre></div>
+</div>
+<p>Note that these operations can only be used on per cpu data that is
+reserved for a specific processor. Without disabling preemption in the
+surrounding code this_cpu_inc() will only guarantee that one of the
+per cpu counters is correctly incremented. However, there is no
+guarantee that the OS will not move the process directly before or
+after the this_cpu instruction is executed. In general this means that
+the value of the individual counters for each processor are
+meaningless. The sum of all the per cpu counters is the only value
+that is of interest.</p>
+<p>Per cpu variables are used for performance reasons. Bouncing cache
+lines can be avoided if multiple processors concurrently go through
+the same code paths.  Since each processor has its own per cpu
+variables no concurrent cache line updates take place. The price that
+has to be paid for this optimization is the need to add up the per cpu
+counters when the value of a counter is needed.</p>
+</section>
+<section id="special-operations">
+<h2>Special operations<a class="headerlink" href="#special-operations" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>y = this_cpu_ptr(&amp;x)
+</pre></div>
+</div>
+<p>Takes the offset of a per cpu variable (&amp;x !) and returns the address
+of the per cpu variable that belongs to the currently executing
+processor.  this_cpu_ptr avoids multiple steps that the common
+get_cpu/put_cpu sequence requires. No processor number is
+available. Instead, the offset of the local per cpu area is simply
+added to the per cpu offset.</p>
+<p>Note that this operation can only be used in code segments where
+smp_processor_id() may be used, for example, where preemption has been
+disabled. The pointer is then used to access local per cpu data in a
+critical section. When preemption is re-enabled this pointer is usually
+no longer useful since it may no longer point to per cpu data of the
+current processor.</p>
+<p>The special cases where it makes sense to obtain a per-CPU pointer in
+preemptible code are addressed by raw_cpu_ptr(), but such use cases need
+to handle cases where two different CPUs are accessing the same per cpu
+variable, which might well be that of a third CPU.  These use cases are
+typically performance optimizations.  For example, SRCU implements a pair
+of counters as a pair of per-CPU variables, and rcu_read_lock_nmisafe()
+uses raw_cpu_ptr() to get a pointer to some CPU’s counter, and uses
+atomic_inc_long() to handle migration between the raw_cpu_ptr() and
+the atomic_inc_long().</p>
+</section>
+<section id="per-cpu-variables-and-offsets">
+<h2>Per cpu variables and offsets<a class="headerlink" href="#per-cpu-variables-and-offsets" title="Link to this heading">¶</a></h2>
+<p>Per cpu variables have <em>offsets</em> to the beginning of the per cpu
+area. They do not have addresses although they look like that in the
+code. Offsets cannot be directly dereferenced. The offset must be
+added to a base pointer of a per cpu area of a processor in order to
+form a valid address.</p>
+<p>Therefore the use of x or &amp;x outside of the context of per cpu
+operations is invalid and will generally be treated like a NULL
+pointer dereference.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(int, x);
+</pre></div>
+</div>
+<p>In the context of per cpu operations the above implies that x is a per
+cpu variable. Most this_cpu operations take a cpu variable.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int __percpu *p = &amp;x;
+</pre></div>
+</div>
+<p>&amp;x and hence p is the <em>offset</em> of a per cpu variable. this_cpu_ptr()
+takes the offset of a per cpu variable which makes this look a bit
+strange.</p>
+</section>
+<section id="operations-on-a-field-of-a-per-cpu-structure">
+<h2>Operations on a field of a per cpu structure<a class="headerlink" href="#operations-on-a-field-of-a-per-cpu-structure" title="Link to this heading">¶</a></h2>
+<p>Let’s say we have a percpu structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        int n,m;
+};
+
+DEFINE_PER_CPU(struct s, p);
+</pre></div>
+</div>
+<p>Operations on these fields are straightforward:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_inc(p.m)
+
+z = this_cpu_cmpxchg(p.m, 0, 1);
+</pre></div>
+</div>
+<p>If we have an offset to struct s:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s __percpu *ps = &amp;p;
+
+this_cpu_dec(ps-&gt;m);
+
+z = this_cpu_inc_return(ps-&gt;n);
+</pre></div>
+</div>
+<p>The calculation of the pointer may require the use of this_cpu_ptr()
+if we do not make use of this_cpu ops later to manipulate fields:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s *pp;
+
+pp = this_cpu_ptr(&amp;p);
+
+pp-&gt;m--;
+
+z = pp-&gt;n++;
+</pre></div>
+</div>
+</section>
+<section id="variants-of-this-cpu-ops">
+<h2>Variants of this_cpu ops<a class="headerlink" href="#variants-of-this-cpu-ops" title="Link to this heading">¶</a></h2>
+<p>this_cpu ops are interrupt safe. Some architectures do not support
+these per cpu local operations. In that case the operation must be
+replaced by code that disables interrupts, then does the operations
+that are guaranteed to be atomic and then re-enable interrupts. Doing
+so is expensive. If there are other reasons why the scheduler cannot
+change the processor we are executing on then there is no reason to
+disable interrupts. For that purpose the following __this_cpu operations
+are provided.</p>
+<p>These operations have no guarantee against concurrent interrupts or
+preemption. If a per cpu variable is not used in an interrupt context
+and the scheduler cannot preempt, then they are safe. If any interrupts
+still occur while an operation is in progress and if the interrupt too
+modifies the variable, then RMW actions can not be guaranteed to be
+safe:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>__this_cpu_read(pcp)
+__this_cpu_write(pcp, val)
+__this_cpu_add(pcp, val)
+__this_cpu_and(pcp, val)
+__this_cpu_or(pcp, val)
+__this_cpu_add_return(pcp, val)
+__this_cpu_xchg(pcp, nval)
+__this_cpu_cmpxchg(pcp, oval, nval)
+__this_cpu_sub(pcp, val)
+__this_cpu_inc(pcp)
+__this_cpu_dec(pcp)
+__this_cpu_sub_return(pcp, val)
+__this_cpu_inc_return(pcp)
+__this_cpu_dec_return(pcp)
+</pre></div>
+</div>
+<p>Will increment x and will not fall-back to code that disables
+interrupts on platforms that cannot accomplish atomicity through
+address relocation and a Read-Modify-Write operation in the same
+instruction.</p>
+</section>
+<section id="this-cpu-ptr-pp-n-vs-this-cpu-ptr-pp-n">
+<h2>&amp;this_cpu_ptr(pp)-&gt;n vs this_cpu_ptr(&amp;pp-&gt;n)<a class="headerlink" href="#this-cpu-ptr-pp-n-vs-this-cpu-ptr-pp-n" title="Link to this heading">¶</a></h2>
+<p>The first operation takes the offset and forms an address and then
+adds the offset of the n field. This may result in two add
+instructions emitted by the compiler.</p>
+<p>The second one first adds the two offsets and then does the
+relocation.  IMHO the second form looks cleaner and has an easier time
+with (). The second form also is consistent with the way
+this_cpu_read() and friends are used.</p>
+</section>
+<section id="remote-access-to-per-cpu-data">
+<h2>Remote access to per cpu data<a class="headerlink" href="#remote-access-to-per-cpu-data" title="Link to this heading">¶</a></h2>
+<p>Per cpu data structures are designed to be used by one cpu exclusively.
+If you use the variables as intended, this_cpu_ops() are guaranteed to
+be “atomic” as no other CPU has access to these data structures.</p>
+<p>There are special cases where you might need to access per cpu data
+structures remotely. It is usually safe to do a remote read access
+and that is frequently done to summarize counters. Remote write access
+something which could be problematic because this_cpu ops do not
+have lock semantics. A remote write may interfere with a this_cpu
+RMW operation.</p>
+<p>Remote write accesses to percpu data structures are highly discouraged
+unless absolutely necessary. Please consider using an IPI to wake up
+the remote CPU and perform the update to its per cpu area.</p>
+<p>To access per-cpu data structure remotely, typically the per_cpu_ptr()
+function is used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(struct data, datap);
+
+struct data *p = per_cpu_ptr(&amp;datap, cpu);
+</pre></div>
+</div>
+<p>This makes it explicit that we are getting ready to access a percpu
+area remotely.</p>
+<p>You can also do the following to convert the datap offset to an address:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct data *p = this_cpu_ptr(&amp;datap);
+</pre></div>
+</div>
+<p>but, passing of pointers calculated via this_cpu_ptr to other cpus is
+unusual and should be avoided.</p>
+<p>Remote access are typically only for reading the status of another cpus
+per cpu data. Write accesses can cause unique problems due to the
+relaxed synchronization requirements for this_cpu operations.</p>
+<p>One example that illustrates some concerns with write operations is
+the following scenario that occurs because two per cpu variables
+share a cache-line but the relaxed synchronization is applied to
+only one process updating the cache-line.</p>
+<p>Consider the following example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct test {
+        atomic_t a;
+        int b;
+};
+
+DEFINE_PER_CPU(struct test, onecacheline);
+</pre></div>
+</div>
+<p>There is some concern about what would happen if the field ‘a’ is updated
+remotely from one processor and the local processor would use this_cpu ops
+to update field b. Care should be taken that such simultaneous accesses to
+data within the same cache line are avoided. Also costly synchronization
+may be necessary. IPIs are generally recommended in such scenarios instead
+of a remote write to the per cpu area of another processor.</p>
+<p>Even in cases where the remote writes are rare, please bear in
+mind that a remote write will evict the cache line from the processor
+that most likely will access it. If the processor wakes up and finds a
+missing local cache line of a per cpu area, its performance and hence
+the wake up times will be affected.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">this_cpu operations</a><ul>
+<li><a class="reference internal" href="#inner-working-of-this-cpu-operations">Inner working of this_cpu operations</a></li>
+<li><a class="reference internal" href="#special-operations">Special operations</a></li>
+<li><a class="reference internal" href="#per-cpu-variables-and-offsets">Per cpu variables and offsets</a></li>
+<li><a class="reference internal" href="#operations-on-a-field-of-a-per-cpu-structure">Operations on a field of a per cpu structure</a></li>
+<li><a class="reference internal" href="#variants-of-this-cpu-ops">Variants of this_cpu ops</a></li>
+<li><a class="reference internal" href="#this-cpu-ptr-pp-n-vs-this-cpu-ptr-pp-n">&amp;this_cpu_ptr(pp)-&gt;n vs this_cpu_ptr(&amp;pp-&gt;n)</a></li>
+<li><a class="reference internal" href="#remote-access-to-per-cpu-data">Remote access to per cpu data</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="packing.html">
+                    <span class="icon">&lt;</span><span>Generic bitfield packing and unpacking functions</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="timekeeping.html"><span>ktime accessors</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

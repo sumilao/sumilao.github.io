@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>內核同頁合併 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <script src="../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="處理器體系結構" href="../../arch/index.html" />
+    <link rel="prev" title="基於DAMON的LRU排序" href="damon/lru_sort.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../index.html" title="Go to homepage"><img src="../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">繁體中文翻譯</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#linux">與Linux 內核社區一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#api">內部API文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id2">開發工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#id3">面向用戶的文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id5">固件相關文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id6">體系結構文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id7">其他文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id8">術語表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/translations/zh_TW/admin-guide/mm/ksm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Traditional)
+
+<ul>
+
+<li><a href="../../../../admin-guide/mm/ksm.html">English</a></li>
+
+<li><a href="../../../zh_CN/admin-guide/mm/ksm.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>此文件的目的是爲讓中文讀者更容易閱讀和理解，而不是作爲一個分支。因此，
+如果您對此文件有任何意見或改動，請先嘗試更新原始英文文件。如果要更改或
+修正某處翻譯文件，請將意見或補丁發送給維護者（聯繫方式見下）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您發現本文檔與原始文件有任何不同或者有翻譯問題，請聯繫該文件的譯者，
+或者發送電子郵件給胡皓文以獲取幫助：&lt;<a class="reference external" href="mailto:2023002089&#37;&#52;&#48;link&#46;tyut&#46;edu&#46;cn">2023002089<span>&#64;</span>link<span>&#46;</span>tyut<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../../admin-guide/mm/ksm.html"><span class="doc">Kernel Samepage Merging</span></a></p>
+</dd>
+<dt class="field-even">翻譯<span class="colon">:</span></dt>
+<dd class="field-even"><p>徐鑫 xu xin &lt;<a class="reference external" href="mailto:xu&#46;xin16&#37;&#52;&#48;zte&#46;com&#46;cn">xu<span>&#46;</span>xin16<span>&#64;</span>zte<span>&#46;</span>com<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="id1">
+<h1>內核同頁合併<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<section id="id2">
+<h2>概述<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>KSM是一種能節省內存的數據去重功能，由CONFIG_KSM=y啓用，並在2.6.32版本時被添
+加到Linux內核。詳見 <code class="docutils literal notranslate"><span class="pre">mm/ksm.c</span></code> 的實現，以及http://lwn.net/Articles/306704
+和https://lwn.net/Articles/330589</p>
+<p>KSM最初目的是爲了與KVM（即著名的內核共享內存）一起使用而開發的，通過共享虛擬機
+之間的公共數據，將更多虛擬機放入物理內存。但它對於任何會生成多個相同數據實例的
+應用程序都是很有用的。</p>
+<p>KSM的守護進程ksmd會定期掃描那些已註冊的用戶內存區域，查找內容相同的頁面，這些
+頁面可以被單個寫保護頁面替換（如果進程以後想要更新其內容，將自動複製）。使用：
+引用:<cite>sysfs intraface  &lt;ksm_sysfs&gt;</cite> 接口來配置KSM守護程序在單個過程中所掃描的頁
+數以及兩個過程之間的間隔時間。</p>
+<p>KSM只合並匿名（私有）頁面，從不合並頁緩存（文件）頁面。KSM的合併頁面最初只能被
+鎖定在內核內存中，但現在可以就像其他用戶頁面一樣被換出（但當它們被交換回來時共
+享會被破壞: ksmd必須重新發現它們的身份並再次合併）。</p>
+</section>
+<section id="madviseksm">
+<h2>以madvise控制KSM<a class="headerlink" href="#madviseksm" title="Link to this heading">¶</a></h2>
+<p>KSM僅在特定的地址空間區域時運行，即應用程序通過使用如下所示的madvise(2)系統調
+用來請求某塊地址成爲可能的合併候選者的地址空間:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int madvise(addr, length, MADV_MERGEABLE)
+</pre></div>
+</div>
+<p>應用程序當然也可以通過調用:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int madvise(addr, length, MADV_UNMERGEABLE)
+</pre></div>
+</div>
+<p>來取消該請求，並恢復爲非共享頁面：此時KSM將去除合併在該範圍內的任何合併頁。注意：
+這個去除合併的調用可能突然需要的內存量超過實際可用的內存量-那麼可能會出現EAGAIN
+失敗，但更可能會喚醒OOM killer。</p>
+<p>如果KSM未被配置到正在運行的內核中，則madvise MADV_MERGEABLE 和 MADV_UNMERGEABLE
+的調用只會以EINVAL 失敗。如果正在運行的內核是用CONFIG_KSM=y方式構建的，那麼這些
+調用通常會成功：即使KSM守護程序當前沒有運行，MADV_MERGEABLE 仍然會在KSM守護程序
+啓動時註冊範圍，即使該範圍不能包含KSM實際可以合併的任何頁面，即使MADV_UNMERGEABLE
+應用於從未標記爲MADV_MERGEABLE的範圍。</p>
+<p>如果一塊內存區域必須被拆分爲至少一個新的MADV_MERGEABLE區域或MADV_UNMERGEABLE區域，
+當該進程將超過 <code class="docutils literal notranslate"><span class="pre">vm.max_map_count</span></code> 的設定，則madvise可能返回ENOMEM。（請參閱文檔
+<a class="reference internal" href="../../../../admin-guide/sysctl/vm.html"><span class="doc">Documentation for /proc/sys/vm/</span></a>）。</p>
+<p>與其他madvise調用一樣，它們在用戶地址空間的映射區域上使用：如果指定的範圍包含未
+映射的間隙（儘管在中間的映射區域工作），它們將報告ENOMEM，如果沒有足夠的內存用於
+內部結構，則可能會因EAGAIN而失敗。</p>
+</section>
+<section id="ksmsysfs">
+<h2>KSM守護進程sysfs接口<a class="headerlink" href="#ksmsysfs" title="Link to this heading">¶</a></h2>
+<p>KSM守護進程可以由``/sys/kernel/mm/ksm/`` 中的sysfs文件控制，所有人都可以讀取，但
+只能由root用戶寫入。各接口解釋如下：</p>
+<dl>
+<dt>pages_to_scan</dt><dd><p>ksmd進程進入睡眠前要掃描的頁數。
+例如， <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">100</span> <span class="pre">&gt;</span> <span class="pre">/sys/kernel/mm/ksm/pages_to_scan</span></code></p>
+<p>默認值：100（該值被選擇用於演示目的）</p>
+</dd>
+<dt>sleep_millisecs</dt><dd><p>ksmd在下次掃描前應休眠多少毫秒
+例如， <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">20</span> <span class="pre">&gt;</span> <span class="pre">/sys/kernel/mm/ksm/sleep_millisecs</span></code></p>
+<p>默認值：20（該值被選擇用於演示目的）</p>
+</dd>
+<dt>merge_across_nodes</dt><dd><p>指定是否可以合併來自不同NUMA節點的頁面。當設置爲0時，ksm僅合併在物理上位
+於同一NUMA節點的內存區域中的頁面。這降低了訪問共享頁面的延遲。在有明顯的
+NUMA距離上，具有更多節點的系統可能受益於設置該值爲0時的更低延遲。而對於
+需要對內存使用量最小化的較小系統來說，設置該值爲1（默認設置）則可能會受
+益於更大共享頁面。在決定使用哪種設置之前，您可能希望比較系統在每種設置下
+的性能。 <code class="docutils literal notranslate"><span class="pre">merge_across_nodes</span></code> 僅當系統中沒有ksm共享頁面時，才能被更改設
+置：首先將接口`run` 設置爲2從而對頁進行去合併，然後在修改
+<code class="docutils literal notranslate"><span class="pre">merge_across_nodes</span></code> 後再將‘run’又設置爲1，以根據新設置來重新合併。</p>
+<p>默認值：1（如早期的發佈版本一樣合併跨站點）</p>
+</dd>
+<dt>run</dt><dd><ul class="simple">
+<li><p>設置爲0可停止ksmd運行，但保留合併頁面，</p></li>
+<li><p>設置爲1可運行ksmd，例如， <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">/sys/kernel/mm/ksm/run</span></code> ，</p></li>
+<li><p>設置爲2可停止ksmd運行，並且對所有目前已合併的頁進行去合併，但保留可合併
+區域以供下次運行。</p></li>
+</ul>
+<p>默認值：0（必須設置爲1才能激活KSM，除非禁用了CONFIG_SYSFS）</p>
+</dd>
+<dt>use_zero_pages</dt><dd><p>指定是否應當特殊處理空頁（即那些僅含zero的已分配頁）。當該值設置爲1時，
+空頁與內核零頁合併，而不是像通常情況下那樣空頁自身彼此合併。這可以根據
+工作負載的不同，在具有着色零頁的架構上可以提高性能。啓用此設置時應小心，
+因爲它可能會降低某些工作負載的KSM性能，比如，當待合併的候選頁面的校驗和
+與空頁面的校驗和恰好匹配的時候。此設置可隨時更改，僅對那些更改後再合併
+的頁面有效。</p>
+<p>默認值：0（如同早期版本的KSM正常表現）</p>
+</dd>
+<dt>max_page_sharing</dt><dd><p>單個KSM頁面允許的最大共享站點數。這將強制執行重複數據消除限制，以避免涉
+及遍歷共享KSM頁面的虛擬映射的虛擬內存操作的高延遲。最小值爲2，因爲新創
+建的KSM頁面將至少有兩個共享者。該值越高，KSM合併內存的速度越快，去重
+因子也越高，但是對於任何給定的KSM頁面，虛擬映射的最壞情況遍歷的速度也會
+越慢。減慢了這種遍歷速度就意味着在交換、壓縮、NUMA平衡和頁面遷移期間，
+某些虛擬內存操作將有更高的延遲，從而降低這些虛擬內存操作調用者的響應能力。
+其他任務如果不涉及執行虛擬映射遍歷的VM操作，其任務調度延遲不受此參數的影
+響，因爲這些遍歷本身是調度友好的。</p>
+</dd>
+<dt>stable_node_chains_prune_millisecs</dt><dd><p>指定KSM檢查特定頁面的元數據的頻率（即那些達到過時信息數據去重限制標準的
+頁面）單位是毫秒。較小的毫秒值將以更低的延遲來釋放KSM元數據，但它們將使
+ksmd在掃描期間使用更多CPU。如果還沒有一個KSM頁面達到 <code class="docutils literal notranslate"><span class="pre">max_page_sharing</span></code>
+標準，那就沒有什麼用。</p>
+</dd>
+</dl>
+<p>KSM與MADV_MERGEABLE的工作有效性體現於 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/mm/ksm/</span></code> 路徑下的接口：</p>
+<dl class="simple">
+<dt>pages_shared</dt><dd><p>表示多少共享頁正在被使用</p>
+</dd>
+<dt>pages_sharing</dt><dd><p>表示還有多少站點正在共享這些共享頁，即節省了多少</p>
+</dd>
+<dt>pages_unshared</dt><dd><p>表示有多少頁是唯一的，但被反覆檢查以進行合併</p>
+</dd>
+<dt>pages_volatile</dt><dd><p>表示有多少頁因變化太快而無法放在tree中</p>
+</dd>
+<dt>full_scans</dt><dd><p>表示所有可合併區域已掃描多少次</p>
+</dd>
+<dt>stable_node_chains</dt><dd><p>達到 <code class="docutils literal notranslate"><span class="pre">max_page_sharing</span></code> 限制的KSM頁數</p>
+</dd>
+<dt>stable_node_dups</dt><dd><p>重複的KSM頁數</p>
+</dd>
+</dl>
+<p>比值 <code class="docutils literal notranslate"><span class="pre">pages_sharing/pages_shared</span></code> 的最大值受限制於 <code class="docutils literal notranslate"><span class="pre">max_page_sharing</span></code>
+的設定。要想增加該比值，則相應地要增加 <code class="docutils literal notranslate"><span class="pre">max_page_sharing</span></code> 的值。</p>
+</section>
+<section id="ksm">
+<h2>監測KSM的收益<a class="headerlink" href="#ksm" title="Link to this heading">¶</a></h2>
+<p>KSM可以通過合併相同的頁面來節省內存，但也會消耗額外的內存，因爲它需要生成一些rmap_items
+來保存每個掃描頁面的簡要rmap信息。其中有些頁面可能會被合併，但有些頁面在被檢查幾次
+後可能無法被合併，這些都是無益的內存消耗。</p>
+<ol class="arabic">
+<li><p>如何確定KSM在全系統範圍內是節省內存還是消耗內存？這裏有一個簡單的近似計算方法供參考:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general_profit =~ pages_sharing * sizeof(page) - (all_rmap_items) *
+                  sizeof(rmap_item);
+</pre></div>
+</div>
+<p>其中all_rmap_items可以通過對 <code class="docutils literal notranslate"><span class="pre">pages_sharing</span></code> 、 <code class="docutils literal notranslate"><span class="pre">pages_shared</span></code> 、 <code class="docutils literal notranslate"><span class="pre">pages_unshared</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">pages_volatile</span></code> 的求和而輕鬆獲得。</p>
+</li>
+<li><p>單一進程中KSM的收益也可以通過以下近似的計算得到:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>process_profit =~ ksm_merging_pages * sizeof(page) -
+                  ksm_rmap_items * sizeof(rmap_item).
+</pre></div>
+</div>
+<p>其中ksm_merging_pages顯示在 <code class="docutils literal notranslate"><span class="pre">/proc/&lt;pid&gt;/</span></code> 目錄下，而ksm_rmap_items
+顯示在 <code class="docutils literal notranslate"><span class="pre">/proc/&lt;pid&gt;/ksm_stat</span></code> 。</p>
+</li>
+</ol>
+<p>從應用的角度來看， <code class="docutils literal notranslate"><span class="pre">ksm_rmap_items</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ksm_merging_pages</span></code> 的高比例意
+味着不好的madvise-applied策略，所以開發者或管理員必須重新考慮如何改變madvis策
+略。舉個例子供參考，一個頁面的大小通常是4K，而rmap_item的大小在32位CPU架構上分
+別是32B，在64位CPU架構上是64B。所以如果 <code class="docutils literal notranslate"><span class="pre">ksm_rmap_items/ksm_merging_pages</span></code>
+的比例在64位CPU上超過64，或者在32位CPU上超過128，那麼應用程序的madvise策略應
+該被放棄，因爲ksm收益大約爲零或負值。</p>
+</section>
+<section id="id3">
+<h2>監控KSM事件<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>在/proc/vmstat中有一些計數器，可以用來監控KSM事件。KSM可能有助於節省內存，這是
+一種權衡，因爲它可能會在KSM COW或複製中的交換上遭受延遲。這些事件可以幫助用戶評估
+是否或如何使用KSM。例如，如果cow_ksm增加得太快，用戶可以減少madvise(, , MADV_MERGEABLE)
+的範圍。</p>
+<dl class="simple">
+<dt>cow_ksm</dt><dd><p>在每次KSM頁面觸發寫時拷貝（COW）時都會被遞增，當用戶試圖寫入KSM頁面時，
+我們必須做一個拷貝。</p>
+</dd>
+<dt>ksm_swpin_copy</dt><dd><p>在換入時，每次KSM頁被複制時都會被遞增。請注意，KSM頁在換入時可能會被複
+制，因爲do_swap_page()不能做所有的鎖，而需要重組一個跨anon_vma的KSM頁。</p>
+</dd>
+</dl>
+<p>--
+Izik Eidus,
+Hugh Dickins, 2009年11月17日。</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">內核同頁合併</a><ul>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#madviseksm">以madvise控制KSM</a></li>
+<li><a class="reference internal" href="#ksmsysfs">KSM守護進程sysfs接口</a></li>
+<li><a class="reference internal" href="#ksm">監測KSM的收益</a></li>
+<li><a class="reference internal" href="#id3">監控KSM事件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="damon/lru_sort.html">
+                    <span class="icon">&lt;</span><span>基於DAMON的LRU排序</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../../arch/index.html"><span>處理器體系結構</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

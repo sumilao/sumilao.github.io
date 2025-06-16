@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux中x86虚拟化的机密计算 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux安全模块：Linux通用安全钩子" href="lsm.html" />
+    <link rel="prev" title="Linux中的凭据" href="credentials.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/security/snp-tdx-threat-model.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../security/snp-tdx-threat-model.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../security/snp-tdx-threat-model.html"><span class="doc">Confidential Computing in Linux for x86 virtualization</span></a></p>
+</dd>
+<dt class="field-even">翻译<span class="colon">:</span></dt>
+<dd class="field-even"><p>毛玉贤 Yuxian Mao &lt;<a class="reference external" href="mailto:maoyuxian&#37;&#52;&#48;cqsoftware&#46;com&#46;cn">maoyuxian<span>&#64;</span>cqsoftware<span>&#46;</span>com<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="linuxx86">
+<h1>Linux中x86虚拟化的机密计算<a class="headerlink" href="#linuxx86" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id5">动机</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">概述与术语</a></p></li>
+<li><p><a class="reference internal" href="#linux" id="id7">现有的Linux内核威胁模型</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">机密计算威胁模型及其安全目标</a></p></li>
+</ul>
+</nav>
+<p>By: Elena Reshetova &lt;<a class="reference external" href="mailto:elena&#46;reshetova&#37;&#52;&#48;intel&#46;com">elena<span>&#46;</span>reshetova<span>&#64;</span>intel<span>&#46;</span>com</a>&gt; and Carlos Bilbao &lt;<a class="reference external" href="mailto:carlos&#46;bilbao&#46;osdev&#37;&#52;&#48;gmail&#46;com">carlos<span>&#46;</span>bilbao<span>&#46;</span>osdev<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">动机</a><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>在x86虚拟环境中从事机密计算工作的内核开发人员，是基于一组与传统Linux内核
+威胁模型有所不同的假设条件下开展工作的。传统意义上，Linux威胁模型承认攻
+击者可以存在于用户空间，以及一小部分能够通过各种网络接口或有限的硬件特定
+暴露接口（如USB、Thunderbolt）与内核交互的外部攻击者。本文档的目的是解释
+在机密计算领域中出现的额外攻击向量，并讨论为 Linux 内核提出的保护机制。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">概述与术语</a><a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>机密计算（Confidential Computing，简称CoCo）是一个广泛的术语，涵盖了多种
+旨在保护数据在使用过程中（与静态数据或传输数据相比）的机密性和完整性的安
+全技术。从本质上讲，机密计算（CoCo）解决方案提供了一个受信任执行环境（TEE），
+在该环境中可以进行安全的数据处理，因此，它们通常根据预期在TEE中运行的软件
+来进一步划分为不同的子类型。本文档专注于一类针对虚拟化环境的机密计算技术
+（Confidential Computing, CoCo），这些技术允许在可信执行环境
+（Trusted Execution Environment, TEE）中运行虚拟机（VM）。从现在起，本文档
+将把这一类机密计算（CoCo）技术称为“虚拟化环境（VE）中的机密计算（CoCo）”。</p>
+<p>在虚拟化环境中，机密计算（CoCo）指的是一组硬件和/或软件技术，这些技术能够
+为在CoCo虚拟机（VM）内运行的软件提供更强的安全保障。具体来说，机密计算允许
+其用户确认所有软件组件的可信度，从而将其包含在精简的受信任计算基（TCB）中，
+这是基于机密计算具备验证这些受信组件状态的能力。</p>
+<p>虽然不同技术之间的具体实现细节有所不同，但所有现有机制都旨在为虚拟机的客户
+内存和执行状态（vCPU寄存器）提供更高的机密性和完整性，更严格地控制客户中断
+注入，并提供一些额外机制来控制客户与宿主机之间的页映射。有关x86特定解决方案
+的更多细节，可以参考
+<a class="reference internal" href="../../../arch/x86/tdx.html"><span class="doc">Intel Trust Domain Extensions (TDX)</span></a> 和
+<a class="reference external" href="https://www.amd.com/system/files/techdocs/sev-snp-strengthening-vm-isolation-with-integrity-protection-and-more.pdf">AMD Memory Encryption</a>.</p>
+<p>基本的机密计算（CoCo）客户布局包括宿主机、客户机、用于客户机与宿主机之间通信
+的接口、能够支持CoCo虚拟机（VM）的平台，以及一个在客户VM和底层平台之间充当安
+全管理员的可信中介。宿主机侧的虚拟机监视器（VMM）通常由传统VMM功能的一个子集
+组成，并仍然负责客户机生命周期的管理，即创建或销毁CoCo虚拟机、管理其对系统资
+源的访问等。然而，由于它通常不在CoCo VM的可信计算基（TCB）内，其访问权限受到
+限制，以确保实现安全目标。</p>
+<p>在下图中，”&lt;---&gt;” 线表示机密计算（CoCo）安全管理员与其余组件之间的双向通信通
+道或接口，这些组件包括客户机、宿主机和硬件（数据流）:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------------------+      +-----------------------+
+| CoCo guest VM     |&lt;----&gt;|                       |
++-------------------+      |                       |
+  | Interfaces |           | CoCo security manager |
++-------------------+      |                       |
+| Host VMM          |&lt;----&gt;|                       |
++-------------------+      |                       |
+                           |                       |
++--------------------+     |                       |
+| CoCo platform      |&lt;---&gt;|                       |
++--------------------+     +-----------------------+
+</pre></div>
+</div>
+<p>机密计算（CoCo）安全管理器的具体细节在在不同技术之间存在显著差异。例如，在某
+些情况下，它可能通过硬件（HW）实现，而在其他情况下，它可能是纯软件（SW）实现。</p>
+</section>
+<section id="linux">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">现有的Linux内核威胁模型</a><a class="headerlink" href="#linux" title="Link to this heading">¶</a></h2>
+<p>当前Linux内核威胁模型的总体组件包括:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----------------------+      +-------------------+
+|                       |&lt;----&gt;| Userspace         |
+|                       |      +-------------------+
+|   External attack     |         | Interfaces |
+|       vectors         |      +-------------------+
+|                       |&lt;----&gt;| Linux Kernel      |
+|                       |      +-------------------+
++-----------------------+      +-------------------+
+                               | Bootloader/BIOS   |
+                               +-------------------+
+                               +-------------------+
+                               | HW platform       |
+                               +-------------------+
+</pre></div>
+</div>
+<p>在启动过程中，引导加载程序（bootloader）和内核之间也存在通信，但本图并未明确
+表示这一点。“接口”框表示允许内核与用户空间之间通信的各种接口。 这包括系统调用、
+内核 API、设备驱动程序等。</p>
+<p>现有的 Linux 内核威胁模型通常假设其在一个受信任的硬件平台上执行，并且所有固件
+和启动加载程序都包含在该平台的受信任计算基（TCB）中。主要攻击者驻留在用户空间
+中，来自用户空间的所有数据通常被认为是不可信的，除非用户空间具有足够的特权来
+执行受信任的操作。此外，通常还会考虑外部攻击者，包括那些能够访问启用的外部网络
+（例如以太网、无线网络、蓝牙）、暴露的硬件接口（例如 USB、Thunderbolt），以及
+能够离线修改磁盘内容的攻击者。</p>
+<p>关于外部攻击途径，值得注意的是，在大多数情况下，外部攻击者会首先尝试利用用户空
+间的漏洞，但攻击者也可能直接针对内核，特别是在宿主机具有物理访问权限的情况下。直
+接攻击内核的例子包括漏洞 CVE-2019-19524、CVE-2022-0435 和 CVE-2020-24490。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">机密计算威胁模型及其安全目标</a><a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>机密计算在上述攻击者列表中增加了一种新的攻击者类型：可能存在行为不当的宿主机
+（这可能包括传统虚拟机监视器VMM的部分组件或全部），由于其较大的软件攻击面，
+通常被置于CoCo VM TCB之外。需要注意的是，这并不意味着宿主机或VMM是故意恶意的，
+而是强调拥有一个较小的CoCo VM TCB具有安全价值。这种新型的攻击者可以被视为一种
+更强大的外部攻击者，因为它位于同一物理机器上（与远程网络攻击者不同），并且对
+客户机内核与大部分硬件的通信具有控制权:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                              +------------------------+
+                              |    CoCo guest VM       |
++-----------------------+     |  +-------------------+ |
+|                       |&lt;---&gt;|  | Userspace         | |
+|                       |     |  +-------------------+ |
+|   External attack     |     |     | Interfaces |     |
+|       vectors         |     |  +-------------------+ |
+|                       |&lt;---&gt;|  | Linux Kernel      | |
+|                       |     |  +-------------------+ |
++-----------------------+     |  +-------------------+ |
+                              |  | Bootloader/BIOS   | |
++-----------------------+     |  +-------------------+ |
+|                       |&lt;---&gt;+------------------------+
+|                       |          | Interfaces |
+|                       |     +------------------------+
+|     CoCo security     |&lt;---&gt;| Host/Host-side VMM |
+|      manager          |     +------------------------+
+|                       |     +------------------------+
+|                       |&lt;---&gt;|   CoCo platform        |
++-----------------------+     +------------------------+
+</pre></div>
+</div>
+<p>传统上，宿主机对客户机数据拥有无限访问权限，并可以利用这种访问权限来攻击客户虚
+拟机。然而，机密计算（CoCo）系统通过添加诸如客户数据保密性和完整性保护等安全
+特性来缓解此类攻击。该威胁模型假设这些安全特性是可用且完好的。</p>
+<p>这个 <strong>Linux内核机密计算虚拟机（CoCo VM）的安全目标</strong> 可以总结如下：</p>
+<ol class="arabic simple">
+<li><p>保护CoCo客户机私有内存和寄存器的机密性和完整性。</p></li>
+<li><p>防止宿主机特权升级到CoCo客户机Linux内核。虽然宿主机（及主机端虚拟机管理程序）
+确实需要一定的特权来创建、销毁或暂停访客，但防止特权升级的部分目标是确保这些
+操作不会为攻击者提供获取客户机内核访问权限的途径。</p></li>
+</ol>
+<p>上述安全目标导致了两个主要的**Linux内核机密计算虚拟机（CoCo VM）资产**：</p>
+<ol class="arabic simple">
+<li><p>客户机内核执行上下文。</p></li>
+<li><p>客户机内核私有内存。</p></li>
+</ol>
+<p>宿主机对CoCo客户机资源具有完全控制权，并可以随时拒绝访问这些资源。资源的示例包
+括CPU时间、客户机可以消耗的内存、网络带宽等。因此，宿主机对CoCo客户机的拒绝服务
+（DoS）攻击超出了此威胁模型的范围。</p>
+<p>Linux CoCo虚拟机攻击面是指从CoCo客户机Linux内核暴露到不受信任的主机的任何接口，
+这些接口未被CoCo技术的软硬件保护所覆盖。这包括所有可能的侧信道攻击以及瞬态执
+行侧信道攻击。显式（非旁道）接口的示例包括访问端口I/O、内存映射I/O（MMIO）和
+直接内存访问（DMA）接口、访问PCI配置空间、特定于虚拟机管理程序（VMM）的超调用
+（指向主机端VMM）、访问共享内存页、主机允许注入到访客内核的中断，以及特定于
+CoCo技术的超调用（如果存在）。此外，在CoCo系统中，宿主机通常控制创建CoCo客户机
+的过程：它有方法将固件和引导程序镜像、内核镜像以及内核命令行加载到客户机中。所有
+这些数据在通过证明机制确认其完整性和真实性之前，都应视为不可信的。</p>
+<p>下表显示了针对CoCo客户机Linux内核的威胁矩阵，但并未讨论潜在的缓解策略。该矩阵涉
+及的是CoCo特定版本的客户机、宿主机和平台。</p>
+<table class="docutils align-center" id="id4">
+<caption><span class="caption-text">CoCo Linux客户机内核威胁矩阵</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>威胁名称</p></th>
+<th class="head"><p>威胁描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>客户机恶意配置</p></td>
+<td><p>一个行为不当的主机修改了以下其中一个客户机的配置：</p>
+<ol class="arabic simple">
+<li><p>客户机固件或引导加载程序</p></li>
+<li><p>客户机内核或模块二进制文件</p></li>
+<li><p>客户机命令行参数</p></li>
+</ol>
+<p>这使得宿主机能够破坏在CoCo客户虚拟机内部运行代码的完整性，从而违反了机密计算
+（CoCo）的安全目标。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>CoCo客户机数据攻击</p></td>
+<td><p>一个行为不当的宿主机对CoCo客户虚拟机与宿主机管理的物理或虚拟设备之间传输的数
+据拥有完全控制权。这使得宿主机可以对这类数据的保密性、完整性和新鲜性进行任何攻击。</p></td>
+</tr>
+<tr class="row-even"><td><p>格式错误的运行时输入</p></td>
+<td><p>一个行为不当的宿主机通过客户机内核代码使用的任意通信接口注入格式错误的输入。
+如果代码没有正确处理这些输入，这可能导致从宿主机到客户机内核的特权提升。这包
+括传统的侧信道攻击和/或瞬态执行攻击路径。</p></td>
+</tr>
+<tr class="row-odd"><td><p>恶意运行时输入</p></td>
+<td><p>一个行为不当的宿主机通过客户机内核代码使用的任意通信接口注入特定的输入值。与之前
+的攻击向量（格式错误的运行时输入）不同，这个输入并非格式错误，而是其值被精心设
+计以影响客户机内核的安全性。这类输入的例子包括向客户机提供恶意的时间或向客户机
+的随机数生成器提供熵值。此外，如果它导致客户机内核执行特定操作（例如处理主机注
+入的中断），此类事件的时序本身也可能成为一种攻击路径。这种攻击是对提供的宿主机输
+入具有抵抗性的一种方式。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux中x86虚拟化的机密计算</a><ul>
+<li><a class="reference internal" href="#id1">动机</a></li>
+<li><a class="reference internal" href="#id2">概述与术语</a></li>
+<li><a class="reference internal" href="#linux">现有的Linux内核威胁模型</a></li>
+<li><a class="reference internal" href="#id3">机密计算威胁模型及其安全目标</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="credentials.html">
+                    <span class="icon">&lt;</span><span>Linux中的凭据</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="lsm.html"><span>Linux安全模块：Linux通用安全钩子</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

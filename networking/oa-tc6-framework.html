@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OPEN Alliance 10BASE-T1x MAC-PHY Serial Interface (TC6) Framework Support &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Open vSwitch datapath developer documentation" href="openvswitch.html" />
+    <link rel="prev" title="Netfilter’s flowtable infrastructure" href="nf_flowtable.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/oa-tc6-framework.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="open-alliance-10base-t1x-mac-phy-serial-interface-tc6-framework-support">
+<h1>OPEN Alliance 10BASE-T1x MAC-PHY Serial Interface (TC6) Framework Support<a class="headerlink" href="#open-alliance-10base-t1x-mac-phy-serial-interface-tc6-framework-support" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The IEEE 802.3cg project defines two 10 Mbit/s PHYs operating over a
+single pair of conductors. The 10BASE-T1L (Clause 146) is a long reach
+PHY supporting full duplex point-to-point operation over 1 km of single
+balanced pair of conductors. The 10BASE-T1S (Clause 147) is a short reach
+PHY supporting full / half duplex point-to-point operation over 15 m of
+single balanced pair of conductors, or half duplex multidrop bus
+operation over 25 m of single balanced pair of conductors.</p>
+<p>Furthermore, the IEEE 802.3cg project defines the new Physical Layer
+Collision Avoidance (PLCA) Reconciliation Sublayer (Clause 148) meant to
+provide improved determinism to the CSMA/CD media access method. PLCA
+works in conjunction with the 10BASE-T1S PHY operating in multidrop mode.</p>
+<p>The aforementioned PHYs are intended to cover the low-speed / low-cost
+applications in industrial and automotive environment. The large number
+of pins (16) required by the MII interface, which is specified by the
+IEEE 802.3 in Clause 22, is one of the major cost factors that need to be
+addressed to fulfil this objective.</p>
+<p>The MAC-PHY solution integrates an IEEE Clause 4 MAC and a 10BASE-T1x PHY
+exposing a low pin count Serial Peripheral Interface (SPI) to the host
+microcontroller. This also enables the addition of Ethernet functionality
+to existing low-end microcontrollers which do not integrate a MAC
+controller.</p>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The MAC-PHY is specified to carry both data (Ethernet frames) and control
+(register access) transactions over a single full-duplex serial peripheral
+interface.</p>
+</section>
+<section id="protocol-overview">
+<h2>Protocol Overview<a class="headerlink" href="#protocol-overview" title="Link to this heading">¶</a></h2>
+<p>Two types of transactions are defined in the protocol: data transactions
+for Ethernet frame transfers and control transactions for register
+read/write transfers. A chunk is the basic element of data transactions
+and is composed of 4 bytes of overhead plus 64 bytes of payload size for
+each chunk. Ethernet frames are transferred over one or more data chunks.
+Control transactions consist of one or more register read/write control
+commands.</p>
+<p>SPI transactions are initiated by the SPI host with the assertion of CSn
+low to the MAC-PHY and ends with the deassertion of CSn high. In between
+each SPI transaction, the SPI host may need time for additional
+processing and to setup the next SPI data or control transaction.</p>
+<p>SPI data transactions consist of an equal number of transmit (TX) and
+receive (RX) chunks. Chunks in both transmit and receive directions may
+or may not contain valid frame data independent from each other, allowing
+for the simultaneous transmission and reception of different length
+frames.</p>
+<p>Each transmit data chunk begins with a 32-bit data header followed by a
+data chunk payload on MOSI. The data header indicates whether transmit
+frame data is present and provides the information to determine which
+bytes of the payload contain valid frame data.</p>
+<p>In parallel, receive data chunks are received on MISO. Each receive data
+chunk consists of a data chunk payload ending with a 32-bit data footer.
+The data footer indicates if there is receive frame data present within
+the payload or not and provides the information to determine which bytes
+of the payload contain valid frame data.</p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<p>10BASE-T1x MAC-PHY Serial Interface Specification,</p>
+<p>Link: <a class="reference external" href="https://opensig.org/download/document/OPEN_Alliance_10BASET1x_MAC-PHY_Serial_Interface_V1.1.pdf">https://opensig.org/download/document/OPEN_Alliance_10BASET1x_MAC-PHY_Serial_Interface_V1.1.pdf</a></p>
+</section>
+<section id="hardware-architecture">
+<h2>Hardware Architecture<a class="headerlink" href="#hardware-architecture" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+      +-------------------------------------+
+|          |      |                MAC-PHY              |
+|          |&lt;----&gt;| +-----------+  +-------+  +-------+ |
+| SPI Host |      | | SPI Slave |  |  MAC  |  |  PHY  | |
+|          |      | +-----------+  +-------+  +-------+ |
++----------+      +-------------------------------------+
+</pre></div>
+</div>
+</section>
+<section id="software-architecture">
+<h2>Software Architecture<a class="headerlink" href="#software-architecture" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------------------------------------------------------+
+|                 Networking Subsystem                     |
++----------------------------------------------------------+
+          / \                             / \
+           |                               |
+           |                               |
+          \ /                              |
++----------------------+     +-----------------------------+
+|     MAC Driver       |&lt;---&gt;| OPEN Alliance TC6 Framework |
++----------------------+     +-----------------------------+
+          / \                             / \
+           |                               |
+           |                               |
+           |                              \ /
++----------------------------------------------------------+
+|                    SPI Subsystem                         |
++----------------------------------------------------------+
+                        / \
+                         |
+                         |
+                        \ /
++----------------------------------------------------------+
+|                10BASE-T1x MAC-PHY Device                 |
++----------------------------------------------------------+
+</pre></div>
+</div>
+</section>
+<section id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading">¶</a></h2>
+<section id="mac-driver">
+<h3>MAC Driver<a class="headerlink" href="#mac-driver" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Probed by SPI subsystem.</p></li>
+<li><p>Initializes OA TC6 framework for the MAC-PHY.</p></li>
+<li><p>Registers and configures the network device.</p></li>
+<li><p>Sends the tx ethernet frames from n/w subsystem to OA TC6 framework.</p></li>
+</ul>
+</section>
+<section id="open-alliance-tc6-framework">
+<h3>OPEN Alliance TC6 Framework<a class="headerlink" href="#open-alliance-tc6-framework" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Initializes PHYLIB interface.</p></li>
+<li><p>Registers mac-phy interrupt.</p></li>
+<li><p>Performs mac-phy register read/write operation using the control
+transaction protocol specified in the OPEN Alliance 10BASE-T1x MAC-PHY
+Serial Interface specification.</p></li>
+<li><p>Performs Ethernet frames transaction using the data transaction protocol
+for Ethernet frames specified in the OPEN Alliance 10BASE-T1x MAC-PHY
+Serial Interface specification.</p></li>
+<li><p>Forwards the received Ethernet frame from 10Base-T1x MAC-PHY to n/w
+subsystem.</p></li>
+</ul>
+</section>
+<section id="data-transaction">
+<h3>Data Transaction<a class="headerlink" href="#data-transaction" title="Link to this heading">¶</a></h3>
+<p>The Ethernet frames that are typically transferred from the SPI host to
+the MAC-PHY will be converted into multiple transmit data chunks. Each
+transmit data chunk will have a 4 bytes header which contains the
+information needed to determine the validity and the location of the
+transmit frame data within the 64 bytes data chunk payload.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------------------------------------------------+
+|                     Tx Chunk                      |
+| +---------------------------+  +----------------+ |   MOSI
+| | 64 bytes chunk payload    |  | 4 bytes header | |------------&gt;
+| +---------------------------+  +----------------+ |
++---------------------------------------------------+
+</pre></div>
+</div>
+<p>4 bytes header contains the below fields,</p>
+<dl class="simple">
+<dt>DNC (Bit 31) - Data-Not-Control flag. This flag specifies the type of SPI</dt><dd><p>transaction. For TX data chunks, this bit shall be ’1’.
+0 - Control command
+1 - Data chunk</p>
+</dd>
+<dt>SEQ (Bit 30) - Data Chunk Sequence. This bit is used to indicate an</dt><dd><p>even/odd transmit data chunk sequence to the MAC-PHY.</p>
+</dd>
+<dt>NORX (Bit 29) - No Receive flag. The SPI host may set this bit to prevent</dt><dd><p>the MAC-PHY from conveying RX data on the MISO for the
+current chunk (DV = 0 in the footer), indicating that the
+host would not process it. Typically, the SPI host should
+set NORX = 0 indicating that it will accept and process
+any receive frame data within the current chunk.</p>
+</dd>
+</dl>
+<p>RSVD (Bit 28..24) - Reserved: All reserved bits shall be ‘0’.</p>
+<dl class="simple">
+<dt>VS (Bit 23..22) - Vendor Specific. These bits are implementation specific.</dt><dd><p>If the MAC-PHY does not implement these bits, the host
+shall set them to ‘0’.</p>
+</dd>
+<dt>DV (Bit 21) - Data Valid flag. The SPI host uses this bit to indicate</dt><dd><p>whether the current chunk contains valid transmit frame data
+(DV = 1) or not (DV = 0). When ‘0’, the MAC-PHY ignores the
+chunk payload. Note that the receive path is unaffected by
+the setting of the DV bit in the data header.</p>
+</dd>
+<dt>SV (Bit 20) - Start Valid flag. The SPI host shall set this bit when the</dt><dd><p>beginning of an Ethernet frame is present in the current
+transmit data chunk payload. Otherwise, this bit shall be
+zero. This bit is not to be confused with the Start-of-Frame
+Delimiter (SFD) byte described in IEEE 802.3 [2].</p>
+</dd>
+<dt>SWO (Bit 19..16) - Start Word Offset. When SV = 1, this field shall</dt><dd><p>contain the 32-bit word offset into the transmit data
+chunk payload that points to the start of a new
+Ethernet frame to be transmitted. The host shall write
+this field as zero when SV = 0.</p>
+</dd>
+</dl>
+<p>RSVD (Bit 15) - Reserved: All reserved bits shall be ‘0’.</p>
+<dl class="simple">
+<dt>EV (Bit 14) - End Valid flag. The SPI host shall set this bit when the end</dt><dd><p>of an Ethernet frame is present in the current transmit data
+chunk payload. Otherwise, this bit shall be zero.</p>
+</dd>
+<dt>EBO (Bit 13..8) - End Byte Offset. When EV = 1, this field shall contain</dt><dd><p>the byte offset into the transmit data chunk payload
+that points to the last byte of the Ethernet frame to
+transmit. This field shall be zero when EV = 0.</p>
+</dd>
+<dt>TSC (Bit 7..6) - Timestamp Capture. Request a timestamp capture when the</dt><dd><p>frame is transmitted onto the network.
+00 - Do not capture a timestamp
+01 - Capture timestamp into timestamp capture register A
+10 - Capture timestamp into timestamp capture register B
+11 - Capture timestamp into timestamp capture register C</p>
+</dd>
+</dl>
+<p>RSVD (Bit 5..1) - Reserved: All reserved bits shall be ‘0’.</p>
+<dl class="simple">
+<dt>P (Bit 0) - Parity. Parity bit calculated over the transmit data header.</dt><dd><p>Method used is odd parity.</p>
+</dd>
+</dl>
+<p>The number of buffers available in the MAC-PHY to store the incoming
+transmit data chunk payloads is represented as transmit credits. The
+available transmit credits in the MAC-PHY can be read either from the
+Buffer Status Register or footer (Refer below for the footer info)
+received from the MAC-PHY. The SPI host should not write more data chunks
+than the available transmit credits as this will lead to transmit buffer
+overflow error.</p>
+<p>In case the previous data footer had no transmit credits available and
+once the transmit credits become available for transmitting transmit data
+chunks, the MAC-PHY interrupt is asserted to SPI host. On reception of the
+first data header this interrupt will be deasserted and the received
+footer for the first data chunk will have the transmit credits available
+information.</p>
+<p>The Ethernet frames that are typically transferred from MAC-PHY to SPI
+host will be sent as multiple receive data chunks. Each receive data
+chunk will have 64 bytes of data chunk payload followed by 4 bytes footer
+which contains the information needed to determine the validity and the
+location of the receive frame data within the 64 bytes data chunk payload.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------------------------------------------------+
+|                     Rx Chunk                      |
+| +----------------+  +---------------------------+ |   MISO
+| | 4 bytes footer |  | 64 bytes chunk payload    | |------------&gt;
+| +----------------+  +---------------------------+ |
++---------------------------------------------------+
+</pre></div>
+</div>
+<p>4 bytes footer contains the below fields,</p>
+<dl class="simple">
+<dt>EXST (Bit 31) - Extended Status. This bit is set when any bit in the</dt><dd><p>STATUS0 or STATUS1 registers are set and not masked.</p>
+</dd>
+<dt>HDRB (Bit 30) - Received Header Bad. When set, indicates that the MAC-PHY</dt><dd><p>received a control or data header with a parity error.</p>
+</dd>
+<dt>SYNC (Bit 29) - Configuration Synchronized flag. This bit reflects the</dt><dd><p>state of the SYNC bit in the CONFIG0 configuration
+register (see Table 12). A zero indicates that the MAC-PHY
+configuration may not be as expected by the SPI host.
+Following configuration, the SPI host sets the
+corresponding bitin the configuration register which is
+reflected in this field.</p>
+</dd>
+<dt>RCA (Bit 28..24) - Receive Chunks Available. The RCA field indicates to</dt><dd><p>the SPI host the minimum number of additional receive
+data chunks of frame data that are available for
+reading beyond the current receive data chunk. This
+field is zero when there is no receive frame data
+pending in the MAC-PHY’s buffer for reading.</p>
+</dd>
+<dt>VS (Bit 23..22) - Vendor Specific. These bits are implementation specific.</dt><dd><p>If not implemented, the MAC-PHY shall set these bits to
+‘0’.</p>
+</dd>
+<dt>DV (Bit 21) - Data Valid flag. The MAC-PHY uses this bit to indicate</dt><dd><p>whether the current receive data chunk contains valid
+receive frame data (DV = 1) or not (DV = 0). When ‘0’, the
+SPI host shall ignore the chunk payload.</p>
+</dd>
+<dt>SV (Bit 20) - Start Valid flag. The MAC-PHY sets this bit when the current</dt><dd><p>chunk payload contains the start of an Ethernet frame.
+Otherwise, this bit is zero. The SV bit is not to be
+confused with the Start-of-Frame Delimiter (SFD) byte
+described in IEEE 802.3 [2].</p>
+</dd>
+<dt>SWO (Bit 19..16) - Start Word Offset. When SV = 1, this field contains the</dt><dd><p>32-bit word offset into the receive data chunk payload
+containing the first byte of a new received Ethernet
+frame. When a receive timestamp has been added to the
+beginning of the received Ethernet frame (RTSA = 1)
+then SWO points to the most significant byte of the
+timestamp. This field will be zero when SV = 0.</p>
+</dd>
+<dt>FD (Bit 15) - Frame Drop. When set, this bit indicates that the MAC has</dt><dd><p>detected a condition for which the SPI host should drop the
+received Ethernet frame. This bit is only valid at the end
+of a received Ethernet frame (EV = 1) and shall be zero at
+all other times.</p>
+</dd>
+<dt>EV (Bit 14) - End Valid flag. The MAC-PHY sets this bit when the end of a</dt><dd><p>received Ethernet frame is present in this receive data
+chunk payload.</p>
+</dd>
+<dt>EBO (Bit 13..8) - End Byte Offset: When EV = 1, this field contains the</dt><dd><p>byte offset into the receive data chunk payload that
+locates the last byte of the received Ethernet frame.
+This field is zero when EV = 0.</p>
+</dd>
+<dt>RTSA (Bit 7) - Receive Timestamp Added. This bit is set when a 32-bit or</dt><dd><p>64-bit timestamp has been added to the beginning of the
+received Ethernet frame. The MAC-PHY shall set this bit to
+zero when SV = 0.</p>
+</dd>
+<dt>RTSP (Bit 6) - Receive Timestamp Parity. Parity bit calculated over the</dt><dd><p>32-bit/64-bit timestamp added to the beginning of the
+received Ethernet frame. Method used is odd parity. The
+MAC-PHY shall set this bit to zero when RTSA = 0.</p>
+</dd>
+<dt>TXC (Bit 5..1) - Transmit Credits. This field contains the minimum number</dt><dd><p>of transmit data chunks of frame data that the SPI host
+can write in a single transaction without incurring a
+transmit buffer overflow error.</p>
+</dd>
+<dt>P (Bit 0) - Parity. Parity bit calculated over the receive data footer.</dt><dd><p>Method used is odd parity.</p>
+</dd>
+</dl>
+<p>SPI host will initiate the data receive transaction based on the receive
+chunks available in the MAC-PHY which is provided in the receive chunk
+footer (RCA - Receive Chunks Available). SPI host will create data invalid
+transmit data chunks (empty chunks) or data valid transmit data chunks in
+case there are valid Ethernet frames to transmit to the MAC-PHY. The
+receive chunks available in MAC-PHY can be read either from the Buffer
+Status Register or footer.</p>
+<p>In case the previous data footer had no receive data chunks available and
+once the receive data chunks become available again for reading, the
+MAC-PHY interrupt is asserted to SPI host. On reception of the first data
+header this interrupt will be deasserted and the received footer for the
+first data chunk will have the receive chunks available information.</p>
+</section>
+<section id="mac-phy-interrupt">
+<h3>MAC-PHY Interrupt<a class="headerlink" href="#mac-phy-interrupt" title="Link to this heading">¶</a></h3>
+<p>The MAC-PHY interrupt is asserted when the following conditions are met.</p>
+<p>Receive chunks available - This interrupt is asserted when the previous
+data footer had no receive data chunks available and once the receive
+data chunks become available for reading. On reception of the first data
+header this interrupt will be deasserted.</p>
+<p>Transmit chunk credits available - This interrupt is asserted when the
+previous data footer indicated no transmit credits available and once the
+transmit credits become available for transmitting transmit data chunks.
+On reception of the first data header this interrupt will be deasserted.</p>
+<p>Extended status event - This interrupt is asserted when the previous data
+footer indicated no extended status and once the extended event become
+available. In this case the host should read status #0 register to know
+the corresponding error/event. On reception of the first data header this
+interrupt will be deasserted.</p>
+</section>
+<section id="control-transaction">
+<h3>Control Transaction<a class="headerlink" href="#control-transaction" title="Link to this heading">¶</a></h3>
+<p>4 bytes control header contains the below fields,</p>
+<dl class="simple">
+<dt>DNC (Bit 31) - Data-Not-Control flag. This flag specifies the type of SPI</dt><dd><p>transaction. For control commands, this bit shall be ‘0’.
+0 - Control command
+1 - Data chunk</p>
+</dd>
+<dt>HDRB (Bit 30) - Received Header Bad. When set by the MAC-PHY, indicates</dt><dd><p>that a header was received with a parity error. The SPI
+host should always clear this bit. The MAC-PHY ignores the
+HDRB value sent by the SPI host on MOSI.</p>
+</dd>
+<dt>WNR (Bit 29) - Write-Not-Read. This bit indicates if data is to be written</dt><dd><p>to registers (when set) or read from registers
+(when clear).</p>
+</dd>
+<dt>AID (Bit 28) - Address Increment Disable. When clear, the address will be</dt><dd><p>automatically post-incremented by one following each
+register read or write. When set, address auto increment is
+disabled allowing successive reads and writes to occur at
+the same register address.</p>
+</dd>
+<dt>MMS (Bit 27..24) - Memory Map Selector. This field selects the specific</dt><dd><p>register memory map to access.</p>
+</dd>
+<dt>ADDR (Bit 23..8) - Address. Address of the first register within the</dt><dd><p>selected memory map to access.</p>
+</dd>
+<dt>LEN (Bit 7..1) - Length. Specifies the number of registers to read/write.</dt><dd><p>This field is interpreted as the number of registers
+minus 1 allowing for up to 128 consecutive registers read
+or written starting at the address specified in ADDR. A
+length of zero shall read or write a single register.</p>
+</dd>
+<dt>P (Bit 0) - Parity. Parity bit calculated over the control command header.</dt><dd><p>Method used is odd parity.</p>
+</dd>
+</dl>
+<p>Control transactions consist of one or more control commands. Control
+commands are used by the SPI host to read and write registers within the
+MAC-PHY. Each control commands are composed of a 4 bytes control command
+header followed by register write data in case of control write command.</p>
+<p>The MAC-PHY ignores the final 4 bytes of data from the SPI host at the end
+of the control write command. The control write command is also echoed
+from the MAC-PHY back to the SPI host to identify which register write
+failed in case of any bus errors. The echoed Control write command will
+have the first 4 bytes unused value to be ignored by the SPI host
+followed by 4 bytes echoed control header followed by echoed register
+write data. Control write commands can write either a single register or
+multiple consecutive registers. When multiple consecutive registers are
+written, the address is automatically post-incremented by the MAC-PHY.
+Writing to any unimplemented or undefined registers shall be ignored and
+yield no effect.</p>
+<p>The MAC-PHY ignores all data from the SPI host following the control
+header for the remainder of the control read command. The control read
+command is also echoed from the MAC-PHY back to the SPI host to identify
+which register read is failed in case of any bus errors. The echoed
+Control read command will have the first 4 bytes of unused value to be
+ignored by the SPI host followed by 4 bytes echoed control header followed
+by register read data. Control read commands can read either a single
+register or multiple consecutive registers. When multiple consecutive
+registers are read, the address is automatically post-incremented by the
+MAC-PHY. Reading any unimplemented or undefined registers shall return
+zero.</p>
+<section id="device-drivers-api">
+<h4>Device drivers API<a class="headerlink" href="#device-drivers-api" title="Link to this heading">¶</a></h4>
+<p>The include/linux/oa_tc6.h defines the following functions:</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_init">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="../driver-api/spi.html#c.spi_device" title="spi_device"><span class="n"><span class="pre">spi_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">spi</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="kapi.html#c.net_device" title="net_device"><span class="n"><span class="pre">net_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">netdev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_init" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Initialize OA TC6 lib.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_exit">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_exit</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_exit" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Free allocated OA TC6 lib.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_write_register">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_write_register</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">address</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_write_register" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Write a single register in the MAC-PHY.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_write_registers">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_write_registers</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">address</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">u8</span></span><span class="w"> </span><span class="n"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_write_registers" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Writing multiple consecutive registers starting from &#64;address in the MAC-PHY.
+Maximum of 128 consecutive registers can be written starting at &#64;address.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_read_register">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_read_register</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">address</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_read_register" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Read a single register in the MAC-PHY.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_read_registers">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_read_registers</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">address</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">u8</span></span><span class="w"> </span><span class="n"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.oa_tc6_read_registers" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Reading multiple consecutive registers starting from &#64;address in the MAC-PHY.
+Maximum of 128 consecutive registers can be read starting at &#64;address.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_start_xmit">
+<span class="n"><span class="pre">netdev_tx_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_start_xmit</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="kapi.html#c.sk_buff" title="sk_buff"><span class="n"><span class="pre">sk_buff</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">skb</span></span><span class="sig-paren">)</span><span class="p"><span class="pre">;</span></span><a class="headerlink" href="#c.oa_tc6_start_xmit" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>The transmit Ethernet frame in the skb is or going to be transmitted through
+the MAC-PHY.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.oa_tc6_zero_align_receive_frame_enable">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oa_tc6_zero_align_receive_frame_enable</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">oa_tc6</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">tc6</span></span><span class="sig-paren">)</span><span class="p"><span class="pre">;</span></span><a class="headerlink" href="#c.oa_tc6_zero_align_receive_frame_enable" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Zero align receive frame feature can be enabled to align all receive ethernet
+frames data to start at the beginning of any receive data chunk payload with a
+start word offset (SWO) of zero.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">OPEN Alliance 10BASE-T1x MAC-PHY Serial Interface (TC6) Framework Support</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#protocol-overview">Protocol Overview</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#hardware-architecture">Hardware Architecture</a></li>
+<li><a class="reference internal" href="#software-architecture">Software Architecture</a></li>
+<li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#mac-driver">MAC Driver</a></li>
+<li><a class="reference internal" href="#open-alliance-tc6-framework">OPEN Alliance TC6 Framework</a></li>
+<li><a class="reference internal" href="#data-transaction">Data Transaction</a></li>
+<li><a class="reference internal" href="#mac-phy-interrupt">MAC-PHY Interrupt</a></li>
+<li><a class="reference internal" href="#control-transaction">Control Transaction</a><ul>
+<li><a class="reference internal" href="#device-drivers-api">Device drivers API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="nf_flowtable.html">
+                    <span class="icon">&lt;</span><span>Netfilter’s flowtable infrastructure</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="openvswitch.html"><span>Open vSwitch datapath developer documentation</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

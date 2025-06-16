@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>zsmalloc &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Power Management" href="../power/index.html" />
+    <link rel="prev" title="A vmemmap diet for HugeTLB and Device DAX" href="vmemmap_dedup.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/mm/zsmalloc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/mm/zsmalloc.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="zsmalloc">
+<h1>zsmalloc<a class="headerlink" href="#zsmalloc" title="Link to this heading">¶</a></h1>
+<p>This allocator is designed for use with zram. Thus, the allocator is
+supposed to work well under low memory conditions. In particular, it
+never attempts higher order page allocation which is very likely to
+fail under memory pressure. On the other hand, if we just use single
+(0-order) pages, it would suffer from very high fragmentation --
+any object of size PAGE_SIZE/2 or larger would occupy an entire page.
+This was one of the major issues with its predecessor (xvmalloc).</p>
+<p>To overcome these issues, zsmalloc allocates a bunch of 0-order pages
+and links them together using various ‘struct page’ fields. These linked
+pages act as a single higher-order page i.e. an object can span 0-order
+page boundaries. The code refers to these linked pages as a single entity
+called zspage.</p>
+<p>For simplicity, zsmalloc can only allocate objects of size up to PAGE_SIZE
+since this satisfies the requirements of all its current users (in the
+worst case, page is incompressible and is thus stored “as-is” i.e. in
+uncompressed form). For allocation requests larger than this size, failure
+is returned (see zs_malloc).</p>
+<p>Additionally, <a class="reference internal" href="#c.zs_malloc" title="zs_malloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">zs_malloc()</span></code></a> does not return a dereferenceable pointer.
+Instead, it returns an opaque handle (unsigned long) which encodes actual
+location of the allocated object. The reason for this indirection is that
+zsmalloc does not keep zspages permanently mapped since that would cause
+issues on 32-bit systems where the VA region for kernel space mappings
+is very small. So, using the allocated memory should be done through the
+proper handle-based APIs.</p>
+<section id="stat">
+<h2>stat<a class="headerlink" href="#stat" title="Link to this heading">¶</a></h2>
+<p>With CONFIG_ZSMALLOC_STAT, we could see zsmalloc internal information via
+<code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/zsmalloc/&lt;user</span> <span class="pre">name&gt;</span></code>. Here is a sample of stat output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cat /sys/kernel/debug/zsmalloc/zram0/classes
+
+class  size       10%       20%       30%       40%       50%       60%       70%       80%       90%       99%      100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+   ...
+   ...
+   30   512         0        12         4         1         0         1         0         0         1         0       414          3464       3346        433                1       14
+   31   528         2         7         2         2         1         0         1         0         0         2       117          4154       3793        536                4       44
+   32   544         6         3         4         1         2         1         0         0         0         1       260          4170       3965        556                2       26
+   ...
+   ...
+</pre></div>
+</div>
+<dl class="simple">
+<dt>class</dt><dd><p>index</p>
+</dd>
+<dt>size</dt><dd><p>object size zspage stores</p>
+</dd>
+<dt>10%</dt><dd><p>the number of zspages with usage ratio less than 10% (see below)</p>
+</dd>
+<dt>20%</dt><dd><p>the number of zspages with usage ratio between 10% and 20%</p>
+</dd>
+<dt>30%</dt><dd><p>the number of zspages with usage ratio between 20% and 30%</p>
+</dd>
+<dt>40%</dt><dd><p>the number of zspages with usage ratio between 30% and 40%</p>
+</dd>
+<dt>50%</dt><dd><p>the number of zspages with usage ratio between 40% and 50%</p>
+</dd>
+<dt>60%</dt><dd><p>the number of zspages with usage ratio between 50% and 60%</p>
+</dd>
+<dt>70%</dt><dd><p>the number of zspages with usage ratio between 60% and 70%</p>
+</dd>
+<dt>80%</dt><dd><p>the number of zspages with usage ratio between 70% and 80%</p>
+</dd>
+<dt>90%</dt><dd><p>the number of zspages with usage ratio between 80% and 90%</p>
+</dd>
+<dt>99%</dt><dd><p>the number of zspages with usage ratio between 90% and 99%</p>
+</dd>
+<dt>100%</dt><dd><p>the number of zspages with usage ratio 100%</p>
+</dd>
+<dt>obj_allocated</dt><dd><p>the number of objects allocated</p>
+</dd>
+<dt>obj_used</dt><dd><p>the number of objects allocated to the user</p>
+</dd>
+<dt>pages_used</dt><dd><p>the number of pages allocated for the class</p>
+</dd>
+<dt>pages_per_zspage</dt><dd><p>the number of 0-order pages to make a zspage</p>
+</dd>
+<dt>freeable</dt><dd><p>the approximate number of pages class compaction can free</p>
+</dd>
+</dl>
+<p>Each zspage maintains inuse counter which keeps track of the number of
+objects stored in the zspage.  The inuse counter determines the zspage’s
+“fullness group” which is calculated as the ratio of the “inuse” objects to
+the total number of objects the zspage can hold (objs_per_zspage). The
+closer the inuse counter is to objs_per_zspage, the better.</p>
+</section>
+<section id="internals">
+<h2>Internals<a class="headerlink" href="#internals" title="Link to this heading">¶</a></h2>
+<p>zsmalloc has 255 size classes, each of which can hold a number of zspages.
+Each zspage can contain up to ZSMALLOC_CHAIN_SIZE physical (0-order) pages.
+The optimal zspage chain size for each size class is calculated during the
+creation of the zsmalloc pool (see calculate_zspage_chain_size()).</p>
+<p>As an optimization, zsmalloc merges size classes that have similar
+characteristics in terms of the number of pages per zspage and the number
+of objects that each zspage can store.</p>
+<p>For instance, consider the following size classes::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+...
+   94  1536        0    ....       0             0          0          0                3        0
+  100  1632        0    ....       0             0          0          0                2        0
+...
+</pre></div>
+</div>
+<p>Size classes #95-99 are merged with size class #100. This means that when we
+need to store an object of size, say, 1568 bytes, we end up using size class
+#100 instead of size class #96. Size class #100 is meant for objects of size
+1632 bytes, so each object of size 1568 bytes wastes 1632-1568=64 bytes.</p>
+<p>Size class #100 consists of zspages with 2 physical pages each, which can
+hold a total of 5 objects. If we need to store 13 objects of size 1568, we
+end up allocating three zspages, or 6 physical pages.</p>
+<p>However, if we take a closer look at size class #96 (which is meant for
+objects of size 1568 bytes) and trace <cite>calculate_zspage_chain_size()</cite>, we
+find that the most optimal zspage configuration for this class is a chain
+of 5 physical pages::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pages per zspage      wasted bytes     used%
+       1                  960           76
+       2                  352           95
+       3                 1312           89
+       4                  704           95
+       5                   96           99
+</pre></div>
+</div>
+<p>This means that a class #96 configuration with 5 physical pages can store 13
+objects of size 1568 in a single zspage, using a total of 5 physical pages.
+This is more efficient than the class #100 configuration, which would use 6
+physical pages to store the same number of objects.</p>
+<p>As the zspage chain size for class #96 increases, its key characteristics
+such as pages per-zspage and objects per-zspage also change. This leads to
+dewer class mergers, resulting in a more compact grouping of classes, which
+reduces memory wastage.</p>
+<p>Let’s take a closer look at the bottom of <cite>/sys/kernel/debug/zsmalloc/zramX/classes</cite>::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+
+...
+  202  3264         0   ..         0             0          0          0                4        0
+  254  4096         0   ..         0             0          0          0                1        0
+...
+</pre></div>
+</div>
+<p>Size class #202 stores objects of size 3264 bytes and has a maximum of 4 pages
+per zspage. Any object larger than 3264 bytes is considered huge and belongs
+to size class #254, which stores each object in its own physical page (objects
+in huge classes do not share pages).</p>
+<p>Increasing the size of the chain of zspages also results in a higher watermark
+for the huge size class and fewer huge classes overall. This allows for more
+efficient storage of large objects.</p>
+<p>For zspage chain size of 8, huge class watermark becomes 3632 bytes::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+
+...
+  202  3264         0   ..         0             0          0          0                4        0
+  211  3408         0   ..         0             0          0          0                5        0
+  217  3504         0   ..         0             0          0          0                6        0
+  222  3584         0   ..         0             0          0          0                7        0
+  225  3632         0   ..         0             0          0          0                8        0
+  254  4096         0   ..         0             0          0          0                1        0
+...
+</pre></div>
+</div>
+<p>For zspage chain size of 16, huge class watermark becomes 3840 bytes::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+
+...
+  202  3264         0   ..         0             0          0          0                4        0
+  206  3328         0   ..         0             0          0          0               13        0
+  207  3344         0   ..         0             0          0          0                9        0
+  208  3360         0   ..         0             0          0          0               14        0
+  211  3408         0   ..         0             0          0          0                5        0
+  212  3424         0   ..         0             0          0          0               16        0
+  214  3456         0   ..         0             0          0          0               11        0
+  217  3504         0   ..         0             0          0          0                6        0
+  219  3536         0   ..         0             0          0          0               13        0
+  222  3584         0   ..         0             0          0          0                7        0
+  223  3600         0   ..         0             0          0          0               15        0
+  225  3632         0   ..         0             0          0          0                8        0
+  228  3680         0   ..         0             0          0          0                9        0
+  230  3712         0   ..         0             0          0          0               10        0
+  232  3744         0   ..         0             0          0          0               11        0
+  234  3776         0   ..         0             0          0          0               12        0
+  235  3792         0   ..         0             0          0          0               13        0
+  236  3808         0   ..         0             0          0          0               14        0
+  238  3840         0   ..         0             0          0          0               15        0
+  254  4096         0   ..         0             0          0          0                1        0
+...
+</pre></div>
+</div>
+<p>Overall the combined zspage chain size effect on zsmalloc pool configuration::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pages per zspage   number of size classes (clusters)   huge size class watermark
+       4                        69                               3264
+       5                        86                               3408
+       6                        93                               3504
+       7                       112                               3584
+       8                       123                               3632
+       9                       140                               3680
+      10                       143                               3712
+      11                       159                               3744
+      12                       164                               3776
+      13                       180                               3792
+      14                       183                               3808
+      15                       188                               3840
+      16                       191                               3840
+</pre></div>
+</div>
+<section id="a-synthetic-test">
+<h3>A synthetic test<a class="headerlink" href="#a-synthetic-test" title="Link to this heading">¶</a></h3>
+<p>zram as a build artifacts storage (Linux kernel compilation).</p>
+<ul>
+<li><p><cite>CONFIG_ZSMALLOC_CHAIN_SIZE=4</cite></p>
+<p>zsmalloc classes stats::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+
+...
+Total              13   ..        51        413836     412973     159955                         3
+</pre></div>
+</div>
+<p>zram mm_stat::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1691783168 628083717 655175680        0 655175680       60        0    34048    34049
+</pre></div>
+</div>
+</li>
+<li><p><cite>CONFIG_ZSMALLOC_CHAIN_SIZE=8</cite></p>
+<p>zsmalloc classes stats::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class  size       10%   ....    100% obj_allocated   obj_used pages_used pages_per_zspage freeable
+
+...
+Total              18   ..        87        414852     412978     156666                         0
+</pre></div>
+</div>
+<p>zram mm_stat::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1691803648 627793930 641703936        0 641703936       60        0    33591    33591
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Using larger zspage chains may result in using fewer physical pages, as seen
+in the example where the number of physical pages used decreased from 159955
+to 156666, at the same time maximum zsmalloc pool memory usage went down from
+655175680 to 641703936 bytes.</p>
+<p>However, this advantage may be offset by the potential for increased system
+memory pressure (as some zspages have larger chain sizes) in cases where there
+is heavy internal fragmentation and zspool compaction is unable to relocate
+objects and release zspages. In these cases, it is recommended to decrease
+the limit on the size of the zspage chains (as specified by the
+CONFIG_ZSMALLOC_CHAIN_SIZE option).</p>
+</section>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.obj_to_location">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">obj_to_location</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">obj</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.obj_to_location" title="zpdesc"><span class="n"><span class="pre">zpdesc</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">zpdesc</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj_idx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.obj_to_location" title="Link to this definition">¶</a><br /></dt>
+<dd><p>get (&lt;zpdesc&gt;, &lt;obj_idx&gt;) from encoded object value</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">obj</span></code></dt><dd><p>the encoded object value</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">zpdesc</span> <span class="pre">**zpdesc</span></code></dt><dd><p>zpdesc object resides in zspage</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">*obj_idx</span></code></dt><dd><p>object index</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.location_to_obj">
+<span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">location_to_obj</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.location_to_obj" title="zpdesc"><span class="n"><span class="pre">zpdesc</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">zpdesc</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">obj_idx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.location_to_obj" title="Link to this definition">¶</a><br /></dt>
+<dd><p>get obj value encoded from (&lt;zpdesc&gt;, &lt;obj_idx&gt;)</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">zpdesc</span> <span class="pre">*zpdesc</span></code></dt><dd><p>zpdesc object resides in zspage</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">obj_idx</span></code></dt><dd><p>object index</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.zs_lookup_class_index">
+<span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">zs_lookup_class_index</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">zs_pool</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pool</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.zs_lookup_class_index" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Returns index of the zsmalloc <code class="xref c c-type docutils literal notranslate"><span class="pre">size_class</span></code> that hold objects of the provided size.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">zs_pool</span> <span class="pre">*pool</span></code></dt><dd><p>zsmalloc pool to use</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">size</span></code></dt><dd><p>object size</p>
+</dd>
+</dl>
+<p><strong>Context</strong></p>
+<p>Any context.</p>
+<p><strong>Return</strong></p>
+<p>the index of the zsmalloc <code class="xref c c-type docutils literal notranslate"><span class="pre">size_class</span></code> that hold objects of the
+provided size.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.zs_huge_class_size">
+<span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">zs_huge_class_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">zs_pool</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pool</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.zs_huge_class_size" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Returns the size (in bytes) of the first huge zsmalloc <code class="xref c c-type docutils literal notranslate"><span class="pre">size_class</span></code>.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">zs_pool</span> <span class="pre">*pool</span></code></dt><dd><p>zsmalloc pool to use</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The function returns the size of the first huge class - any object of equal
+or bigger size will be stored in zspage consisting of a single physical
+page.</p>
+<p><strong>Context</strong></p>
+<p>Any context.</p>
+<p><strong>Return</strong></p>
+<p>the size (in bytes) of the first huge zsmalloc <code class="xref c c-type docutils literal notranslate"><span class="pre">size_class</span></code>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.zs_malloc">
+<span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">zs_malloc</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">zs_pool</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pool</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">gfp_t</span></span><span class="w"> </span><span class="n"><span class="pre">gfp</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.zs_malloc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Allocate block of given size from pool.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">zs_pool</span> <span class="pre">*pool</span></code></dt><dd><p>pool to allocate from</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">size_t</span> <span class="pre">size</span></code></dt><dd><p>size of block to allocate</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">gfp_t</span> <span class="pre">gfp</span></code></dt><dd><p>gfp flags when allocating object</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>On success, handle to the allocated object is returned,
+otherwise an <a class="reference internal" href="../core-api/kernel-api.html#c.ERR_PTR" title="ERR_PTR"><code class="xref c c-func docutils literal notranslate"><span class="pre">ERR_PTR()</span></code></a>.
+Allocation requests with size &gt; ZS_MAX_ALLOC_SIZE will fail.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.zs_create_pool">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">zs_pool</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">zs_create_pool</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.zs_create_pool" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Creates an allocation pool to work from.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*name</span></code></dt><dd><p>pool name to be created</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function must be called before anything when using
+the zsmalloc allocator.</p>
+<p>On success, a pointer to the newly created pool is returned,
+otherwise NULL.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">zsmalloc</a><ul>
+<li><a class="reference internal" href="#stat">stat</a></li>
+<li><a class="reference internal" href="#internals">Internals</a><ul>
+<li><a class="reference internal" href="#a-synthetic-test">A synthetic test</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="vmemmap_dedup.html">
+                    <span class="icon">&lt;</span><span>A vmemmap diet for HugeTLB and Device DAX</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../power/index.html"><span>Power Management</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

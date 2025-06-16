@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Function Redirection API &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Clk API" href="clk.html" />
+    <link rel="prev" title="Resource API" href="resource.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/dev-tools/kunit/api/functionredirection.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="function-redirection-api">
+<h1>Function Redirection API<a class="headerlink" href="#function-redirection-api" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>When writing unit tests, it’s important to be able to isolate the code being
+tested from other parts of the kernel. This ensures the reliability of the test
+(it won’t be affected by external factors), reduces dependencies on specific
+hardware or config options (making the test easier to run), and protects the
+stability of the rest of the system (making it less likely for test-specific
+state to interfere with the rest of the system).</p>
+<p>While for some code (typically generic data structures, helpers, and other
+“pure functions”) this is trivial, for others (like device drivers,
+filesystems, core subsystems) the code is heavily coupled with other parts of
+the kernel.</p>
+<p>This coupling is often due to global state in some way: be it a global list of
+devices, the filesystem, or some hardware state. Tests need to either carefully
+manage, isolate, and restore state, or they can avoid it altogether by
+replacing access to and mutation of this state with a “fake” or “mock” variant.</p>
+<p>By refactoring access to such state, such as by introducing a layer of
+indirection which can use or emulate a separate set of test state. However,
+such refactoring comes with its own costs (and undertaking significant
+refactoring before being able to write tests is suboptimal).</p>
+<p>A simpler way to intercept and replace some of the function calls is to use
+function redirection via static stubs.</p>
+</section>
+<section id="static-stubs">
+<h2>Static Stubs<a class="headerlink" href="#static-stubs" title="Link to this heading">¶</a></h2>
+<p>Static stubs are a way of redirecting calls to one function (the “real”
+function) to another function (the “replacement” function).</p>
+<p>It works by adding a macro to the “real” function which checks to see if a test
+is running, and if a replacement function is available. If so, that function is
+called in place of the original.</p>
+<p>Using static stubs is pretty straightforward:</p>
+<ol class="arabic">
+<li><p>Add the <a class="reference internal" href="#c.KUNIT_STATIC_STUB_REDIRECT" title="KUNIT_STATIC_STUB_REDIRECT"><code class="xref c c-func docutils literal notranslate"><span class="pre">KUNIT_STATIC_STUB_REDIRECT()</span></code></a> macro to the start of the “real”
+function.</p>
+<p>This should be the first statement in the function, after any variable
+declarations. <a class="reference internal" href="#c.KUNIT_STATIC_STUB_REDIRECT" title="KUNIT_STATIC_STUB_REDIRECT"><code class="xref c c-func docutils literal notranslate"><span class="pre">KUNIT_STATIC_STUB_REDIRECT()</span></code></a> takes the name of the
+function, followed by all of the arguments passed to the real function.</p>
+<p>For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">send_data_to_hardware</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="n">KUNIT_STATIC_STUB_REDIRECT</span><span class="p">(</span><span class="n">send_data_to_hardware</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">);</span>
+<span class="w">        </span><span class="cm">/* real implementation */</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Write one or more replacement functions.</p>
+<p>These functions should have the same function signature as the real function.
+In the event they need to access or modify test-specific state, they can use
+kunit_get_current_test() to get a <a class="reference internal" href="test.html#c.kunit" title="kunit"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kunit</span></code></a> pointer. This can then
+be passed to the expectation/assertion macros, or used to look up KUnit
+resources.</p>
+<p>For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">fake_send_data_to_hardware</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">kunit</span><span class="w"> </span><span class="o">*</span><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kunit_get_current_test</span><span class="p">();</span>
+<span class="w">        </span><span class="n">KUNIT_EXPECT_STREQ</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Activate the static stub from your test.</p>
+<p>From within a test, the redirection can be enabled with
+<a class="reference internal" href="#c.kunit_activate_static_stub" title="kunit_activate_static_stub"><code class="xref c c-func docutils literal notranslate"><span class="pre">kunit_activate_static_stub()</span></code></a>, which accepts a <a class="reference internal" href="test.html#c.kunit" title="kunit"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kunit</span></code></a> pointer,
+the real function, and the replacement function. You can call this several
+times with different replacement functions to swap out implementations of the
+function.</p>
+<p>In our example, this would be</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">kunit_activate_static_stub</span><span class="p">(</span><span class="n">test</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">send_data_to_hardware</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">fake_send_data_to_hardware</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Call (perhaps indirectly) the real function.</p>
+<p>Once the redirection is activated, any call to the real function will call
+the replacement function instead. Such calls may be buried deep in the
+implementation of another function, but must occur from the test’s kthread.</p>
+<p>For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">send_data_to_hardware</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span><span class="w"> </span><span class="cm">/* Succeeds */</span>
+<span class="n">send_data_to_hardware</span><span class="p">(</span><span class="s">&quot;Something else&quot;</span><span class="p">);</span><span class="w"> </span><span class="cm">/* Fails the test. */</span>
+</pre></div>
+</div>
+</li>
+<li><p>(Optionally) disable the stub.</p>
+<p>When you no longer need it, disable the redirection (and hence resume the
+original behaviour of the ‘real’ function) using
+<a class="reference internal" href="#c.kunit_deactivate_static_stub" title="kunit_deactivate_static_stub"><code class="xref c c-func docutils literal notranslate"><span class="pre">kunit_deactivate_static_stub()</span></code></a>. Otherwise, it will be automatically disabled
+when the test exits.</p>
+<p>For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">kunit_deactivate_static_stub</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">send_data_to_hardware</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>It’s also possible to use these replacement functions to test to see if a
+function is called at all, for example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">send_data_to_hardware</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="n">KUNIT_STATIC_STUB_REDIRECT</span><span class="p">(</span><span class="n">send_data_to_hardware</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">);</span>
+<span class="w">        </span><span class="cm">/* real implementation */</span>
+<span class="p">}</span>
+
+<span class="cm">/* In test file */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">times_called</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">fake_send_data_to_hardware</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="n">times_called</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="cm">/* In the test case, redirect calls for the duration of the test */</span>
+<span class="n">kunit_activate_static_stub</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">send_data_to_hardware</span><span class="p">,</span><span class="w"> </span><span class="n">fake_send_data_to_hardware</span><span class="p">);</span>
+
+<span class="n">send_data_to_hardware</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">);</span>
+<span class="n">KUNIT_EXPECT_EQ</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">times_called</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="cm">/* Can also deactivate the stub early, if wanted */</span>
+<span class="n">kunit_deactivate_static_stub</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">send_data_to_hardware</span><span class="p">);</span>
+
+<span class="n">send_data_to_hardware</span><span class="p">(</span><span class="s">&quot;hello again&quot;</span><span class="p">);</span>
+<span class="n">KUNIT_EXPECT_EQ</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">times_called</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h2>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.KUNIT_STATIC_STUB_REDIRECT">
+<span class="sig-name descname"><span class="n"><span class="pre">KUNIT_STATIC_STUB_REDIRECT</span></span></span><a class="headerlink" href="#c.KUNIT_STATIC_STUB_REDIRECT" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">KUNIT_STATIC_STUB_REDIRECT</span> <span class="pre">(real_fn_name,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>call a replacement ‘static stub’ if one exists</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">real_fn_name</span></code></dt><dd><p>The name of this function (as an identifier, not a string)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>All of the arguments passed to this function</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This is a function prologue which is used to allow calls to the current
+function to be redirected by a KUnit test. KUnit tests can call
+<a class="reference internal" href="#c.kunit_activate_static_stub" title="kunit_activate_static_stub"><code class="xref c c-func docutils literal notranslate"><span class="pre">kunit_activate_static_stub()</span></code></a> to pass a replacement function in. The
+replacement function will be called by <a class="reference internal" href="#c.KUNIT_STATIC_STUB_REDIRECT" title="KUNIT_STATIC_STUB_REDIRECT"><code class="xref c c-func docutils literal notranslate"><span class="pre">KUNIT_STATIC_STUB_REDIRECT()</span></code></a>, which
+will then return from the function. If the caller is not in a KUnit context,
+the function will continue execution as normal.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">real_func</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="n">KUNIT_STATIC_STUB_REDIRECT</span><span class="p">(</span><span class="n">real_func</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">replacement_func</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">example_test</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">kunit</span><span class="w"> </span><span class="o">*</span><span class="n">test</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="n">kunit_activate_static_stub</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">real_func</span><span class="p">,</span><span class="w"> </span><span class="n">replacement_func</span><span class="p">);</span>
+<span class="w">        </span><span class="n">KUNIT_EXPECT_EQ</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">real_func</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example</strong></p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.kunit_activate_static_stub">
+<span class="sig-name descname"><span class="n"><span class="pre">kunit_activate_static_stub</span></span></span><a class="headerlink" href="#c.kunit_activate_static_stub" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">kunit_activate_static_stub</span> <span class="pre">(test,</span> <span class="pre">real_fn_addr,</span> <span class="pre">replacement_addr)</span></code></p>
+<blockquote>
+<div><p>replace a function using static stubs.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">test</span></code></dt><dd><p>A pointer to the ‘<a class="reference internal" href="test.html#c.kunit" title="kunit"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kunit</span></code></a>’ test context for the current test.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">real_fn_addr</span></code></dt><dd><p>The address of the function to replace.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">replacement_addr</span></code></dt><dd><p>The address of the function to replace it with.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>When activated, calls to real_fn_addr from within this test (even if called
+indirectly) will instead call replacement_addr. The function pointed to by
+real_fn_addr must begin with the static stub prologue in
+<a class="reference internal" href="#c.KUNIT_STATIC_STUB_REDIRECT" title="KUNIT_STATIC_STUB_REDIRECT"><code class="xref c c-func docutils literal notranslate"><span class="pre">KUNIT_STATIC_STUB_REDIRECT()</span></code></a> for this to work. real_fn_addr and
+replacement_addr must have the same type.</p>
+<p>The redirection can be disabled again with <a class="reference internal" href="#c.kunit_deactivate_static_stub" title="kunit_deactivate_static_stub"><code class="xref c c-func docutils literal notranslate"><span class="pre">kunit_deactivate_static_stub()</span></code></a>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.kunit_deactivate_static_stub">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kunit_deactivate_static_stub</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="test.html#c.kunit" title="kunit"><span class="n"><span class="pre">kunit</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">test</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">real_fn_addr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.kunit_deactivate_static_stub" title="Link to this definition">¶</a><br /></dt>
+<dd><p>disable a function redirection</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kunit</span> <span class="pre">*test</span></code></dt><dd><p>A pointer to the ‘<a class="reference internal" href="test.html#c.kunit" title="kunit"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kunit</span></code></a>’ test context for the current test.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*real_fn_addr</span></code></dt><dd><p>The address of the function to no-longer redirect</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Deactivates a redirection configured with <a class="reference internal" href="#c.kunit_activate_static_stub" title="kunit_activate_static_stub"><code class="xref c c-func docutils literal notranslate"><span class="pre">kunit_activate_static_stub()</span></code></a>. After
+this function returns, calls to real_fn_addr() will execute the original
+real_fn, not any previously-configured replacement.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Function Redirection API</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#static-stubs">Static Stubs</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="resource.html">
+                    <span class="icon">&lt;</span><span>Resource API</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="clk.html"><span>Clk API</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

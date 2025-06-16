@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.10. Extended Controls API &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="1.11. Camera Control Reference" href="ext-ctrls-camera.html" />
+    <link rel="prev" title="1.9. User Controls" href="control.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Userspace API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#system-calls">System calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#security-related-interfaces">Security-related interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#devices-and-i-o">Devices and I/O</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accelerators/ocxl.html">OpenCAPI (Open Coherent Accelerator Processor Interface)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-heaps.html">Allocating dma-buf using heaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-alloc-exchange.html">Exchanging pixel buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fwctl/index.html">Firmware Control (FWCTL) Userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpio/index.html">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iommufd.html">IOMMUFD</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Linux Media Infrastructure userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dcdbas.html">Dell Systems Management Base Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vduse.html">VDUSE - “vDPA Device in Userspace”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isapnp.html">ISA Plug &amp; Play support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/userspace-api/media/v4l/extended-controls.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="extended-controls-api">
+<span id="extended-controls"></span><h1><span class="section-number">1.10. </span>Extended Controls API<a class="headerlink" href="#extended-controls-api" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2><span class="section-number">1.10.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The control mechanism as originally designed was meant to be used for
+user settings (brightness, saturation, etc). However, it turned out to
+be a very useful model for implementing more complicated driver APIs
+where each driver implements only a subset of a larger API.</p>
+<p>The MPEG encoding API was the driving force behind designing and
+implementing this extended control mechanism: the MPEG standard is quite
+large and the currently supported hardware MPEG encoders each only
+implement a subset of this standard. Further more, many parameters
+relating to how the video is encoded into an MPEG stream are specific to
+the MPEG encoding chip since the MPEG standard only defines the format
+of the resulting MPEG stream, not how the video is actually encoded into
+that format.</p>
+<p>Unfortunately, the original control API lacked some features needed for
+these new uses and so it was extended into the (not terribly originally
+named) extended control API.</p>
+<p>Even though the MPEG encoding API was the first effort to use the
+Extended Control API, nowadays there are also other classes of Extended
+Controls, such as Camera Controls and FM Transmitter Controls. The
+Extended Controls API as well as all Extended Controls classes are
+described in the following text.</p>
+</section>
+<section id="the-extended-control-api">
+<h2><span class="section-number">1.10.2. </span>The Extended Control API<a class="headerlink" href="#the-extended-control-api" title="Link to this heading">¶</a></h2>
+<p>Three new ioctls are available:
+<a class="reference internal" href="vidioc-g-ext-ctrls.html#vidioc-g-ext-ctrls"><span class="std std-ref">VIDIOC_G_EXT_CTRLS</span></a>,
+<a class="reference internal" href="vidioc-g-ext-ctrls.html#vidioc-g-ext-ctrls"><span class="std std-ref">VIDIOC_S_EXT_CTRLS</span></a> and
+<a class="reference internal" href="vidioc-g-ext-ctrls.html#vidioc-g-ext-ctrls"><span class="std std-ref">VIDIOC_TRY_EXT_CTRLS</span></a>. These ioctls act
+on arrays of controls (as opposed to the
+<a class="reference internal" href="vidioc-g-ctrl.html#vidioc-g-ctrl"><span class="std std-ref">VIDIOC_G_CTRL</span></a> and
+<a class="reference internal" href="vidioc-g-ctrl.html#vidioc-g-ctrl"><span class="std std-ref">VIDIOC_S_CTRL</span></a> ioctls that act on a single
+control). This is needed since it is often required to atomically change
+several controls at once.</p>
+<p>Each of the new ioctls expects a pointer to a struct
+<code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_ext_controls</span></code>. This structure
+contains a pointer to the control array, a count of the number of
+controls in that array and a control class. Control classes are used to
+group similar controls into a single class. For example, control class
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_CLASS_USER</span></code> contains all user controls (i. e. all controls
+that can also be set using the old <a class="reference internal" href="vidioc-g-ctrl.html#vidioc-g-ctrl"><span class="std std-ref">VIDIOC_S_CTRL</span></a>
+ioctl). Control class <code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_CLASS_CODEC</span></code> contains controls
+relating to codecs.</p>
+<p>All controls in the control array must belong to the specified control
+class. An error is returned if this is not the case.</p>
+<p>It is also possible to use an empty control array (<code class="docutils literal notranslate"><span class="pre">count</span></code> == 0) to check
+whether the specified control class is supported.</p>
+<p>The control array is a struct
+<code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_ext_control</span></code> array. The
+struct <code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_ext_control</span></code> is very similar to
+struct <code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_control</span></code>, except for the fact that
+it also allows for 64-bit values and pointers to be passed.</p>
+<p>Since the struct <code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_ext_control</span></code> supports
+pointers it is now also possible to have controls with compound types
+such as N-dimensional arrays and/or structures. You need to specify the
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_FLAG_NEXT_COMPOUND</span></code> when enumerating controls to actually
+be able to see such compound controls. In other words, these controls
+with compound types should only be used programmatically.</p>
+<p>Since such compound controls need to expose more information about
+themselves than is possible with <a class="reference internal" href="vidioc-queryctrl.html#vidioc-queryctrl"><span class="std std-ref">VIDIOC_QUERYCTRL</span></a>
+the <a class="reference internal" href="vidioc-queryctrl.html#vidioc-queryctrl"><span class="std std-ref">VIDIOC_QUERY_EXT_CTRL</span></a> ioctl was added. In
+particular, this ioctl gives the dimensions of the N-dimensional array if
+this control consists of more than one element.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>It is important to realize that due to the flexibility of controls it is
+necessary to check whether the control you want to set actually is
+supported in the driver and what the valid range of values is. So use
+<a class="reference internal" href="vidioc-queryctrl.html#vidioc-queryctrl"><span class="std std-ref">ioctls VIDIOC_QUERYCTRL, VIDIOC_QUERY_EXT_CTRL and VIDIOC_QUERYMENU</span></a> to check this.</p></li>
+<li><p>It is possible that some of the menu indices in a control of
+type <code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_TYPE_MENU</span></code> may not be supported (<code class="docutils literal notranslate"><span class="pre">VIDIOC_QUERYMENU</span></code>
+will return an error). A good example is the list of supported MPEG
+audio bitrates. Some drivers only support one or two bitrates, others
+support a wider range.</p></li>
+</ol>
+</div>
+<p>All controls use machine endianness.</p>
+</section>
+<section id="enumerating-extended-controls">
+<h2><span class="section-number">1.10.3. </span>Enumerating Extended Controls<a class="headerlink" href="#enumerating-extended-controls" title="Link to this heading">¶</a></h2>
+<p>The recommended way to enumerate over the extended controls is by using
+<a class="reference internal" href="vidioc-queryctrl.html#vidioc-queryctrl"><span class="std std-ref">ioctls VIDIOC_QUERYCTRL, VIDIOC_QUERY_EXT_CTRL and VIDIOC_QUERYMENU</span></a> in combination with the
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_FLAG_NEXT_CTRL</span></code> flag:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">v4l2_queryctrl</span><span class="w"> </span><span class="n">qctrl</span><span class="p">;</span>
+
+<span class="n">qctrl</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">V4L2_CTRL_FLAG_NEXT_CTRL</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ioctl</span><span class="w"> </span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">VIDIOC_QUERYCTRL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">qctrl</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* ... */</span>
+<span class="w">    </span><span class="n">qctrl</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">V4L2_CTRL_FLAG_NEXT_CTRL</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The initial control ID is set to 0 ORed with the
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_FLAG_NEXT_CTRL</span></code> flag. The <code class="docutils literal notranslate"><span class="pre">VIDIOC_QUERYCTRL</span></code> ioctl will
+return the first control with a higher ID than the specified one. When
+no such controls are found an error is returned.</p>
+<p>If you want to get all controls within a specific control class, then
+you can set the initial <code class="docutils literal notranslate"><span class="pre">qctrl.id</span></code> value to the control class and add
+an extra check to break out of the loop when a control of another
+control class is found:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">qctrl</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">V4L2_CTRL_CLASS_CODEC</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">V4L2_CTRL_FLAG_NEXT_CTRL</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">VIDIOC_QUERYCTRL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">qctrl</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">V4L2_CTRL_ID2CLASS</span><span class="p">(</span><span class="n">qctrl</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">V4L2_CTRL_CLASS_CODEC</span><span class="p">)</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/* ... */</span>
+<span class="w">    </span><span class="n">qctrl</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">V4L2_CTRL_FLAG_NEXT_CTRL</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The 32-bit <code class="docutils literal notranslate"><span class="pre">qctrl.id</span></code> value is subdivided into three bit ranges: the
+top 4 bits are reserved for flags (e. g. <code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_FLAG_NEXT_CTRL</span></code>)
+and are not actually part of the ID. The remaining 28 bits form the
+control ID, of which the most significant 12 bits define the control
+class and the least significant 16 bits identify the control within the
+control class. It is guaranteed that these last 16 bits are always
+non-zero for controls. The range of 0x1000 and up are reserved for
+driver-specific controls. The macro <code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_ID2CLASS(id)</span></code> returns
+the control class ID based on a control ID.</p>
+<p>If the driver does not support extended controls, then
+<code class="docutils literal notranslate"><span class="pre">VIDIOC_QUERYCTRL</span></code> will fail when used in combination with
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_FLAG_NEXT_CTRL</span></code>. In that case the old method of enumerating
+control should be used (see <a class="reference internal" href="control.html#enum-all-controls"><span class="std std-ref">Example: Enumerating all controls</span></a>). But if it is
+supported, then it is guaranteed to enumerate over all controls,
+including driver-private controls.</p>
+</section>
+<section id="creating-control-panels">
+<h2><span class="section-number">1.10.4. </span>Creating Control Panels<a class="headerlink" href="#creating-control-panels" title="Link to this heading">¶</a></h2>
+<p>It is possible to create control panels for a graphical user interface
+where the user can select the various controls. Basically you will have
+to iterate over all controls using the method described above. Each
+control class starts with a control of type
+<code class="docutils literal notranslate"><span class="pre">V4L2_CTRL_TYPE_CTRL_CLASS</span></code>. <code class="docutils literal notranslate"><span class="pre">VIDIOC_QUERYCTRL</span></code> will return the name
+of this control class which can be used as the title of a tab page
+within a control panel.</p>
+<p>The flags field of struct <a class="reference internal" href="vidioc-queryctrl.html#v4l2-queryctrl"><span class="std std-ref">v4l2_queryctrl</span></a> also
+contains hints on the behavior of the control. See the
+<a class="reference internal" href="vidioc-queryctrl.html#vidioc-queryctrl"><span class="std std-ref">ioctls VIDIOC_QUERYCTRL, VIDIOC_QUERY_EXT_CTRL and VIDIOC_QUERYMENU</span></a> documentation for more
+details.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">1.10. Extended Controls API</a><ul>
+<li><a class="reference internal" href="#introduction">1.10.1. Introduction</a></li>
+<li><a class="reference internal" href="#the-extended-control-api">1.10.2. The Extended Control API</a></li>
+<li><a class="reference internal" href="#enumerating-extended-controls">1.10.3. Enumerating Extended Controls</a></li>
+<li><a class="reference internal" href="#creating-control-panels">1.10.4. Creating Control Panels</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="control.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">1.9. </span>User Controls</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="ext-ctrls-camera.html"><span><span class="section-number">1.11. </span>Camera Control Reference</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

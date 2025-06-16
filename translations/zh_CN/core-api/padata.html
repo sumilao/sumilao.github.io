@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>padata并行执行机制 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux下的缓存和TLB刷新" href="cachetlb.html" />
+    <link rel="prev" title="本地原子操作的语义和行为" href="local_ops.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/core-api/padata.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../core-api/padata.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../core-api/padata.html"><span class="doc">The padata parallel execution mechanism</span></a></p>
+</dd>
+<dt class="field-even">翻译<span class="colon">:</span></dt>
+<dd class="field-even"><p>司延腾 Yanteng Si &lt;<a class="reference external" href="mailto:siyanteng&#37;&#52;&#48;loongson&#46;cn">siyanteng<span>&#64;</span>loongson<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="padata">
+<span id="cn-core-api-padata-rst"></span><h1>padata并行执行机制<a class="headerlink" href="#padata" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">日期<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2020年5月</p>
+</dd>
+</dl>
+<p>Padata是一种机制，内核可以通过此机制将工作分散到多个CPU上并行完成，同时
+可以选择保持它们的顺序。</p>
+<p>它最初是为IPsec开发的，它需要在不对这些数据包重新排序的其前提下，为大量的数
+据包进行加密和解密。这是目前padata的序列化作业支持的唯一用途。</p>
+<p>Padata还支持多线程作业，将作业平均分割，同时在线程之间进行负载均衡和协调。</p>
+<section id="id1">
+<h2>执行序列化作业<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>初始化<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>使用padata执行序列化作业的第一步是建立一个padata_instance结构体，以全面
+控制作业的运行方式:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#include &lt;linux/padata.h&gt;
+
+struct padata_instance *padata_alloc(const char *name);
+</pre></div>
+</div>
+<p>‘name’即标识了这个实例。</p>
+<p>然后，通过分配一个padata_shell来完成padata的初始化:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct padata_shell *padata_alloc_shell(struct padata_instance *pinst);
+</pre></div>
+</div>
+<p>一个padata_shell用于向padata提交一个作业，并允许一系列这样的作业被独立地
+序列化。一个padata_instance可以有一个或多个padata_shell与之相关联，每个
+都允许一系列独立的作业。</p>
+</section>
+<section id="cpumasks">
+<h3>修改cpumasks<a class="headerlink" href="#cpumasks" title="Link to this heading">¶</a></h3>
+<p>用于运行作业的CPU可以通过两种方式改变，通过<a class="reference internal" href="../../../core-api/padata.html#c.padata_set_cpumask" title="padata_set_cpumask"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_set_cpumask()</span></code></a>编程或通
+过sysfs。前者的定义是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int padata_set_cpumask(struct padata_instance *pinst, int cpumask_type,
+                       cpumask_var_t cpumask);
+</pre></div>
+</div>
+<p>这里cpumask_type是PADATA_CPU_PARALLEL（并行）或PADATA_CPU_SERIAL（串行）之一，其中并
+行cpumask描述了哪些处理器将被用来并行执行提交给这个实例的作业，串行cpumask
+定义了哪些处理器被允许用作串行化回调处理器。 cpumask指定了要使用的新cpumask。</p>
+<p>一个实例的cpumasks可能有sysfs文件。例如，pcrypt的文件在
+/sys/kernel/pcrypt/&lt;instance-name&gt;。在一个实例的目录中，有两个文件，parallel_cpumask
+和serial_cpumask，任何一个cpumask都可以通过在文件中回显（echo）一个bitmask
+来改变，比如说:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo f &gt; /sys/kernel/pcrypt/pencrypt/parallel_cpumask
+</pre></div>
+</div>
+<p>读取其中一个文件会显示用户提供的cpumask，它可能与“可用”的cpumask不同。</p>
+<p>Padata内部维护着两对cpumask，用户提供的cpumask和“可用的”cpumask(每一对由一个
+并行和一个串行cpumask组成)。用户提供的cpumasks在实例分配时默认为所有可能的CPU，
+并且可以如上所述进行更改。可用的cpumasks总是用户提供的cpumasks的一个子集，只包
+含用户提供的掩码中的在线CPU；这些是padata实际使用的cpumasks。因此，向padata提
+供一个包含离线CPU的cpumask是合法的。一旦用户提供的cpumask中的一个离线CPU上线，
+padata就会使用它。</p>
+<p>改变CPU掩码的操作代价很高，所以不应频繁更改。</p>
+</section>
+<section id="id3">
+<h3>运行一个作业<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>实际上向padata实例提交工作需要创建一个padata_priv结构体，它代表一个作业:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct padata_priv {
+    /* Other stuff here... */
+    void                    (*parallel)(struct padata_priv *padata);
+    void                    (*serial)(struct padata_priv *padata);
+};
+</pre></div>
+</div>
+<p>这个结构体几乎肯定会被嵌入到一些针对要做的工作的大结构体中。它的大部分字段对
+padata来说是私有的，但是这个结构在初始化时应该被清零，并且应该提供parallel()和
+serial()函数。在完成工作的过程中，这些函数将被调用，我们马上就会遇到。</p>
+<p>工作的提交是通过:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int padata_do_parallel(struct padata_shell *ps,
+                       struct padata_priv *padata, int *cb_cpu);
+</pre></div>
+</div>
+<p>ps和padata结构体必须如上所述进行设置；cb_cpu指向作业完成后用于最终回调的首选CPU；
+它必须在当前实例的CPU掩码中（如果不是，cb_cpu指针将被更新为指向实际选择的CPU）。
+<a class="reference internal" href="../../../core-api/padata.html#c.padata_do_parallel" title="padata_do_parallel"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_do_parallel()</span></code></a>的返回值在成功时为0，表示工作正在进行中。-EBUSY意味着有人
+在其他地方正在搞乱实例的CPU掩码，而当cb_cpu不在串行cpumask中、并行或串行cpumasks
+中无在线CPU，或实例停止时，则会出现-EINVAL反馈。</p>
+<p>每个提交给<a class="reference internal" href="../../../core-api/padata.html#c.padata_do_parallel" title="padata_do_parallel"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_do_parallel()</span></code></a>的作业将依次传递给一个CPU上的上述parallel()函数
+的一个调用，所以真正的并行是通过提交多个作业来实现的。parallel()在运行时禁用软
+件中断，因此不能睡眠。parallel()函数把获得的padata_priv结构体指针作为其唯一的参
+数；关于实际要做的工作的信息可能是通过使用container_of()找到封装结构体来获得的。</p>
+<p>请注意，parallel()没有返回值；padata子系统假定parallel()将从此时开始负责这项工
+作。作业不需要在这次调用中完成，但是，如果parallel()留下了未完成的工作，它应该准
+备在前一个作业完成之前，被以新的作业再次调用</p>
+</section>
+<section id="id4">
+<h3>序列化作业<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>当一个作业完成时，parallel()（或任何实际完成该工作的函数）应该通过调用通知padata此
+事:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void padata_do_serial(struct padata_priv *padata);
+</pre></div>
+</div>
+<p>在未来的某个时刻，<a class="reference internal" href="../../../core-api/padata.html#c.padata_do_serial" title="padata_do_serial"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_do_serial()</span></code></a>将触发对padata_priv结构体中serial()函数的调
+用。这个调用将发生在最初要求调用<a class="reference internal" href="../../../core-api/padata.html#c.padata_do_parallel" title="padata_do_parallel"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_do_parallel()</span></code></a>的CPU上；它也是在本地软件中断
+被禁用的情况下运行的。
+请注意，这个调用可能会被推迟一段时间，因为padata代码会努力确保作业按照提交的顺序完
+成。</p>
+</section>
+<section id="id5">
+<h3>销毁<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>清理一个padata实例时，可以预见的是调用两个free函数，这两个函数对应于分配的逆过程:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void padata_free_shell(struct padata_shell *ps);
+void padata_free(struct padata_instance *pinst);
+</pre></div>
+</div>
+<p>用户有责任确保在调用上述任何一项之前，所有未完成的工作都已完成。</p>
+</section>
+</section>
+<section id="id6">
+<h2>运行多线程作业<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>一个多线程作业有一个主线程和零个或多个辅助线程，主线程参与作业，然后等待所有辅助线
+程完成。padata将作业分割成称为chunk的单元，其中chunk是一个线程在一次调用线程函数
+中完成的作业片段。</p>
+<p>用户必须做三件事来运行一个多线程作业。首先，通过定义一个padata_mt_job结构体来描述
+作业，这在接口部分有解释。这包括一个指向线程函数的指针，padata每次将作业块分配给线
+程时都会调用这个函数。然后，定义线程函数，它接受三个参数： <code class="docutils literal notranslate"><span class="pre">start</span></code> 、 <code class="docutils literal notranslate"><span class="pre">end</span></code> 和 <code class="docutils literal notranslate"><span class="pre">arg</span></code> ，
+其中前两个参数限定了线程操作的范围，最后一个是指向作业共享状态的指针，如果有的话。
+准备好共享状态，它通常被分配在主线程的堆栈中。最后，调用<a class="reference internal" href="../../../core-api/padata.html#c.padata_do_multithreaded" title="padata_do_multithreaded"><code class="xref c c-func docutils literal notranslate"><span class="pre">padata_do_multithreaded()</span></code></a>，
+它将在作业完成后返回。</p>
+</section>
+<section id="id7">
+<h2>接口<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>该API在以下内核代码中:</p>
+<p>include/linux/padata.h</p>
+<p>kernel/padata.c</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">padata并行执行机制</a><ul>
+<li><a class="reference internal" href="#id1">执行序列化作业</a><ul>
+<li><a class="reference internal" href="#id2">初始化</a></li>
+<li><a class="reference internal" href="#cpumasks">修改cpumasks</a></li>
+<li><a class="reference internal" href="#id3">运行一个作业</a></li>
+<li><a class="reference internal" href="#id4">序列化作业</a></li>
+<li><a class="reference internal" href="#id5">销毁</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">运行多线程作业</a></li>
+<li><a class="reference internal" href="#id7">接口</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="local_ops.html">
+                    <span class="icon">&lt;</span><span>本地原子操作的语义和行为</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="cachetlb.html"><span>Linux下的缓存和TLB刷新</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

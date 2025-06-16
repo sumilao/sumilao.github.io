@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CFS Scheduler &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EEVDF Scheduler" href="sched-eevdf.html" />
+    <link rel="prev" title="Deadline Task Scheduling" href="sched-deadline.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/scheduler/sched-design-CFS.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/scheduler/sched-design-CFS.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/sp_SP/scheduler/sched-design-CFS.html">Spanish</a></li>
+
+</ul>
+</div>
+<section id="cfs-scheduler">
+<span id="sched-design-cfs"></span><h1>CFS Scheduler<a class="headerlink" href="#cfs-scheduler" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>1.  OVERVIEW<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>CFS stands for “Completely Fair Scheduler,” and is the “desktop” process
+scheduler implemented by Ingo Molnar and merged in Linux 2.6.23. When
+originally merged, it was the replacement for the previous vanilla
+scheduler’s SCHED_OTHER interactivity code. Nowadays, CFS is making room
+for EEVDF, for which documentation can be found in
+<a class="reference internal" href="sched-eevdf.html"><span class="doc">EEVDF Scheduler</span></a>.</p>
+<p>80% of CFS’s design can be summed up in a single sentence: CFS basically models
+an “ideal, precise multi-tasking CPU” on real hardware.</p>
+<p>“Ideal multi-tasking CPU” is a (non-existent  :-)) CPU that has 100% physical
+power and which can run each task at precise equal speed, in parallel, each at
+1/nr_running speed.  For example: if there are 2 tasks running, then it runs
+each at 50% physical power --- i.e., actually in parallel.</p>
+<p>On real hardware, we can run only a single task at once, so we have to
+introduce the concept of “virtual runtime.”  The virtual runtime of a task
+specifies when its next timeslice would start execution on the ideal
+multi-tasking CPU described above.  In practice, the virtual runtime of a task
+is its actual runtime normalized to the total number of running tasks.</p>
+</section>
+<section id="few-implementation-details">
+<h2>2.  FEW IMPLEMENTATION DETAILS<a class="headerlink" href="#few-implementation-details" title="Link to this heading">¶</a></h2>
+<p>In CFS the virtual runtime is expressed and tracked via the per-task
+p-&gt;se.vruntime (nanosec-unit) value.  This way, it’s possible to accurately
+timestamp and measure the “expected CPU time” a task should have gotten.</p>
+<blockquote>
+<div><p>Small detail: on “ideal” hardware, at any time all tasks would have the same
+p-&gt;se.vruntime value --- i.e., tasks would execute simultaneously and no task
+would ever get “out of balance” from the “ideal” share of CPU time.</p>
+</div></blockquote>
+<p>CFS’s task picking logic is based on this p-&gt;se.vruntime value and it is thus
+very simple: it always tries to run the task with the smallest p-&gt;se.vruntime
+value (i.e., the task which executed least so far).  CFS always tries to split
+up CPU time between runnable tasks as close to “ideal multitasking hardware” as
+possible.</p>
+<p>Most of the rest of CFS’s design just falls out of this really simple concept,
+with a few add-on embellishments like nice levels, multiprocessing and various
+algorithm variants to recognize sleepers.</p>
+</section>
+<section id="the-rbtree">
+<h2>3.  THE RBTREE<a class="headerlink" href="#the-rbtree" title="Link to this heading">¶</a></h2>
+<p>CFS’s design is quite radical: it does not use the old data structures for the
+runqueues, but it uses a time-ordered rbtree to build a “timeline” of future
+task execution, and thus has no “array switch” artifacts (by which both the
+previous vanilla scheduler and RSDL/SD are affected).</p>
+<p>CFS also maintains the rq-&gt;cfs.min_vruntime value, which is a monotonic
+increasing value tracking the smallest vruntime among all tasks in the
+runqueue.  The total amount of work done by the system is tracked using
+min_vruntime; that value is used to place newly activated entities on the left
+side of the tree as much as possible.</p>
+<p>The total number of running tasks in the runqueue is accounted through the
+rq-&gt;cfs.load value, which is the sum of the weights of the tasks queued on the
+runqueue.</p>
+<p>CFS maintains a time-ordered rbtree, where all runnable tasks are sorted by the
+p-&gt;se.vruntime key. CFS picks the “leftmost” task from this tree and sticks to it.
+As the system progresses forwards, the executed tasks are put into the tree
+more and more to the right --- slowly but surely giving a chance for every task
+to become the “leftmost task” and thus get on the CPU within a deterministic
+amount of time.</p>
+<p>Summing up, CFS works like this: it runs a task a bit, and when the task
+schedules (or a scheduler tick happens) the task’s CPU usage is “accounted
+for”: the (small) time it just spent using the physical CPU is added to
+p-&gt;se.vruntime.  Once p-&gt;se.vruntime gets high enough so that another task
+becomes the “leftmost task” of the time-ordered rbtree it maintains (plus a
+small amount of “granularity” distance relative to the leftmost task so that we
+do not over-schedule tasks and trash the cache), then the new leftmost task is
+picked and the current task is preempted.</p>
+</section>
+<section id="some-features-of-cfs">
+<h2>4.  SOME FEATURES OF CFS<a class="headerlink" href="#some-features-of-cfs" title="Link to this heading">¶</a></h2>
+<p>CFS uses nanosecond granularity accounting and does not rely on any jiffies or
+other HZ detail.  Thus the CFS scheduler has no notion of “timeslices” in the
+way the previous scheduler had, and has no heuristics whatsoever.  There is
+only one central tunable:</p>
+<blockquote>
+<div><p>/sys/kernel/debug/sched/base_slice_ns</p>
+</div></blockquote>
+<p>which can be used to tune the scheduler from “desktop” (i.e., low latencies) to
+“server” (i.e., good batching) workloads.  It defaults to a setting suitable
+for desktop workloads.  SCHED_BATCH is handled by the CFS scheduler module too.</p>
+<p>In case CONFIG_HZ results in base_slice_ns &lt; TICK_NSEC, the value of
+base_slice_ns will have little to no impact on the workloads.</p>
+<p>Due to its design, the CFS scheduler is not prone to any of the “attacks” that
+exist today against the heuristics of the stock scheduler: fiftyp.c, thud.c,
+chew.c, ring-test.c, massive_intr.c all work fine and do not impact
+interactivity and produce the expected behavior.</p>
+<p>The CFS scheduler has a much stronger handling of nice levels and SCHED_BATCH
+than the previous vanilla scheduler: both types of workloads are isolated much
+more aggressively.</p>
+<p>SMP load-balancing has been reworked/sanitized: the runqueue-walking
+assumptions are gone from the load-balancing code now, and iterators of the
+scheduling modules are used.  The balancing code got quite a bit simpler as a
+result.</p>
+</section>
+<section id="scheduling-policies">
+<h2>5. Scheduling policies<a class="headerlink" href="#scheduling-policies" title="Link to this heading">¶</a></h2>
+<p>CFS implements three scheduling policies:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SCHED_NORMAL (traditionally called SCHED_OTHER): The scheduling
+policy that is used for regular tasks.</p></li>
+<li><p>SCHED_BATCH: Does not preempt nearly as often as regular tasks
+would, thereby allowing tasks to run longer and make better use of
+caches but at the cost of interactivity. This is well suited for
+batch jobs.</p></li>
+<li><p>SCHED_IDLE: This is even weaker than nice 19, but its not a true
+idle timer scheduler in order to avoid to get into priority
+inversion problems which would deadlock the machine.</p></li>
+</ul>
+</div></blockquote>
+<p>SCHED_FIFO/_RR are implemented in sched/rt.c and are as specified by
+POSIX.</p>
+<p>The command chrt from util-linux-ng 2.13.1.1 can set all of these except
+SCHED_IDLE.</p>
+</section>
+<section id="scheduling-classes">
+<h2>6.  SCHEDULING CLASSES<a class="headerlink" href="#scheduling-classes" title="Link to this heading">¶</a></h2>
+<p>The new CFS scheduler has been designed in such a way to introduce “Scheduling
+Classes,” an extensible hierarchy of scheduler modules.  These modules
+encapsulate scheduling policy details and are handled by the scheduler core
+without the core code assuming too much about them.</p>
+<p>sched/fair.c implements the CFS scheduler described above.</p>
+<p>sched/rt.c implements SCHED_FIFO and SCHED_RR semantics, in a simpler way than
+the previous vanilla scheduler did.  It uses 100 runqueues (for all 100 RT
+priority levels, instead of 140 in the previous scheduler) and it needs no
+expired array.</p>
+<p>Scheduling classes are implemented through the sched_class structure, which
+contains hooks to functions that must be called whenever an interesting event
+occurs.</p>
+<p>This is the (partial) list of the hooks:</p>
+<blockquote>
+<div><ul>
+<li><p>enqueue_task(...)</p>
+<p>Called when a task enters a runnable state.
+It puts the scheduling entity (task) into the red-black tree and
+increments the nr_running variable.</p>
+</li>
+<li><p>dequeue_task(...)</p>
+<p>When a task is no longer runnable, this function is called to keep the
+corresponding scheduling entity out of the red-black tree.  It decrements
+the nr_running variable.</p>
+</li>
+<li><p>yield_task(...)</p>
+<p>This function is basically just a dequeue followed by an enqueue, unless the
+compat_yield sysctl is turned on; in that case, it places the scheduling
+entity at the right-most end of the red-black tree.</p>
+</li>
+<li><p>wakeup_preempt(...)</p>
+<p>This function checks if a task that entered the runnable state should
+preempt the currently running task.</p>
+</li>
+<li><p>pick_next_task(...)</p>
+<p>This function chooses the most appropriate task eligible to run next.</p>
+</li>
+<li><p>set_next_task(...)</p>
+<p>This function is called when a task changes its scheduling class, changes
+its task group or is scheduled.</p>
+</li>
+<li><p>task_tick(...)</p>
+<p>This function is mostly called from time tick functions; it might lead to
+process switch.  This drives the running preemption.</p>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="group-scheduler-extensions-to-cfs">
+<h2>7.  GROUP SCHEDULER EXTENSIONS TO CFS<a class="headerlink" href="#group-scheduler-extensions-to-cfs" title="Link to this heading">¶</a></h2>
+<p>Normally, the scheduler operates on individual tasks and strives to provide
+fair CPU time to each task.  Sometimes, it may be desirable to group tasks and
+provide fair CPU time to each such task group.  For example, it may be
+desirable to first provide fair CPU time to each user on the system and then to
+each task belonging to a user.</p>
+<p>CONFIG_CGROUP_SCHED strives to achieve exactly that.  It lets tasks to be
+grouped and divides CPU time fairly among such groups.</p>
+<p>CONFIG_RT_GROUP_SCHED permits to group real-time (i.e., SCHED_FIFO and
+SCHED_RR) tasks.</p>
+<p>CONFIG_FAIR_GROUP_SCHED permits to group CFS (i.e., SCHED_NORMAL and
+SCHED_BATCH) tasks.</p>
+<blockquote>
+<div><p>These options need CONFIG_CGROUPS to be defined, and let the administrator
+create arbitrary groups of tasks, using the “cgroup” pseudo filesystem.  See
+<a class="reference internal" href="../admin-guide/cgroup-v1/cgroups.html"><span class="doc">Control Groups</span></a> for more information about this filesystem.</p>
+</div></blockquote>
+<p>When CONFIG_FAIR_GROUP_SCHED is defined, a “cpu.shares” file is created for each
+group created using the pseudo filesystem.  See example steps below to create
+task groups and modify their CPU share using the “cgroups” pseudo filesystem:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># mount -t tmpfs cgroup_root /sys/fs/cgroup
+# mkdir /sys/fs/cgroup/cpu
+# mount -t cgroup -ocpu none /sys/fs/cgroup/cpu
+# cd /sys/fs/cgroup/cpu
+
+# mkdir multimedia      # create &quot;multimedia&quot; group of tasks
+# mkdir browser         # create &quot;browser&quot; group of tasks
+
+# #Configure the multimedia group to receive twice the CPU bandwidth
+# #that of browser group
+
+# echo 2048 &gt; multimedia/cpu.shares
+# echo 1024 &gt; browser/cpu.shares
+
+# firefox &amp;     # Launch firefox and move it to &quot;browser&quot; group
+# echo &lt;firefox_pid&gt; &gt; browser/tasks
+
+# #Launch gmplayer (or your favourite movie player)
+# echo &lt;movie_player_pid&gt; &gt; multimedia/tasks
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">CFS Scheduler</a><ul>
+<li><a class="reference internal" href="#overview">1.  OVERVIEW</a></li>
+<li><a class="reference internal" href="#few-implementation-details">2.  FEW IMPLEMENTATION DETAILS</a></li>
+<li><a class="reference internal" href="#the-rbtree">3.  THE RBTREE</a></li>
+<li><a class="reference internal" href="#some-features-of-cfs">4.  SOME FEATURES OF CFS</a></li>
+<li><a class="reference internal" href="#scheduling-policies">5. Scheduling policies</a></li>
+<li><a class="reference internal" href="#scheduling-classes">6.  SCHEDULING CLASSES</a></li>
+<li><a class="reference internal" href="#group-scheduler-extensions-to-cfs">7.  GROUP SCHEDULER EXTENSIONS TO CFS</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="sched-deadline.html">
+                    <span class="icon">&lt;</span><span>Deadline Task Scheduling</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="sched-eevdf.html"><span>EEVDF Scheduler</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

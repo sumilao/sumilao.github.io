@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux and parallel port IDE devices &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using the RAM disk block device with Linux" href="ramdisk.html" />
+    <link rel="prev" title="Network Block Device (TCP version)" href="nbd.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bcache.html">A block layer cache (bcache)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../binderfs.html">The Android binderfs Filesystem</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Block Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cifs/index.html">CIFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../device-mapper/index.html">Device Mapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ext4.html">ext4 General Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem-monitoring.html">File system Monitoring with fanotify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nfs/index.html">NFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iostats.html">I/O statistics fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jfs.html">IBM’s Journaled File System (JFS) for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../md.html">RAID arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ufs.html">Using UFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xfs.html">The SGI XFS Filesystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/admin-guide/blockdev/paride.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="linux-and-parallel-port-ide-devices">
+<h1>Linux and parallel port IDE devices<a class="headerlink" href="#linux-and-parallel-port-ide-devices" title="Link to this heading">¶</a></h1>
+<p>PARIDE v1.03   (c) 1997-8  Grant Guenther &lt;<a class="reference external" href="mailto:grant&#37;&#52;&#48;torque&#46;net">grant<span>&#64;</span>torque<span>&#46;</span>net</a>&gt;
+PATA_PARPORT   (c) 2023 Ondrej Zary</p>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Owing to the simplicity and near universality of the parallel port interface
+to personal computers, many external devices such as portable hard-disk,
+CD-ROM, LS-120 and tape drives use the parallel port to connect to their
+host computer.  While some devices (notably scanners) use ad-hoc methods
+to pass commands and data through the parallel port interface, most
+external devices are actually identical to an internal model, but with
+a parallel-port adapter chip added in.  Some of the original parallel port
+adapters were little more than mechanisms for multiplexing a SCSI bus.
+(The Iomega PPA-3 adapter used in the ZIP drives is an example of this
+approach).  Most current designs, however, take a different approach.
+The adapter chip reproduces a small ISA or IDE bus in the external device
+and the communication protocol provides operations for reading and writing
+device registers, as well as data block transfer functions.  Sometimes,
+the device being addressed via the parallel cable is a standard SCSI
+controller like an NCR 5380.  The “ditto” family of external tape
+drives use the ISA replicator to interface a floppy disk controller,
+which is then connected to a floppy-tape mechanism.  The vast majority
+of external parallel port devices, however, are now based on standard
+IDE type devices, which require no intermediate controller.  If one
+were to open up a parallel port CD-ROM drive, for instance, one would
+find a standard ATAPI CD-ROM drive, a power supply, and a single adapter
+that interconnected a standard PC parallel port cable and a standard
+IDE cable.  It is usually possible to exchange the CD-ROM device with
+any other device using the IDE interface.</p>
+<p>The document describes the support in Linux for parallel port IDE
+devices.  It does not cover parallel port SCSI devices, “ditto” tape
+drives or scanners.  Many different devices are supported by the
+parallel port IDE subsystem, including:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MicroSolutions backpack CD-ROM</p></li>
+<li><p>MicroSolutions backpack PD/CD</p></li>
+<li><p>MicroSolutions backpack hard-drives</p></li>
+<li><p>MicroSolutions backpack 8000t tape drive</p></li>
+<li><p>SyQuest EZ-135, EZ-230 &amp; SparQ drives</p></li>
+<li><p>Avatar Shark</p></li>
+<li><p>Imation Superdisk LS-120</p></li>
+<li><p>Maxell Superdisk LS-120</p></li>
+<li><p>FreeCom Power CD</p></li>
+<li><p>Hewlett-Packard 5GB and 8GB tape drives</p></li>
+<li><p>Hewlett-Packard 7100 and 7200 CD-RW drives</p></li>
+</ul>
+</div></blockquote>
+<p>as well as most of the clone and no-name products on the market.</p>
+<p>To support such a wide range of devices, pata_parport is actually structured
+in two parts. There is a base pata_parport module which provides an interface
+to kernel libata subsystem, registry and some common methods for accessing
+the parallel ports.</p>
+<p>The second component is a set of low-level protocol drivers for each of the
+parallel port IDE adapter chips.  Thanks to the interest and encouragement of
+Linux users from many parts of the world, support is available for almost all
+known adapter protocols:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>aten</p></td>
+<td><p>ATEN EH-100</p></td>
+<td><p>(HK)</p></td>
+</tr>
+<tr class="row-even"><td><p>bpck</p></td>
+<td><p>Microsolutions backpack</p></td>
+<td><p>(US)</p></td>
+</tr>
+<tr class="row-odd"><td><p>comm</p></td>
+<td><p>DataStor (old-type) “commuter” adapter</p></td>
+<td><p>(TW)</p></td>
+</tr>
+<tr class="row-even"><td><p>dstr</p></td>
+<td><p>DataStor EP-2000</p></td>
+<td><p>(TW)</p></td>
+</tr>
+<tr class="row-odd"><td><p>epat</p></td>
+<td><p>Shuttle EPAT</p></td>
+<td><p>(UK)</p></td>
+</tr>
+<tr class="row-even"><td><p>epia</p></td>
+<td><p>Shuttle EPIA</p></td>
+<td><p>(UK)</p></td>
+</tr>
+<tr class="row-odd"><td><p>fit2</p></td>
+<td><p>FIT TD-2000</p></td>
+<td><p>(US)</p></td>
+</tr>
+<tr class="row-even"><td><p>fit3</p></td>
+<td><p>FIT TD-3000</p></td>
+<td><p>(US)</p></td>
+</tr>
+<tr class="row-odd"><td><p>friq</p></td>
+<td><p>Freecom IQ cable</p></td>
+<td><p>(DE)</p></td>
+</tr>
+<tr class="row-even"><td><p>frpw</p></td>
+<td><p>Freecom Power</p></td>
+<td><p>(DE)</p></td>
+</tr>
+<tr class="row-odd"><td><p>kbic</p></td>
+<td><p>KingByte KBIC-951A and KBIC-971A</p></td>
+<td><p>(TW)</p></td>
+</tr>
+<tr class="row-even"><td><p>ktti</p></td>
+<td><p>KT Technology PHd adapter</p></td>
+<td><p>(SG)</p></td>
+</tr>
+<tr class="row-odd"><td><p>on20</p></td>
+<td><p>OnSpec 90c20</p></td>
+<td><p>(US)</p></td>
+</tr>
+<tr class="row-even"><td><p>on26</p></td>
+<td><p>OnSpec 90c26</p></td>
+<td><p>(US)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="using-pata-parport-subsystem">
+<h2>2. Using pata_parport subsystem<a class="headerlink" href="#using-pata-parport-subsystem" title="Link to this heading">¶</a></h2>
+<p>While configuring the Linux kernel, you may choose either to build
+the pata_parport drivers into your kernel, or to build them as modules.</p>
+<p>In either case, you will need to select “Parallel port IDE device support”
+and at least one of the parallel port communication protocols.
+If you do not know what kind of parallel port adapter is used in your drive,
+you could begin by checking the file names and any text files on your DOS
+installation floppy.  Alternatively, you can look at the markings on
+the adapter chip itself.  That’s usually sufficient to identify the
+correct device.</p>
+<p>You can actually select all the protocol modules, and allow the pata_parport
+subsystem to try them all for you.</p>
+<p>For the “brand-name” products listed above, here are the protocol
+and high-level drivers that you would use:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Manufacturer</p></th>
+<th class="head"><p>Model</p></th>
+<th class="head"><p>Protocol</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MicroSolutions</p></td>
+<td><p>CD-ROM</p></td>
+<td><p>bpck</p></td>
+</tr>
+<tr class="row-odd"><td><p>MicroSolutions</p></td>
+<td><p>PD drive</p></td>
+<td><p>bpck</p></td>
+</tr>
+<tr class="row-even"><td><p>MicroSolutions</p></td>
+<td><p>hard-drive</p></td>
+<td><p>bpck</p></td>
+</tr>
+<tr class="row-odd"><td><p>MicroSolutions</p></td>
+<td><p>8000t tape</p></td>
+<td><p>bpck</p></td>
+</tr>
+<tr class="row-even"><td><p>SyQuest</p></td>
+<td><p>EZ, SparQ</p></td>
+<td><p>epat</p></td>
+</tr>
+<tr class="row-odd"><td><p>Imation</p></td>
+<td><p>Superdisk</p></td>
+<td><p>epat</p></td>
+</tr>
+<tr class="row-even"><td><p>Maxell</p></td>
+<td><p>Superdisk</p></td>
+<td><p>friq</p></td>
+</tr>
+<tr class="row-odd"><td><p>Avatar</p></td>
+<td><p>Shark</p></td>
+<td><p>epat</p></td>
+</tr>
+<tr class="row-even"><td><p>FreeCom</p></td>
+<td><p>CD-ROM</p></td>
+<td><p>frpw</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hewlett-Packard</p></td>
+<td><p>5GB Tape</p></td>
+<td><p>epat</p></td>
+</tr>
+<tr class="row-even"><td><p>Hewlett-Packard</p></td>
+<td><p>7200e (CD)</p></td>
+<td><p>epat</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hewlett-Packard</p></td>
+<td><p>7200e (CD-R)</p></td>
+<td><p>epat</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>All parports and all protocol drivers are probed automatically unless probe=0
+parameter is used. So just “modprobe epat” is enough for a Imation SuperDisk
+drive to work.</p>
+<p>Manual device creation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo &quot;port protocol mode unit delay&quot; &gt;/sys/bus/pata_parport/new_device
+</pre></div>
+</div>
+<p>where:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>port</p></td>
+<td><p>parport name (or “auto” for all parports)</p></td>
+</tr>
+<tr class="row-even"><td><p>protocol</p></td>
+<td><p>protocol name (or “auto” for all protocols)</p></td>
+</tr>
+<tr class="row-odd"><td><p>mode</p></td>
+<td><p>mode number (protocol-specific) or -1 for probe</p></td>
+</tr>
+<tr class="row-even"><td><p>unit</p></td>
+<td><p>unit number (for backpack only, see below)</p></td>
+</tr>
+<tr class="row-odd"><td><p>delay</p></td>
+<td><p>I/O delay (see troubleshooting section below)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>If you happen to be using a MicroSolutions backpack device, you will
+also need to know the unit ID number for each drive.  This is usually
+the last two digits of the drive’s serial number (but read MicroSolutions’
+documentation about this).</p>
+<p>If you omit the parameters from the end, defaults will be used, e.g.:</p>
+<p>Probe all parports with all protocols:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo auto &gt;/sys/bus/pata_parport/new_device
+</pre></div>
+</div>
+<p>Probe parport0 using protocol epat and mode 4 (EPP-16):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo &quot;parport0 epat 4&quot; &gt;/sys/bus/pata_parport/new_device
+</pre></div>
+</div>
+<p>Probe parport0 using all protocols:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo &quot;parport0 auto&quot; &gt;/sys/bus/pata_parport/new_device
+</pre></div>
+</div>
+<p>Probe all parports using protoocol epat:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo &quot;auto epat&quot; &gt;/sys/bus/pata_parport/new_device
+</pre></div>
+</div>
+<p>Deleting devices:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo pata_parport.0 &gt;/sys/bus/pata_parport/delete_device
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting">
+<h2>3. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="use-epp-mode-if-you-can">
+<h3>3.1  Use EPP mode if you can<a class="headerlink" href="#use-epp-mode-if-you-can" title="Link to this heading">¶</a></h3>
+<p>The most common problems that people report with the pata_parport drivers
+concern the parallel port CMOS settings.  At this time, none of the
+protocol modules support ECP mode, or any ECP combination modes.
+If you are able to do so, please set your parallel port into EPP mode
+using your CMOS setup procedure.</p>
+</section>
+<section id="check-the-port-delay">
+<h3>3.2  Check the port delay<a class="headerlink" href="#check-the-port-delay" title="Link to this heading">¶</a></h3>
+<p>Some parallel ports cannot reliably transfer data at full speed.  To
+offset the errors, the protocol modules introduce a “port
+delay” between each access to the i/o ports.  Each protocol sets
+a default value for this delay.  In most cases, the user can override
+the default and set it to 0 - resulting in somewhat higher transfer
+rates.  In some rare cases (especially with older 486 systems) the
+default delays are not long enough.  if you experience corrupt data
+transfers, or unexpected failures, you may wish to increase the
+port delay.</p>
+</section>
+<section id="some-drives-need-a-printer-reset">
+<h3>3.3  Some drives need a printer reset<a class="headerlink" href="#some-drives-need-a-printer-reset" title="Link to this heading">¶</a></h3>
+<p>There appear to be a number of “noname” external drives on the market
+that do not always power up correctly.  We have noticed this with some
+drives based on OnSpec and older Freecom adapters.  In these rare cases,
+the adapter can often be reinitialised by issuing a “printer reset” on
+the parallel port.  As the reset operation is potentially disruptive in
+multiple device environments, the pata_parport drivers will not do it
+automatically.  You can however, force a printer reset by doing:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>insmod lp reset=1
+rmmod lp
+</pre></div>
+</div>
+<p>If you have one of these marginal cases, you should probably build
+your pata_parport drivers as modules, and arrange to do the printer reset
+before loading the pata_parport drivers.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux and parallel port IDE devices</a><ul>
+<li><a class="reference internal" href="#introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#using-pata-parport-subsystem">2. Using pata_parport subsystem</a></li>
+<li><a class="reference internal" href="#troubleshooting">3. Troubleshooting</a><ul>
+<li><a class="reference internal" href="#use-epp-mode-if-you-can">3.1  Use EPP mode if you can</a></li>
+<li><a class="reference internal" href="#check-the-port-delay">3.2  Check the port delay</a></li>
+<li><a class="reference internal" href="#some-drives-need-a-printer-reset">3.3  Some drives need a printer reset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="nbd.html">
+                    <span class="icon">&lt;</span><span>Network Block Device (TCP version)</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="ramdisk.html"><span>Using the RAM disk block device with Linux</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

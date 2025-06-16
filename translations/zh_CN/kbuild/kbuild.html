@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kbuild &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="可重现的构建" href="reproducible-builds.html" />
+    <link rel="prev" title="GCC 插件基础设施" href="gcc-plugins.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/kbuild/kbuild.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../kbuild/kbuild.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../kbuild/kbuild.html"><span class="doc">Kbuild</span></a></p>
+</dd>
+<dt class="field-even">Translator<span class="colon">:</span></dt>
+<dd class="field-even"><p>慕冬亮 Dongliang Mu &lt;<a class="reference external" href="mailto:dzm91&#37;&#52;&#48;hust&#46;edu&#46;cn">dzm91<span>&#64;</span>hust<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="kbuild">
+<h1>Kbuild<a class="headerlink" href="#kbuild" title="Link to this heading">¶</a></h1>
+<section id="id1">
+<h2>输出文件<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="modules-order">
+<h3>modules.order<a class="headerlink" href="#modules-order" title="Link to this heading">¶</a></h3>
+<p>该文件记录模块在 Makefile 中出现的顺序。modprobe 使用该文件来确定性
+解析匹配多个模块的别名。</p>
+</section>
+<section id="modules-builtin">
+<h3>modules.builtin<a class="headerlink" href="#modules-builtin" title="Link to this heading">¶</a></h3>
+<p>该文件列出了所有内置到内核中的模块。modprobe 使用该文件来避免尝试加载
+内置模块时出错。</p>
+</section>
+<section id="modules-builtin-modinfo">
+<h3>modules.builtin.modinfo<a class="headerlink" href="#modules-builtin-modinfo" title="Link to this heading">¶</a></h3>
+<p>该文件包含所有内置模块的 modinfo。与单独模块的 modinfo 不同，所有字段
+都带有模块名称前缀。</p>
+</section>
+<section id="modules-builtin-ranges">
+<h3>modules.builtin.ranges<a class="headerlink" href="#modules-builtin-ranges" title="Link to this heading">¶</a></h3>
+<p>该文件包含所有内核内置模块的地址偏移范围（每个 ELF 节）。结合 System.map
+文件，它可以用来将模块名称与符号关联起来。</p>
+</section>
+</section>
+<section id="id2">
+<h2>环境变量<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="kcppflags">
+<h3>KCPPFLAGS<a class="headerlink" href="#kcppflags" title="Link to this heading">¶</a></h3>
+<p>在预处理时传递的额外选项。kbuild 进行所有预处理（包括构建 C 文件和汇编文件）
+时，都会使用这些预处理选项。</p>
+</section>
+<section id="kaflags">
+<h3>KAFLAGS<a class="headerlink" href="#kaflags" title="Link to this heading">¶</a></h3>
+<p>传递给汇编器的额外选项（适用于内置模块和外部模块）。</p>
+</section>
+<section id="aflags-module">
+<h3>AFLAGS_MODULE<a class="headerlink" href="#aflags-module" title="Link to this heading">¶</a></h3>
+<p>外部模块的额外汇编选项。</p>
+</section>
+<section id="aflags-kernel">
+<h3>AFLAGS_KERNEL<a class="headerlink" href="#aflags-kernel" title="Link to this heading">¶</a></h3>
+<p>内置模块的额外汇编选项。</p>
+</section>
+<section id="kcflags">
+<h3>KCFLAGS<a class="headerlink" href="#kcflags" title="Link to this heading">¶</a></h3>
+<p>传递给 C 编译器的额外选项（适用于内置模块和外部模块）。</p>
+</section>
+<section id="krustflags">
+<h3>KRUSTFLAGS<a class="headerlink" href="#krustflags" title="Link to this heading">¶</a></h3>
+<p>传递给 Rust 编译器的额外选项（适用于内置模块和外部模块）。</p>
+</section>
+<section id="cflags-kernel">
+<h3>CFLAGS_KERNEL<a class="headerlink" href="#cflags-kernel" title="Link to this heading">¶</a></h3>
+<p>在编译内置代码时，传递给 $(CC) 的额外选项。</p>
+</section>
+<section id="cflags-module">
+<h3>CFLAGS_MODULE<a class="headerlink" href="#cflags-module" title="Link to this heading">¶</a></h3>
+<p>编译外部模块时，传递给 $(CC) 的额外模块特定选项。</p>
+</section>
+<section id="rustflags-kernel">
+<h3>RUSTFLAGS_KERNEL<a class="headerlink" href="#rustflags-kernel" title="Link to this heading">¶</a></h3>
+<p>在编译内置代码时，传递给 $(RUSTC) 的额外选项。</p>
+</section>
+<section id="rustflags-module">
+<h3>RUSTFLAGS_MODULE<a class="headerlink" href="#rustflags-module" title="Link to this heading">¶</a></h3>
+<p>用于 $(RUSTC) 的额外模块特定选项。</p>
+</section>
+<section id="ldflags-module">
+<h3>LDFLAGS_MODULE<a class="headerlink" href="#ldflags-module" title="Link to this heading">¶</a></h3>
+<p>用于 $(LD) 链接模块时的额外选项。</p>
+</section>
+<section id="hostcflags">
+<h3>HOSTCFLAGS<a class="headerlink" href="#hostcflags" title="Link to this heading">¶</a></h3>
+<p>在构建主机程序时传递给 $(HOSTCC) 的额外标志。</p>
+</section>
+<section id="hostcxxflags">
+<h3>HOSTCXXFLAGS<a class="headerlink" href="#hostcxxflags" title="Link to this heading">¶</a></h3>
+<p>在构建主机程序时传递给 $(HOSTCXX) 的额外标志。</p>
+</section>
+<section id="hostrustflags">
+<h3>HOSTRUSTFLAGS<a class="headerlink" href="#hostrustflags" title="Link to this heading">¶</a></h3>
+<p>在构建主机程序时传递给 $(HOSTRUSTC) 的额外标志。</p>
+</section>
+<section id="hostldflags">
+<h3>HOSTLDFLAGS<a class="headerlink" href="#hostldflags" title="Link to this heading">¶</a></h3>
+<p>链接主机程序时传递的额外选项。</p>
+</section>
+<section id="hostldlibs">
+<h3>HOSTLDLIBS<a class="headerlink" href="#hostldlibs" title="Link to this heading">¶</a></h3>
+<p>在构建主机程序时链接的额外库。</p>
+</section>
+<section id="usercflags">
+<span id="zh-cn-userkbuildflags"></span><h3>USERCFLAGS<a class="headerlink" href="#usercflags" title="Link to this heading">¶</a></h3>
+<p>用于 $(CC) 编译用户程序（userprogs）时的额外选项。</p>
+</section>
+<section id="userldflags">
+<h3>USERLDFLAGS<a class="headerlink" href="#userldflags" title="Link to this heading">¶</a></h3>
+<p>用于 $(LD) 链接用户程序时的额外选项。用户程序（userprogs）是使用 CC 链接的，
+因此 $(USERLDFLAGS) 应该根据需要包含 “-Wl,” 前缀。</p>
+</section>
+<section id="kbuild-kconfig">
+<h3>KBUILD_KCONFIG<a class="headerlink" href="#kbuild-kconfig" title="Link to this heading">¶</a></h3>
+<p>将顶级 Kconfig 文件设置为此环境变量的值。默认名称为 “Kconfig”。</p>
+</section>
+<section id="kbuild-verbose">
+<h3>KBUILD_VERBOSE<a class="headerlink" href="#kbuild-verbose" title="Link to this heading">¶</a></h3>
+<p>设置 kbuild 的详细程度。可以分配与 “V=...” 相同的值。</p>
+<p>有关完整列表，请参见 <cite>make help</cite>。</p>
+<p>设置 “V=...” 优先于 KBUILD_VERBOSE。</p>
+</section>
+<section id="kbuild-extmod">
+<h3>KBUILD_EXTMOD<a class="headerlink" href="#kbuild-extmod" title="Link to this heading">¶</a></h3>
+<p>在构建外部模块时设置内核源代码的搜索目录。</p>
+<p>设置 “M=...” 优先于 KBUILD_EXTMOD。</p>
+</section>
+<section id="kbuild-output">
+<h3>KBUILD_OUTPUT<a class="headerlink" href="#kbuild-output" title="Link to this heading">¶</a></h3>
+<p>指定内核构建的输出目录。</p>
+<p>在单独的构建目录中为预构建内核构建外部模块时，这个变量也可以指向内核输出目录。请注意，
+这并不指定外部模块本身的输出目录。</p>
+<p>输出目录也可以使用 “O=...” 指定。</p>
+<p>设置 “O=...” 优先于 KBUILD_OUTPUT。</p>
+</section>
+<section id="kbuild-extra-warn">
+<h3>KBUILD_EXTRA_WARN<a class="headerlink" href="#kbuild-extra-warn" title="Link to this heading">¶</a></h3>
+<p>指定额外的构建检查。也可以通过在命令行传递 “W=...” 来设置相同的值。</p>
+<p>请参阅 <cite>make help</cite> 了解支持的值列表。</p>
+<p>设置 “W=...” 优先于 KBUILD_EXTRA_WARN。</p>
+</section>
+<section id="kbuild-debarch">
+<h3>KBUILD_DEBARCH<a class="headerlink" href="#kbuild-debarch" title="Link to this heading">¶</a></h3>
+<p>对于 deb-pkg 目标，允许覆盖 deb-pkg 部署的正常启发式方法。通常 deb-pkg 尝试根据
+UTS_MACHINE 变量（在某些架构中还包括内核配置）来猜测正确的架构。KBUILD_DEBARCH
+的值假定（不检查）为有效的 Debian 架构。</p>
+</section>
+<section id="kdocflags">
+<h3>KDOCFLAGS<a class="headerlink" href="#kdocflags" title="Link to this heading">¶</a></h3>
+<p>指定在构建过程中用于 kernel-doc 检查的额外（警告/错误）标志，查看
+scripts/kernel-doc 了解支持的标志。请注意，这目前不适用于文档构建。</p>
+</section>
+<section id="arch">
+<h3>ARCH<a class="headerlink" href="#arch" title="Link to this heading">¶</a></h3>
+<p>设置 ARCH 为要构建的架构。</p>
+<p>在大多数情况下，架构的名称与 arch/ 目录中的子目录名称相同。</p>
+<p>但某些架构（如 x86 和 sparc）有别名。</p>
+<ul class="simple">
+<li><p>x86: i386 表示 32 位，x86_64 表示 64 位</p></li>
+<li><p>parisc: parisc64 表示 64 位</p></li>
+<li><p>sparc: sparc32 表示 32 位，sparc64 表示 64 位</p></li>
+</ul>
+</section>
+<section id="cross-compile">
+<h3>CROSS_COMPILE<a class="headerlink" href="#cross-compile" title="Link to this heading">¶</a></h3>
+<p>指定 binutils 文件名的可选固定部分。CROSS_COMPILE 可以是文件名的一部分或完整路径。</p>
+<p>在某些设置中，CROSS_COMPILE 也用于 ccache。</p>
+</section>
+<section id="cf">
+<h3>CF<a class="headerlink" href="#cf" title="Link to this heading">¶</a></h3>
+<p>用于 sparse 的额外选项。</p>
+<p>CF 通常在命令行中如下所示使用:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make CF=-Wbitwise C=2
+</pre></div>
+</div>
+</section>
+<section id="install-path">
+<h3>INSTALL_PATH<a class="headerlink" href="#install-path" title="Link to this heading">¶</a></h3>
+<p>INSTALL_PATH 指定放置更新后的内核和系统映像的路径。默认值是 /boot，但你可以设置
+为其他值。</p>
+</section>
+<section id="installkernel">
+<h3>INSTALLKERNEL<a class="headerlink" href="#installkernel" title="Link to this heading">¶</a></h3>
+<p>使用 “make install” 时调用的安装脚本。
+默认名称是 “installkernel”。</p>
+<p>该脚本将会以以下参数调用：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>$1 - 内核版本</p></li>
+<li><p>$2 - 内核映像文件</p></li>
+<li><p>$3 - 内核映射文件</p></li>
+<li><p>$4 - 默认安装路径（如果为空，则使用根目录）</p></li>
+</ul>
+</div></blockquote>
+<p>“make install” 的实现是架构特定的，可能与上述有所不同。</p>
+<p>提供 INSTALLKERNEL 以便在交叉编译内核时可以指定自定义安装程序。</p>
+</section>
+<section id="modlib">
+<h3>MODLIB<a class="headerlink" href="#modlib" title="Link to this heading">¶</a></h3>
+<p>指定模块的安装位置。
+默认值为:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
+</pre></div>
+</div>
+<p>该值可以被覆盖，在这种情况下将忽略默认值。</p>
+</section>
+<section id="install-mod-path">
+<h3>INSTALL_MOD_PATH<a class="headerlink" href="#install-mod-path" title="Link to this heading">¶</a></h3>
+<p>INSTALL_MOD_PATH 指定了模块目录重定位时 MODLIB 的前缀，通常由构建根
+（build roots）所需。它没有在 makefile 中定义，但如果需要，可以作为
+参数传递给 make。</p>
+</section>
+<section id="install-mod-strip">
+<h3>INSTALL_MOD_STRIP<a class="headerlink" href="#install-mod-strip" title="Link to this heading">¶</a></h3>
+<p>如果 INSTALL_MOD_STRIP 被定义，内核模块在安装后会被剥离。如果
+INSTALL_MOD_STRIP 的值为 ‘1’，则会使用默认选项 --strip-debug。否则，
+INSTALL_MOD_STRIP 的值将作为 strip 命令的选项。</p>
+</section>
+<section id="install-hdr-path">
+<h3>INSTALL_HDR_PATH<a class="headerlink" href="#install-hdr-path" title="Link to this heading">¶</a></h3>
+<p>INSTALL_HDR_PATH 指定了执行 “make headers_*” 时，用户空间头文件的安装位置。</p>
+<p>默认值为:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$(objtree)/usr
+</pre></div>
+</div>
+<p>$(objtree) 是保存输出文件的目录。
+输出目录通常使用命令行中的 “O=...” 进行设置。</p>
+<p>该值可以被覆盖，在这种情况下将忽略默认值。</p>
+</section>
+<section id="install-dtbs-path">
+<h3>INSTALL_DTBS_PATH<a class="headerlink" href="#install-dtbs-path" title="Link to this heading">¶</a></h3>
+<p>INSTALL_DTBS_PATH 指定了设备树二进制文件的安装位置，通常由构建根（build roots）所需。
+它没有在 makefile 中定义，但如果需要，可以作为参数传递给 make。</p>
+</section>
+<section id="kbuild-abs-srctree">
+<h3>KBUILD_ABS_SRCTREE<a class="headerlink" href="#kbuild-abs-srctree" title="Link to this heading">¶</a></h3>
+<p>Kbuild 在可能的情况下使用相对路径指向源代码树。例如，在源代码树中构建时，源代码树路径是
+‘.’。</p>
+<p>设置该标志请求 Kbuild 使用源代码树的绝对路径。
+在某些情况下这是有用的，例如在生成带有绝对路径条目的标签文件时等。</p>
+</section>
+<section id="kbuild-sign-pin">
+<h3>KBUILD_SIGN_PIN<a class="headerlink" href="#kbuild-sign-pin" title="Link to this heading">¶</a></h3>
+<p>当签署内核模块时，如果私钥需要密码或 PIN，此变量允许将密码或 PIN 传递给 sign-file 工具。</p>
+</section>
+<section id="kbuild-modpost-warn">
+<h3>KBUILD_MODPOST_WARN<a class="headerlink" href="#kbuild-modpost-warn" title="Link to this heading">¶</a></h3>
+<p>KBUILD_MODPOST_WARN 可以设置为在最终模块链接阶段出现未定义符号时避免错误。它将这些错误
+转为警告。</p>
+</section>
+<section id="kbuild-modpost-nofinal">
+<h3>KBUILD_MODPOST_NOFINAL<a class="headerlink" href="#kbuild-modpost-nofinal" title="Link to this heading">¶</a></h3>
+<p>KBUILD_MODPOST_NOFINAL 可以设置为跳过模块的最终链接。这仅在加速编译测试时有用。</p>
+</section>
+<section id="kbuild-extra-symbols">
+<h3>KBUILD_EXTRA_SYMBOLS<a class="headerlink" href="#kbuild-extra-symbols" title="Link to this heading">¶</a></h3>
+<p>用于依赖其他模块符号的模块。详见 modules.rst。</p>
+</section>
+<section id="allsource-archs">
+<h3>ALLSOURCE_ARCHS<a class="headerlink" href="#allsource-archs" title="Link to this heading">¶</a></h3>
+<p>对于 tags/TAGS/cscope 目标，可以指定包含在数据库中的多个架构，用空格分隔。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make ALLSOURCE_ARCHS=&quot;x86 mips arm&quot; tags
+</pre></div>
+</div>
+<p>要获取所有可用架构，也可以指定 all。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make ALLSOURCE_ARCHS=all tags
+</pre></div>
+</div>
+</section>
+<section id="ignore-dirs">
+<h3>IGNORE_DIRS<a class="headerlink" href="#ignore-dirs" title="Link to this heading">¶</a></h3>
+<p>对于 tags/TAGS/cscope 目标，可以选择不包含在数据库中的目录，用空格分隔。例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make IGNORE_DIRS=&quot;drivers/gpu/drm/radeon tools&quot; cscope
+</pre></div>
+</div>
+</section>
+<section id="kbuild-build-timestamp">
+<h3>KBUILD_BUILD_TIMESTAMP<a class="headerlink" href="#kbuild-build-timestamp" title="Link to this heading">¶</a></h3>
+<p>将该环境变量设置为日期字符串，可以覆盖在 UTS_VERSION 定义中使用的时间戳
+（运行内核时的 uname -v）。该值必须是一个可以传递给 date -d 的字符串。默认值是
+内核构建某个时刻的 date 命令输出。</p>
+</section>
+<section id="kbuild-build-user-kbuild-build-host">
+<h3>KBUILD_BUILD_USER, KBUILD_BUILD_HOST<a class="headerlink" href="#kbuild-build-user-kbuild-build-host" title="Link to this heading">¶</a></h3>
+<p>这两个变量允许覆盖启动时显示的 <a class="reference external" href="mailto:user&#37;&#52;&#48;host">user<span>&#64;</span>host</a> 字符串以及 /proc/version 中的信息。
+默认值分别是 whoami 和 host 命令的输出。</p>
+</section>
+<section id="llvm">
+<h3>LLVM<a class="headerlink" href="#llvm" title="Link to this heading">¶</a></h3>
+<p>如果该变量设置为 1，Kbuild 将使用 Clang 和 LLVM 工具，而不是 GCC 和 GNU
+binutils 来构建内核。</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Kbuild</a><ul>
+<li><a class="reference internal" href="#id1">输出文件</a><ul>
+<li><a class="reference internal" href="#modules-order">modules.order</a></li>
+<li><a class="reference internal" href="#modules-builtin">modules.builtin</a></li>
+<li><a class="reference internal" href="#modules-builtin-modinfo">modules.builtin.modinfo</a></li>
+<li><a class="reference internal" href="#modules-builtin-ranges">modules.builtin.ranges</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">环境变量</a><ul>
+<li><a class="reference internal" href="#kcppflags">KCPPFLAGS</a></li>
+<li><a class="reference internal" href="#kaflags">KAFLAGS</a></li>
+<li><a class="reference internal" href="#aflags-module">AFLAGS_MODULE</a></li>
+<li><a class="reference internal" href="#aflags-kernel">AFLAGS_KERNEL</a></li>
+<li><a class="reference internal" href="#kcflags">KCFLAGS</a></li>
+<li><a class="reference internal" href="#krustflags">KRUSTFLAGS</a></li>
+<li><a class="reference internal" href="#cflags-kernel">CFLAGS_KERNEL</a></li>
+<li><a class="reference internal" href="#cflags-module">CFLAGS_MODULE</a></li>
+<li><a class="reference internal" href="#rustflags-kernel">RUSTFLAGS_KERNEL</a></li>
+<li><a class="reference internal" href="#rustflags-module">RUSTFLAGS_MODULE</a></li>
+<li><a class="reference internal" href="#ldflags-module">LDFLAGS_MODULE</a></li>
+<li><a class="reference internal" href="#hostcflags">HOSTCFLAGS</a></li>
+<li><a class="reference internal" href="#hostcxxflags">HOSTCXXFLAGS</a></li>
+<li><a class="reference internal" href="#hostrustflags">HOSTRUSTFLAGS</a></li>
+<li><a class="reference internal" href="#hostldflags">HOSTLDFLAGS</a></li>
+<li><a class="reference internal" href="#hostldlibs">HOSTLDLIBS</a></li>
+<li><a class="reference internal" href="#usercflags">USERCFLAGS</a></li>
+<li><a class="reference internal" href="#userldflags">USERLDFLAGS</a></li>
+<li><a class="reference internal" href="#kbuild-kconfig">KBUILD_KCONFIG</a></li>
+<li><a class="reference internal" href="#kbuild-verbose">KBUILD_VERBOSE</a></li>
+<li><a class="reference internal" href="#kbuild-extmod">KBUILD_EXTMOD</a></li>
+<li><a class="reference internal" href="#kbuild-output">KBUILD_OUTPUT</a></li>
+<li><a class="reference internal" href="#kbuild-extra-warn">KBUILD_EXTRA_WARN</a></li>
+<li><a class="reference internal" href="#kbuild-debarch">KBUILD_DEBARCH</a></li>
+<li><a class="reference internal" href="#kdocflags">KDOCFLAGS</a></li>
+<li><a class="reference internal" href="#arch">ARCH</a></li>
+<li><a class="reference internal" href="#cross-compile">CROSS_COMPILE</a></li>
+<li><a class="reference internal" href="#cf">CF</a></li>
+<li><a class="reference internal" href="#install-path">INSTALL_PATH</a></li>
+<li><a class="reference internal" href="#installkernel">INSTALLKERNEL</a></li>
+<li><a class="reference internal" href="#modlib">MODLIB</a></li>
+<li><a class="reference internal" href="#install-mod-path">INSTALL_MOD_PATH</a></li>
+<li><a class="reference internal" href="#install-mod-strip">INSTALL_MOD_STRIP</a></li>
+<li><a class="reference internal" href="#install-hdr-path">INSTALL_HDR_PATH</a></li>
+<li><a class="reference internal" href="#install-dtbs-path">INSTALL_DTBS_PATH</a></li>
+<li><a class="reference internal" href="#kbuild-abs-srctree">KBUILD_ABS_SRCTREE</a></li>
+<li><a class="reference internal" href="#kbuild-sign-pin">KBUILD_SIGN_PIN</a></li>
+<li><a class="reference internal" href="#kbuild-modpost-warn">KBUILD_MODPOST_WARN</a></li>
+<li><a class="reference internal" href="#kbuild-modpost-nofinal">KBUILD_MODPOST_NOFINAL</a></li>
+<li><a class="reference internal" href="#kbuild-extra-symbols">KBUILD_EXTRA_SYMBOLS</a></li>
+<li><a class="reference internal" href="#allsource-archs">ALLSOURCE_ARCHS</a></li>
+<li><a class="reference internal" href="#ignore-dirs">IGNORE_DIRS</a></li>
+<li><a class="reference internal" href="#kbuild-build-timestamp">KBUILD_BUILD_TIMESTAMP</a></li>
+<li><a class="reference internal" href="#kbuild-build-user-kbuild-build-host">KBUILD_BUILD_USER, KBUILD_BUILD_HOST</a></li>
+<li><a class="reference internal" href="#llvm">LLVM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="gcc-plugins.html">
+                    <span class="icon">&lt;</span><span>GCC 插件基础设施</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="reproducible-builds.html"><span>可重现的构建</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

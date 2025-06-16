@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bisecting a regression &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tainted kernels" href="tainted-kernels.html" />
+    <link rel="prev" title="Bug hunting" href="bug-hunting.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reporting-regressions.html">Reporting regressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickly-build-trimmed-linux.html">How to quickly build a trimmed Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="verify-bugs-and-bisect-regressions.html">How to verify bugs and bisect regressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bug-hunting.html">Bug hunting</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bisecting a regression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tainted-kernels.html">Tainted kernels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ramoops.html">Ramoops oops/panic logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic-debug-howto.html">Dynamic debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="init.html">Explaining the “No working init found.” boot hang message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kdump/index.html">Documentation for Kdump - The kexec-based Crash Dumping Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perf/index.html">Performance monitor support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pstore-blk.html">pstore block oops/panic logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clearing-warn-once.html">Clearing WARN_ONCE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kernel-per-CPU-kthreads.html">Reducing OS jitter due to per-cpu kthreads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lockup-watchdogs.html">Softlockup detector and hardlockup detector (aka nmi_watchdog)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/main.html">Reliability, Availability and Serviceability (RAS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/error-decoding.html">Error decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/address-translation.html">Address translation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysrq.html">Linux Magic System Request Key Hacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin-guide/bug-bisect.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/admin-guide/bug-bisect.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/zh_TW/admin-guide/bug-bisect.html">Chinese (Traditional)</a></li>
+
+</ul>
+</div>
+<section id="bisecting-a-regression">
+<h1>Bisecting a regression<a class="headerlink" href="#bisecting-a-regression" title="Link to this heading">¶</a></h1>
+<p>This document describes how to use a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">bisect</span></code> to find the source code
+change that broke something -- for example when some functionality stopped
+working after upgrading from Linux 6.0 to 6.1.</p>
+<p>The text focuses on the gist of the process. If you are new to bisecting the
+kernel, better follow <a class="reference internal" href="verify-bugs-and-bisect-regressions.html"><span class="doc">How to verify bugs and bisect regressions</span></a>
+instead: it depicts everything from start to finish while covering multiple
+aspects even kernel developers occasionally forget. This includes detecting
+situations early where a bisection would be a waste of time, as nobody would
+care about the result -- for example, because the problem happens after the
+kernel marked itself as ‘tainted’, occurs in an abandoned version, was already
+fixed, or is caused by a .config change you or your Linux distributor performed.</p>
+<section id="finding-the-change-causing-a-kernel-issue-using-a-bisection">
+<h2>Finding the change causing a kernel issue using a bisection<a class="headerlink" href="#finding-the-change-causing-a-kernel-issue-using-a-bisection" title="Link to this heading">¶</a></h2>
+<p><em>Note: the following process assumes you prepared everything for a bisection.
+This includes having a Git clone with the appropriate sources, installing the
+software required to build and install kernels, as well as a .config file stored
+in a safe place (the following example assumes ‘~/prepared_kernel_.config’) to
+use as pristine base at each bisection step; ideally, you have also worked out
+a fully reliable and straight-forward way to reproduce the regression, too.</em></p>
+<ul>
+<li><p>Preparation: start the bisection and tell Git about the points in the history
+you consider to be working and broken, which Git calls ‘good’ and ‘bad’:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git bisect start
+git bisect good v6.0
+git bisect bad v6.1
+</pre></div>
+</div>
+<p>Instead of Git tags like ‘v6.0’ and ‘v6.1’ you can specify commit-ids, too.</p>
+</li>
+</ul>
+<ol class="arabic">
+<li><p>Copy your prepared .config into the build directory and adjust it to the
+needs of the codebase Git checked out for testing:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp ~/prepared_kernel_.config .config
+make olddefconfig
+</pre></div>
+</div>
+</li>
+<li><p>Now build, install, and boot a kernel. This might fail for unrelated reasons,
+for example, when a compile error happens at the current stage of the
+bisection a later change resolves. In such cases run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">bisect</span> <span class="pre">skip</span></code> and
+go back to step 1.</p></li>
+<li><p>Check if the functionality that regressed works in the kernel you just built.</p>
+<p>If it works, execute:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git bisect good
+</pre></div>
+</div>
+<p>If it is broken, run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git bisect bad
+</pre></div>
+</div>
+<p>Note, getting this wrong just once will send the rest of the bisection
+totally off course. To prevent having to start anew later you thus want to
+ensure what you tell Git is correct; it is thus often wise to spend a few
+minutes more on testing in case your reproducer is unreliable.</p>
+<p>After issuing one of these two commands, Git will usually check out another
+bisection point and print something like ‘Bisecting: 675 revisions left to
+test after this (roughly 10 steps)’. In that case go back to step 1.</p>
+<p>If Git instead prints something like ‘cafecaca0c0dacafecaca0c0dacafecaca0c0da
+is the first bad commit’, then you have finished the bisection. In that case
+move to the next point below. Note, right after displaying that line Git will
+show some details about the culprit including its patch description; this can
+easily fill your terminal, so you might need to scroll up to see the message
+mentioning the culprit’s commit-id.</p>
+<p>In case you missed Git’s output, you can always run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">bisect</span> <span class="pre">log</span></code> to
+print the status: it will show how many steps remain or mention the result of
+the bisection.</p>
+</li>
+</ol>
+<ul>
+<li><p>Recommended complementary task: put the bisection log and the current .config
+file aside for the bug report; furthermore tell Git to reset the sources to
+the state before the bisection:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git bisect log &gt; ~/bisection-log
+cp .config ~/bisection-config-culprit
+git bisect reset
+</pre></div>
+</div>
+</li>
+<li><p>Recommended optional task: try reverting the culprit on top of the latest
+codebase and check if that fixes your bug; if that is the case, it validates
+the bisection and enables developers to resolve the regression through a
+revert.</p>
+<p>To try this, update your clone and check out latest mainline. Then tell Git
+to revert the change by specifying its commit-id:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git revert --no-edit cafec0cacaca0
+</pre></div>
+</div>
+<p>Git might reject this, for example when the bisection landed on a merge
+commit. In that case, abandon the attempt. Do the same, if Git fails to revert
+the culprit on its own because later changes depend on it -- at least unless
+you bisected a stable or longterm kernel series, in which case you want to
+check out its latest codebase and try a revert there.</p>
+<p>If a revert succeeds, build and test another kernel to check if reverting
+resolved your regression.</p>
+</li>
+</ul>
+<p>With that the process is complete. Now report the regression as described by
+<a class="reference internal" href="reporting-issues.html"><span class="doc">Reporting issues</span></a>.</p>
+<section id="bisecting-linux-next">
+<h3>Bisecting linux-next<a class="headerlink" href="#bisecting-linux-next" title="Link to this heading">¶</a></h3>
+<p>If you face a problem only happening in linux-next, bisect between the
+linux-next branches ‘stable’ and ‘master’. The following commands will start
+the process for a linux-next tree you added as a remote called ‘next’:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git bisect start
+git bisect good next/stable
+git bisect bad next/master
+</pre></div>
+</div>
+<p>The ‘stable’ branch refers to the state of linux-mainline that the current
+linux-next release (found in the ‘master’ branch) is based on -- the former
+thus should be free of any problems that show up in -next, but not in Linus’
+tree.</p>
+<p>This will bisect across a wide range of changes, some of which you might have
+used in earlier linux-next releases without problems. Sadly there is no simple
+way to avoid checking them: bisecting from one linux-next release to a later
+one (say between ‘next-20241020’ and ‘next-20241021’) is impossible, as they
+share no common history.</p>
+</section>
+<section id="additional-reading-material">
+<h3>Additional reading material<a class="headerlink" href="#additional-reading-material" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://git-scm.com/docs/git-bisect">man page for ‘git bisect’</a> and
+<a class="reference external" href="https://git-scm.com/docs/git-bisect-lk2009.html">fighting regressions with ‘git bisect’</a>
+in the Git documentation.</p></li>
+<li><p><a class="reference external" href="https://nathanchance.dev/posts/working-with-git-bisect/">Working with git bisect</a>
+from kernel developer Nathan Chancellor.</p></li>
+<li><p><a class="reference external" href="http://webchick.net/node/99">Using Git bisect to figure out when brokenness was introduced</a>.</p></li>
+<li><p><a class="reference external" href="https://lwn.net/Articles/317154">Fully automated bisecting with ‘git bisect run’</a>.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Bisecting a regression</a><ul>
+<li><a class="reference internal" href="#finding-the-change-causing-a-kernel-issue-using-a-bisection">Finding the change causing a kernel issue using a bisection</a><ul>
+<li><a class="reference internal" href="#bisecting-linux-next">Bisecting linux-next</a></li>
+<li><a class="reference internal" href="#additional-reading-material">Additional reading material</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="bug-hunting.html">
+                    <span class="icon">&lt;</span><span>Bug hunting</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="tainted-kernels.html"><span>Tainted kernels</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

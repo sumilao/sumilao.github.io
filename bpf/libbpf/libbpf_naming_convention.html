@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API naming convention &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Building libbpf" href="libbpf_build.html" />
+    <link rel="prev" title="Program Types and ELF Sections" href="program_types.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/bpf/libbpf/libbpf_naming_convention.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="api-naming-convention">
+<h1>API naming convention<a class="headerlink" href="#api-naming-convention" title="Link to this heading">¶</a></h1>
+<p>libbpf API provides access to a few logically separated groups of
+functions and types. Every group has its own naming convention
+described here. It’s recommended to follow these conventions whenever a
+new function or type is added to keep libbpf API clean and consistent.</p>
+<p>All types and functions provided by libbpf API should have one of the
+following prefixes: <code class="docutils literal notranslate"><span class="pre">bpf_</span></code>, <code class="docutils literal notranslate"><span class="pre">btf_</span></code>, <code class="docutils literal notranslate"><span class="pre">libbpf_</span></code>, <code class="docutils literal notranslate"><span class="pre">btf_dump_</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ring_buffer_</span></code>, <code class="docutils literal notranslate"><span class="pre">perf_buffer_</span></code>.</p>
+<section id="system-call-wrappers">
+<h2>System call wrappers<a class="headerlink" href="#system-call-wrappers" title="Link to this heading">¶</a></h2>
+<p>System call wrappers are simple wrappers for commands supported by
+sys_bpf system call. These wrappers should go to <code class="docutils literal notranslate"><span class="pre">bpf.h</span></code> header file
+and map one to one to corresponding commands.</p>
+<p>For example <code class="docutils literal notranslate"><span class="pre">bpf_map_lookup_elem</span></code> wraps <code class="docutils literal notranslate"><span class="pre">BPF_MAP_LOOKUP_ELEM</span></code>
+command of sys_bpf, <code class="docutils literal notranslate"><span class="pre">bpf_prog_attach</span></code> wraps <code class="docutils literal notranslate"><span class="pre">BPF_PROG_ATTACH</span></code>, etc.</p>
+</section>
+<section id="objects">
+<h2>Objects<a class="headerlink" href="#objects" title="Link to this heading">¶</a></h2>
+<p>Another class of types and functions provided by libbpf API is “objects”
+and functions to work with them. Objects are high-level abstractions
+such as BPF program or BPF map. They’re represented by corresponding
+structures such as <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_object</span></code>, <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_program</span></code>,
+<code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_map</span></code>, etc.</p>
+<p>Structures are forward declared and access to their fields should be
+provided via corresponding getters and setters rather than directly.</p>
+<p>These objects are associated with corresponding parts of ELF object that
+contains compiled BPF programs.</p>
+<p>For example <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_object</span></code> represents ELF object itself created
+from an ELF file or from a buffer, <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_program</span></code> represents a
+program in ELF object and <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bpf_map</span></code> is a map.</p>
+<p>Functions that work with an object have names built from object name,
+double underscore and part that describes function purpose.</p>
+<p>For example <code class="docutils literal notranslate"><span class="pre">bpf_object__open</span></code> consists of the name of corresponding
+object, <code class="docutils literal notranslate"><span class="pre">bpf_object</span></code>, double underscore and <code class="docutils literal notranslate"><span class="pre">open</span></code> that defines the
+purpose of the function to open ELF file and create <code class="docutils literal notranslate"><span class="pre">bpf_object</span></code> from
+it.</p>
+<p>All objects and corresponding functions other than BTF related should go
+to <code class="docutils literal notranslate"><span class="pre">libbpf.h</span></code>. BTF types and functions should go to <code class="docutils literal notranslate"><span class="pre">btf.h</span></code>.</p>
+</section>
+<section id="auxiliary-functions">
+<h2>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Link to this heading">¶</a></h2>
+<p>Auxiliary functions and types that don’t fit well in any of categories
+described above should have <code class="docutils literal notranslate"><span class="pre">libbpf_</span></code> prefix, e.g.
+<code class="docutils literal notranslate"><span class="pre">libbpf_get_error</span></code> or <code class="docutils literal notranslate"><span class="pre">libbpf_prog_type_by_name</span></code>.</p>
+</section>
+<section id="abi">
+<h2>ABI<a class="headerlink" href="#abi" title="Link to this heading">¶</a></h2>
+<p>libbpf can be both linked statically or used as DSO. To avoid possible
+conflicts with other libraries an application is linked with, all
+non-static libbpf symbols should have one of the prefixes mentioned in
+API documentation above. See API naming convention to choose the right
+name for a new symbol.</p>
+</section>
+<section id="symbol-visibility">
+<h2>Symbol visibility<a class="headerlink" href="#symbol-visibility" title="Link to this heading">¶</a></h2>
+<p>libbpf follow the model when all global symbols have visibility “hidden”
+by default and to make a symbol visible it has to be explicitly
+attributed with <code class="docutils literal notranslate"><span class="pre">LIBBPF_API</span></code> macro. For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">LIBBPF_API</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">bpf_prog_get_fd_by_id</span><span class="p">(</span><span class="n">__u32</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This prevents from accidentally exporting a symbol, that is not supposed
+to be a part of ABI what, in turn, improves both libbpf developer- and
+user-experiences.</p>
+</section>
+<section id="abi-versioning">
+<h2>ABI versioning<a class="headerlink" href="#abi-versioning" title="Link to this heading">¶</a></h2>
+<p>To make future ABI extensions possible libbpf ABI is versioned.
+Versioning is implemented by <code class="docutils literal notranslate"><span class="pre">libbpf.map</span></code> version script that is
+passed to linker.</p>
+<p>Version name is <code class="docutils literal notranslate"><span class="pre">LIBBPF_</span></code> prefix + three-component numeric version,
+starting from <code class="docutils literal notranslate"><span class="pre">0.0.1</span></code>.</p>
+<p>Every time ABI is being changed, e.g. because a new symbol is added or
+semantic of existing symbol is changed, ABI version should be bumped.
+This bump in ABI version is at most once per kernel development cycle.</p>
+<p>For example, if current state of <code class="docutils literal notranslate"><span class="pre">libbpf.map</span></code> is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LIBBPF_0.0.1 {
+        global:
+                bpf_func_a;
+                bpf_func_b;
+        local:
+                \*;
+};
+</pre></div>
+</div>
+<p>, and a new symbol <code class="docutils literal notranslate"><span class="pre">bpf_func_c</span></code> is being introduced, then
+<code class="docutils literal notranslate"><span class="pre">libbpf.map</span></code> should be changed like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LIBBPF_0.0.1 {
+        global:
+                bpf_func_a;
+                bpf_func_b;
+        local:
+                \*;
+};
+LIBBPF_0.0.2 {
+        global:
+                bpf_func_c;
+} LIBBPF_0.0.1;
+</pre></div>
+</div>
+<p>, where new version <code class="docutils literal notranslate"><span class="pre">LIBBPF_0.0.2</span></code> depends on the previous
+<code class="docutils literal notranslate"><span class="pre">LIBBPF_0.0.1</span></code>.</p>
+<p>Format of version script and ways to handle ABI changes, including
+incompatible ones, described in details in [1].</p>
+</section>
+<section id="stand-alone-build">
+<h2>Stand-alone build<a class="headerlink" href="#stand-alone-build" title="Link to this heading">¶</a></h2>
+<p>Under <a class="reference external" href="https://github.com/libbpf/libbpf">https://github.com/libbpf/libbpf</a> there is a (semi-)automated
+mirror of the mainline’s version of libbpf for a stand-alone build.</p>
+<p>However, all changes to libbpf’s code base must be upstreamed through
+the mainline kernel tree.</p>
+</section>
+</section>
+<section id="api-documentation-convention">
+<h1>API documentation convention<a class="headerlink" href="#api-documentation-convention" title="Link to this heading">¶</a></h1>
+<p>The libbpf API is documented via comments above definitions in
+header files. These comments can be rendered by doxygen and sphinx
+for well organized html output. This section describes the
+convention in which these comments should be formatted.</p>
+<p>Here is an example from btf.h:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @brief **btf__new()** creates a new instance of a BTF object from the raw</span>
+<span class="cm"> * bytes of an ELF&#39;s BTF section</span>
+<span class="cm"> * @param data raw bytes</span>
+<span class="cm"> * @param size number of bytes passed in `data`</span>
+<span class="cm"> * @return new BTF object instance which has to be eventually freed with</span>
+<span class="cm"> * **btf__free()**</span>
+<span class="cm"> *</span>
+<span class="cm"> * On error, error-code-encoded-as-pointer is returned, not a NULL. To extract</span>
+<span class="cm"> * error code from such a pointer `libbpf_get_error()` should be used. If</span>
+<span class="cm"> * `libbpf_set_strict_mode(LIBBPF_STRICT_CLEAN_PTRS)` is enabled, NULL is</span>
+<span class="cm"> * returned on error instead. In both cases thread-local `errno` variable is</span>
+<span class="cm"> * always set to error code as well.</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>The comment must start with a block comment of the form ‘/**’.</p>
+<p>The documentation always starts with a &#64;brief directive. This line is a short
+description about this API. It starts with the name of the API, denoted in bold
+like so: <strong>api_name</strong>. Please include an open and close parenthesis if this is a
+function. Follow with the short description of the API. A longer form description
+can be added below the last directive, at the bottom of the comment.</p>
+<p>Parameters are denoted with the &#64;param directive, there should be one for each
+parameter. If this is a function with a non-void return, use the &#64;return directive
+to document it.</p>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>libbpf is dual-licensed under LGPL 2.1 and BSD 2-Clause.</p>
+</section>
+<section id="links">
+<h2>Links<a class="headerlink" href="#links" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>[1] <a class="reference external" href="https://www.akkadia.org/drepper/dsohowto.pdf">https://www.akkadia.org/drepper/dsohowto.pdf</a></dt><dd><p>(Chapter 3. Maintaining APIs and ABIs).</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">API naming convention</a><ul>
+<li><a class="reference internal" href="#system-call-wrappers">System call wrappers</a></li>
+<li><a class="reference internal" href="#objects">Objects</a></li>
+<li><a class="reference internal" href="#auxiliary-functions">Auxiliary functions</a></li>
+<li><a class="reference internal" href="#abi">ABI</a></li>
+<li><a class="reference internal" href="#symbol-visibility">Symbol visibility</a></li>
+<li><a class="reference internal" href="#abi-versioning">ABI versioning</a></li>
+<li><a class="reference internal" href="#stand-alone-build">Stand-alone build</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-documentation-convention">API documentation convention</a><ul>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#links">Links</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="program_types.html">
+                    <span class="icon">&lt;</span><span>Program Types and ELF Sections</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="libbpf_build.html"><span>Building libbpf</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

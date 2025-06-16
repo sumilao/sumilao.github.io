@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DRM client usage stats &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DRM Driver uAPI" href="driver-uapi.html" />
+    <link rel="prev" title="Userland interfaces" href="drm-uapi.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/gpu/drm-usage-stats.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="drm-client-usage-stats">
+<span id="id1"></span><h1>DRM client usage stats<a class="headerlink" href="#drm-client-usage-stats" title="Link to this heading">¶</a></h1>
+<p>DRM drivers can choose to export partly standardised text output via the
+<cite>fops-&gt;show_fdinfo()</cite> as part of the driver specific file operations registered
+in the <cite><a class="reference internal" href="drm-internals.html#c.drm_driver" title="drm_driver"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">drm_driver</span></code></a></cite> object registered with the DRM core.</p>
+<p>One purpose of this output is to enable writing as generic as practically
+feasible <cite>top(1)</cite> like userspace monitoring tools.</p>
+<p>Given the differences between various DRM drivers the specification of the
+output is split between common and driver specific parts. Having said that,
+wherever possible effort should still be made to standardise as much as
+possible.</p>
+<section id="file-format-specification">
+<h2>File format specification<a class="headerlink" href="#file-format-specification" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>File shall contain one key value pair per one line of text.</p></li>
+<li><p>Colon character (<cite>:</cite>) must be used to delimit keys and values.</p></li>
+<li><p>All standardised keys shall be prefixed with <cite>drm-</cite>.</p></li>
+<li><p>Driver-specific keys shall be prefixed with <cite>driver_name-</cite>, where
+driver_name should ideally be the same as the <cite>name</cite> field in
+<cite><a class="reference internal" href="drm-internals.html#c.drm_driver" title="drm_driver"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">drm_driver</span></code></a></cite>, although this is not mandatory.</p></li>
+<li><p>Whitespace between the delimiter and first non-whitespace character shall be
+ignored when parsing.</p></li>
+<li><p>Keys are not allowed to contain whitespace characters.</p></li>
+<li><p>Numerical key value pairs can end with optional unit string.</p></li>
+<li><p>Data type of the value is fixed as defined in the specification.</p></li>
+</ul>
+<section id="key-types">
+<h3>Key types<a class="headerlink" href="#key-types" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Mandatory, fully standardised.</p></li>
+<li><p>Optional, fully standardised.</p></li>
+<li><p>Driver specific.</p></li>
+</ol>
+</section>
+<section id="data-types">
+<h3>Data types<a class="headerlink" href="#data-types" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>&lt;uint&gt; - Unsigned integer without defining the maximum value.</p></li>
+<li><p>&lt;keystr&gt; - String excluding any above defined reserved characters or whitespace.</p></li>
+<li><p>&lt;valstr&gt; - String.</p></li>
+</ul>
+</section>
+<section id="mandatory-fully-standardised-keys">
+<h3>Mandatory fully standardised keys<a class="headerlink" href="#mandatory-fully-standardised-keys" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>drm-driver: &lt;valstr&gt;</p></li>
+</ul>
+<p>String shall contain the name this driver registered as via the respective
+<cite><a class="reference internal" href="drm-internals.html#c.drm_driver" title="drm_driver"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">drm_driver</span></code></a></cite> data structure.</p>
+</section>
+<section id="optional-fully-standardised-keys">
+<h3>Optional fully standardised keys<a class="headerlink" href="#optional-fully-standardised-keys" title="Link to this heading">¶</a></h3>
+<section id="identification">
+<h4>Identification<a class="headerlink" href="#identification" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>drm-pdev: &lt;aaaa:bb.cc.d&gt;</p></li>
+</ul>
+<p>For PCI devices this should contain the PCI slot address of the device in
+question.</p>
+<ul class="simple">
+<li><p>drm-client-id: &lt;uint&gt;</p></li>
+</ul>
+<p>Unique value relating to the open DRM file descriptor used to distinguish
+duplicated and shared file descriptors. Conceptually the value should map 1:1
+to the in kernel representation of <cite><a class="reference internal" href="drm-internals.html#c.drm_file" title="drm_file"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">drm_file</span></code></a></cite> instances.</p>
+<p>Uniqueness of the value shall be either globally unique, or unique within the
+scope of each device, in which case <cite>drm-pdev</cite> shall be present as well.</p>
+<p>Userspace should make sure to not double account any usage statistics by using
+the above described criteria in order to associate data to individual clients.</p>
+<ul class="simple">
+<li><p>drm-client-name: &lt;valstr&gt;</p></li>
+</ul>
+<p>String optionally set by userspace using DRM_IOCTL_SET_CLIENT_NAME.</p>
+</section>
+<section id="utilization">
+<h4>Utilization<a class="headerlink" href="#utilization" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>drm-engine-&lt;keystr&gt;: &lt;uint&gt; ns</p></li>
+</ul>
+<p>GPUs usually contain multiple execution engines. Each shall be given a stable
+and unique name (keystr), with possible values documented in the driver specific
+documentation.</p>
+<p>Value shall be in specified time units which the respective GPU engine spent
+busy executing workloads belonging to this client.</p>
+<p>Values are not required to be constantly monotonic if it makes the driver
+implementation easier, but are required to catch up with the previously reported
+larger value within a reasonable period. Upon observing a value lower than what
+was previously read, userspace is expected to stay with that larger previous
+value until a monotonic update is seen.</p>
+<ul class="simple">
+<li><p>drm-engine-capacity-&lt;keystr&gt;: &lt;uint&gt;</p></li>
+</ul>
+<p>Engine identifier string must be the same as the one specified in the
+drm-engine-&lt;keystr&gt; tag and shall contain a greater than zero number in case the
+exported engine corresponds to a group of identical hardware engines.</p>
+<p>In the absence of this tag parser shall assume capacity of one. Zero capacity
+is not allowed.</p>
+<ul class="simple">
+<li><p>drm-cycles-&lt;keystr&gt;: &lt;uint&gt;</p></li>
+</ul>
+<p>Engine identifier string must be the same as the one specified in the
+drm-engine-&lt;keystr&gt; tag and shall contain the number of busy cycles for the given
+engine.</p>
+<p>Values are not required to be constantly monotonic if it makes the driver
+implementation easier, but are required to catch up with the previously reported
+larger value within a reasonable period. Upon observing a value lower than what
+was previously read, userspace is expected to stay with that larger previous
+value until a monotonic update is seen.</p>
+<ul class="simple">
+<li><p>drm-total-cycles-&lt;keystr&gt;: &lt;uint&gt;</p></li>
+</ul>
+<p>Engine identifier string must be the same as the one specified in the
+drm-cycles-&lt;keystr&gt; tag and shall contain the total number cycles for the given
+engine.</p>
+<p>This is a timestamp in GPU unspecified unit that matches the update rate
+of drm-cycles-&lt;keystr&gt;. For drivers that implement this interface, the engine
+utilization can be calculated entirely on the GPU clock domain, without
+considering the CPU sleep time between 2 samples.</p>
+<p>A driver may implement either this key or drm-maxfreq-&lt;keystr&gt;, but not both.</p>
+<ul class="simple">
+<li><p>drm-maxfreq-&lt;keystr&gt;: &lt;uint&gt; [Hz|MHz|KHz]</p></li>
+</ul>
+<p>Engine identifier string must be the same as the one specified in the
+drm-engine-&lt;keystr&gt; tag and shall contain the maximum frequency for the given
+engine.  Taken together with drm-cycles-&lt;keystr&gt;, this can be used to calculate
+percentage utilization of the engine, whereas drm-engine-&lt;keystr&gt; only reflects
+time active without considering what frequency the engine is operating as a
+percentage of its maximum frequency.</p>
+<p>A driver may implement either this key or drm-total-cycles-&lt;keystr&gt;, but not
+both.</p>
+</section>
+<section id="memory">
+<h4>Memory<a class="headerlink" href="#memory" title="Link to this heading">¶</a></h4>
+<p>Each possible memory type which can be used to store buffer objects by the GPU
+in question shall be given a stable and unique name to be used as the “&lt;region&gt;”
+string.</p>
+<p>The region name “memory” is reserved to refer to normal system memory.</p>
+<p>The value shall reflect the amount of storage currently consumed by the buffer
+objects belong to this client, in the respective memory region.</p>
+<p>Default unit shall be bytes with optional unit specifiers of ‘KiB’ or ‘MiB’
+indicating kibi- or mebi-bytes.</p>
+<ul class="simple">
+<li><p>drm-total-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>The total size of all requested buffers, including both shared and private
+memory. The backing store for the buffers does not need to be currently
+instantiated to count under this category. To avoid double-counting, if a buffer
+has multiple regions where it can be allocated to, the implementation should
+consistently select a single region for accounting purposes.</p>
+<ul class="simple">
+<li><p>drm-shared-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>The total size of buffers that are shared with another file (i.e., have more
+than one handle). The same requirement to avoid double-counting that applies to
+drm-total-&lt;region&gt; also applies here.</p>
+<ul class="simple">
+<li><p>drm-resident-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>The total size of buffers that are resident (i.e., have their backing store
+present or instantiated) in the specified region.</p>
+<ul class="simple">
+<li><p>drm-memory-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>This key is deprecated and is only printed by amdgpu; it is an alias for
+drm-resident-&lt;region&gt;.</p>
+<ul class="simple">
+<li><p>drm-purgeable-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>The total size of buffers that are resident and purgeable.</p>
+<p>For example, drivers that implement functionality similar to ‘madvise’ can count
+buffers that have instantiated backing stores but have been marked with an
+equivalent of MADV_DONTNEED.</p>
+<ul class="simple">
+<li><p>drm-active-&lt;region&gt;: &lt;uint&gt; [KiB|MiB]</p></li>
+</ul>
+<p>The total size of buffers that are active on one or more engines.</p>
+<p>One practical example of this could be the presence of unsignaled fences in a
+GEM buffer reservation object. Therefore, the active category is a subset of the
+resident category.</p>
+</section>
+</section>
+</section>
+<section id="implementation-details">
+<h2>Implementation Details<a class="headerlink" href="#implementation-details" title="Link to this heading">¶</a></h2>
+<p>Drivers should use <a class="reference internal" href="drm-internals.html#c.drm_show_fdinfo" title="drm_show_fdinfo"><code class="xref c c-func docutils literal notranslate"><span class="pre">drm_show_fdinfo()</span></code></a> in their <cite>struct file_operations</cite>, and
+implement &amp;drm_driver.show_fdinfo if they wish to provide any stats which
+are not provided by <a class="reference internal" href="drm-internals.html#c.drm_show_fdinfo" title="drm_show_fdinfo"><code class="xref c c-func docutils literal notranslate"><span class="pre">drm_show_fdinfo()</span></code></a>.  But even driver specific stats should
+be documented above and where possible, aligned with other drivers.</p>
+<section id="driver-specific-implementations">
+<h3>Driver specific implementations<a class="headerlink" href="#driver-specific-implementations" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="i915.html#i915-usage-stats"><span class="std std-ref">i915 DRM client usage stats implementation</span></a></p></li>
+<li><p><a class="reference internal" href="panfrost.html#panfrost-usage-stats"><span class="std std-ref">Panfrost DRM client usage stats implementation</span></a></p></li>
+<li><p><a class="reference internal" href="panthor.html#panthor-usage-stats"><span class="std std-ref">Panthor DRM client usage stats implementation</span></a></p></li>
+<li><p><a class="reference internal" href="xe/xe-drm-usage-stats.html#xe-usage-stats"><span class="std std-ref">Xe DRM client usage stats implementation</span></a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">DRM client usage stats</a><ul>
+<li><a class="reference internal" href="#file-format-specification">File format specification</a><ul>
+<li><a class="reference internal" href="#key-types">Key types</a></li>
+<li><a class="reference internal" href="#data-types">Data types</a></li>
+<li><a class="reference internal" href="#mandatory-fully-standardised-keys">Mandatory fully standardised keys</a></li>
+<li><a class="reference internal" href="#optional-fully-standardised-keys">Optional fully standardised keys</a><ul>
+<li><a class="reference internal" href="#identification">Identification</a></li>
+<li><a class="reference internal" href="#utilization">Utilization</a></li>
+<li><a class="reference internal" href="#memory">Memory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementation-details">Implementation Details</a><ul>
+<li><a class="reference internal" href="#driver-specific-implementations">Driver specific implementations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="drm-uapi.html">
+                    <span class="icon">&lt;</span><span>Userland interfaces</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="driver-uapi.html"><span>DRM Driver uAPI</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

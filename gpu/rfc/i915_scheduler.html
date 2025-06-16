@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>I915 GuC Submission/DRM Scheduler Section &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="I915 Small BAR RFC Section" href="i915_small_bar.html" />
+    <link rel="prev" title="I915 DG1/LMEM RFC Section" href="i915_gem_lmem.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/gpu/rfc/i915_scheduler.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="i915-guc-submission-drm-scheduler-section">
+<h1>I915 GuC Submission/DRM Scheduler Section<a class="headerlink" href="#i915-guc-submission-drm-scheduler-section" title="Link to this heading">¶</a></h1>
+<section id="upstream-plan">
+<h2>Upstream plan<a class="headerlink" href="#upstream-plan" title="Link to this heading">¶</a></h2>
+<p>For upstream the overall plan for landing GuC submission and integrating the
+i915 with the DRM scheduler is:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Merge basic GuC submission</dt><dd><ul>
+<li><p>Basic submission support for all gen11+ platforms</p></li>
+<li><p>Not enabled by default on any current platforms but can be enabled via
+modparam enable_guc</p></li>
+<li><p>Lots of rework will need to be done to integrate with DRM scheduler so
+no need to nit pick everything in the code, it just should be
+functional, no major coding style / layering errors, and not regress
+execlists</p></li>
+<li><p>Update IGTs / selftests as needed to work with GuC submission</p></li>
+<li><p>Enable CI on supported platforms for a baseline</p></li>
+<li><p>Rework / get CI heathly for GuC submission in place as needed</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Merge new parallel submission uAPI</dt><dd><ul>
+<li><p>Bonding uAPI completely incompatible with GuC submission, plus it has
+severe design issues in general, which is why we want to retire it no
+matter what</p></li>
+<li><p>New uAPI adds I915_CONTEXT_ENGINES_EXT_PARALLEL context setup step
+which configures a slot with N contexts</p></li>
+<li><p>After I915_CONTEXT_ENGINES_EXT_PARALLEL a user can submit N batches to
+a slot in a single execbuf IOCTL and the batches run on the GPU in
+paralllel</p></li>
+<li><p>Initially only for GuC submission but execlists can be supported if
+needed</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Convert the i915 to use the DRM scheduler</dt><dd><ul>
+<li><dl class="simple">
+<dt>GuC submission backend fully integrated with DRM scheduler</dt><dd><ul>
+<li><p>All request queues removed from backend (e.g. all backpressure
+handled in DRM scheduler)</p></li>
+<li><p>Resets / cancels hook in DRM scheduler</p></li>
+<li><p>Watchdog hooks into DRM scheduler</p></li>
+<li><p>Lots of complexity of the GuC backend can be pulled out once
+integrated with DRM scheduler (e.g. state machine gets
+simpler, locking gets simpler, etc...)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Execlists backend will minimum required to hook in the DRM scheduler</dt><dd><ul>
+<li><p>Legacy interface</p></li>
+<li><p>Features like timeslicing / preemption / virtual engines would
+be difficult to integrate with the DRM scheduler and these
+features are not required for GuC submission as the GuC does
+these things for us</p></li>
+<li><p>ROI low on fully integrating into DRM scheduler</p></li>
+<li><p>Fully integrating would add lots of complexity to DRM
+scheduler</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Port i915 priority inheritance / boosting feature in DRM scheduler</dt><dd><ul>
+<li><p>Used for i915 page flip, may be useful to other DRM drivers as
+well</p></li>
+<li><p>Will be an optional feature in the DRM scheduler</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Remove in-order completion assumptions from DRM scheduler</dt><dd><ul>
+<li><p>Even when using the DRM scheduler the backends will handle
+preemption, timeslicing, etc... so it is possible for jobs to
+finish out of order</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Pull out i915 priority levels and use DRM priority levels</p></li>
+<li><p>Optimize DRM scheduler as needed</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="todos-for-guc-submission-upstream">
+<h2>TODOs for GuC submission upstream<a class="headerlink" href="#todos-for-guc-submission-upstream" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Need an update to GuC firmware / i915 to enable error state capture</p></li>
+<li><p>Open source tool to decode GuC logs</p></li>
+<li><p>Public GuC spec</p></li>
+</ul>
+</section>
+<section id="new-uapi-for-basic-guc-submission">
+<h2>New uAPI for basic GuC submission<a class="headerlink" href="#new-uapi-for-basic-guc-submission" title="Link to this heading">¶</a></h2>
+<p>No major changes are required to the uAPI for basic GuC submission. The only
+change is a new scheduler attribute: I915_SCHEDULER_CAP_STATIC_PRIORITY_MAP.
+This attribute indicates the 2k i915 user priority levels are statically mapped
+into 3 levels as follows:</p>
+<ul class="simple">
+<li><p>-1k to -1 Low priority</p></li>
+<li><p>0 Medium priority</p></li>
+<li><p>1 to 1k High priority</p></li>
+</ul>
+<p>This is needed because the GuC only has 4 priority bands. The highest priority
+band is reserved with the kernel. This aligns with the DRM scheduler priority
+levels too.</p>
+<section id="spec-references">
+<h3>Spec references:<a class="headerlink" href="#spec-references" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.khronos.org/registry/EGL/extensions/IMG/EGL_IMG_context_priority.txt">https://www.khronos.org/registry/EGL/extensions/IMG/EGL_IMG_context_priority.txt</a></p></li>
+<li><p><a class="reference external" href="https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/chap5.html#devsandqueues-priority">https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/chap5.html#devsandqueues-priority</a></p></li>
+<li><p><a class="reference external" href="https://spec.oneapi.com/level-zero/latest/core/api.html#ze-command-queue-priority-t">https://spec.oneapi.com/level-zero/latest/core/api.html#ze-command-queue-priority-t</a></p></li>
+</ul>
+</section>
+</section>
+<section id="new-parallel-submission-uapi">
+<h2>New parallel submission uAPI<a class="headerlink" href="#new-parallel-submission-uapi" title="Link to this heading">¶</a></h2>
+<p>The existing bonding uAPI is completely broken with GuC submission because
+whether a submission is a single context submit or parallel submit isn’t known
+until execbuf time activated via the I915_SUBMIT_FENCE. To submit multiple
+contexts in parallel with the GuC the context must be explicitly registered with
+N contexts and all N contexts must be submitted in a single command to the GuC.
+The GuC interfaces do not support dynamically changing between N contexts as the
+bonding uAPI does. Hence the need for a new parallel submission interface. Also
+the legacy bonding uAPI is quite confusing and not intuitive at all. Furthermore
+I915_SUBMIT_FENCE is by design a future fence, so not really something we should
+continue to support.</p>
+<p>The new parallel submission uAPI consists of 3 parts:</p>
+<ul class="simple">
+<li><p>Export engines logical mapping</p></li>
+<li><p>A ‘set_parallel’ extension to configure contexts for parallel
+submission</p></li>
+<li><p>Extend execbuf2 IOCTL to support submitting N BBs in a single IOCTL</p></li>
+</ul>
+<section id="export-engines-logical-mapping">
+<h3>Export engines logical mapping<a class="headerlink" href="#export-engines-logical-mapping" title="Link to this heading">¶</a></h3>
+<p>Certain use cases require BBs to be placed on engine instances in logical order
+(e.g. split-frame on gen11+). The logical mapping of engine instances can change
+based on fusing. Rather than making UMDs be aware of fusing, simply expose the
+logical mapping with the existing query engine info IOCTL. Also the GuC
+submission interface currently only supports submitting multiple contexts to
+engines in logical order which is a new requirement compared to execlists.
+Lastly, all current platforms have at most 2 engine instances and the logical
+order is the same as uAPI order. This will change on platforms with more than 2
+engine instances.</p>
+<p>A single bit will be added to drm_i915_engine_info.flags indicating that the
+logical instance has been returned and a new field,
+drm_i915_engine_info.logical_instance, returns the logical instance.</p>
+</section>
+<section id="a-set-parallel-extension-to-configure-contexts-for-parallel-submission">
+<h3>A ‘set_parallel’ extension to configure contexts for parallel submission<a class="headerlink" href="#a-set-parallel-extension-to-configure-contexts-for-parallel-submission" title="Link to this heading">¶</a></h3>
+<p>The ‘set_parallel’ extension configures a slot for parallel submission of N BBs.
+It is a setup step that must be called before using any of the contexts. See
+I915_CONTEXT_ENGINES_EXT_LOAD_BALANCE or I915_CONTEXT_ENGINES_EXT_BOND for
+similar existing examples. Once a slot is configured for parallel submission the
+execbuf2 IOCTL can be called submitting N BBs in a single IOCTL. Initially only
+supports GuC submission. Execlists supports can be added later if needed.</p>
+<p>Add I915_CONTEXT_ENGINES_EXT_PARALLEL_SUBMIT and
+drm_i915_context_engines_parallel_submit to the uAPI to implement this
+extension.</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.rfc.i915_context_engines_parallel_submit">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">i915_context_engines_parallel_submit</span></span></span><a class="headerlink" href="#c.rfc.i915_context_engines_parallel_submit" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Configure engine for parallel submission.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct i915_context_engines_parallel_submit {
+    struct i915_user_extension base;
+    __u16 engine_index;
+    __u16 width;
+    __u16 num_siblings;
+    __u16 mbz16;
+    __u64 flags;
+    __u64 mbz64[3];
+    struct i915_engine_class_instance engines[];
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">base</span></code></dt><dd><p>base user extension.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">engine_index</span></code></dt><dd><p>slot for parallel engine</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">width</span></code></dt><dd><p>number of contexts per parallel engine or in other words the
+number of batches in each submission</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">num_siblings</span></code></dt><dd><p>number of siblings per context or in other words the
+number of possible placements for each submission</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">mbz16</span></code></dt><dd><p>reserved for future use; must be zero</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">flags</span></code></dt><dd><p>all undefined flags must be zero, currently not defined flags</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">mbz64</span></code></dt><dd><p>reserved for future use; must be zero</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">engines</span></code></dt><dd><p>2-d array of engine instances to configure parallel engine</p>
+<p>length = width (i) * num_siblings (j)
+index = j + i * num_siblings</p>
+</dd>
+</dl>
+</div>
+<p><strong>Description</strong></p>
+<p>Setup a slot in the context engine map to allow multiple BBs to be submitted
+in a single execbuf IOCTL. Those BBs will then be scheduled to run on the GPU
+in parallel. Multiple hardware contexts are created internally in the i915 to
+run these BBs. Once a slot is configured for N BBs only N BBs can be
+submitted in each execbuf IOCTL and this is implicit behavior e.g. The user
+doesn’t tell the execbuf IOCTL there are N BBs, the execbuf IOCTL knows how
+many BBs there are based on the slot’s configuration. The N BBs are the last
+N buffer objects or first N if I915_EXEC_BATCH_FIRST is set.</p>
+<p>The default placement behavior is to create implicit bonds between each
+context if each context maps to more than 1 physical engine (e.g. context is
+a virtual engine). Also we only allow contexts of same engine class and these
+contexts must be in logically contiguous order. Examples of the placement
+behavior are described below. Lastly, the default is to not allow BBs to be
+preempted mid-batch. Rather insert coordinated preemption points on all
+hardware contexts between each set of BBs. Flags could be added in the future
+to change both of these default behaviors.</p>
+<p>Returns -EINVAL if hardware context placement configuration is invalid or if
+the placement configuration isn’t supported on the platform / submission
+interface.
+Returns -ENODEV if extension isn’t supported on the platform / submission
+interface.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Examples syntax:
+CS[X] = generic engine of same class, logical instance X
+INVALID = I915_ENGINE_CLASS_INVALID, I915_ENGINE_CLASS_INVALID_NONE
+
+Example 1 pseudo code:
+set_engines(INVALID)
+set_parallel(engine_index=0, width=2, num_siblings=1,
+             engines=CS[0],CS[1])
+
+Results in the following valid placement:
+CS[0], CS[1]
+
+Example 2 pseudo code:
+set_engines(INVALID)
+set_parallel(engine_index=0, width=2, num_siblings=2,
+             engines=CS[0],CS[2],CS[1],CS[3])
+
+Results in the following valid placements:
+CS[0], CS[1]
+CS[2], CS[3]
+
+This can be thought of as two virtual engines, each containing two
+engines thereby making a 2D array. However, there are bonds tying the
+entries together and placing restrictions on how they can be scheduled.
+Specifically, the scheduler can choose only vertical columns from the 2D
+array. That is, CS[0] is bonded to CS[1] and CS[2] to CS[3]. So if the
+scheduler wants to submit to CS[0], it must also choose CS[1] and vice
+versa. Same for CS[2] requires also using CS[3].
+VE[0] = CS[0], CS[2]
+VE[1] = CS[1], CS[3]
+
+Example 3 pseudo code:
+set_engines(INVALID)
+set_parallel(engine_index=0, width=2, num_siblings=2,
+             engines=CS[0],CS[1],CS[1],CS[3])
+
+Results in the following valid and invalid placements:
+CS[0], CS[1]
+CS[1], CS[3] - Not logically contiguous, return -EINVAL
+</pre></div>
+</div>
+</section>
+<section id="extend-execbuf2-ioctl-to-support-submitting-n-bbs-in-a-single-ioctl">
+<h3>Extend execbuf2 IOCTL to support submitting N BBs in a single IOCTL<a class="headerlink" href="#extend-execbuf2-ioctl-to-support-submitting-n-bbs-in-a-single-ioctl" title="Link to this heading">¶</a></h3>
+<p>Contexts that have been configured with the ‘set_parallel’ extension can only
+submit N BBs in a single execbuf2 IOCTL. The BBs are either the last N objects
+in the drm_i915_gem_exec_object2 list or the first N if I915_EXEC_BATCH_FIRST is
+set. The number of BBs is implicit based on the slot submitted and how it has
+been configured by ‘set_parallel’ or other extensions. No uAPI changes are
+required to the execbuf2 IOCTL.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">I915 GuC Submission/DRM Scheduler Section</a><ul>
+<li><a class="reference internal" href="#upstream-plan">Upstream plan</a></li>
+<li><a class="reference internal" href="#todos-for-guc-submission-upstream">TODOs for GuC submission upstream</a></li>
+<li><a class="reference internal" href="#new-uapi-for-basic-guc-submission">New uAPI for basic GuC submission</a><ul>
+<li><a class="reference internal" href="#spec-references">Spec references:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#new-parallel-submission-uapi">New parallel submission uAPI</a><ul>
+<li><a class="reference internal" href="#export-engines-logical-mapping">Export engines logical mapping</a></li>
+<li><a class="reference internal" href="#a-set-parallel-extension-to-configure-contexts-for-parallel-submission">A ‘set_parallel’ extension to configure contexts for parallel submission</a></li>
+<li><a class="reference internal" href="#extend-execbuf2-ioctl-to-support-submitting-n-bbs-in-a-single-ioctl">Extend execbuf2 IOCTL to support submitting N BBs in a single IOCTL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="i915_gem_lmem.html">
+                    <span class="icon">&lt;</span><span>I915 DG1/LMEM RFC Section</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="i915_small_bar.html"><span>I915 Small BAR RFC Section</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

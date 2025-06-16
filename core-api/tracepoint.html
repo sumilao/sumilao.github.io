@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The Linux Kernel Tracepoint API &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using physical DMA provided by OHCI-1394 FireWire controllers for debugging" href="debugging-via-ohci1394.html" />
+    <link rel="prev" title="The object-lifetime debugging infrastructure" href="debug-objects.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-utilities">Core utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#data-structures-and-low-level-utilities">Data structures and low-level utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-entry-and-exit">Low level entry and exit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#concurrency-primitives">Concurrency primitives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#low-level-hardware-management">Low-level hardware management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#memory-management">Memory management</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#interfaces-for-kernel-debugging">Interfaces for kernel debugging</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="debug-objects.html">The object-lifetime debugging infrastructure</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">The Linux Kernel Tracepoint API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugging-via-ohci1394.html">Using physical DMA provided by OHCI-1394 FireWire controllers for debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/core-api/tracepoint.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="the-linux-kernel-tracepoint-api">
+<h1>The Linux Kernel Tracepoint API<a class="headerlink" href="#the-linux-kernel-tracepoint-api" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Jason Baron</p>
+</dd>
+<dt class="field-even">Author<span class="colon">:</span></dt>
+<dd class="field-even"><p>William Cohen</p>
+</dd>
+</dl>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Tracepoints are static probe points that are located in strategic points
+throughout the kernel. ‘Probes’ register/unregister with tracepoints via
+a callback mechanism. The ‘probes’ are strictly typed functions that are
+passed a unique set of parameters defined by each tracepoint.</p>
+<p>From this simple callback mechanism, ‘probes’ can be used to profile,
+debug, and understand kernel behavior. There are a number of tools that
+provide a framework for using ‘probes’. These tools include Systemtap,
+ftrace, and LTTng.</p>
+<p>Tracepoints are defined in a number of header files via various macros.
+Thus, the purpose of this document is to provide a clear accounting of
+the available tracepoints. The intention is to understand not only what
+tracepoints are available but also to understand where future
+tracepoints might be added.</p>
+<p>The API presented has functions of the form:
+<code class="docutils literal notranslate"><span class="pre">trace_tracepointname(function</span> <span class="pre">parameters)</span></code>. These are the tracepoints
+callbacks that are found throughout the code. Registering and
+unregistering probes with these callback sites is covered in the
+<code class="docutils literal notranslate"><span class="pre">Documentation/trace/*</span></code> directory.</p>
+</section>
+<section id="irq">
+<h2>IRQ<a class="headerlink" href="#irq" title="Link to this heading">¶</a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_irq_handler_entry">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_irq_handler_entry</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">irq</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="genericirq.html#c.irqaction" title="irqaction"><span class="n"><span class="pre">irqaction</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">action</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_irq_handler_entry" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately before the irq action handler</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">irq</span></code></dt><dd><p>irq number</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irqaction</span> <span class="pre">*action</span></code></dt><dd><p>pointer to <a class="reference internal" href="genericirq.html#c.irqaction" title="irqaction"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irqaction</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <a class="reference internal" href="genericirq.html#c.irqaction" title="irqaction"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irqaction</span></code></a> pointed to by <strong>action</strong> contains various
+information about the handler, including the device name,
+<strong>action-&gt;name</strong>, and the device id, <strong>action-&gt;dev_id</strong>. When used in
+conjunction with the irq_handler_exit tracepoint, we can figure
+out irq handler latencies.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_irq_handler_exit">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_irq_handler_exit</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">irq</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="genericirq.html#c.irqaction" title="irqaction"><span class="n"><span class="pre">irqaction</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">action</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">ret</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_irq_handler_exit" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately after the irq action handler returns</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">irq</span></code></dt><dd><p>irq number</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irqaction</span> <span class="pre">*action</span></code></dt><dd><p>pointer to <a class="reference internal" href="genericirq.html#c.irqaction" title="irqaction"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irqaction</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">ret</span></code></dt><dd><p>return value</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>If the <strong>ret</strong> value is set to IRQ_HANDLED, then we know that the corresponding
+<strong>action-&gt;handler</strong> successfully handled this irq. Otherwise, the irq might be
+a shared irq line, or the irq was not handled successfully. Can be used in
+conjunction with the irq_handler_entry to understand irq handler latencies.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_softirq_entry">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_softirq_entry</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">vec_nr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_softirq_entry" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately before the softirq handler</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">vec_nr</span></code></dt><dd><p>softirq vector number</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>When used in combination with the softirq_exit tracepoint
+we can determine the softirq handler routine.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_softirq_exit">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_softirq_exit</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">vec_nr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_softirq_exit" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately after the softirq handler returns</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">vec_nr</span></code></dt><dd><p>softirq vector number</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>When used in combination with the softirq_entry tracepoint
+we can determine the softirq handler routine.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_softirq_raise">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_softirq_raise</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">vec_nr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_softirq_raise" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately when a softirq is raised</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">vec_nr</span></code></dt><dd><p>softirq vector number</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>When used in combination with the softirq_entry tracepoint
+we can determine the softirq raise to run latency.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_tasklet_entry">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_tasklet_entry</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">tasklet_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">func</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_tasklet_entry" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately before the tasklet is run</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">tasklet_struct</span> <span class="pre">*t</span></code></dt><dd><p>tasklet pointer</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*func</span></code></dt><dd><p>tasklet callback or function being run</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Used to find individual tasklet execution time</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_tasklet_exit">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_tasklet_exit</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">tasklet_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">func</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_tasklet_exit" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately after the tasklet is run</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">tasklet_struct</span> <span class="pre">*t</span></code></dt><dd><p>tasklet pointer</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*func</span></code></dt><dd><p>tasklet callback or function being run</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Used to find individual tasklet execution time</p>
+</div>
+</section>
+<section id="signal">
+<h2>SIGNAL<a class="headerlink" href="#signal" title="Link to this heading">¶</a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_signal_generate">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_signal_generate</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">sig</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">kernel_siginfo</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">info</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">task_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">task</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">group</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">result</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_signal_generate" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called when a signal is generated</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">sig</span></code></dt><dd><p>signal number</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kernel_siginfo</span> <span class="pre">*info</span></code></dt><dd><p>pointer to struct siginfo</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">task_struct</span> <span class="pre">*task</span></code></dt><dd><p>pointer to struct task_struct</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">group</span></code></dt><dd><p>shared or private</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">result</span></code></dt><dd><p>TRACE_SIGNAL_*</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Current process sends a ‘sig’ signal to ‘task’ process with
+‘info’ siginfo. If ‘info’ is SEND_SIG_NOINFO or SEND_SIG_PRIV,
+‘info’ is not a pointer and you can’t access its field. Instead,
+SEND_SIG_NOINFO means that si_code is SI_USER, and SEND_SIG_PRIV
+means that si_code is SI_KERNEL.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_signal_deliver">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_signal_deliver</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">sig</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">kernel_siginfo</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">info</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">k_sigaction</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ka</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_signal_deliver" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called when a signal is delivered</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">sig</span></code></dt><dd><p>signal number</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kernel_siginfo</span> <span class="pre">*info</span></code></dt><dd><p>pointer to struct siginfo</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">k_sigaction</span> <span class="pre">*ka</span></code></dt><dd><p>pointer to struct k_sigaction</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>A ‘sig’ signal is delivered to current process with ‘info’ siginfo,
+and it will be handled by ‘ka’. ka-&gt;sa.sa_handler can be SIG_IGN or
+SIG_DFL.
+Note that some signals reported by signal_generate tracepoint can be
+lost, ignored or modified (by debugger) before hitting this tracepoint.
+This means, this can show which signals are actually delivered, but
+matching generated signals and delivered signals may not be correct.</p>
+</div>
+</section>
+<section id="block-io">
+<h2>Block IO<a class="headerlink" href="#block-io" title="Link to this heading">¶</a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_touch_buffer">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_touch_buffer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">buffer_head</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bh</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_touch_buffer" title="Link to this definition">¶</a><br /></dt>
+<dd><p>mark a buffer accessed</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">buffer_head</span> <span class="pre">*bh</span></code></dt><dd><p>buffer_head being touched</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called from touch_buffer().</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_dirty_buffer">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_dirty_buffer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">buffer_head</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bh</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_dirty_buffer" title="Link to this definition">¶</a><br /></dt>
+<dd><p>mark a buffer dirty</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">buffer_head</span> <span class="pre">*bh</span></code></dt><dd><p>buffer_head being dirtied</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called from <a class="reference internal" href="../filesystems/buffer.html#c.mark_buffer_dirty" title="mark_buffer_dirty"><code class="xref c c-func docutils literal notranslate"><span class="pre">mark_buffer_dirty()</span></code></a>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_requeue">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_requeue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_requeue" title="Link to this definition">¶</a><br /></dt>
+<dd><p>place block IO request back on a queue</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The block operation request <strong>rq</strong> is being placed back into queue
+<strong>q</strong>.  For some reason the request was not completed and needs to be
+put back in the queue.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_complete">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_complete</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span>, <span class="n"><span class="pre">blk_status_t</span></span><span class="w"> </span><span class="n"><span class="pre">error</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nr_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_complete" title="Link to this definition">¶</a><br /></dt>
+<dd><p>block IO operation completed by device driver</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block operations request</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">blk_status_t</span> <span class="pre">error</span></code></dt><dd><p>status code</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">nr_bytes</span></code></dt><dd><p>number of completed bytes</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The block_rq_complete tracepoint event indicates that some portion
+of operation request has been completed by the device driver.  If
+the <strong>rq-&gt;bio</strong> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, then there is absolutely no additional work to
+do for the request. If <strong>rq-&gt;bio</strong> is non-NULL then there is
+additional work required to complete the request.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_error">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span>, <span class="n"><span class="pre">blk_status_t</span></span><span class="w"> </span><span class="n"><span class="pre">error</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nr_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_error" title="Link to this definition">¶</a><br /></dt>
+<dd><p>block IO operation error reported by device driver</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block operations request</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">blk_status_t</span> <span class="pre">error</span></code></dt><dd><p>status code</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">nr_bytes</span></code></dt><dd><p>number of completed bytes</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The block_rq_error tracepoint event indicates that some portion
+of operation request has failed as reported by the device driver.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_insert">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_insert</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_insert" title="Link to this definition">¶</a><br /></dt>
+<dd><p>insert block operation request into queue</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called immediately before block operation request <strong>rq</strong> is inserted
+into queue <strong>q</strong>.  The fields in the operation request <strong>rq</strong> struct can
+be examined to determine which device and sectors the pending
+operation would access.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_issue">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_issue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_issue" title="Link to this definition">¶</a><br /></dt>
+<dd><p>issue pending block IO request operation to device driver</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called when block operation request <strong>rq</strong> from queue <strong>q</strong> is sent to a
+device driver for processing.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_merge">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_merge</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_merge" title="Link to this definition">¶</a><br /></dt>
+<dd><p>merge request with another one in the elevator</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called when block operation request <strong>rq</strong> from queue <strong>q</strong> is merged to another
+request queued in the elevator.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_io_start">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_io_start</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_io_start" title="Link to this definition">¶</a><br /></dt>
+<dd><p>insert a request for execution</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called when block operation request <strong>rq</strong> is queued for execution</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_io_done">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_io_done</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_io_done" title="Link to this definition">¶</a><br /></dt>
+<dd><p>block IO operation request completed</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Called when block operation request <strong>rq</strong> is completed</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_complete">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_complete</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request_queue</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">q</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_complete" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_complete" title="Link to this definition">¶</a><br /></dt>
+<dd><p>completed all work on the block operation</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request_queue</span> <span class="pre">*q</span></code></dt><dd><p>queue holding the block operation</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>block operation completed</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This tracepoint indicates there is no further work to do on this
+block IO operation <strong>bio</strong>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_bounce">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_bounce</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_bounce" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_bounce" title="Link to this definition">¶</a><br /></dt>
+<dd><p>used bounce buffer when processing block operation</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>block operation</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>A bounce buffer was used to handle the block operation <strong>bio</strong> in <strong>q</strong>.
+This occurs when hardware limitations prevent a direct transfer of
+data between the <strong>bio</strong> data memory area and the IO device.  Use of a
+bounce buffer requires extra copying of data and decreases
+performance.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_backmerge">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_backmerge</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_backmerge" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_backmerge" title="Link to this definition">¶</a><br /></dt>
+<dd><p>merging block operation to the end of an existing operation</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>new block operation to merge</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Merging block request <strong>bio</strong> to the end of an existing block request.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_frontmerge">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_frontmerge</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_frontmerge" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_frontmerge" title="Link to this definition">¶</a><br /></dt>
+<dd><p>merging block operation to the beginning of an existing operation</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>new block operation to merge</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Merging block IO operation <strong>bio</strong> to the beginning of an existing block request.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_queue">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_queue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_queue" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_queue" title="Link to this definition">¶</a><br /></dt>
+<dd><p>putting new block IO operation in queue</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>new block operation</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>About to place the block IO operation <strong>bio</strong> into queue <strong>q</strong>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_getrq">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_getrq</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_getrq" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_getrq" title="Link to this definition">¶</a><br /></dt>
+<dd><p>get a free request entry in queue for block IO operations</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>pending block IO operation (can be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>)</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>A request struct has been allocated to handle the block IO operation <strong>bio</strong>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_plug">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_plug</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request_queue</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">q</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_plug" title="Link to this definition">¶</a><br /></dt>
+<dd><p>keep operations requests in request queue</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request_queue</span> <span class="pre">*q</span></code></dt><dd><p>request queue to plug</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Plug the request queue <strong>q</strong>.  Do not allow block operation requests
+to be sent to the device driver. Instead, accumulate requests in
+the queue to improve throughput performance of the block device.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_unplug">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_unplug</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request_queue</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">q</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">depth</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">explicit</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_unplug" title="Link to this definition">¶</a><br /></dt>
+<dd><p>release of operations requests in request queue</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request_queue</span> <span class="pre">*q</span></code></dt><dd><p>request queue to unplug</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">depth</span></code></dt><dd><p>number of requests just added to the queue</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">explicit</span></code></dt><dd><p>whether this was an explicit unplug, or one from schedule()</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Unplug request queue <strong>q</strong> because device driver is scheduled to work
+on elements in the request queue.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_split">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_split</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_split" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">new_sector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_split" title="Link to this definition">¶</a><br /></dt>
+<dd><p>split a single bio struct into two bio structs</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>block operation being split</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">new_sector</span></code></dt><dd><p>The starting sector for the new bio</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The bio request <strong>bio</strong> needs to be split into two bio requests.  The newly
+created <strong>bio</strong> request starts at <strong>new_sector</strong>. This split may be required due to
+hardware limitations such as operation crossing device boundaries in a RAID
+system.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_bio_remap">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_bio_remap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.trace_block_bio_remap" title="bio"><span class="n"><span class="pre">bio</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bio</span></span>, <span class="n"><span class="pre">dev_t</span></span><span class="w"> </span><span class="n"><span class="pre">dev</span></span>, <span class="n"><span class="pre">sector_t</span></span><span class="w"> </span><span class="n"><span class="pre">from</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_bio_remap" title="Link to this definition">¶</a><br /></dt>
+<dd><p>map request for a logical device to the raw device</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">bio</span> <span class="pre">*bio</span></code></dt><dd><p>revised operation</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dev_t</span> <span class="pre">dev</span></code></dt><dd><p>original device for the operation</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sector_t</span> <span class="pre">from</span></code></dt><dd><p>original sector for the operation</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>An operation for a logical device has been mapped to the
+raw block device.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_block_rq_remap">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_block_rq_remap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">request</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">rq</span></span>, <span class="n"><span class="pre">dev_t</span></span><span class="w"> </span><span class="n"><span class="pre">dev</span></span>, <span class="n"><span class="pre">sector_t</span></span><span class="w"> </span><span class="n"><span class="pre">from</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_rq_remap" title="Link to this definition">¶</a><br /></dt>
+<dd><p>map request for a block operation request</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">request</span> <span class="pre">*rq</span></code></dt><dd><p>block IO operation request</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dev_t</span> <span class="pre">dev</span></code></dt><dd><p>device for the operation</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sector_t</span> <span class="pre">from</span></code></dt><dd><p>original sector for the operation</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The block operation request <strong>rq</strong> in <strong>q</strong> has been remapped.  The block
+operation request <strong>rq</strong> holds the current information and <strong>from</strong> hold
+the original sector.</p>
+</div>
+</section>
+<section id="workqueue">
+<h2>Workqueue<a class="headerlink" href="#workqueue" title="Link to this heading">¶</a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_workqueue_queue_work">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_workqueue_queue_work</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">req_cpu</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">pool_workqueue</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pwq</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">work_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">work</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_workqueue_queue_work" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called when a work gets queued</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">req_cpu</span></code></dt><dd><p>the requested cpu</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">pool_workqueue</span> <span class="pre">*pwq</span></code></dt><dd><p>pointer to struct pool_workqueue</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">work_struct</span> <span class="pre">*work</span></code></dt><dd><p>pointer to struct work_struct</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This event occurs when a work is queued immediately or once a
+delayed work is actually queued on a workqueue (ie: once the delay
+has been reached).</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_workqueue_activate_work">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_workqueue_activate_work</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">work_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">work</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_workqueue_activate_work" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called when a work gets activated</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">work_struct</span> <span class="pre">*work</span></code></dt><dd><p>pointer to struct work_struct</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This event occurs when a queued work is put on the active queue,
+which happens immediately after queueing unless <strong>max_active</strong> limit
+is reached.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_workqueue_execute_start">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_workqueue_execute_start</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">work_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">work</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_workqueue_execute_start" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately before the workqueue callback</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">work_struct</span> <span class="pre">*work</span></code></dt><dd><p>pointer to struct work_struct</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Allows to track workqueue execution.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.trace_workqueue_execute_end">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_workqueue_execute_end</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">work_struct</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">work</span></span>, <span class="n"><span class="pre">work_func_t</span></span><span class="w"> </span><span class="n"><span class="pre">function</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_workqueue_execute_end" title="Link to this definition">¶</a><br /></dt>
+<dd><p>called immediately after the workqueue callback</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">work_struct</span> <span class="pre">*work</span></code></dt><dd><p>pointer to struct work_struct</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">work_func_t</span> <span class="pre">function</span></code></dt><dd><p>pointer to worker function</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Allows to track workqueue execution.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">The Linux Kernel Tracepoint API</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#irq">IRQ</a></li>
+<li><a class="reference internal" href="#signal">SIGNAL</a></li>
+<li><a class="reference internal" href="#block-io">Block IO</a></li>
+<li><a class="reference internal" href="#workqueue">Workqueue</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="debug-objects.html">
+                    <span class="icon">&lt;</span><span>The object-lifetime debugging infrastructure</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="debugging-via-ohci1394.html"><span>Using physical DMA provided by OHCI-1394 FireWire controllers for debugging</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

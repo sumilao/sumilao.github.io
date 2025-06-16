@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tracepoints &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <script src="../../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Ethtool counters" href="counters.html" />
+    <link rel="prev" title="Switchdev" href="switchdev.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../../index.html" title="Go to homepage"><img src="../../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/networking/device_drivers/ethernet/mellanox/mlx5/tracepoints.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="tracepoints">
+<h1>Tracepoints<a class="headerlink" href="#tracepoints" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>© 2023, NVIDIA CORPORATION &amp; AFFILIATES. All rights reserved.</p>
+</dd>
+</dl>
+<p>mlx5 driver provides internal tracepoints for tracking and debugging using
+kernel tracepoints interfaces (refer to <a class="reference internal" href="../../../../../trace/ftrace.html"><span class="doc">ftrace - Function Tracer</span></a>).</p>
+<p>For the list of support mlx5 events, check /sys/kernel/tracing/events/mlx5/.</p>
+<p>tc and eswitch offloads tracepoints:</p>
+<ul>
+<li><p>mlx5e_configure_flower: trace flower filter actions and cookies offloaded to mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5e_configure_flower &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+tc-6535  [019] ...1  2672.404466: mlx5e_configure_flower: cookie=0000000067874a55 actions= REDIRECT
+</pre></div>
+</div>
+</li>
+<li><p>mlx5e_delete_flower: trace flower filter actions and cookies deleted from mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5e_delete_flower &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+tc-6569  [010] .N.1  2686.379075: mlx5e_delete_flower: cookie=0000000067874a55 actions= NULL
+</pre></div>
+</div>
+</li>
+<li><p>mlx5e_stats_flower: trace flower stats request:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5e_stats_flower &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+tc-6546  [010] ...1  2679.704889: mlx5e_stats_flower: cookie=0000000060eb3d6a bytes=0 packets=0 lastused=4295560217
+</pre></div>
+</div>
+</li>
+<li><p>mlx5e_tc_update_neigh_used_value: trace tunnel rule neigh update value offloaded to mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5e_tc_update_neigh_used_value &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u48:4-8806  [009] ...1 55117.882428: mlx5e_tc_update_neigh_used_value: netdev: ens1f0 IPv4: 1.1.1.10 IPv6: ::ffff:1.1.1.10 neigh_used=1
+</pre></div>
+</div>
+</li>
+<li><p>mlx5e_rep_neigh_update: trace neigh update tasks scheduled due to neigh state change events:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5e_rep_neigh_update &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u48:7-2221  [009] ...1  1475.387435: mlx5e_rep_neigh_update: netdev: ens1f0 MAC: 24:8a:07:9a:17:9a IPv4: 1.1.1.10 IPv6: ::ffff:1.1.1.10 neigh_connected=1
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Bridge offloads tracepoints:</p>
+<ul>
+<li><p>mlx5_esw_bridge_fdb_entry_init: trace bridge FDB entry offloaded to mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_fdb_entry_init &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u20:9-2217    [003] ...1   318.582243: mlx5_esw_bridge_fdb_entry_init: net_device=enp8s0f0_0 addr=e4:fd:05:08:00:02 vid=0 flags=0 used=0
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_fdb_entry_cleanup: trace bridge FDB entry deleted from mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_fdb_entry_cleanup &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+ip-2581    [005] ...1   318.629871: mlx5_esw_bridge_fdb_entry_cleanup: net_device=enp8s0f0_1 addr=e4:fd:05:08:00:03 vid=0 flags=0 used=16
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_fdb_entry_refresh: trace bridge FDB entry offload refreshed in
+mlx5:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_fdb_entry_refresh &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u20:8-3849    [003] ...1       466716: mlx5_esw_bridge_fdb_entry_refresh: net_device=enp8s0f0_0 addr=e4:fd:05:08:00:02 vid=3 flags=0 used=0
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_vlan_create: trace bridge VLAN object add on mlx5
+representor:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_vlan_create &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+ip-2560    [007] ...1   318.460258: mlx5_esw_bridge_vlan_create: vid=1 flags=6
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_vlan_cleanup: trace bridge VLAN object delete from mlx5
+representor:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_vlan_cleanup &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+bridge-2582    [007] ...1   318.653496: mlx5_esw_bridge_vlan_cleanup: vid=2 flags=8
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_vport_init: trace mlx5 vport assigned with bridge upper
+device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_vport_init &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+ip-2560    [007] ...1   318.458915: mlx5_esw_bridge_vport_init: vport_num=1
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_bridge_vport_cleanup: trace mlx5 vport removed from bridge upper
+device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_bridge_vport_cleanup &gt;&gt; set_event
+$ cat /sys/kernel/tracing/trace
+...
+ip-5387    [000] ...1       573713: mlx5_esw_bridge_vport_cleanup: vport_num=1
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Eswitch QoS tracepoints:</p>
+<ul>
+<li><p>mlx5_esw_vport_qos_create: trace creation of transmit scheduler arbiter for vport:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_vport_qos_create &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-23496   [018] .... 73136.838831: mlx5_esw_vport_qos_create: (0000:82:00.0) vport=2 tsar_ix=4 bw_share=0, max_rate=0 group=000000007b576bb3
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_vport_qos_config: trace configuration of transmit scheduler arbiter for vport:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_vport_qos_config &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-26548   [023] .... 75754.223823: mlx5_esw_vport_qos_config: (0000:82:00.0) vport=1 tsar_ix=3 bw_share=34, max_rate=10000 group=000000007b576bb3
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_vport_qos_destroy: trace deletion of transmit scheduler arbiter for vport:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_vport_qos_destroy &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-27418   [004] .... 76546.680901: mlx5_esw_vport_qos_destroy: (0000:82:00.0) vport=1 tsar_ix=3
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_group_qos_create: trace creation of transmit scheduler arbiter for rate group:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_group_qos_create &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-26578   [008] .... 75776.022112: mlx5_esw_group_qos_create: (0000:82:00.0) group=000000008dac63ea tsar_ix=5
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_group_qos_config: trace configuration of transmit scheduler arbiter for rate group:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_group_qos_config &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-27303   [020] .... 76461.455356: mlx5_esw_group_qos_config: (0000:82:00.0) group=000000008dac63ea tsar_ix=5 bw_share=100 max_rate=20000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_esw_group_qos_destroy: trace deletion of transmit scheduler arbiter for group:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_esw_group_qos_destroy &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+&lt;...&gt;-27418   [006] .... 76547.187258: mlx5_esw_group_qos_destroy: (0000:82:00.0) group=000000007b576bb3 tsar_ix=1
+</pre></div>
+</div>
+</li>
+</ul>
+<p>SF tracepoints:</p>
+<ul>
+<li><p>mlx5_sf_add: trace addition of the SF port:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_add &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-9363    [031] ..... 24610.188722: mlx5_sf_add: (0000:06:00.0) port_index=32768 controller=0 hw_id=0x8000 sfnum=88
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_free: trace freeing of the SF port:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_free &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-9830    [038] ..... 26300.404749: mlx5_sf_free: (0000:06:00.0) port_index=32768 controller=0 hw_id=0x8000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_activate: trace activation of the SF port:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_activate &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-29841   [008] .....  3669.635095: mlx5_sf_activate: (0000:08:00.0) port_index=32768 controller=0 hw_id=0x8000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_deactivate: trace deactivation of the SF port:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_deactivate &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-29994   [008] .....  4015.969467: mlx5_sf_deactivate: (0000:08:00.0) port_index=32768 controller=0 hw_id=0x8000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_hwc_alloc: trace allocating of the hardware SF context:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_hwc_alloc &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-9775    [031] ..... 26296.385259: mlx5_sf_hwc_alloc: (0000:06:00.0) controller=0 hw_id=0x8000 sfnum=88
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_hwc_free: trace freeing of the hardware SF context:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_hwc_free &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u128:3-9093    [046] ..... 24625.365771: mlx5_sf_hwc_free: (0000:06:00.0) hw_id=0x8000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_hwc_deferred_free: trace deferred freeing of the hardware SF context:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_hwc_deferred_free &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+devlink-9519    [046] ..... 24624.400271: mlx5_sf_hwc_deferred_free: (0000:06:00.0) hw_id=0x8000
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_update_state: trace state updates for SF contexts:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_update_state &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u20:3-29490   [009] .....  4141.453530: mlx5_sf_update_state: (0000:08:00.0) port_index=32768 controller=0 hw_id=0x8000 state=2
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_vhca_event: trace SF vhca event and state:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_vhca_event &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u128:3-9093    [046] ..... 24625.365525: mlx5_sf_vhca_event: (0000:06:00.0) hw_id=0x8000 sfnum=88 vhca_state=1
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_dev_add: trace SF device add event:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_dev_add&gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u128:3-9093    [000] ..... 24616.524495: mlx5_sf_dev_add: (0000:06:00.0) sfdev=00000000fc5d96fd aux_id=4 hw_id=0x8000 sfnum=88
+</pre></div>
+</div>
+</li>
+<li><p>mlx5_sf_dev_del: trace SF device delete event:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mlx5:mlx5_sf_dev_del &gt;&gt; /sys/kernel/tracing/set_event
+$ cat /sys/kernel/tracing/trace
+...
+kworker/u128:3-9093    [044] ..... 24624.400749: mlx5_sf_dev_del: (0000:06:00.0) sfdev=00000000fc5d96fd aux_id=4 hw_id=0x8000 sfnum=88
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="switchdev.html">
+                    <span class="icon">&lt;</span><span>Switchdev</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="counters.html"><span>Ethtool counters</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

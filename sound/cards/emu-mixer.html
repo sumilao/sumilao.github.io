@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>E-MU Digital Audio System mixer / default DSP code &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Low latency, multichannel audio with JACK and the emu10k1/emu10k2" href="emu10k1-jack.html" />
+    <link rel="prev" title="Sound Blaster Audigy mixer / default DSP code" href="audigy-mixer.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/sound/cards/emu-mixer.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="e-mu-digital-audio-system-mixer-default-dsp-code">
+<h1>E-MU Digital Audio System mixer / default DSP code<a class="headerlink" href="#e-mu-digital-audio-system-mixer-default-dsp-code" title="Link to this heading">¶</a></h1>
+<p>This document covers the E-MU 0404/1010/1212/1616/1820 PCI/PCI-e/CardBus
+cards.</p>
+<p>These cards use regular EMU10K2 (SoundBlaster Audigy) chips, but with an
+alternative front-end geared towards semi-professional studio recording.</p>
+<p>This document is based on <a class="reference internal" href="audigy-mixer.html"><span class="doc">Sound Blaster Audigy mixer / default DSP code</span></a>.</p>
+<section id="hardware-compatibility">
+<h2>Hardware compatibility<a class="headerlink" href="#hardware-compatibility" title="Link to this heading">¶</a></h2>
+<p>The EMU10K2 chips have a very short capture FIFO, which makes recording
+unreliable if the card’s PCI bus requests are not handled with the
+appropriate priority.
+This is the case on more modern motherboards, where the PCI bus is only a
+secondary peripheral, rather than the actual arbiter of device access.
+In particular, I got recording glitches during simultaneous playback on an
+Intel DP55 board (memory controller in the CPU), but had success with an
+Intel DP45 board (memory controller in the north bridge).</p>
+<p>The PCI Express variants of these cards (which have a PCI bridge on board,
+but are otherwise identical) may be less problematic.</p>
+</section>
+<section id="driver-capabilities">
+<h2>Driver capabilities<a class="headerlink" href="#driver-capabilities" title="Link to this heading">¶</a></h2>
+<p>This driver supports only 16-bit 44.1/48 kHz operation. The multi-channel
+device (see <a class="reference internal" href="emu10k1-jack.html"><span class="doc">Low latency, multichannel audio with JACK and the emu10k1/emu10k2</span></a>) additionally supports 24-bit capture.</p>
+<p>A patchset to enhance the driver is available from <a class="reference external" href="https://github.com/ossilator/linux/tree/ossis-emu10k1">a GitHub repository</a>.
+Its multi-channel device supports 24-bit for both playback and capture,
+and also supports full 88.2/96/176.4/192 kHz operation.
+It is not going to be upstreamed due to a fundamental disagreement about
+what constitutes a good user experience.</p>
+</section>
+<section id="digital-mixer-controls">
+<h2>Digital mixer controls<a class="headerlink" href="#digital-mixer-controls" title="Link to this heading">¶</a></h2>
+<p>Note that the controls work as attenuators: the maximum value is the neutral
+position leaving the signal unchanged. Note that if the same destination is
+mentioned in multiple controls, the signal is accumulated and can be clipped
+(set to maximal or minimal value without checking for overflow).</p>
+<p>Explanation of used abbreviations:</p>
+<dl class="simple">
+<dt>DAC</dt><dd><p>digital to analog converter</p>
+</dd>
+<dt>ADC</dt><dd><p>analog to digital converter</p>
+</dd>
+<dt>LFE</dt><dd><p>low frequency effects (used as subwoofer signal)</p>
+</dd>
+<dt>IEC958</dt><dd><p>S/PDIF</p>
+</dd>
+<dt>FX-bus</dt><dd><p>the EMU10K2 chip has an effect bus containing 64 accumulators.
+Each of the synthesizer voices can feed its output to these accumulators
+and the DSP microcontroller can operate with the resulting sum.</p>
+</dd>
+</dl>
+<section id="name-clock-source-index-0">
+<h3>name=’Clock Source’,index=0<a class="headerlink" href="#name-clock-source-index-0" title="Link to this heading">¶</a></h3>
+<p>This control allows switching the word clock between interally generated
+44.1 or 48 kHz, or a number of external sources.</p>
+<p>Note: the sources for the 1616 CardBus card are unclear. Please report your
+findings.</p>
+</section>
+<section id="name-clock-fallback-index-0">
+<h3>name=’Clock Fallback’,index=0<a class="headerlink" href="#name-clock-fallback-index-0" title="Link to this heading">¶</a></h3>
+<p>This control determines the internal clock which the card switches to when
+the selected external clock source is/becomes invalid.</p>
+</section>
+<section id="name-dac1-0202-14db-pad-index-0-etc">
+<h3>name=’DAC1 0202 14dB PAD’,index=0, etc.<a class="headerlink" href="#name-dac1-0202-14db-pad-index-0-etc" title="Link to this heading">¶</a></h3>
+<p>Output attenuation controls. Not available on 0404 cards.</p>
+</section>
+<section id="name-adc1-14db-pad-0202-index-0-etc">
+<h3>name=’ADC1 14dB PAD 0202’,index=0, etc.<a class="headerlink" href="#name-adc1-14db-pad-0202-index-0-etc" title="Link to this heading">¶</a></h3>
+<p>Input attenuation controls. Not available on 0404 cards.</p>
+</section>
+<section id="name-optical-output-mode-index-0">
+<h3>name=’Optical Output Mode’,index=0<a class="headerlink" href="#name-optical-output-mode-index-0" title="Link to this heading">¶</a></h3>
+<p>Switches the TOSLINK output port between S/PDIF and ADAT.
+Not available on 0404 cards (fixed to S/PDIF).</p>
+</section>
+<section id="name-optical-input-mode-index-0">
+<h3>name=’Optical Input Mode’,index=0<a class="headerlink" href="#name-optical-input-mode-index-0" title="Link to this heading">¶</a></h3>
+<p>Switches the TOSLINK input port between S/PDIF and ADAT.
+Not available on 0404 cards (fixed to S/PDIF).</p>
+</section>
+<section id="name-pcm-front-playback-volume-index-0">
+<h3>name=’PCM Front Playback Volume’,index=0<a class="headerlink" href="#name-pcm-front-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right front PCM FX-bus
+accumulators. ALSA uses accumulators 8 and 9 for left and right front PCM
+samples for 5.1 playback. The result samples are forwarded to the DSP 0 &amp; 1
+playback channels.</p>
+</section>
+<section id="name-pcm-surround-playback-volume-index-0">
+<h3>name=’PCM Surround Playback Volume’,index=0<a class="headerlink" href="#name-pcm-surround-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right surround PCM FX-bus
+accumulators. ALSA uses accumulators 2 and 3 for left and right surround PCM
+samples for 5.1 playback. The result samples are forwarded to the DSP 2 &amp; 3
+playback channels.</p>
+</section>
+<section id="name-pcm-side-playback-volume-index-0">
+<h3>name=’PCM Side Playback Volume’,index=0<a class="headerlink" href="#name-pcm-side-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right side PCM FX-bus
+accumulators. ALSA uses accumulators 14 and 15 for left and right side PCM
+samples for 7.1 playback. The result samples are forwarded to the DSP 6 &amp; 7
+playback channels.</p>
+</section>
+<section id="name-pcm-center-playback-volume-index-0">
+<h3>name=’PCM Center Playback Volume’,index=0<a class="headerlink" href="#name-pcm-center-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the center PCM FX-bus accumulator.
+ALSA uses accumulator 6 for center PCM samples for 5.1 playback. The result samples
+are forwarded to the DSP 4 playback channel.</p>
+</section>
+<section id="name-pcm-lfe-playback-volume-index-0">
+<h3>name=’PCM LFE Playback Volume’,index=0<a class="headerlink" href="#name-pcm-lfe-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the LFE PCM FX-bus accumulator.
+ALSA uses accumulator 7 for LFE PCM samples for 5.1 playback. The result samples
+are forwarded to the DSP 5 playback channel.</p>
+</section>
+<section id="name-pcm-playback-volume-index-0">
+<h3>name=’PCM Playback Volume’,index=0<a class="headerlink" href="#name-pcm-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right PCM FX-bus
+accumulators. ALSA uses accumulators 0 and 1 for left and right PCM samples for
+stereo playback. The result samples are forwarded to the virtual stereo mixer.</p>
+</section>
+<section id="name-pcm-capture-volume-index-0">
+<h3>name=’PCM Capture Volume’,index=0<a class="headerlink" href="#name-pcm-capture-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right PCM FX-bus
+accumulators. ALSA uses accumulators 0 and 1 for left and right PCM.
+The result is forwarded to the standard capture PCM device.</p>
+</section>
+<section id="name-music-playback-volume-index-0">
+<h3>name=’Music Playback Volume’,index=0<a class="headerlink" href="#name-music-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from left and right MIDI FX-bus
+accumulators. ALSA uses accumulators 4 and 5 for left and right MIDI samples.
+The result samples are forwarded to the virtual stereo mixer.</p>
+</section>
+<section id="name-music-capture-volume-index-0">
+<h3>name=’Music Capture Volume’,index=0<a class="headerlink" href="#name-music-capture-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>These controls are used to attenuate samples from left and right MIDI FX-bus
+accumulator. ALSA uses accumulators 4 and 5 for left and right MIDI samples.
+The result is forwarded to the standard capture PCM device.</p>
+</section>
+<section id="name-front-playback-volume-index-0">
+<h3>name=’Front Playback Volume’,index=0<a class="headerlink" href="#name-front-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the virtual stereo mixer.
+The result samples are forwarded to the DSP 0 &amp; 1 playback channels.</p>
+</section>
+<section id="name-surround-playback-volume-index-0">
+<h3>name=’Surround Playback Volume’,index=0<a class="headerlink" href="#name-surround-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the virtual stereo mixer.
+The result samples are forwarded to the DSP 2 &amp; 3 playback channels.</p>
+</section>
+<section id="name-side-playback-volume-index-0">
+<h3>name=’Side Playback Volume’,index=0<a class="headerlink" href="#name-side-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the virtual stereo mixer.
+The result samples are forwarded to the DSP 6 &amp; 7 playback channels.</p>
+</section>
+<section id="name-center-playback-volume-index-0">
+<h3>name=’Center Playback Volume’,index=0<a class="headerlink" href="#name-center-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the virtual stereo mixer.
+The result samples are forwarded to the DSP 4 playback channel.</p>
+</section>
+<section id="name-lfe-playback-volume-index-0">
+<h3>name=’LFE Playback Volume’,index=0<a class="headerlink" href="#name-lfe-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the virtual stereo mixer.
+The result samples are forwarded to the DSP 5 playback channel.</p>
+</section>
+<section id="name-tone-control-switch-index-0">
+<h3>name=’Tone Control - Switch’,index=0<a class="headerlink" href="#name-tone-control-switch-index-0" title="Link to this heading">¶</a></h3>
+<p>This control turns the tone control on or off. The samples forwarded to
+the DSP playback channels are affected.</p>
+</section>
+<section id="name-tone-control-bass-index-0">
+<h3>name=’Tone Control - Bass’,index=0<a class="headerlink" href="#name-tone-control-bass-index-0" title="Link to this heading">¶</a></h3>
+<p>This control sets the bass intensity. There is no neutral value!!
+When the tone control code is activated, the samples are always modified.
+The closest value to pure signal is 20.</p>
+</section>
+<section id="name-tone-control-treble-index-0">
+<h3>name=’Tone Control - Treble’,index=0<a class="headerlink" href="#name-tone-control-treble-index-0" title="Link to this heading">¶</a></h3>
+<p>This control sets the treble intensity. There is no neutral value!!
+When the tone control code is activated, the samples are always modified.
+The closest value to pure signal is 20.</p>
+</section>
+<section id="name-master-playback-volume-index-0">
+<h3>name=’Master Playback Volume’,index=0<a class="headerlink" href="#name-master-playback-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples for all DSP playback channels.</p>
+</section>
+<section id="name-emu-capture-volume-index-0">
+<h3>name=’EMU Capture Volume’,index=0<a class="headerlink" href="#name-emu-capture-volume-index-0" title="Link to this heading">¶</a></h3>
+<p>This control is used to attenuate samples from the DSP 0 &amp; 1 capture channels.
+The result is forwarded to the standard capture PCM device.</p>
+</section>
+<section id="name-dac-left-index-0-etc">
+<h3>name=’DAC Left’,index=0, etc.<a class="headerlink" href="#name-dac-left-index-0-etc" title="Link to this heading">¶</a></h3>
+<p>Select the source for the given physical audio output. These may be physical
+inputs, playback channels (DSP xx, specified as a decimal number), or silence.</p>
+</section>
+<section id="name-dsp-x-index-0">
+<h3>name=’DSP x’,index=0<a class="headerlink" href="#name-dsp-x-index-0" title="Link to this heading">¶</a></h3>
+<p>Select the source for the given capture channel (specified as a hexadecimal
+digit). Same options as for the physical audio outputs.</p>
+</section>
+</section>
+<section id="pcm-stream-related-controls">
+<h2>PCM stream related controls<a class="headerlink" href="#pcm-stream-related-controls" title="Link to this heading">¶</a></h2>
+<p>These controls are described in <a class="reference internal" href="audigy-mixer.html"><span class="doc">Sound Blaster Audigy mixer / default DSP code</span></a>.</p>
+</section>
+<section id="manuals-patents">
+<h2>MANUALS/PATENTS<a class="headerlink" href="#manuals-patents" title="Link to this heading">¶</a></h2>
+<p>See <a class="reference internal" href="sb-live-mixer.html"><span class="doc">Sound Blaster Live mixer / default DSP code</span></a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">E-MU Digital Audio System mixer / default DSP code</a><ul>
+<li><a class="reference internal" href="#hardware-compatibility">Hardware compatibility</a></li>
+<li><a class="reference internal" href="#driver-capabilities">Driver capabilities</a></li>
+<li><a class="reference internal" href="#digital-mixer-controls">Digital mixer controls</a><ul>
+<li><a class="reference internal" href="#name-clock-source-index-0">name=’Clock Source’,index=0</a></li>
+<li><a class="reference internal" href="#name-clock-fallback-index-0">name=’Clock Fallback’,index=0</a></li>
+<li><a class="reference internal" href="#name-dac1-0202-14db-pad-index-0-etc">name=’DAC1 0202 14dB PAD’,index=0, etc.</a></li>
+<li><a class="reference internal" href="#name-adc1-14db-pad-0202-index-0-etc">name=’ADC1 14dB PAD 0202’,index=0, etc.</a></li>
+<li><a class="reference internal" href="#name-optical-output-mode-index-0">name=’Optical Output Mode’,index=0</a></li>
+<li><a class="reference internal" href="#name-optical-input-mode-index-0">name=’Optical Input Mode’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-front-playback-volume-index-0">name=’PCM Front Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-surround-playback-volume-index-0">name=’PCM Surround Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-side-playback-volume-index-0">name=’PCM Side Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-center-playback-volume-index-0">name=’PCM Center Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-lfe-playback-volume-index-0">name=’PCM LFE Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-playback-volume-index-0">name=’PCM Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-pcm-capture-volume-index-0">name=’PCM Capture Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-music-playback-volume-index-0">name=’Music Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-music-capture-volume-index-0">name=’Music Capture Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-front-playback-volume-index-0">name=’Front Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-surround-playback-volume-index-0">name=’Surround Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-side-playback-volume-index-0">name=’Side Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-center-playback-volume-index-0">name=’Center Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-lfe-playback-volume-index-0">name=’LFE Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-tone-control-switch-index-0">name=’Tone Control - Switch’,index=0</a></li>
+<li><a class="reference internal" href="#name-tone-control-bass-index-0">name=’Tone Control - Bass’,index=0</a></li>
+<li><a class="reference internal" href="#name-tone-control-treble-index-0">name=’Tone Control - Treble’,index=0</a></li>
+<li><a class="reference internal" href="#name-master-playback-volume-index-0">name=’Master Playback Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-emu-capture-volume-index-0">name=’EMU Capture Volume’,index=0</a></li>
+<li><a class="reference internal" href="#name-dac-left-index-0-etc">name=’DAC Left’,index=0, etc.</a></li>
+<li><a class="reference internal" href="#name-dsp-x-index-0">name=’DSP x’,index=0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pcm-stream-related-controls">PCM stream related controls</a></li>
+<li><a class="reference internal" href="#manuals-patents">MANUALS/PATENTS</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="audigy-mixer.html">
+                    <span class="icon">&lt;</span><span>Sound Blaster Audigy mixer / default DSP code</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="emu10k1-jack.html"><span>Low latency, multichannel audio with JACK and the emu10k1/emu10k2</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DAMON-based LRU-lists Sorting &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="HugeTLB Pages" href="../hugetlbpage.html" />
+    <link rel="prev" title="DAMON-based Reclamation" href="reclaim.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#core-kernel-subsystems">Core-kernel subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../cgroup-v2.html">Control Group v2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cgroup-v1/index.html">Control Groups version 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cpu-load.html">CPU load</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Memory Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../module-signing.html">Kernel module signing facility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../namespaces/index.html">Namespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../numastat.html">Numa policy hit/miss statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pm/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../syscall-user-dispatch.html">Syscall User Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binfmt-misc.html">Kernel Support for miscellaneous Binary Formats (binfmt_misc)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../java.html">Java(tm) Binary Kernel Support for Linux v1.03</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mono.html">Mono(tm) Binary Kernel Support for Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/admin-guide/mm/damon/lru_sort.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../../../translations/zh_CN/admin-guide/mm/damon/lru_sort.html">Chinese (Simplified)</a></li>
+
+<li><a href="../../../translations/zh_TW/admin-guide/mm/damon/lru_sort.html">Chinese (Traditional)</a></li>
+
+</ul>
+</div>
+<section id="damon-based-lru-lists-sorting">
+<h1>DAMON-based LRU-lists Sorting<a class="headerlink" href="#damon-based-lru-lists-sorting" title="Link to this heading">¶</a></h1>
+<p>DAMON-based LRU-lists Sorting (DAMON_LRU_SORT) is a static kernel module that
+aimed to be used for proactive and lightweight data access pattern based
+(de)prioritization of pages on their LRU-lists for making LRU-lists a more
+trusworthy data access pattern source.</p>
+<section id="where-proactive-lru-lists-sorting-is-required">
+<h2>Where Proactive LRU-lists Sorting is Required?<a class="headerlink" href="#where-proactive-lru-lists-sorting-is-required" title="Link to this heading">¶</a></h2>
+<p>As page-granularity access checking overhead could be significant on huge
+systems, LRU lists are normally not proactively sorted but partially and
+reactively sorted for special events including specific user requests, system
+calls and memory pressure.  As a result, LRU lists are sometimes not so
+perfectly prepared to be used as a trustworthy access pattern source for some
+situations including reclamation target pages selection under sudden memory
+pressure.</p>
+<p>Because DAMON can identify access patterns of best-effort accuracy while
+inducing only user-specified range of overhead, proactively running
+DAMON_LRU_SORT could be helpful for making LRU lists more trustworthy access
+pattern source with low and controlled overhead.</p>
+</section>
+<section id="how-it-works">
+<h2>How It Works?<a class="headerlink" href="#how-it-works" title="Link to this heading">¶</a></h2>
+<p>DAMON_LRU_SORT finds hot pages (pages of memory regions that showing access
+rates that higher than a user-specified threshold) and cold pages (pages of
+memory regions that showing no access for a time that longer than a
+user-specified threshold) using DAMON, and prioritizes hot pages while
+deprioritizing cold pages on their LRU-lists.  To avoid it consuming too much
+CPU for the prioritizations, a CPU time usage limit can be configured.  Under
+the limit, it prioritizes and deprioritizes more hot and cold pages first,
+respectively.  System administrators can also configure under what situation
+this scheme should automatically activated and deactivated with three memory
+pressure watermarks.</p>
+<p>Its default parameters for hotness/coldness thresholds and CPU quota limit are
+conservatively chosen.  That is, the module under its default parameters could
+be widely used without harm for common situations while providing a level of
+benefits for systems having clear hot/cold access patterns under memory
+pressure while consuming only a limited small portion of CPU time.</p>
+</section>
+<section id="interface-module-parameters">
+<h2>Interface: Module Parameters<a class="headerlink" href="#interface-module-parameters" title="Link to this heading">¶</a></h2>
+<p>To use this feature, you should first ensure your system is running on a kernel
+that is built with <code class="docutils literal notranslate"><span class="pre">CONFIG_DAMON_LRU_SORT=y</span></code>.</p>
+<p>To let sysadmins enable or disable it and tune for the given system,
+DAMON_LRU_SORT utilizes module parameters.  That is, you can put
+<code class="docutils literal notranslate"><span class="pre">damon_lru_sort.&lt;parameter&gt;=&lt;value&gt;</span></code> on the kernel boot command line or write
+proper values to <code class="docutils literal notranslate"><span class="pre">/sys/module/damon_lru_sort/parameters/&lt;parameter&gt;</span></code> files.</p>
+<p>Below are the description of each parameter.</p>
+<section id="enabled">
+<h3>enabled<a class="headerlink" href="#enabled" title="Link to this heading">¶</a></h3>
+<p>Enable or disable DAMON_LRU_SORT.</p>
+<p>You can enable DAMON_LRU_SORT by setting the value of this parameter as <code class="docutils literal notranslate"><span class="pre">Y</span></code>.
+Setting it as <code class="docutils literal notranslate"><span class="pre">N</span></code> disables DAMON_LRU_SORT.  Note that DAMON_LRU_SORT could do
+no real monitoring and LRU-lists sorting due to the watermarks-based activation
+condition.  Refer to below descriptions for the watermarks parameter for this.</p>
+</section>
+<section id="commit-inputs">
+<h3>commit_inputs<a class="headerlink" href="#commit-inputs" title="Link to this heading">¶</a></h3>
+<p>Make DAMON_LRU_SORT reads the input parameters again, except <code class="docutils literal notranslate"><span class="pre">enabled</span></code>.</p>
+<p>Input parameters that updated while DAMON_LRU_SORT is running are not applied
+by default.  Once this parameter is set as <code class="docutils literal notranslate"><span class="pre">Y</span></code>, DAMON_LRU_SORT reads values
+of parametrs except <code class="docutils literal notranslate"><span class="pre">enabled</span></code> again.  Once the re-reading is done, this
+parameter is set as <code class="docutils literal notranslate"><span class="pre">N</span></code>.  If invalid parameters are found while the
+re-reading, DAMON_LRU_SORT will be disabled.</p>
+</section>
+<section id="hot-thres-access-freq">
+<h3>hot_thres_access_freq<a class="headerlink" href="#hot-thres-access-freq" title="Link to this heading">¶</a></h3>
+<p>Access frequency threshold for hot memory regions identification in permil.</p>
+<p>If a memory region is accessed in frequency of this or higher, DAMON_LRU_SORT
+identifies the region as hot, and mark it as accessed on the LRU list, so that
+it could not be reclaimed under memory pressure.  50% by default.</p>
+</section>
+<section id="cold-min-age">
+<h3>cold_min_age<a class="headerlink" href="#cold-min-age" title="Link to this heading">¶</a></h3>
+<p>Time threshold for cold memory regions identification in microseconds.</p>
+<p>If a memory region is not accessed for this or longer time, DAMON_LRU_SORT
+identifies the region as cold, and mark it as unaccessed on the LRU list, so
+that it could be reclaimed first under memory pressure.  120 seconds by
+default.</p>
+</section>
+<section id="quota-ms">
+<h3>quota_ms<a class="headerlink" href="#quota-ms" title="Link to this heading">¶</a></h3>
+<p>Limit of time for trying the LRU lists sorting in milliseconds.</p>
+<p>DAMON_LRU_SORT tries to use only up to this time within a time window
+(quota_reset_interval_ms) for trying LRU lists sorting.  This can be used
+for limiting CPU consumption of DAMON_LRU_SORT.  If the value is zero, the
+limit is disabled.</p>
+<p>10 ms by default.</p>
+</section>
+<section id="quota-reset-interval-ms">
+<h3>quota_reset_interval_ms<a class="headerlink" href="#quota-reset-interval-ms" title="Link to this heading">¶</a></h3>
+<p>The time quota charge reset interval in milliseconds.</p>
+<p>The charge reset interval for the quota of time (quota_ms).  That is,
+DAMON_LRU_SORT does not try LRU-lists sorting for more than quota_ms
+milliseconds or quota_sz bytes within quota_reset_interval_ms milliseconds.</p>
+<p>1 second by default.</p>
+</section>
+<section id="wmarks-interval">
+<h3>wmarks_interval<a class="headerlink" href="#wmarks-interval" title="Link to this heading">¶</a></h3>
+<p>The watermarks check time interval in microseconds.</p>
+<p>Minimal time to wait before checking the watermarks, when DAMON_LRU_SORT is
+enabled but inactive due to its watermarks rule.  5 seconds by default.</p>
+</section>
+<section id="wmarks-high">
+<h3>wmarks_high<a class="headerlink" href="#wmarks-high" title="Link to this heading">¶</a></h3>
+<p>Free memory rate (per thousand) for the high watermark.</p>
+<p>If free memory of the system in bytes per thousand bytes is higher than this,
+DAMON_LRU_SORT becomes inactive, so it does nothing but periodically checks the
+watermarks.  200 (20%) by default.</p>
+</section>
+<section id="wmarks-mid">
+<h3>wmarks_mid<a class="headerlink" href="#wmarks-mid" title="Link to this heading">¶</a></h3>
+<p>Free memory rate (per thousand) for the middle watermark.</p>
+<p>If free memory of the system in bytes per thousand bytes is between this and
+the low watermark, DAMON_LRU_SORT becomes active, so starts the monitoring and
+the LRU-lists sorting.  150 (15%) by default.</p>
+</section>
+<section id="wmarks-low">
+<h3>wmarks_low<a class="headerlink" href="#wmarks-low" title="Link to this heading">¶</a></h3>
+<p>Free memory rate (per thousand) for the low watermark.</p>
+<p>If free memory of the system in bytes per thousand bytes is lower than this,
+DAMON_LRU_SORT becomes inactive, so it does nothing but periodically checks the
+watermarks.  50 (5%) by default.</p>
+</section>
+<section id="sample-interval">
+<h3>sample_interval<a class="headerlink" href="#sample-interval" title="Link to this heading">¶</a></h3>
+<p>Sampling interval for the monitoring in microseconds.</p>
+<p>The sampling interval of DAMON for the cold memory monitoring.  Please refer to
+the DAMON documentation (<a class="reference internal" href="usage.html"><span class="doc">Detailed Usages</span></a>) for more detail.  5ms by default.</p>
+</section>
+<section id="aggr-interval">
+<h3>aggr_interval<a class="headerlink" href="#aggr-interval" title="Link to this heading">¶</a></h3>
+<p>Aggregation interval for the monitoring in microseconds.</p>
+<p>The aggregation interval of DAMON for the cold memory monitoring.  Please
+refer to the DAMON documentation (<a class="reference internal" href="usage.html"><span class="doc">Detailed Usages</span></a>) for more detail.  100ms by
+default.</p>
+</section>
+<section id="min-nr-regions">
+<h3>min_nr_regions<a class="headerlink" href="#min-nr-regions" title="Link to this heading">¶</a></h3>
+<p>Minimum number of monitoring regions.</p>
+<p>The minimal number of monitoring regions of DAMON for the cold memory
+monitoring.  This can be used to set lower-bound of the monitoring quality.
+But, setting this too high could result in increased monitoring overhead.
+Please refer to the DAMON documentation (<a class="reference internal" href="usage.html"><span class="doc">Detailed Usages</span></a>) for more detail.  10 by
+default.</p>
+</section>
+<section id="max-nr-regions">
+<h3>max_nr_regions<a class="headerlink" href="#max-nr-regions" title="Link to this heading">¶</a></h3>
+<p>Maximum number of monitoring regions.</p>
+<p>The maximum number of monitoring regions of DAMON for the cold memory
+monitoring.  This can be used to set upper-bound of the monitoring overhead.
+However, setting this too low could result in bad monitoring quality.  Please
+refer to the DAMON documentation (<a class="reference internal" href="usage.html"><span class="doc">Detailed Usages</span></a>) for more detail.  1000 by
+defaults.</p>
+</section>
+<section id="monitor-region-start">
+<h3>monitor_region_start<a class="headerlink" href="#monitor-region-start" title="Link to this heading">¶</a></h3>
+<p>Start of target memory region in physical address.</p>
+<p>The start physical address of memory region that DAMON_LRU_SORT will do work
+against.  By default, biggest System RAM is used as the region.</p>
+</section>
+<section id="monitor-region-end">
+<h3>monitor_region_end<a class="headerlink" href="#monitor-region-end" title="Link to this heading">¶</a></h3>
+<p>End of target memory region in physical address.</p>
+<p>The end physical address of memory region that DAMON_LRU_SORT will do work
+against.  By default, biggest System RAM is used as the region.</p>
+</section>
+<section id="kdamond-pid">
+<h3>kdamond_pid<a class="headerlink" href="#kdamond-pid" title="Link to this heading">¶</a></h3>
+<p>PID of the DAMON thread.</p>
+<p>If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.  Else,
+-1.</p>
+</section>
+<section id="nr-lru-sort-tried-hot-regions">
+<h3>nr_lru_sort_tried_hot_regions<a class="headerlink" href="#nr-lru-sort-tried-hot-regions" title="Link to this heading">¶</a></h3>
+<p>Number of hot memory regions that tried to be LRU-sorted.</p>
+</section>
+<section id="bytes-lru-sort-tried-hot-regions">
+<h3>bytes_lru_sort_tried_hot_regions<a class="headerlink" href="#bytes-lru-sort-tried-hot-regions" title="Link to this heading">¶</a></h3>
+<p>Total bytes of hot memory regions that tried to be LRU-sorted.</p>
+</section>
+<section id="nr-lru-sorted-hot-regions">
+<h3>nr_lru_sorted_hot_regions<a class="headerlink" href="#nr-lru-sorted-hot-regions" title="Link to this heading">¶</a></h3>
+<p>Number of hot memory regions that successfully be LRU-sorted.</p>
+</section>
+<section id="bytes-lru-sorted-hot-regions">
+<h3>bytes_lru_sorted_hot_regions<a class="headerlink" href="#bytes-lru-sorted-hot-regions" title="Link to this heading">¶</a></h3>
+<p>Total bytes of hot memory regions that successfully be LRU-sorted.</p>
+</section>
+<section id="nr-hot-quota-exceeds">
+<h3>nr_hot_quota_exceeds<a class="headerlink" href="#nr-hot-quota-exceeds" title="Link to this heading">¶</a></h3>
+<p>Number of times that the time quota limit for hot regions have exceeded.</p>
+</section>
+<section id="nr-lru-sort-tried-cold-regions">
+<h3>nr_lru_sort_tried_cold_regions<a class="headerlink" href="#nr-lru-sort-tried-cold-regions" title="Link to this heading">¶</a></h3>
+<p>Number of cold memory regions that tried to be LRU-sorted.</p>
+</section>
+<section id="bytes-lru-sort-tried-cold-regions">
+<h3>bytes_lru_sort_tried_cold_regions<a class="headerlink" href="#bytes-lru-sort-tried-cold-regions" title="Link to this heading">¶</a></h3>
+<p>Total bytes of cold memory regions that tried to be LRU-sorted.</p>
+</section>
+<section id="nr-lru-sorted-cold-regions">
+<h3>nr_lru_sorted_cold_regions<a class="headerlink" href="#nr-lru-sorted-cold-regions" title="Link to this heading">¶</a></h3>
+<p>Number of cold memory regions that successfully be LRU-sorted.</p>
+</section>
+<section id="bytes-lru-sorted-cold-regions">
+<h3>bytes_lru_sorted_cold_regions<a class="headerlink" href="#bytes-lru-sorted-cold-regions" title="Link to this heading">¶</a></h3>
+<p>Total bytes of cold memory regions that successfully be LRU-sorted.</p>
+</section>
+<section id="nr-cold-quota-exceeds">
+<h3>nr_cold_quota_exceeds<a class="headerlink" href="#nr-cold-quota-exceeds" title="Link to this heading">¶</a></h3>
+<p>Number of times that the time quota limit for cold regions have exceeded.</p>
+</section>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>Below runtime example commands make DAMON_LRU_SORT to find memory regions
+having &gt;=50% access frequency and LRU-prioritize while LRU-deprioritizing
+memory regions that not accessed for 120 seconds.  The prioritization and
+deprioritization is limited to be done using only up to 1% CPU time to avoid
+DAMON_LRU_SORT consuming too much CPU time for the (de)prioritization.  It also
+asks DAMON_LRU_SORT to do nothing if the system’s free memory rate is more than
+50%, but start the real works if it becomes lower than 40%.  If DAMON_RECLAIM
+doesn’t make progress and therefore the free memory rate becomes lower than
+20%, it asks DAMON_LRU_SORT to do nothing again, so that we can fall back to
+the LRU-list based page granularity reclamation.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cd /sys/module/damon_lru_sort/parameters
+# echo 500 &gt; hot_thres_access_freq
+# echo 120000000 &gt; cold_min_age
+# echo 10 &gt; quota_ms
+# echo 1000 &gt; quota_reset_interval_ms
+# echo 500 &gt; wmarks_high
+# echo 400 &gt; wmarks_mid
+# echo 200 &gt; wmarks_low
+# echo Y &gt; enabled
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">DAMON-based LRU-lists Sorting</a><ul>
+<li><a class="reference internal" href="#where-proactive-lru-lists-sorting-is-required">Where Proactive LRU-lists Sorting is Required?</a></li>
+<li><a class="reference internal" href="#how-it-works">How It Works?</a></li>
+<li><a class="reference internal" href="#interface-module-parameters">Interface: Module Parameters</a><ul>
+<li><a class="reference internal" href="#enabled">enabled</a></li>
+<li><a class="reference internal" href="#commit-inputs">commit_inputs</a></li>
+<li><a class="reference internal" href="#hot-thres-access-freq">hot_thres_access_freq</a></li>
+<li><a class="reference internal" href="#cold-min-age">cold_min_age</a></li>
+<li><a class="reference internal" href="#quota-ms">quota_ms</a></li>
+<li><a class="reference internal" href="#quota-reset-interval-ms">quota_reset_interval_ms</a></li>
+<li><a class="reference internal" href="#wmarks-interval">wmarks_interval</a></li>
+<li><a class="reference internal" href="#wmarks-high">wmarks_high</a></li>
+<li><a class="reference internal" href="#wmarks-mid">wmarks_mid</a></li>
+<li><a class="reference internal" href="#wmarks-low">wmarks_low</a></li>
+<li><a class="reference internal" href="#sample-interval">sample_interval</a></li>
+<li><a class="reference internal" href="#aggr-interval">aggr_interval</a></li>
+<li><a class="reference internal" href="#min-nr-regions">min_nr_regions</a></li>
+<li><a class="reference internal" href="#max-nr-regions">max_nr_regions</a></li>
+<li><a class="reference internal" href="#monitor-region-start">monitor_region_start</a></li>
+<li><a class="reference internal" href="#monitor-region-end">monitor_region_end</a></li>
+<li><a class="reference internal" href="#kdamond-pid">kdamond_pid</a></li>
+<li><a class="reference internal" href="#nr-lru-sort-tried-hot-regions">nr_lru_sort_tried_hot_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sort-tried-hot-regions">bytes_lru_sort_tried_hot_regions</a></li>
+<li><a class="reference internal" href="#nr-lru-sorted-hot-regions">nr_lru_sorted_hot_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sorted-hot-regions">bytes_lru_sorted_hot_regions</a></li>
+<li><a class="reference internal" href="#nr-hot-quota-exceeds">nr_hot_quota_exceeds</a></li>
+<li><a class="reference internal" href="#nr-lru-sort-tried-cold-regions">nr_lru_sort_tried_cold_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sort-tried-cold-regions">bytes_lru_sort_tried_cold_regions</a></li>
+<li><a class="reference internal" href="#nr-lru-sorted-cold-regions">nr_lru_sorted_cold_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sorted-cold-regions">bytes_lru_sorted_cold_regions</a></li>
+<li><a class="reference internal" href="#nr-cold-quota-exceeds">nr_cold_quota_exceeds</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="reclaim.html">
+                    <span class="icon">&lt;</span><span>DAMON-based Reclamation</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../hugetlbpage.html"><span>HugeTLB Pages</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

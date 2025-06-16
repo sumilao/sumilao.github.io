@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kernel Connection Multiplexor &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="L2TP" href="l2tp.html" />
+    <link rel="prev" title="IPvs-sysctl" href="ipvs-sysctl.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/kcm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="kernel-connection-multiplexor">
+<h1>Kernel Connection Multiplexor<a class="headerlink" href="#kernel-connection-multiplexor" title="Link to this heading">¶</a></h1>
+<p>Kernel Connection Multiplexor (KCM) is a mechanism that provides a message based
+interface over TCP for generic application protocols. With KCM an application
+can efficiently send and receive application protocol messages over TCP using
+datagram sockets.</p>
+<p>KCM implements an NxM multiplexor in the kernel as diagrammed below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+------------+   +------------+   +------------+   +------------+
+| KCM socket |   | KCM socket |   | KCM socket |   | KCM socket |
++------------+   +------------+   +------------+   +------------+
+    |                 |               |                |
+    +-----------+     |               |     +----------+
+                |     |               |     |
+            +----------------------------------+
+            |           Multiplexor            |
+            +----------------------------------+
+                |   |           |           |  |
+    +---------+   |           |           |  ------------+
+    |             |           |           |              |
++----------+  +----------+  +----------+  +----------+ +----------+
+|  Psock   |  |  Psock   |  |  Psock   |  |  Psock   | |  Psock   |
++----------+  +----------+  +----------+  +----------+ +----------+
+    |              |           |            |             |
++----------+  +----------+  +----------+  +----------+ +----------+
+| TCP sock |  | TCP sock |  | TCP sock |  | TCP sock | | TCP sock |
++----------+  +----------+  +----------+  +----------+ +----------+
+</pre></div>
+</div>
+<section id="kcm-sockets">
+<h2>KCM sockets<a class="headerlink" href="#kcm-sockets" title="Link to this heading">¶</a></h2>
+<p>The KCM sockets provide the user interface to the multiplexor. All the KCM sockets
+bound to a multiplexor are considered to have equivalent function, and I/O
+operations in different sockets may be done in parallel without the need for
+synchronization between threads in userspace.</p>
+</section>
+<section id="multiplexor">
+<h2>Multiplexor<a class="headerlink" href="#multiplexor" title="Link to this heading">¶</a></h2>
+<p>The multiplexor provides the message steering. In the transmit path, messages
+written on a KCM socket are sent atomically on an appropriate TCP socket.
+Similarly, in the receive path, messages are constructed on each TCP socket
+(Psock) and complete messages are steered to a KCM socket.</p>
+</section>
+<section id="tcp-sockets-psocks">
+<h2>TCP sockets &amp; Psocks<a class="headerlink" href="#tcp-sockets-psocks" title="Link to this heading">¶</a></h2>
+<p>TCP sockets may be bound to a KCM multiplexor. A Psock structure is allocated
+for each bound TCP socket, this structure holds the state for constructing
+messages on receive as well as other connection specific information for KCM.</p>
+</section>
+<section id="connected-mode-semantics">
+<h2>Connected mode semantics<a class="headerlink" href="#connected-mode-semantics" title="Link to this heading">¶</a></h2>
+<p>Each multiplexor assumes that all attached TCP connections are to the same
+destination and can use the different connections for load balancing when
+transmitting. The normal send and recv calls (include sendmmsg and recvmmsg)
+can be used to send and receive messages from the KCM socket.</p>
+</section>
+<section id="socket-types">
+<h2>Socket types<a class="headerlink" href="#socket-types" title="Link to this heading">¶</a></h2>
+<p>KCM supports SOCK_DGRAM and SOCK_SEQPACKET socket types.</p>
+<section id="message-delineation">
+<h3>Message delineation<a class="headerlink" href="#message-delineation" title="Link to this heading">¶</a></h3>
+<p>Messages are sent over a TCP stream with some application protocol message
+format that typically includes a header which frames the messages. The length
+of a received message can be deduced from the application protocol header
+(often just a simple length field).</p>
+<p>A TCP stream must be parsed to determine message boundaries. Berkeley Packet
+Filter (BPF) is used for this. When attaching a TCP socket to a multiplexor a
+BPF program must be specified. The program is called at the start of receiving
+a new message and is given an skbuff that contains the bytes received so far.
+It parses the message header and returns the length of the message. Given this
+information, KCM will construct the message of the stated length and deliver it
+to a KCM socket.</p>
+</section>
+<section id="tcp-socket-management">
+<h3>TCP socket management<a class="headerlink" href="#tcp-socket-management" title="Link to this heading">¶</a></h3>
+<p>When a TCP socket is attached to a KCM multiplexor data ready (POLLIN) and
+write space available (POLLOUT) events are handled by the multiplexor. If there
+is a state change (disconnection) or other error on a TCP socket, an error is
+posted on the TCP socket so that a POLLERR event happens and KCM discontinues
+using the socket. When the application gets the error notification for a
+TCP socket, it should unattach the socket from KCM and then handle the error
+condition (the typical response is to close the socket and create a new
+connection if necessary).</p>
+<p>KCM limits the maximum receive message size to be the size of the receive
+socket buffer on the attached TCP socket (the socket buffer size can be set by
+SO_RCVBUF). If the length of a new message reported by the BPF program is
+greater than this limit a corresponding error (EMSGSIZE) is posted on the TCP
+socket. The BPF program may also enforce a maximum messages size and report an
+error when it is exceeded.</p>
+<p>A timeout may be set for assembling messages on a receive socket. The timeout
+value is taken from the receive timeout of the attached TCP socket (this is set
+by SO_RCVTIMEO). If the timer expires before assembly is complete an error
+(ETIMEDOUT) is posted on the socket.</p>
+</section>
+</section>
+<section id="user-interface">
+<h2>User interface<a class="headerlink" href="#user-interface" title="Link to this heading">¶</a></h2>
+<section id="creating-a-multiplexor">
+<h3>Creating a multiplexor<a class="headerlink" href="#creating-a-multiplexor" title="Link to this heading">¶</a></h3>
+<p>A new multiplexor and initial KCM socket is created by a socket call:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>socket(AF_KCM, type, protocol)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>type is either SOCK_DGRAM or SOCK_SEQPACKET</p></li>
+<li><p>protocol is KCMPROTO_CONNECTED</p></li>
+</ul>
+</section>
+<section id="cloning-kcm-sockets">
+<h3>Cloning KCM sockets<a class="headerlink" href="#cloning-kcm-sockets" title="Link to this heading">¶</a></h3>
+<p>After the first KCM socket is created using the socket call as described
+above, additional sockets for the multiplexor can be created by cloning
+a KCM socket. This is accomplished by an ioctl on a KCM socket:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* From linux/kcm.h */
+struct kcm_clone {
+      int fd;
+};
+
+struct kcm_clone info;
+
+memset(&amp;info, 0, sizeof(info));
+
+err = ioctl(kcmfd, SIOCKCMCLONE, &amp;info);
+
+if (!err)
+  newkcmfd = info.fd;
+</pre></div>
+</div>
+</section>
+<section id="attach-transport-sockets">
+<h3>Attach transport sockets<a class="headerlink" href="#attach-transport-sockets" title="Link to this heading">¶</a></h3>
+<p>Attaching of transport sockets to a multiplexor is performed by calling an
+ioctl on a KCM socket for the multiplexor. e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* From linux/kcm.h */
+struct kcm_attach {
+      int fd;
+      int bpf_fd;
+};
+
+struct kcm_attach info;
+
+memset(&amp;info, 0, sizeof(info));
+
+info.fd = tcpfd;
+info.bpf_fd = bpf_prog_fd;
+
+ioctl(kcmfd, SIOCKCMATTACH, &amp;info);
+</pre></div>
+</div>
+<p>The kcm_attach structure contains:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>fd: file descriptor for TCP socket being attached</p></li>
+<li><p>bpf_prog_fd: file descriptor for compiled BPF program downloaded</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="unattach-transport-sockets">
+<h3>Unattach transport sockets<a class="headerlink" href="#unattach-transport-sockets" title="Link to this heading">¶</a></h3>
+<p>Unattaching a transport socket from a multiplexor is straightforward. An
+“unattach” ioctl is done with the kcm_unattach structure as the argument:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* From linux/kcm.h */
+struct kcm_unattach {
+      int fd;
+};
+
+struct kcm_unattach info;
+
+memset(&amp;info, 0, sizeof(info));
+
+info.fd = cfd;
+
+ioctl(fd, SIOCKCMUNATTACH, &amp;info);
+</pre></div>
+</div>
+</section>
+<section id="disabling-receive-on-kcm-socket">
+<h3>Disabling receive on KCM socket<a class="headerlink" href="#disabling-receive-on-kcm-socket" title="Link to this heading">¶</a></h3>
+<p>A setsockopt is used to disable or enable receiving on a KCM socket.
+When receive is disabled, any pending messages in the socket’s
+receive buffer are moved to other sockets. This feature is useful
+if an application thread knows that it will be doing a lot of
+work on a request and won’t be able to service new messages for a
+while. Example use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int val = 1;
+
+setsockopt(kcmfd, SOL_KCM, KCM_RECV_DISABLE, &amp;val, sizeof(val))
+</pre></div>
+</div>
+</section>
+<section id="bpf-programs-for-message-delineation">
+<h3>BPF programs for message delineation<a class="headerlink" href="#bpf-programs-for-message-delineation" title="Link to this heading">¶</a></h3>
+<p>BPF programs can be compiled using the BPF LLVM backend. For example,
+the BPF program for parsing Thrift is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#include &quot;bpf.h&quot; /* for __sk_buff */
+#include &quot;bpf_helpers.h&quot; /* for load_word intrinsic */
+
+SEC(&quot;socket_kcm&quot;)
+int bpf_prog1(struct __sk_buff *skb)
+{
+     return load_word(skb, 0) + 4;
+}
+
+char _license[] SEC(&quot;license&quot;) = &quot;GPL&quot;;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="use-in-applications">
+<h2>Use in applications<a class="headerlink" href="#use-in-applications" title="Link to this heading">¶</a></h2>
+<p>KCM accelerates application layer protocols. Specifically, it allows
+applications to use a message based interface for sending and receiving
+messages. The kernel provides necessary assurances that messages are sent
+and received atomically. This relieves much of the burden applications have
+in mapping a message based protocol onto the TCP stream. KCM also make
+application layer messages a unit of work in the kernel for the purposes of
+steering and scheduling, which in turn allows a simpler networking model in
+multithreaded applications.</p>
+<section id="configurations">
+<h3>Configurations<a class="headerlink" href="#configurations" title="Link to this heading">¶</a></h3>
+<p>In an Nx1 configuration, KCM logically provides multiple socket handles
+to the same TCP connection. This allows parallelism between in I/O
+operations on the TCP socket (for instance copyin and copyout of data is
+parallelized). In an application, a KCM socket can be opened for each
+processing thread and inserted into the epoll (similar to how SO_REUSEPORT
+is used to allow multiple listener sockets on the same port).</p>
+<p>In a MxN configuration, multiple connections are established to the
+same destination. These are used for simple load balancing.</p>
+</section>
+<section id="message-batching">
+<h3>Message batching<a class="headerlink" href="#message-batching" title="Link to this heading">¶</a></h3>
+<p>The primary purpose of KCM is load balancing between KCM sockets and hence
+threads in a nominal use case. Perfect load balancing, that is steering
+each received message to a different KCM socket or steering each sent
+message to a different TCP socket, can negatively impact performance
+since this doesn’t allow for affinities to be established. Balancing
+based on groups, or batches of messages, can be beneficial for performance.</p>
+<p>On transmit, there are three ways an application can batch (pipeline)
+messages on a KCM socket.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Send multiple messages in a single sendmmsg.</p></li>
+<li><p>Send a group of messages each with a sendmsg call, where all messages
+except the last have MSG_BATCH in the flags of sendmsg call.</p></li>
+<li><p>Create “super message” composed of multiple messages and send this
+with a single sendmsg.</p></li>
+</ol>
+</div></blockquote>
+<p>On receive, the KCM module attempts to queue messages received on the
+same KCM socket during each TCP ready callback. The targeted KCM socket
+changes at each receive ready callback on the KCM socket. The application
+does not need to configure this.</p>
+</section>
+<section id="error-handling">
+<h3>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h3>
+<p>An application should include a thread to monitor errors raised on
+the TCP connection. Normally, this will be done by placing each
+TCP socket attached to a KCM multiplexor in epoll set for POLLERR
+event. If an error occurs on an attached TCP socket, KCM sets an EPIPE
+on the socket thus waking up the application thread. When the application
+sees the error (which may just be a disconnect) it should unattach the
+socket from KCM and then close it. It is assumed that once an error is
+posted on the TCP socket the data stream is unrecoverable (i.e. an error
+may have occurred in the middle of receiving a message).</p>
+</section>
+<section id="tcp-connection-monitoring">
+<h3>TCP connection monitoring<a class="headerlink" href="#tcp-connection-monitoring" title="Link to this heading">¶</a></h3>
+<p>In KCM there is no means to correlate a message to the TCP socket that
+was used to send or receive the message (except in the case there is
+only one attached TCP socket). However, the application does retain
+an open file descriptor to the socket so it will be able to get statistics
+from the socket which can be used in detecting issues (such as high
+retransmissions on the socket).</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Kernel Connection Multiplexor</a><ul>
+<li><a class="reference internal" href="#kcm-sockets">KCM sockets</a></li>
+<li><a class="reference internal" href="#multiplexor">Multiplexor</a></li>
+<li><a class="reference internal" href="#tcp-sockets-psocks">TCP sockets &amp; Psocks</a></li>
+<li><a class="reference internal" href="#connected-mode-semantics">Connected mode semantics</a></li>
+<li><a class="reference internal" href="#socket-types">Socket types</a><ul>
+<li><a class="reference internal" href="#message-delineation">Message delineation</a></li>
+<li><a class="reference internal" href="#tcp-socket-management">TCP socket management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-interface">User interface</a><ul>
+<li><a class="reference internal" href="#creating-a-multiplexor">Creating a multiplexor</a></li>
+<li><a class="reference internal" href="#cloning-kcm-sockets">Cloning KCM sockets</a></li>
+<li><a class="reference internal" href="#attach-transport-sockets">Attach transport sockets</a></li>
+<li><a class="reference internal" href="#unattach-transport-sockets">Unattach transport sockets</a></li>
+<li><a class="reference internal" href="#disabling-receive-on-kcm-socket">Disabling receive on KCM socket</a></li>
+<li><a class="reference internal" href="#bpf-programs-for-message-delineation">BPF programs for message delineation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-in-applications">Use in applications</a><ul>
+<li><a class="reference internal" href="#configurations">Configurations</a></li>
+<li><a class="reference internal" href="#message-batching">Message batching</a></li>
+<li><a class="reference internal" href="#error-handling">Error handling</a></li>
+<li><a class="reference internal" href="#tcp-connection-monitoring">TCP connection monitoring</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="ipvs-sysctl.html">
+                    <span class="icon">&lt;</span><span>IPvs-sysctl</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="l2tp.html"><span>L2TP</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

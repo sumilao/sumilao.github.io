@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NVMe Fault Injection &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Provoking crashes with Linux Kernel Dump Test Module (LKDTM)" href="provoke-crashes.html" />
+    <link rel="prev" title="Notifier error injection" href="notifier-error-inject.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Fault injection</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fault-injection.html">Fault injection capabilities infrastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notifier-error-inject.html">Notifier error injection</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NVMe Fault Injection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-1-inject-default-status-code-with-no-retry">Example 1: Inject default status code with no retry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-2-inject-default-status-code-with-retry">Example 2: Inject default status code with retry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-3-inject-an-error-into-the-10th-admin-command">Example 3: Inject an error into the 10th admin command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="provoke-crashes.html">Provoking crashes with Linux Kernel Dump Test Module (LKDTM)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/fault-injection/nvme-fault-injection.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="nvme-fault-injection">
+<h1>NVMe Fault Injection<a class="headerlink" href="#nvme-fault-injection" title="Link to this heading">¶</a></h1>
+<p>Linux’s fault injection framework provides a systematic way to support
+error injection via debugfs in the /sys/kernel/debug directory. When
+enabled, the default NVME_SC_INVALID_OPCODE with no retry will be
+injected into the nvme_try_complete_req. Users can change the default status
+code and no retry flag via the debugfs. The list of Generic Command
+Status can be found in include/linux/nvme.h</p>
+<p>Following examples show how to inject an error into the nvme.</p>
+<p>First, enable CONFIG_FAULT_INJECTION_DEBUG_FS kernel config,
+recompile the kernel. After booting up the kernel, do the
+following.</p>
+<section id="example-1-inject-default-status-code-with-no-retry">
+<h2>Example 1: Inject default status code with no retry<a class="headerlink" href="#example-1-inject-default-status-code-with-no-retry" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount /dev/nvme0n1 /mnt
+echo 1 &gt; /sys/kernel/debug/nvme0n1/fault_inject/times
+echo 100 &gt; /sys/kernel/debug/nvme0n1/fault_inject/probability
+cp a.file /mnt
+</pre></div>
+</div>
+<p>Expected Result:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp: cannot stat ‘/mnt/a.file’: Input/output error
+</pre></div>
+</div>
+<p>Message from dmesg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FAULT_INJECTION: forcing a failure.
+name fault_inject, interval 1, probability 100, space 0, times 1
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.15.0-rc8+ #2
+Hardware name: innotek GmbH VirtualBox/VirtualBox,
+BIOS VirtualBox 12/01/2006
+Call Trace:
+  &lt;IRQ&gt;
+  dump_stack+0x5c/0x7d
+  should_fail+0x148/0x170
+  nvme_should_fail+0x2f/0x50 [nvme_core]
+  nvme_process_cq+0xe7/0x1d0 [nvme]
+  nvme_irq+0x1e/0x40 [nvme]
+  __handle_irq_event_percpu+0x3a/0x190
+  handle_irq_event_percpu+0x30/0x70
+  handle_irq_event+0x36/0x60
+  handle_fasteoi_irq+0x78/0x120
+  handle_irq+0xa7/0x130
+  ? tick_irq_enter+0xa8/0xc0
+  do_IRQ+0x43/0xc0
+  common_interrupt+0xa2/0xa2
+  &lt;/IRQ&gt;
+RIP: 0010:native_safe_halt+0x2/0x10
+RSP: 0018:ffffffff82003e90 EFLAGS: 00000246 ORIG_RAX: ffffffffffffffdd
+RAX: ffffffff817a10c0 RBX: ffffffff82012480 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 000000008e38ce64 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82012480
+R13: ffffffff82012480 R14: 0000000000000000 R15: 0000000000000000
+  ? __sched_text_end+0x4/0x4
+  default_idle+0x18/0xf0
+  do_idle+0x150/0x1d0
+  cpu_startup_entry+0x6f/0x80
+  start_kernel+0x4c4/0x4e4
+  ? set_init_arg+0x55/0x55
+  secondary_startup_64+0xa5/0xb0
+  print_req_error: I/O error, dev nvme0n1, sector 9240
+EXT4-fs error (device nvme0n1): ext4_find_entry:1436:
+inode #2: comm cp: reading directory lblock 0
+</pre></div>
+</div>
+</section>
+<section id="example-2-inject-default-status-code-with-retry">
+<h2>Example 2: Inject default status code with retry<a class="headerlink" href="#example-2-inject-default-status-code-with-retry" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount /dev/nvme0n1 /mnt
+echo 1 &gt; /sys/kernel/debug/nvme0n1/fault_inject/times
+echo 100 &gt; /sys/kernel/debug/nvme0n1/fault_inject/probability
+echo 1 &gt; /sys/kernel/debug/nvme0n1/fault_inject/status
+echo 0 &gt; /sys/kernel/debug/nvme0n1/fault_inject/dont_retry
+
+cp a.file /mnt
+</pre></div>
+</div>
+<p>Expected Result:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>command success without error
+</pre></div>
+</div>
+<p>Message from dmesg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FAULT_INJECTION: forcing a failure.
+name fault_inject, interval 1, probability 100, space 0, times 1
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.15.0-rc8+ #4
+Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+Call Trace:
+  &lt;IRQ&gt;
+  dump_stack+0x5c/0x7d
+  should_fail+0x148/0x170
+  nvme_should_fail+0x30/0x60 [nvme_core]
+  nvme_loop_queue_response+0x84/0x110 [nvme_loop]
+  nvmet_req_complete+0x11/0x40 [nvmet]
+  nvmet_bio_done+0x28/0x40 [nvmet]
+  blk_update_request+0xb0/0x310
+  blk_mq_end_request+0x18/0x60
+  flush_smp_call_function_queue+0x3d/0xf0
+  smp_call_function_single_interrupt+0x2c/0xc0
+  call_function_single_interrupt+0xa2/0xb0
+  &lt;/IRQ&gt;
+RIP: 0010:native_safe_halt+0x2/0x10
+RSP: 0018:ffffc9000068bec0 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff04
+RAX: ffffffff817a10c0 RBX: ffff88011a3c9680 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000000000001 R08: 000000008e38c131 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffff88011a3c9680
+R13: ffff88011a3c9680 R14: 0000000000000000 R15: 0000000000000000
+  ? __sched_text_end+0x4/0x4
+  default_idle+0x18/0xf0
+  do_idle+0x150/0x1d0
+  cpu_startup_entry+0x6f/0x80
+  start_secondary+0x187/0x1e0
+  secondary_startup_64+0xa5/0xb0
+</pre></div>
+</div>
+</section>
+<section id="example-3-inject-an-error-into-the-10th-admin-command">
+<h2>Example 3: Inject an error into the 10th admin command<a class="headerlink" href="#example-3-inject-an-error-into-the-10th-admin-command" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo 100 &gt; /sys/kernel/debug/nvme0/fault_inject/probability
+echo 10 &gt; /sys/kernel/debug/nvme0/fault_inject/space
+echo 1 &gt; /sys/kernel/debug/nvme0/fault_inject/times
+nvme reset /dev/nvme0
+</pre></div>
+</div>
+<p>Expected Result:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>After NVMe controller reset, the reinitialization may or may not succeed.
+It depends on which admin command is actually forced to fail.
+</pre></div>
+</div>
+<p>Message from dmesg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nvme nvme0: resetting controller
+FAULT_INJECTION: forcing a failure.
+name fault_inject, interval 1, probability 100, space 1, times 1
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.2.0-rc2+ #2
+Hardware name: MSI MS-7A45/B150M MORTAR ARCTIC (MS-7A45), BIOS 1.50 04/25/2017
+Call Trace:
+ &lt;IRQ&gt;
+ dump_stack+0x63/0x85
+ should_fail+0x14a/0x170
+ nvme_should_fail+0x38/0x80 [nvme_core]
+ nvme_irq+0x129/0x280 [nvme]
+ ? blk_mq_end_request+0xb3/0x120
+ __handle_irq_event_percpu+0x84/0x1a0
+ handle_irq_event_percpu+0x32/0x80
+ handle_irq_event+0x3b/0x60
+ handle_edge_irq+0x7f/0x1a0
+ handle_irq+0x20/0x30
+ do_IRQ+0x4e/0xe0
+ common_interrupt+0xf/0xf
+ &lt;/IRQ&gt;
+RIP: 0010:cpuidle_enter_state+0xc5/0x460
+Code: ff e8 8f 5f 86 ff 80 7d c7 00 74 17 9c 58 0f 1f 44 00 00 f6 c4 02 0f 85 69 03 00 00 31 ff e8 62 aa 8c ff fb 66 0f 1f 44 00 00 &lt;45&gt; 85 ed 0f 88 37 03 00 00 4c 8b 45 d0 4c 2b 45 b8 48 ba cf f7 53
+RSP: 0018:ffffffff88c03dd0 EFLAGS: 00000246 ORIG_RAX: ffffffffffffffdc
+RAX: ffff9dac25a2ac80 RBX: ffffffff88d53760 RCX: 000000000000001f
+RDX: 0000000000000000 RSI: 000000002d958403 RDI: 0000000000000000
+RBP: ffffffff88c03e18 R08: fffffff75e35ffb7 R09: 00000a49a56c0b48
+R10: ffffffff88c03da0 R11: 0000000000001b0c R12: ffff9dac25a34d00
+R13: 0000000000000006 R14: 0000000000000006 R15: ffffffff88d53760
+ cpuidle_enter+0x2e/0x40
+ call_cpuidle+0x23/0x40
+ do_idle+0x201/0x280
+ cpu_startup_entry+0x1d/0x20
+ rest_init+0xaa/0xb0
+ arch_call_rest_init+0xe/0x1b
+ start_kernel+0x51c/0x53b
+ x86_64_start_reservations+0x24/0x26
+ x86_64_start_kernel+0x74/0x77
+ secondary_startup_64+0xa4/0xb0
+nvme nvme0: Could not set queue count (16385)
+nvme nvme0: IO queues not created
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">NVMe Fault Injection</a><ul>
+<li><a class="reference internal" href="#example-1-inject-default-status-code-with-no-retry">Example 1: Inject default status code with no retry</a></li>
+<li><a class="reference internal" href="#example-2-inject-default-status-code-with-retry">Example 2: Inject default status code with retry</a></li>
+<li><a class="reference internal" href="#example-3-inject-an-error-into-the-10th-admin-command">Example 3: Inject an error into the 10th admin command</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="notifier-error-inject.html">
+                    <span class="icon">&lt;</span><span>Notifier error injection</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="provoke-crashes.html"><span>Provoking crashes with Linux Kernel Dump Test Module (LKDTM)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

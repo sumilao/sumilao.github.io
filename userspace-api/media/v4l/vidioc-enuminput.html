@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.18. ioctl VIDIOC_ENUMINPUT &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="7.19. ioctl VIDIOC_ENUMOUTPUT" href="vidioc-enumoutput.html" />
+    <link rel="prev" title="7.17. ioctl VIDIOC_ENUM_FREQ_BANDS" href="vidioc-enum-freq-bands.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Userspace API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#system-calls">System calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#security-related-interfaces">Security-related interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#devices-and-i-o">Devices and I/O</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accelerators/ocxl.html">OpenCAPI (Open Coherent Accelerator Processor Interface)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-heaps.html">Allocating dma-buf using heaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-alloc-exchange.html">Exchanging pixel buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fwctl/index.html">Firmware Control (FWCTL) Userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpio/index.html">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iommufd.html">IOMMUFD</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Linux Media Infrastructure userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dcdbas.html">Dell Systems Management Base Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vduse.html">VDUSE - “vDPA Device in Userspace”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isapnp.html">ISA Plug &amp; Play support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/userspace-api/media/v4l/vidioc-enuminput.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="ioctl-vidioc-enuminput">
+<span id="vidioc-enuminput"></span><h1><span class="section-number">7.18. </span>ioctl VIDIOC_ENUMINPUT<a class="headerlink" href="#ioctl-vidioc-enuminput" title="Link to this heading">¶</a></h1>
+<section id="name">
+<h2><span class="section-number">7.18.1. </span>Name<a class="headerlink" href="#name" title="Link to this heading">¶</a></h2>
+<p>VIDIOC_ENUMINPUT - Enumerate video inputs</p>
+</section>
+<section id="synopsis">
+<h2><span class="section-number">7.18.2. </span>Synopsis<a class="headerlink" href="#synopsis" title="Link to this heading">¶</a></h2>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.V4L.VIDIOC_ENUMINPUT">
+<span class="sig-name descname"><span class="n"><span class="pre">VIDIOC_ENUMINPUT</span></span></span><a class="headerlink" href="#c.V4L.VIDIOC_ENUMINPUT" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">ioctl(int</span> <span class="pre">fd,</span> <span class="pre">VIDIOC_ENUMINPUT,</span> <span class="pre">struct</span> <span class="pre">v4l2_input</span> <span class="pre">*argp)</span></code></p>
+</section>
+<section id="arguments">
+<h2><span class="section-number">7.18.3. </span>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">fd</span></code></dt><dd><p>File descriptor returned by <a class="reference internal" href="func-open.html#c.V4L.open" title="open"><code class="xref c c-func docutils literal notranslate"><span class="pre">open()</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">argp</span></code></dt><dd><p>Pointer to struct <a class="reference internal" href="#c.V4L.v4l2_input" title="v4l2_input"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_input</span></code></a>.</p>
+</dd>
+</dl>
+</section>
+<section id="description">
+<h2><span class="section-number">7.18.4. </span>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>To query the attributes of a video input applications initialize the
+<code class="docutils literal notranslate"><span class="pre">index</span></code> field of struct <a class="reference internal" href="#c.V4L.v4l2_input" title="v4l2_input"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_input</span></code></a> and call the
+<a class="reference internal" href="#vidioc-enuminput"><span class="std std-ref">ioctl VIDIOC_ENUMINPUT</span></a> with a pointer to this structure. Drivers
+fill the rest of the structure or return an <code class="docutils literal notranslate"><span class="pre">EINVAL</span></code> error code when the
+index is out of bounds. To enumerate all inputs applications shall begin
+at index zero, incrementing by one until the driver returns <code class="docutils literal notranslate"><span class="pre">EINVAL</span></code>.</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.V4L.v4l2_input">
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_input</span></span></span><a class="headerlink" href="#c.V4L.v4l2_input" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">struct v4l2_input</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">index</span></code></p></td>
+<td><p>Identifies the input, set by the application.</p></td>
+</tr>
+<tr class="row-even"><td><p>__u8</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">name</span></code>[32]</p></td>
+<td><p>Name of the video input, a NUL-terminated ASCII string, for
+example: “Vin (Composite 2)”. This information is intended for the
+user, preferably the connector label on the device itself.</p></td>
+</tr>
+<tr class="row-odd"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">type</span></code></p></td>
+<td><p>Type of the input, see <a class="reference internal" href="#input-type"><span class="std std-ref">Input Types</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">audioset</span></code></p></td>
+<td><p>Drivers can enumerate up to 32 video and audio inputs. This field
+shows which audio inputs were selectable as audio source if this
+was the currently selected video input. It is a bit mask. The LSB
+corresponds to audio input 0, the MSB to input 31. Any number of
+bits can be set, or none.</p>
+<p>When the driver does not enumerate audio inputs no bits must be
+set. Applications shall not interpret this as lack of audio
+support. Some drivers automatically select audio sources and do
+not enumerate them since there is no choice anyway.</p>
+<p>For details on audio inputs and how to select the current input
+see <a class="reference internal" href="audio.html#audio"><span class="std std-ref">Audio Inputs and Outputs</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tuner</span></code></p></td>
+<td><p>Capture devices can have zero or more tuners (RF demodulators).
+When the <code class="docutils literal notranslate"><span class="pre">type</span></code> is set to <code class="docutils literal notranslate"><span class="pre">V4L2_INPUT_TYPE_TUNER</span></code> this is an
+RF connector and this field identifies the tuner. It corresponds
+to struct <a class="reference internal" href="vidioc-g-tuner.html#c.V4L.v4l2_tuner" title="v4l2_tuner"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_tuner</span></code></a> field <code class="docutils literal notranslate"><span class="pre">index</span></code>. For
+details on tuners see <a class="reference internal" href="tuner.html#tuner"><span class="std std-ref">Tuners and Modulators</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="vidioc-enumstd.html#v4l2-std-id"><span class="std std-ref">v4l2_std_id</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std</span></code></p></td>
+<td><p>Every video input supports one or more different video standards.
+This field is a set of all supported standards. For details on
+video standards and how to switch see <a class="reference internal" href="standard.html#standard"><span class="std std-ref">Video Standards</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>This field provides status information about the input. See
+<a class="reference internal" href="#input-status"><span class="std std-ref">Input Status Flags</span></a> for flags. With the exception of the sensor
+orientation bits <code class="docutils literal notranslate"><span class="pre">status</span></code> is only valid when this is the current
+input.</p></td>
+</tr>
+<tr class="row-even"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">capabilities</span></code></p></td>
+<td><p>This field provides capabilities for the input. See
+<a class="reference internal" href="#input-capabilities"><span class="std std-ref">Input capabilities</span></a> for flags.</p></td>
+</tr>
+<tr class="row-odd"><td><p>__u32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">reserved</span></code>[3]</p></td>
+<td><p>Reserved for future extensions. Drivers must set the array to
+zero.</p></td>
+</tr>
+</tbody>
+</table>
+<span id="input-type"></span><table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Input Types</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_INPUT_TYPE_TUNER</span></code></p></td>
+<td><p>1</p></td>
+<td><p>This input uses a tuner (RF demodulator).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_INPUT_TYPE_CAMERA</span></code></p></td>
+<td><p>2</p></td>
+<td><p>Any non-tuner video input, for example Composite Video,
+S-Video, HDMI, camera sensor. The naming as <code class="docutils literal notranslate"><span class="pre">_TYPE_CAMERA</span></code> is historical,
+today we would have called it <code class="docutils literal notranslate"><span class="pre">_TYPE_VIDEO</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_INPUT_TYPE_TOUCH</span></code></p></td>
+<td><p>3</p></td>
+<td><p>This input is a touch device for capturing raw touch data.</p></td>
+</tr>
+</tbody>
+</table>
+<span id="input-status"></span><table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Input Status Flags</span><a class="headerlink" href="#id3" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td colspan="3"><p> General</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_POWER</span></code></p></td>
+<td><p>0x00000001</p></td>
+<td><p>Attached device is off.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_SIGNAL</span></code></p></td>
+<td><p>0x00000002</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_COLOR</span></code></p></td>
+<td><p>0x00000004</p></td>
+<td><p>The hardware supports color decoding, but does not detect color
+modulation in the signal.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p> Sensor Orientation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_HFLIP</span></code></p></td>
+<td><p>0x00000010</p></td>
+<td><p>The input is connected to a device that produces a signal that is
+flipped horizontally and does not correct this before passing the
+signal to userspace.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_VFLIP</span></code></p></td>
+<td><p>0x00000020</p></td>
+<td><p>The input is connected to a device that produces a signal that is
+flipped vertically and does not correct this before passing the
+signal to userspace.
+.. note:: A 180 degree rotation is the same as HFLIP | VFLIP</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p> Analog Video</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_H_LOCK</span></code></p></td>
+<td><p>0x00000100</p></td>
+<td><p>No horizontal sync lock.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_COLOR_KILL</span></code></p></td>
+<td><p>0x00000200</p></td>
+<td><p>A color killer circuit automatically disables color decoding when
+it detects no color modulation. When this flag is set the color
+killer is enabled <em>and</em> has shut off color decoding.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_V_LOCK</span></code></p></td>
+<td><p>0x00000400</p></td>
+<td><p>No vertical sync lock.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_STD_LOCK</span></code></p></td>
+<td><p>0x00000800</p></td>
+<td><p>No standard format lock in case of auto-detection format
+by the component.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p> Digital Video</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_SYNC</span></code></p></td>
+<td><p>0x00010000</p></td>
+<td><p>No synchronization lock.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_EQU</span></code></p></td>
+<td><p>0x00020000</p></td>
+<td><p>No equalizer lock.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_CARRIER</span></code></p></td>
+<td><p>0x00040000</p></td>
+<td><p>Carrier recovery failed.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p> VCR and Set-Top Box</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_MACROVISION</span></code></p></td>
+<td><p>0x01000000</p></td>
+<td><p>Macrovision is an analog copy prevention system mangling the video
+signal to confuse video recorders. When this flag is set
+Macrovision has been detected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_NO_ACCESS</span></code></p></td>
+<td><p>0x02000000</p></td>
+<td><p>Conditional access denied.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_ST_VTR</span></code></p></td>
+<td><p>0x04000000</p></td>
+<td><p>VTR time constant. [?]</p></td>
+</tr>
+</tbody>
+</table>
+<span id="input-capabilities"></span><table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Input capabilities</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_CAP_DV_TIMINGS</span></code></p></td>
+<td><p>0x00000002</p></td>
+<td><p>This input supports setting video timings by using
+<code class="docutils literal notranslate"><span class="pre">VIDIOC_S_DV_TIMINGS</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_CAP_STD</span></code></p></td>
+<td><p>0x00000004</p></td>
+<td><p>This input supports setting the TV standard by using
+<code class="docutils literal notranslate"><span class="pre">VIDIOC_S_STD</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V4L2_IN_CAP_NATIVE_SIZE</span></code></p></td>
+<td><p>0x00000008</p></td>
+<td><p>This input supports setting the native size using the
+<code class="docutils literal notranslate"><span class="pre">V4L2_SEL_TGT_NATIVE_SIZE</span></code> selection target, see
+<a class="reference internal" href="selections-common.html#v4l2-selections-common"><span class="std std-ref">Common selection definitions</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="return-value">
+<h2><span class="section-number">7.18.5. </span>Return Value<a class="headerlink" href="#return-value" title="Link to this heading">¶</a></h2>
+<p>On success 0 is returned, on error -1 and the <code class="docutils literal notranslate"><span class="pre">errno</span></code> variable is set
+appropriately. The generic error codes are described at the
+<a class="reference internal" href="../gen-errors.html#id1"><span class="std std-ref">Generic Error Codes</span></a> chapter.</p>
+<dl class="simple">
+<dt>EINVAL</dt><dd><p>The struct <a class="reference internal" href="#c.V4L.v4l2_input" title="v4l2_input"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_input</span></code></a> <code class="docutils literal notranslate"><span class="pre">index</span></code> is out of
+bounds.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">7.18. ioctl VIDIOC_ENUMINPUT</a><ul>
+<li><a class="reference internal" href="#name">7.18.1. Name</a></li>
+<li><a class="reference internal" href="#synopsis">7.18.2. Synopsis</a></li>
+<li><a class="reference internal" href="#arguments">7.18.3. Arguments</a></li>
+<li><a class="reference internal" href="#description">7.18.4. Description</a></li>
+<li><a class="reference internal" href="#return-value">7.18.5. Return Value</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="vidioc-enum-freq-bands.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">7.17. </span>ioctl VIDIOC_ENUM_FREQ_BANDS</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="vidioc-enumoutput.html"><span><span class="section-number">7.19. </span>ioctl VIDIOC_ENUMOUTPUT</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

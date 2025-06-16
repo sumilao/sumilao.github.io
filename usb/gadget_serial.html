@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux Gadget Serial Driver v2.0 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linux UVC Gadget Driver" href="gadget_uvc.html" />
+    <link rel="prev" title="Linux USB Printer Gadget Driver" href="gadget_printer.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/usb/gadget_serial.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="linux-gadget-serial-driver-v2-0">
+<h1>Linux Gadget Serial Driver v2.0<a class="headerlink" href="#linux-gadget-serial-driver-v2-0" title="Link to this heading">¶</a></h1>
+<p>11/20/2004</p>
+<p>(updated 8-May-2008 for v2.3)</p>
+<section id="license-and-disclaimer">
+<h2>License and Disclaimer<a class="headerlink" href="#license-and-disclaimer" title="Link to this heading">¶</a></h2>
+<p>This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public
+License along with this program; if not, write to the Free
+Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+MA 02111-1307 USA.</p>
+<p>This document and the gadget serial driver itself are
+Copyright (C) 2004 by Al Borchers (<a class="reference external" href="mailto:alborchers&#37;&#52;&#48;steinerpoint&#46;com">alborchers<span>&#64;</span>steinerpoint<span>&#46;</span>com</a>).</p>
+<p>If you have questions, problems, or suggestions for this driver
+please contact Al Borchers at <a class="reference external" href="mailto:alborchers&#37;&#52;&#48;steinerpoint&#46;com">alborchers<span>&#64;</span>steinerpoint<span>&#46;</span>com</a>.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<p>Versions of the gadget serial driver are available for the
+2.4 Linux kernels, but this document assumes you are using
+version 2.3 or later of the gadget serial driver in a 2.6
+Linux kernel.</p>
+<p>This document assumes that you are familiar with Linux and
+Windows and know how to configure and build Linux kernels, run
+standard utilities, use minicom and HyperTerminal, and work with
+USB and serial devices.  It also assumes you configure the Linux
+gadget and usb drivers as modules.</p>
+<p>With version 2.3 of the driver, major and minor device nodes are
+no longer statically defined.  Your Linux based system should mount
+sysfs in /sys, and use “mdev” (in Busybox) or “udev” to make the
+/dev nodes matching the sysfs /sys/class/tty files.</p>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The gadget serial driver is a Linux USB gadget driver, a USB device
+side driver.  It runs on a Linux system that has USB device side
+hardware; for example, a PDA, an embedded Linux system, or a PC
+with a USB development card.</p>
+<p>The gadget serial driver talks over USB to either a CDC ACM driver
+or a generic USB serial driver running on a host PC:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> Host
+ --------------------------------------
+| Host-Side   CDC ACM       USB Host   |
+| Operating |   or        | Controller |   USB
+| System    | Generic USB | Driver     |--------
+| (Linux or | Serial      | and        |        |
+| Windows)    Driver        USB Stack  |        |
+ --------------------------------------         |
+                                                |
+                                                |
+                                                |
+ Gadget                                         |
+ --------------------------------------         |
+| Gadget                   USB Periph. |        |
+| Device-Side |  Gadget  | Controller  |        |
+| Linux       |  Serial  | Driver      |--------
+| Operating   |  Driver  | and         |
+| System                   USB Stack   |
+ --------------------------------------
+</pre></div>
+</div>
+<p>On the device-side Linux system, the gadget serial driver looks
+like a serial device.</p>
+<p>On the host-side system, the gadget serial device looks like a
+CDC ACM compliant class device or a simple vendor specific device
+with bulk in and bulk out endpoints, and it is treated similarly
+to other serial devices.</p>
+<p>The host side driver can potentially be any ACM compliant driver
+or any driver that can talk to a device with a simple bulk in/out
+interface.  Gadget serial has been tested with the Linux ACM driver,
+the Windows usbser.sys ACM driver, and the Linux USB generic serial
+driver.</p>
+<p>With the gadget serial driver and the host side ACM or generic
+serial driver running, you should be able to communicate between
+the host and the gadget side systems as if they were connected by a
+serial cable.</p>
+<p>The gadget serial driver only provides simple unreliable data
+communication.  It does not yet handle flow control or many other
+features of normal serial devices.</p>
+</section>
+<section id="installing-the-gadget-serial-driver">
+<h2>Installing the Gadget Serial Driver<a class="headerlink" href="#installing-the-gadget-serial-driver" title="Link to this heading">¶</a></h2>
+<p>To use the gadget serial driver you must configure the Linux gadget
+side kernel for “Support for USB Gadgets”, for a “USB Peripheral
+Controller” (for example, net2280), and for the “Serial Gadget”
+driver.  All this are listed under “USB Gadget Support” when
+configuring the kernel.  Then rebuild and install the kernel or
+modules.</p>
+<p>Then you must load the gadget serial driver.  To load it as an
+ACM device (recommended for interoperability), do this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>modprobe g_serial
+</pre></div>
+</div>
+<p>To load it as a vendor specific bulk in/out device, do this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>modprobe g_serial use_acm=0
+</pre></div>
+</div>
+<p>This will also automatically load the underlying gadget peripheral
+controller driver.  This must be done each time you reboot the gadget
+side Linux system.  You can add this to the start up scripts, if
+desired.</p>
+<p>Your system should use mdev (from busybox) or udev to make the
+device nodes.  After this gadget driver has been set up you should
+then see a /dev/ttyGS0 node:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls -l /dev/ttyGS0 | cat
+crw-rw----    1 root     root     253,   0 May  8 14:10 /dev/ttyGS0
+#
+</pre></div>
+</div>
+<p>Note that the major number (253, above) is system-specific.  If
+you need to create /dev nodes by hand, the right numbers to use
+will be in the /sys/class/tty/ttyGS0/dev file.</p>
+<p>When you link this gadget driver early, perhaps even statically,
+you may want to set up an /etc/inittab entry to run “getty” on it.
+The /dev/ttyGS0 line should work like most any other serial port.</p>
+<p>If gadget serial is loaded as an ACM device you will want to use
+either the Windows or Linux ACM driver on the host side.  If gadget
+serial is loaded as a bulk in/out device, you will want to use the
+Linux generic serial driver on the host side.  Follow the appropriate
+instructions below to install the host side driver.</p>
+</section>
+<section id="installing-the-windows-host-acm-driver">
+<h2>Installing the Windows Host ACM Driver<a class="headerlink" href="#installing-the-windows-host-acm-driver" title="Link to this heading">¶</a></h2>
+<p>To use the Windows ACM driver you must have the “linux-cdc-acm.inf”
+file (provided along this document) which supports all recent versions
+of Windows.</p>
+<p>When the gadget serial driver is loaded and the USB device connected
+to the Windows host with a USB cable, Windows should recognize the
+gadget serial device and ask for a driver.  Tell Windows to find the
+driver in the folder that contains the “linux-cdc-acm.inf” file.</p>
+<p>For example, on Windows XP, when the gadget serial device is first
+plugged in, the “Found New Hardware Wizard” starts up.  Select
+“Install from a list or specific location (Advanced)”, then on the
+next screen select “Include this location in the search” and enter the
+path or browse to the folder containing the “linux-cdc-acm.inf” file.
+Windows will complain that the Gadget Serial driver has not passed
+Windows Logo testing, but select “Continue anyway” and finish the
+driver installation.</p>
+<p>On Windows XP, in the “Device Manager” (under “Control Panel”,
+“System”, “Hardware”) expand the “Ports (COM &amp; LPT)” entry and you
+should see “Gadget Serial” listed as the driver for one of the COM
+ports.</p>
+<p>To uninstall the Windows XP driver for “Gadget Serial”, right click
+on the “Gadget Serial” entry in the “Device Manager” and select
+“Uninstall”.</p>
+</section>
+<section id="installing-the-linux-host-acm-driver">
+<h2>Installing the Linux Host ACM Driver<a class="headerlink" href="#installing-the-linux-host-acm-driver" title="Link to this heading">¶</a></h2>
+<p>To use the Linux ACM driver you must configure the Linux host side
+kernel for “Support for Host-side USB” and for “USB Modem (CDC ACM)
+support”.</p>
+<p>Once the gadget serial driver is loaded and the USB device connected
+to the Linux host with a USB cable, the host system should recognize
+the gadget serial device.  For example, the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/kernel/debug/usb/devices
+</pre></div>
+</div>
+<p>should show something like this::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=02(comm.) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0525 ProdID=a4a7 Rev= 2.01
+S:  Manufacturer=Linux 2.6.8.1 with net2280
+S:  Product=Gadget Serial
+S:  SerialNumber=0
+C:* #Ifs= 2 Cfg#= 2 Atr=c0 MxPwr=  2mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=01 Driver=acm
+E:  Ad=83(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=acm
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+</pre></div>
+</div>
+<p>If the host side Linux system is configured properly, the ACM driver
+should be loaded automatically.  The command “lsmod” should show the
+“acm” module is loaded.</p>
+</section>
+<section id="installing-the-linux-host-generic-usb-serial-driver">
+<h2>Installing the Linux Host Generic USB Serial Driver<a class="headerlink" href="#installing-the-linux-host-generic-usb-serial-driver" title="Link to this heading">¶</a></h2>
+<p>To use the Linux generic USB serial driver you must configure the
+Linux host side kernel for “Support for Host-side USB”, for “USB
+Serial Converter support”, and for the “USB Generic Serial Driver”.</p>
+<p>Once the gadget serial driver is loaded and the USB device connected
+to the Linux host with a USB cable, the host system should recognize
+the gadget serial device.  For example, the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/kernel/debug/usb/devices
+</pre></div>
+</div>
+<p>should show something like this::</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  6 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=ff(vend.) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0525 ProdID=a4a6 Rev= 2.01
+S:  Manufacturer=Linux 2.6.8.1 with net2280
+S:  Product=Gadget Serial
+S:  SerialNumber=0
+C:* #Ifs= 1 Cfg#= 1 Atr=c0 MxPwr=  2mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=serial
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+</pre></div>
+</div>
+<p>You must load the usbserial driver and explicitly set its parameters
+to configure it to recognize the gadget serial device, like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo 0x0525 0xA4A6 &gt;/sys/bus/usb-serial/drivers/generic/new_id
+</pre></div>
+</div>
+<p>The legacy way is to use module parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>modprobe usbserial vendor=0x0525 product=0xA4A6
+</pre></div>
+</div>
+<p>If everything is working, usbserial will print a message in the
+system log saying something like “Gadget Serial converter now
+attached to ttyUSB0”.</p>
+</section>
+<section id="testing-with-minicom-or-hyperterminal">
+<h2>Testing with Minicom or HyperTerminal<a class="headerlink" href="#testing-with-minicom-or-hyperterminal" title="Link to this heading">¶</a></h2>
+<p>Once the gadget serial driver and the host driver are both installed,
+and a USB cable connects the gadget device to the host, you should
+be able to communicate over USB between the gadget and host systems.
+You can use minicom or HyperTerminal to try this out.</p>
+<p>On the gadget side run “minicom -s” to configure a new minicom
+session.  Under “Serial port setup” set “/dev/ttygserial” as the
+“Serial Device”.  Set baud rate, data bits, parity, and stop bits,
+to 9600, 8, none, and 1--these settings mostly do not matter.
+Under “Modem and dialing” erase all the modem and dialing strings.</p>
+<p>On a Linux host running the ACM driver, configure minicom similarly
+but use “/dev/ttyACM0” as the “Serial Device”.  (If you have other
+ACM devices connected, change the device name appropriately.)</p>
+<p>On a Linux host running the USB generic serial driver, configure
+minicom similarly, but use “/dev/ttyUSB0” as the “Serial Device”.
+(If you have other USB serial devices connected, change the device
+name appropriately.)</p>
+<p>On a Windows host configure a new HyperTerminal session to use the
+COM port assigned to Gadget Serial.  The “Port Settings” will be
+set automatically when HyperTerminal connects to the gadget serial
+device, so you can leave them set to the default values--these
+settings mostly do not matter.</p>
+<p>With minicom configured and running on the gadget side and with
+minicom or HyperTerminal configured and running on the host side,
+you should be able to send data back and forth between the gadget
+side and host side systems.  Anything you type on the terminal
+window on the gadget side should appear in the terminal window on
+the host side and vice versa.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux Gadget Serial Driver v2.0</a><ul>
+<li><a class="reference internal" href="#license-and-disclaimer">License and Disclaimer</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installing-the-gadget-serial-driver">Installing the Gadget Serial Driver</a></li>
+<li><a class="reference internal" href="#installing-the-windows-host-acm-driver">Installing the Windows Host ACM Driver</a></li>
+<li><a class="reference internal" href="#installing-the-linux-host-acm-driver">Installing the Linux Host ACM Driver</a></li>
+<li><a class="reference internal" href="#installing-the-linux-host-generic-usb-serial-driver">Installing the Linux Host Generic USB Serial Driver</a></li>
+<li><a class="reference internal" href="#testing-with-minicom-or-hyperterminal">Testing with Minicom or HyperTerminal</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="gadget_printer.html">
+                    <span class="icon">&lt;</span><span>Linux USB Printer Gadget Driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="gadget_uvc.html"><span>Linux UVC Gadget Driver</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

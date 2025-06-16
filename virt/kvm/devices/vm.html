@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Generic vm interface &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="XICS interrupt controller" href="xics.html" />
+    <link rel="prev" title="VFIO virtual device" href="vfio.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/virt/kvm/devices/vm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="generic-vm-interface">
+<h1>Generic vm interface<a class="headerlink" href="#generic-vm-interface" title="Link to this heading">¶</a></h1>
+<p>The virtual machine “device” also accepts the ioctls KVM_SET_DEVICE_ATTR,
+KVM_GET_DEVICE_ATTR, and KVM_HAS_DEVICE_ATTR. The interface uses the same
+struct kvm_device_attr as other devices, but targets VM-wide settings
+and controls.</p>
+<p>The groups and attributes per virtual machine, if any, are architecture
+specific.</p>
+<section id="group-kvm-s390-vm-mem-ctrl">
+<h2>1. GROUP: KVM_S390_VM_MEM_CTRL<a class="headerlink" href="#group-kvm-s390-vm-mem-ctrl" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>s390</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-mem-enable-cmma">
+<h3>1.1. ATTRIBUTE: KVM_S390_VM_MEM_ENABLE_CMMA<a class="headerlink" href="#attribute-kvm-s390-vm-mem-enable-cmma" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EBUSY if a vcpu is already defined, otherwise 0</p>
+</dd>
+</dl>
+<p>Enables Collaborative Memory Management Assist (CMMA) for the virtual machine.</p>
+</section>
+<section id="attribute-kvm-s390-vm-mem-clr-cmma">
+<h3>1.2. ATTRIBUTE: KVM_S390_VM_MEM_CLR_CMMA<a class="headerlink" href="#attribute-kvm-s390-vm-mem-clr-cmma" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EINVAL if CMMA was not enabled;
+0 otherwise</p>
+</dd>
+</dl>
+<p>Clear the CMMA status for all guest pages, so any pages the guest marked
+as unused are again used any may not be reclaimed by the host.</p>
+</section>
+<section id="attribute-kvm-s390-vm-mem-limit-size">
+<h3>1.3. ATTRIBUTE KVM_S390_VM_MEM_LIMIT_SIZE<a class="headerlink" href="#attribute-kvm-s390-vm-mem-limit-size" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>in attr-&gt;addr the address for the new limit of guest memory</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible;
+-EINVAL if the virtual machine is of type UCONTROL;
+-E2BIG if the given guest memory is to big for that machine;
+-EBUSY if a vcpu is already defined;
+-ENOMEM if not enough memory is available for a new shadow guest mapping;
+0 otherwise.</p>
+</dd>
+</dl>
+<p>Allows userspace to query the actual limit and set a new limit for
+the maximum guest memory size. The limit will be rounded up to
+2048 MB, 4096 GB, 8192 TB respectively, as this limit is governed by
+the number of page table levels. In the case that there is no limit we will set
+the limit to KVM_S390_NO_MEM_LIMIT (U64_MAX).</p>
+</section>
+</section>
+<section id="group-kvm-s390-vm-cpu-model">
+<h2>2. GROUP: KVM_S390_VM_CPU_MODEL<a class="headerlink" href="#group-kvm-s390-vm-cpu-model" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>s390</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-cpu-machine-r-o">
+<h3>2.1. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE (r/o)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-machine-r-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to retrieve machine and kvm specific cpu related information:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct kvm_s390_vm_cpu_machine {
+     __u64 cpuid;           # CPUID of host
+     __u32 ibc;             # IBC level range offered by host
+     __u8  pad[4];
+     __u64 fac_mask[256];   # set of cpu facilities enabled by KVM
+     __u64 fac_list[256];   # set of cpu facilities offered by host
+}
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of buffer to store the machine related cpu data
+of type struct kvm_s390_vm_cpu_machine*</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+-ENOMEM if not enough memory is available to process the ioctl;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="attribute-kvm-s390-vm-cpu-processor-r-w">
+<h2>2.2. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR (r/w)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-processor-r-w" title="Link to this heading">¶</a></h2>
+<p>Allows user space to retrieve or request to change cpu related information for a vcpu:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct kvm_s390_vm_cpu_processor {
+     __u64 cpuid;           # CPUID currently (to be) used by this vcpu
+     __u16 ibc;             # IBC level currently (to be) used by this vcpu
+     __u8  pad[6];
+     __u64 fac_list[256];   # set of cpu facilities currently (to be) used
+                            # by this vcpu
+}
+</pre></div>
+</div>
+<p>KVM does not enforce or limit the cpu model data in any form. Take the information
+retrieved by means of KVM_S390_VM_CPU_MACHINE as hint for reasonable configuration
+setups. Instruction interceptions triggered by additionally set facility bits that
+are not handled by KVM need to by implemented in the VM driver code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of buffer to store/set the processor related cpu
+data of type struct kvm_s390_vm_cpu_processor*.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EBUSY in case 1 or more vcpus are already activated (only in write case);
+-EFAULT if the given address is not accessible from kernel space;
+-ENOMEM if not enough memory is available to process the ioctl;
+0 in case of success.</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-cpu-machine-feat-r-o">
+<span id="kvm-s390-vm-cpu-machine-feat"></span><h3>2.3. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_FEAT (r/o)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-machine-feat-r-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to retrieve available cpu features. A feature is available if
+provided by the hardware and supported by kvm. In theory, cpu features could
+even be completely emulated by kvm.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct kvm_s390_vm_cpu_feat {
+      __u64 feat[16]; # Bitmap (1 = feature available), MSB 0 bit numbering
+};
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer to load the feature list from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-cpu-processor-feat-r-w">
+<h3>2.4. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR_FEAT (r/w)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-processor-feat-r-w" title="Link to this heading">¶</a></h3>
+<p>Allows user space to retrieve or change enabled cpu features for all VCPUs of a
+VM. Features that are not available cannot be enabled.</p>
+<p>See <a class="reference internal" href="#kvm-s390-vm-cpu-machine-feat"><span class="std std-ref">2.3. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_FEAT (r/o)</span></a> for
+a description of the parameter struct.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer to store/load the feature list from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+-EINVAL if a cpu feature that is not available is to be enabled;
+-EBUSY if at least one VCPU has already been defined;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-cpu-machine-subfunc-r-o">
+<span id="kvm-s390-vm-cpu-machine-subfunc"></span><h3>2.5. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_SUBFUNC (r/o)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-machine-subfunc-r-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to retrieve available cpu subfunctions without any filtering
+done by a set IBC. These subfunctions are indicated to the guest VCPU via
+query or “test bit” subfunctions and used e.g. by cpacf functions, plo and ptff.</p>
+<p>A subfunction block is only valid if KVM_S390_VM_CPU_MACHINE contains the
+STFL(E) bit introducing the affected instruction. If the affected instruction
+indicates subfunctions via a “query subfunction”, the response block is
+contained in the returned struct. If the affected instruction
+indicates subfunctions via a “test bit” mechanism, the subfunction codes are
+contained in the returned struct in MSB 0 bit numbering.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct kvm_s390_vm_cpu_subfunc {
+     u8 plo[32];           # always valid (ESA/390 feature)
+     u8 ptff[16];          # valid with TOD-clock steering
+     u8 kmac[16];          # valid with Message-Security-Assist
+     u8 kmc[16];           # valid with Message-Security-Assist
+     u8 km[16];            # valid with Message-Security-Assist
+     u8 kimd[16];          # valid with Message-Security-Assist
+     u8 klmd[16];          # valid with Message-Security-Assist
+     u8 pckmo[16];         # valid with Message-Security-Assist-Extension 3
+     u8 kmctr[16];         # valid with Message-Security-Assist-Extension 4
+     u8 kmf[16];           # valid with Message-Security-Assist-Extension 4
+     u8 kmo[16];           # valid with Message-Security-Assist-Extension 4
+     u8 pcc[16];           # valid with Message-Security-Assist-Extension 4
+     u8 ppno[16];          # valid with Message-Security-Assist-Extension 5
+     u8 kma[16];           # valid with Message-Security-Assist-Extension 8
+     u8 kdsa[16];          # valid with Message-Security-Assist-Extension 9
+     u8 reserved[1792];    # reserved for future instructions
+};
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer to load the subfunction blocks from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-cpu-processor-subfunc-r-w">
+<h3>2.6. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR_SUBFUNC (r/w)<a class="headerlink" href="#attribute-kvm-s390-vm-cpu-processor-subfunc-r-w" title="Link to this heading">¶</a></h3>
+<p>Allows user space to retrieve or change cpu subfunctions to be indicated for
+all VCPUs of a VM. This attribute will only be available if kernel and
+hardware support are in place.</p>
+<p>The kernel uses the configured subfunction blocks for indication to
+the guest. A subfunction block will only be used if the associated STFL(E) bit
+has not been disabled by user space (so the instruction to be queried is
+actually available for the guest).</p>
+<p>As long as no data has been written, a read will fail. The IBC will be used
+to determine available subfunctions in this case, this will guarantee backward
+compatibility.</p>
+<p>See <a class="reference internal" href="#kvm-s390-vm-cpu-machine-subfunc"><span class="std std-ref">2.5. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_SUBFUNC (r/o)</span></a> for a
+description of the parameter struct.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer to store/load the subfunction blocks from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+-EINVAL when reading, if there was no write yet;
+-EBUSY if at least one VCPU has already been defined;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="group-kvm-s390-vm-tod">
+<h2>3. GROUP: KVM_S390_VM_TOD<a class="headerlink" href="#group-kvm-s390-vm-tod" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>s390</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-tod-high">
+<h3>3.1. ATTRIBUTE: KVM_S390_VM_TOD_HIGH<a class="headerlink" href="#attribute-kvm-s390-vm-tod-high" title="Link to this heading">¶</a></h3>
+<p>Allows user space to set/get the TOD clock extension (u8) (superseded by
+KVM_S390_VM_TOD_EXT).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer in user space to store the data (u8) to</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+-EINVAL if setting the TOD clock extension to != 0 is not supported
+-EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-tod-low">
+<h3>3.2. ATTRIBUTE: KVM_S390_VM_TOD_LOW<a class="headerlink" href="#attribute-kvm-s390-vm-tod-low" title="Link to this heading">¶</a></h3>
+<p>Allows user space to set/get bits 0-63 of the TOD clock register as defined in
+the POP (u64).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer in user space to store the data (u64) to</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space
+-EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-tod-ext">
+<h3>3.3. ATTRIBUTE: KVM_S390_VM_TOD_EXT<a class="headerlink" href="#attribute-kvm-s390-vm-tod-ext" title="Link to this heading">¶</a></h3>
+<p>Allows user space to set/get bits 0-63 of the TOD clock register as defined in
+the POP (u64). If the guest CPU model supports the TOD clock extension (u8), it
+also allows user space to get/set it. If the guest CPU model does not support
+it, it is stored as 0 and not allowed to be set to a value != 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer in user space to store the data
+(kvm_s390_vm_tod_clock) to</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+-EINVAL if setting the TOD clock extension to != 0 is not supported
+-EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="group-kvm-s390-vm-crypto">
+<h2>4. GROUP: KVM_S390_VM_CRYPTO<a class="headerlink" href="#group-kvm-s390-vm-crypto" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>s390</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-crypto-enable-aes-kw-w-o">
+<h3>4.1. ATTRIBUTE: KVM_S390_VM_CRYPTO_ENABLE_AES_KW (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-crypto-enable-aes-kw-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to enable aes key wrapping, including generating a new
+wrapping key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-crypto-enable-dea-kw-w-o">
+<h3>4.2. ATTRIBUTE: KVM_S390_VM_CRYPTO_ENABLE_DEA_KW (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-crypto-enable-dea-kw-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to enable dea key wrapping, including generating a new
+wrapping key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-crypto-disable-aes-kw-w-o">
+<h3>4.3. ATTRIBUTE: KVM_S390_VM_CRYPTO_DISABLE_AES_KW (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-crypto-disable-aes-kw-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to disable aes key wrapping, clearing the wrapping key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-crypto-disable-dea-kw-w-o">
+<h3>4.4. ATTRIBUTE: KVM_S390_VM_CRYPTO_DISABLE_DEA_KW (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-crypto-disable-dea-kw-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows user space to disable dea key wrapping, clearing the wrapping key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="group-kvm-s390-vm-migration">
+<h2>5. GROUP: KVM_S390_VM_MIGRATION<a class="headerlink" href="#group-kvm-s390-vm-migration" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>s390</p>
+</dd>
+</dl>
+<section id="attribute-kvm-s390-vm-migration-stop-w-o">
+<h3>5.1. ATTRIBUTE: KVM_S390_VM_MIGRATION_STOP (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-migration-stop-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows userspace to stop migration mode, needed for PGSTE migration.
+Setting this attribute when migration mode is not active will have no
+effects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-migration-start-w-o">
+<h3>5.2. ATTRIBUTE: KVM_S390_VM_MIGRATION_START (w/o)<a class="headerlink" href="#attribute-kvm-s390-vm-migration-start-w-o" title="Link to this heading">¶</a></h3>
+<p>Allows userspace to start migration mode, needed for PGSTE migration.
+Setting this attribute when migration mode is already active will have
+no effects.</p>
+<p>Dirty tracking must be enabled on all memslots, else -EINVAL is returned. When
+dirty tracking is disabled on any memslot, migration mode is automatically
+stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-ENOMEM if there is not enough free memory to start migration mode;
+-EINVAL if the state of the VM is invalid (e.g. no memory defined);
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+<section id="attribute-kvm-s390-vm-migration-status-r-o">
+<h3>5.3. ATTRIBUTE: KVM_S390_VM_MIGRATION_STATUS (r/o)<a class="headerlink" href="#attribute-kvm-s390-vm-migration-status-r-o" title="Link to this heading">¶</a></h3>
+<p>Allows userspace to query the status of migration mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>address of a buffer in user space to store the data (u64) to;
+the data itself is either 0 if migration mode is disabled or 1
+if it is enabled</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-EFAULT if the given address is not accessible from kernel space;
+0 in case of success.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="group-kvm-arm-vm-smccc-ctrl">
+<h2>6. GROUP: KVM_ARM_VM_SMCCC_CTRL<a class="headerlink" href="#group-kvm-arm-vm-smccc-ctrl" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Architectures<span class="colon">:</span></dt>
+<dd class="field-odd"><p>arm64</p>
+</dd>
+</dl>
+<section id="attribute-kvm-arm-vm-smccc-filter-w-o">
+<h3>6.1. ATTRIBUTE: KVM_ARM_VM_SMCCC_FILTER (w/o)<a class="headerlink" href="#attribute-kvm-arm-vm-smccc-filter-w-o" title="Link to this heading">¶</a></h3>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to a <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kvm_smccc_filter</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>EEXIST</p></td>
+<td><p>Range intersects with a previously inserted
+or reserved range</p></td>
+</tr>
+<tr class="row-even"><td><p>EBUSY</p></td>
+<td><p>A vCPU in the VM has already run</p></td>
+</tr>
+<tr class="row-odd"><td><p>EINVAL</p></td>
+<td><p>Invalid filter configuration</p></td>
+</tr>
+<tr class="row-even"><td><p>ENOMEM</p></td>
+<td><p>Failed to allocate memory for the in-kernel
+representation of the SMCCC filter</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p>Requests the installation of an SMCCC call filter described as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>enum kvm_smccc_filter_action {
+        KVM_SMCCC_FILTER_HANDLE = 0,
+        KVM_SMCCC_FILTER_DENY,
+        KVM_SMCCC_FILTER_FWD_TO_USER,
+};
+
+struct kvm_smccc_filter {
+        __u32 base;
+        __u32 nr_functions;
+        __u8 action;
+        __u8 pad[15];
+};
+</pre></div>
+</div>
+<p>The filter is defined as a set of non-overlapping ranges. Each
+range defines an action to be applied to SMCCC calls within the range.
+Userspace can insert multiple ranges into the filter by using
+successive calls to this attribute.</p>
+<p>The default configuration of KVM is such that all implemented SMCCC
+calls are allowed. Thus, the SMCCC filter can be defined sparsely
+by userspace, only describing ranges that modify the default behavior.</p>
+<p>The range expressed by <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">kvm_smccc_filter</span></code> is
+[<code class="docutils literal notranslate"><span class="pre">base</span></code>, <code class="docutils literal notranslate"><span class="pre">base</span> <span class="pre">+</span> <span class="pre">nr_functions</span></code>). The range is not allowed to wrap,
+i.e. userspace cannot rely on <code class="docutils literal notranslate"><span class="pre">base</span> <span class="pre">+</span> <span class="pre">nr_functions</span></code> overflowing.</p>
+<p>The SMCCC filter applies to both SMC and HVC calls initiated by the
+guest. The SMCCC filter gates the in-kernel emulation of SMCCC calls
+and as such takes effect before other interfaces that interact with
+SMCCC calls (e.g. hypercall bitmap registers).</p>
+<p>Actions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">KVM_SMCCC_FILTER_HANDLE</span></code>: Allows the guest SMCCC call to be
+handled in-kernel. It is strongly recommended that userspace <em>not</em>
+explicitly describe the allowed SMCCC call ranges.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KVM_SMCCC_FILTER_DENY</span></code>: Rejects the guest SMCCC call in-kernel
+and returns to the guest.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KVM_SMCCC_FILTER_FWD_TO_USER</span></code>: The guest SMCCC call is forwarded
+to userspace with an exit reason of <code class="docutils literal notranslate"><span class="pre">KVM_EXIT_HYPERCALL</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">pad</span></code> field is reserved for future use and must be zero. KVM may
+return <code class="docutils literal notranslate"><span class="pre">-EINVAL</span></code> if the field is nonzero.</p>
+<p>KVM reserves the ‘Arm Architecture Calls’ range of function IDs and
+will reject attempts to define a filter for any portion of these ranges:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Start</p></th>
+<th class="head"><p>End (inclusive)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x8000_0000</p></td>
+<td><p>0x8000_FFFF</p></td>
+</tr>
+<tr class="row-odd"><td><p>0xC000_0000</p></td>
+<td><p>0xC000_FFFF</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Generic vm interface</a><ul>
+<li><a class="reference internal" href="#group-kvm-s390-vm-mem-ctrl">1. GROUP: KVM_S390_VM_MEM_CTRL</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-mem-enable-cmma">1.1. ATTRIBUTE: KVM_S390_VM_MEM_ENABLE_CMMA</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-mem-clr-cmma">1.2. ATTRIBUTE: KVM_S390_VM_MEM_CLR_CMMA</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-mem-limit-size">1.3. ATTRIBUTE KVM_S390_VM_MEM_LIMIT_SIZE</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-kvm-s390-vm-cpu-model">2. GROUP: KVM_S390_VM_CPU_MODEL</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-machine-r-o">2.1. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE (r/o)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-processor-r-w">2.2. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR (r/w)</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-machine-feat-r-o">2.3. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_FEAT (r/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-processor-feat-r-w">2.4. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR_FEAT (r/w)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-machine-subfunc-r-o">2.5. ATTRIBUTE: KVM_S390_VM_CPU_MACHINE_SUBFUNC (r/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-cpu-processor-subfunc-r-w">2.6. ATTRIBUTE: KVM_S390_VM_CPU_PROCESSOR_SUBFUNC (r/w)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-kvm-s390-vm-tod">3. GROUP: KVM_S390_VM_TOD</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-tod-high">3.1. ATTRIBUTE: KVM_S390_VM_TOD_HIGH</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-tod-low">3.2. ATTRIBUTE: KVM_S390_VM_TOD_LOW</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-tod-ext">3.3. ATTRIBUTE: KVM_S390_VM_TOD_EXT</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-kvm-s390-vm-crypto">4. GROUP: KVM_S390_VM_CRYPTO</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-crypto-enable-aes-kw-w-o">4.1. ATTRIBUTE: KVM_S390_VM_CRYPTO_ENABLE_AES_KW (w/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-crypto-enable-dea-kw-w-o">4.2. ATTRIBUTE: KVM_S390_VM_CRYPTO_ENABLE_DEA_KW (w/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-crypto-disable-aes-kw-w-o">4.3. ATTRIBUTE: KVM_S390_VM_CRYPTO_DISABLE_AES_KW (w/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-crypto-disable-dea-kw-w-o">4.4. ATTRIBUTE: KVM_S390_VM_CRYPTO_DISABLE_DEA_KW (w/o)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-kvm-s390-vm-migration">5. GROUP: KVM_S390_VM_MIGRATION</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-migration-stop-w-o">5.1. ATTRIBUTE: KVM_S390_VM_MIGRATION_STOP (w/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-migration-start-w-o">5.2. ATTRIBUTE: KVM_S390_VM_MIGRATION_START (w/o)</a></li>
+<li><a class="reference internal" href="#attribute-kvm-s390-vm-migration-status-r-o">5.3. ATTRIBUTE: KVM_S390_VM_MIGRATION_STATUS (r/o)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-kvm-arm-vm-smccc-ctrl">6. GROUP: KVM_ARM_VM_SMCCC_CTRL</a><ul>
+<li><a class="reference internal" href="#attribute-kvm-arm-vm-smccc-filter-w-o">6.1. ATTRIBUTE: KVM_ARM_VM_SMCCC_FILTER (w/o)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="vfio.html">
+                    <span class="icon">&lt;</span><span>VFIO virtual device</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="xics.html"><span>XICS interrupt controller</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

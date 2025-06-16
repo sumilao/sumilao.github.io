@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The irq_domain interrupt number mapping library &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="IRQ-flags state tracing" href="irqflags-tracing.html" />
+    <link rel="prev" title="SMP IRQ affinity" href="irq-affinity.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Core API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-utilities">Core utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#data-structures-and-low-level-utilities">Data structures and low-level utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#low-level-entry-and-exit">Low level entry and exit</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#concurrency-primitives">Concurrency primitives</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../refcount-vs-atomic.html">refcount_t API compared to atomic_t</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">IRQs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../local_ops.html">Semantics and Behavior of Local Atomic Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../padata.html">The padata parallel execution mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../RCU/index.html">RCU concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrappers/memory-barriers.html">Linux kernel memory barriers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#low-level-hardware-management">Low-level hardware management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#memory-management">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#interfaces-for-kernel-debugging">Interfaces for kernel debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/core-api/irq/irq-domain.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../../translations/zh_CN/core-api/irq/irq-domain.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="the-irq-domain-interrupt-number-mapping-library">
+<h1>The irq_domain interrupt number mapping library<a class="headerlink" href="#the-irq-domain-interrupt-number-mapping-library" title="Link to this heading">¶</a></h1>
+<p>The current design of the Linux kernel uses a single large number
+space where each separate IRQ source is assigned a different number.
+This is simple when there is only one interrupt controller, but in
+systems with multiple interrupt controllers the kernel must ensure
+that each one gets assigned non-overlapping allocations of Linux
+IRQ numbers.</p>
+<p>The number of interrupt controllers registered as unique irqchips
+show a rising tendency: for example subdrivers of different kinds
+such as GPIO controllers avoid reimplementing identical callback
+mechanisms as the IRQ core system by modelling their interrupt
+handlers as irqchips, i.e. in effect cascading interrupt controllers.</p>
+<p>Here the interrupt number loose all kind of correspondence to
+hardware interrupt numbers: whereas in the past, IRQ numbers could
+be chosen so they matched the hardware IRQ line into the root
+interrupt controller (i.e. the component actually fireing the
+interrupt line to the CPU) nowadays this number is just a number.</p>
+<p>For this reason we need a mechanism to separate controller-local
+interrupt numbers, called hardware irq’s, from Linux IRQ numbers.</p>
+<p>The irq_alloc_desc*() and irq_free_desc*() APIs provide allocation of
+irq numbers, but they don’t provide any support for reverse mapping of
+the controller-local IRQ (hwirq) number into the Linux IRQ number
+space.</p>
+<p>The irq_domain library adds mapping between hwirq and IRQ numbers on
+top of the irq_alloc_desc*() API.  An irq_domain to manage mapping is
+preferred over interrupt controller drivers open coding their own
+reverse mapping scheme.</p>
+<p>irq_domain also implements translation from an abstract irq_fwspec
+structure to hwirq numbers (Device Tree and ACPI GSI so far), and can
+be easily extended to support other IRQ topology data sources.</p>
+<section id="irq-domain-usage">
+<h2>irq_domain usage<a class="headerlink" href="#irq-domain-usage" title="Link to this heading">¶</a></h2>
+<p>An interrupt controller driver creates and registers an irq_domain by
+calling one of the irq_domain_add_*() or irq_domain_create_*() functions
+(each mapping method has a different allocator function, more on that later).
+The function will return a pointer to the irq_domain on success. The caller
+must provide the allocator function with an irq_domain_ops structure.</p>
+<p>In most cases, the irq_domain will begin empty without any mappings
+between hwirq and IRQ numbers.  Mappings are added to the irq_domain
+by calling irq_create_mapping() which accepts the irq_domain and a
+hwirq number as arguments.  If a mapping for the hwirq doesn’t already
+exist then it will allocate a new Linux irq_desc, associate it with
+the hwirq, and call the .map() callback so the driver can perform any
+required hardware setup.</p>
+<p>Once a mapping has been established, it can be retrieved or used via a
+variety of methods:</p>
+<ul class="simple">
+<li><p>irq_resolve_mapping() returns a pointer to the irq_desc structure
+for a given domain and hwirq number, and NULL if there was no
+mapping.</p></li>
+<li><p><a class="reference internal" href="../genericirq.html#c.irq_find_mapping" title="irq_find_mapping"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_find_mapping()</span></code></a> returns a Linux IRQ number for a given domain and
+hwirq number, and 0 if there was no mapping</p></li>
+<li><p>irq_linear_revmap() is now identical to <a class="reference internal" href="../genericirq.html#c.irq_find_mapping" title="irq_find_mapping"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_find_mapping()</span></code></a>, and is
+deprecated</p></li>
+<li><p><a class="reference internal" href="../genericirq.html#c.generic_handle_domain_irq" title="generic_handle_domain_irq"><code class="xref c c-func docutils literal notranslate"><span class="pre">generic_handle_domain_irq()</span></code></a> handles an interrupt described by a
+domain and a hwirq number</p></li>
+</ul>
+<p>Note that irq domain lookups must happen in contexts that are
+compatible with a RCU read-side critical section.</p>
+<p>The irq_create_mapping() function must be called <em>at least once</em>
+before any call to <a class="reference internal" href="../genericirq.html#c.irq_find_mapping" title="irq_find_mapping"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_find_mapping()</span></code></a>, lest the descriptor will not
+be allocated.</p>
+<p>If the driver has the Linux IRQ number or the irq_data pointer, and
+needs to know the associated hwirq number (such as in the irq_chip
+callbacks) then it can be directly obtained from irq_data-&gt;hwirq.</p>
+</section>
+<section id="types-of-irq-domain-mappings">
+<h2>Types of irq_domain mappings<a class="headerlink" href="#types-of-irq-domain-mappings" title="Link to this heading">¶</a></h2>
+<p>There are several mechanisms available for reverse mapping from hwirq
+to Linux irq, and each mechanism uses a different allocation function.
+Which reverse map type should be used depends on the use case.  Each
+of the reverse map types are described below:</p>
+<section id="linear">
+<h3>Linear<a class="headerlink" href="#linear" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>irq_domain_add_linear()
+irq_domain_create_linear()
+</pre></div>
+</div>
+<p>The linear reverse map maintains a fixed size table indexed by the
+hwirq number.  When a hwirq is mapped, an irq_desc is allocated for
+the hwirq, and the IRQ number is stored in the table.</p>
+<p>The Linear map is a good choice when the maximum number of hwirqs is
+fixed and a relatively small number (~ &lt; 256).  The advantages of this
+map are fixed time lookup for IRQ numbers, and irq_descs are only
+allocated for in-use IRQs.  The disadvantage is that the table must be
+as large as the largest possible hwirq number.</p>
+<p><a class="reference internal" href="../genericirq.html#c.irq_domain_add_linear" title="irq_domain_add_linear"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_domain_add_linear()</span></code></a> and irq_domain_create_linear() are functionally
+equivalent, except for the first argument is different - the former
+accepts an Open Firmware specific ‘struct device_node’, while the latter
+accepts a more general abstraction ‘struct fwnode_handle’.</p>
+<p>The majority of drivers should use the linear map.</p>
+</section>
+<section id="tree">
+<h3>Tree<a class="headerlink" href="#tree" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>irq_domain_add_tree()
+irq_domain_create_tree()
+</pre></div>
+</div>
+<p>The irq_domain maintains a radix tree map from hwirq numbers to Linux
+IRQs.  When an hwirq is mapped, an irq_desc is allocated and the
+hwirq is used as the lookup key for the radix tree.</p>
+<p>The tree map is a good choice if the hwirq number can be very large
+since it doesn’t need to allocate a table as large as the largest
+hwirq number.  The disadvantage is that hwirq to IRQ number lookup is
+dependent on how many entries are in the table.</p>
+<p>irq_domain_add_tree() and irq_domain_create_tree() are functionally
+equivalent, except for the first argument is different - the former
+accepts an Open Firmware specific ‘struct device_node’, while the latter
+accepts a more general abstraction ‘struct fwnode_handle’.</p>
+<p>Very few drivers should need this mapping.</p>
+</section>
+<section id="no-map">
+<h3>No Map<a class="headerlink" href="#no-map" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>irq_domain_add_nomap()
+</pre></div>
+</div>
+<p>The No Map mapping is to be used when the hwirq number is
+programmable in the hardware.  In this case it is best to program the
+Linux IRQ number into the hardware itself so that no mapping is
+required.  Calling irq_create_direct_mapping() will allocate a Linux
+IRQ number and call the .map() callback so that driver can program the
+Linux IRQ number into the hardware.</p>
+<p>Most drivers cannot use this mapping, and it is now gated on the
+CONFIG_IRQ_DOMAIN_NOMAP option. Please refrain from introducing new
+users of this API.</p>
+</section>
+<section id="legacy">
+<h3>Legacy<a class="headerlink" href="#legacy" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>irq_domain_add_simple()
+irq_domain_add_legacy()
+irq_domain_create_simple()
+irq_domain_create_legacy()
+</pre></div>
+</div>
+<p>The Legacy mapping is a special case for drivers that already have a
+range of irq_descs allocated for the hwirqs.  It is used when the
+driver cannot be immediately converted to use the linear mapping.  For
+example, many embedded system board support files use a set of #defines
+for IRQ numbers that are passed to <a class="reference internal" href="../../driver-api/infrastructure.html#c.device" title="device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">device</span></code></a> registrations.  In that
+case the Linux IRQ numbers cannot be dynamically assigned and the legacy
+mapping should be used.</p>
+<p>As the name implies, the *_legacy() functions are deprecated and only
+exist to ease the support of ancient platforms. No new users should be
+added. Same goes for the *_simple() functions when their use results
+in the legacy behaviour.</p>
+<p>The legacy map assumes a contiguous range of IRQ numbers has already
+been allocated for the controller and that the IRQ number can be
+calculated by adding a fixed offset to the hwirq number, and
+visa-versa.  The disadvantage is that it requires the interrupt
+controller to manage IRQ allocations and it requires an irq_desc to be
+allocated for every hwirq, even if it is unused.</p>
+<p>The legacy map should only be used if fixed IRQ mappings must be
+supported.  For example, ISA controllers would use the legacy map for
+mapping Linux IRQs 0-15 so that existing ISA drivers get the correct IRQ
+numbers.</p>
+<p>Most users of legacy mappings should use irq_domain_add_simple() or
+irq_domain_create_simple() which will use a legacy domain only if an IRQ range
+is supplied by the system and will otherwise use a linear domain mapping.
+The semantics of this call are such that if an IRQ range is specified then
+descriptors will be allocated on-the-fly for it, and if no range is
+specified it will fall through to <a class="reference internal" href="../genericirq.html#c.irq_domain_add_linear" title="irq_domain_add_linear"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_domain_add_linear()</span></code></a> or
+irq_domain_create_linear() which means <em>no</em> irq descriptors will be allocated.</p>
+<p>A typical use case for simple domains is where an irqchip provider
+is supporting both dynamic and static IRQ assignments.</p>
+<p>In order to avoid ending up in a situation where a linear domain is
+used and no descriptor gets allocated it is very important to make sure
+that the driver using the simple domain call irq_create_mapping()
+before any <a class="reference internal" href="../genericirq.html#c.irq_find_mapping" title="irq_find_mapping"><code class="xref c c-func docutils literal notranslate"><span class="pre">irq_find_mapping()</span></code></a> since the latter will actually work
+for the static IRQ assignment case.</p>
+<p>irq_domain_add_simple() and irq_domain_create_simple() as well as
+irq_domain_add_legacy() and irq_domain_create_legacy() are functionally
+equivalent, except for the first argument is different - the former
+accepts an Open Firmware specific ‘struct device_node’, while the latter
+accepts a more general abstraction ‘struct fwnode_handle’.</p>
+</section>
+<section id="hierarchy-irq-domain">
+<h3>Hierarchy IRQ domain<a class="headerlink" href="#hierarchy-irq-domain" title="Link to this heading">¶</a></h3>
+<p>On some architectures, there may be multiple interrupt controllers
+involved in delivering an interrupt from the device to the target CPU.
+Let’s look at a typical interrupt delivering path on x86 platforms:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Device --&gt; IOAPIC -&gt; Interrupt remapping Controller -&gt; Local APIC -&gt; CPU
+</pre></div>
+</div>
+<p>There are three interrupt controllers involved:</p>
+<ol class="arabic simple">
+<li><p>IOAPIC controller</p></li>
+<li><p>Interrupt remapping controller</p></li>
+<li><p>Local APIC controller</p></li>
+</ol>
+<p>To support such a hardware topology and make software architecture match
+hardware architecture, an irq_domain data structure is built for each
+interrupt controller and those irq_domains are organized into hierarchy.
+When building irq_domain hierarchy, the irq_domain near to the device is
+child and the irq_domain near to CPU is parent. So a hierarchy structure
+as below will be built for the example above:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CPU Vector irq_domain (root irq_domain to manage CPU vectors)
+        ^
+        |
+Interrupt Remapping irq_domain (manage irq_remapping entries)
+        ^
+        |
+IOAPIC irq_domain (manage IOAPIC delivery entries/pins)
+</pre></div>
+</div>
+<p>There are four major interfaces to use hierarchy irq_domain:</p>
+<ol class="arabic simple">
+<li><p>irq_domain_alloc_irqs(): allocate IRQ descriptors and interrupt
+controller related resources to deliver these interrupts.</p></li>
+<li><p>irq_domain_free_irqs(): free IRQ descriptors and interrupt controller
+related resources associated with these interrupts.</p></li>
+<li><p>irq_domain_activate_irq(): activate interrupt controller hardware to
+deliver the interrupt.</p></li>
+<li><p>irq_domain_deactivate_irq(): deactivate interrupt controller hardware
+to stop delivering the interrupt.</p></li>
+</ol>
+<p>Following changes are needed to support hierarchy irq_domain:</p>
+<ol class="arabic simple">
+<li><p>a new field ‘parent’ is added to <a class="reference internal" href="../genericirq.html#c.irq_domain" title="irq_domain"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irq_domain</span></code></a>; it’s used to
+maintain irq_domain hierarchy information.</p></li>
+<li><p>a new field ‘parent_data’ is added to <a class="reference internal" href="../genericirq.html#c.irq_data" title="irq_data"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irq_data</span></code></a>; it’s used to
+build hierarchy irq_data to match hierarchy irq_domains. The irq_data
+is used to store irq_domain pointer and hardware irq number.</p></li>
+<li><p>new callbacks are added to <a class="reference internal" href="../genericirq.html#c.irq_domain_ops" title="irq_domain_ops"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">irq_domain_ops</span></code></a> to support hierarchy
+irq_domain operations.</p></li>
+</ol>
+<p>With support of hierarchy irq_domain and hierarchy irq_data ready, an
+irq_domain structure is built for each interrupt controller, and an
+irq_data structure is allocated for each irq_domain associated with an
+IRQ. Now we could go one step further to support stacked(hierarchy)
+irq_chip. That is, an irq_chip is associated with each irq_data along
+the hierarchy. A child irq_chip may implement a required action by
+itself or by cooperating with its parent irq_chip.</p>
+<p>With stacked irq_chip, interrupt controller driver only needs to deal
+with the hardware managed by itself and may ask for services from its
+parent irq_chip when needed. So we could achieve a much cleaner
+software architecture.</p>
+<p>For an interrupt controller driver to support hierarchy irq_domain, it
+needs to:</p>
+<ol class="arabic simple">
+<li><p>Implement irq_domain_ops.alloc and irq_domain_ops.free</p></li>
+<li><p>Optionally implement irq_domain_ops.activate and
+irq_domain_ops.deactivate.</p></li>
+<li><p>Optionally implement an irq_chip to manage the interrupt controller
+hardware.</p></li>
+<li><p>No need to implement irq_domain_ops.map and irq_domain_ops.unmap,
+they are unused with hierarchy irq_domain.</p></li>
+</ol>
+<p>Hierarchy irq_domain is in no way x86 specific, and is heavily used to
+support other architectures, such as ARM, ARM64 etc.</p>
+</section>
+</section>
+<section id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Link to this heading">¶</a></h2>
+<p>Most of the internals of the IRQ subsystem are exposed in debugfs by
+turning CONFIG_GENERIC_IRQ_DEBUGFS on.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">The irq_domain interrupt number mapping library</a><ul>
+<li><a class="reference internal" href="#irq-domain-usage">irq_domain usage</a></li>
+<li><a class="reference internal" href="#types-of-irq-domain-mappings">Types of irq_domain mappings</a><ul>
+<li><a class="reference internal" href="#linear">Linear</a></li>
+<li><a class="reference internal" href="#tree">Tree</a></li>
+<li><a class="reference internal" href="#no-map">No Map</a></li>
+<li><a class="reference internal" href="#legacy">Legacy</a></li>
+<li><a class="reference internal" href="#hierarchy-irq-domain">Hierarchy IRQ domain</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="irq-affinity.html">
+                    <span class="icon">&lt;</span><span>SMP IRQ affinity</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="irqflags-tracing.html"><span>IRQ-flags state tracing</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

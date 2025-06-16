@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DPAA2 Switch driver &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <script src="../../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="The Gianfar Ethernet Driver" href="../gianfar.html" />
+    <link rel="prev" title="DPAA2 MAC / PHY support" href="mac-phy-support.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../../index.html" title="Go to homepage"><img src="../../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/networking/device_drivers/ethernet/freescale/dpaa2/switch-driver.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="dpaa2-switch-driver">
+<h1>DPAA2 Switch driver<a class="headerlink" href="#dpaa2-switch-driver" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>© 2021 NXP</p>
+</dd>
+</dl>
+<p>The DPAA2 Switch driver probes on the Datapath Switch (DPSW) object which can
+be instantiated on the following DPAA2 SoCs and their variants: LS2088A and
+LX2160A.</p>
+<p>The driver uses the switch device driver model and exposes each switch port as
+a network interface, which can be included in a bridge or used as a standalone
+interface. Traffic switched between ports is offloaded into the hardware.</p>
+<p>The DPSW can have ports connected to DPNIs or to DPMACs for external access.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  [ethA]     [ethB]      [ethC]     [ethD]     [ethE]     [ethF]
+     :          :          :          :          :          :
+     :          :          :          :          :          :
+[dpaa2-eth]  [dpaa2-eth]  [              dpaa2-switch              ]
+     :          :          :          :          :          :        kernel
+=============================================================================
+     :          :          :          :          :          :        hardware
+  [DPNI]      [DPNI]     [============= DPSW =================]
+     |          |          |          |          |          |
+     |           ----------           |       [DPMAC]    [DPMAC]
+      -------------------------------            |          |
+                                                 |          |
+                                               [PHY]      [PHY]
+</pre></div>
+</div>
+<section id="creating-an-ethernet-switch">
+<h2>Creating an Ethernet Switch<a class="headerlink" href="#creating-an-ethernet-switch" title="Link to this heading">¶</a></h2>
+<p>The dpaa2-switch driver probes on DPSW devices found on the fsl-mc bus. These
+devices can be either created statically through the boot time configuration
+file - DataPath Layout (DPL) - or at runtime using the DPAA2 object APIs
+(incorporated already into the restool userspace tool).</p>
+<p>At the moment, the dpaa2-switch driver imposes the following restrictions on
+the DPSW object that it will probe:</p>
+<blockquote>
+<div><ul>
+<li><p>The minimum number of FDBs should be at least equal to the number of switch
+interfaces. This is necessary so that separation of switch ports can be
+done, ie when not under a bridge, each switch port will have its own FDB.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fsl_dpaa2_switch dpsw.0: The number of FDBs is lower than the number of ports, cannot probe
+</pre></div>
+</div>
+</li>
+<li><p>Both the broadcast and flooding configuration should be per FDB. This
+enables the driver to restrict the broadcast and flooding domains of each
+FDB depending on the switch ports that are sharing it (aka are under the
+same bridge).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fsl_dpaa2_switch dpsw.0: Flooding domain is not per FDB, cannot probe
+fsl_dpaa2_switch dpsw.0: Broadcast domain is not per FDB, cannot probe
+</pre></div>
+</div>
+</li>
+<li><p>The control interface of the switch should not be disabled
+(DPSW_OPT_CTRL_IF_DIS not passed as a create time option). Without the
+control interface, the driver is not capable to provide proper Rx/Tx traffic
+support on the switch port netdevices.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fsl_dpaa2_switch dpsw.0: Control Interface is disabled, cannot probe
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>Besides the configuration of the actual DPSW object, the dpaa2-switch driver
+will need the following DPAA2 objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1 DPMCP - A Management Command Portal object is needed for any interaction
+with the MC firmware.</p></li>
+<li><p>1 DPBP - A Buffer Pool is used for seeding buffers intended for the Rx path
+on the control interface.</p></li>
+<li><p>Access to at least one DPIO object (Software Portal) is needed for any
+enqueue/dequeue operation to be performed on the control interface queues.
+The DPIO object will be shared, no need for a private one.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="switching-features">
+<h2>Switching features<a class="headerlink" href="#switching-features" title="Link to this heading">¶</a></h2>
+<p>The driver supports the configuration of L2 forwarding rules in hardware for
+port bridging as well as standalone usage of the independent switch interfaces.</p>
+<p>The hardware is not configurable with respect to VLAN awareness, thus any DPAA2
+switch port should be used only in usecases with a VLAN aware bridge:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ip link add dev br0 type bridge vlan_filtering 1
+
+$ ip link add dev br1 type bridge
+$ ip link set dev ethX master br1
+Error: fsl_dpaa2_switch: Cannot join a VLAN-unaware bridge
+</pre></div>
+</div>
+<p>Topology and loop detection through STP is supported when <code class="docutils literal notranslate"><span class="pre">stp_state</span> <span class="pre">1</span></code> is
+used at bridge create</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ip link add dev br0 type bridge vlan_filtering 1 stp_state 1
+</pre></div>
+</div>
+<p>L2 FDB manipulation (add/delete/dump) is supported.</p>
+<p>HW FDB learning can be configured on each switch port independently through
+bridge commands. When the HW learning is disabled, a fast age procedure will be
+run and any previously learnt addresses will be removed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ bridge link set dev ethX learning off
+$ bridge link set dev ethX learning on
+</pre></div>
+</div>
+<p>Restricting the unknown unicast and multicast flooding domain is supported, but
+not independently of each other:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ip link set dev ethX type bridge_slave flood off mcast_flood off
+$ ip link set dev ethX type bridge_slave flood off mcast_flood on
+Error: fsl_dpaa2_switch: Cannot configure multicast flooding independently of unicast.
+</pre></div>
+</div>
+<p>Broadcast flooding on a switch port can be disabled/enabled through the brport sysfs:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo 0 &gt; /sys/bus/fsl-mc/devices/dpsw.Y/net/ethX/brport/broadcast_flood
+</pre></div>
+</div>
+</section>
+<section id="offloads">
+<h2>Offloads<a class="headerlink" href="#offloads" title="Link to this heading">¶</a></h2>
+<section id="routing-actions-redirect-trap-drop">
+<h3>Routing actions (redirect, trap, drop)<a class="headerlink" href="#routing-actions-redirect-trap-drop" title="Link to this heading">¶</a></h3>
+<p>The DPAA2 switch is able to offload flow-based redirection of packets making
+use of ACL tables. Shared filter blocks are supported by sharing a single ACL
+table between multiple ports.</p>
+<p>The following flow keys are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ethernet: dst_mac/src_mac</p></li>
+<li><p>IPv4: dst_ip/src_ip/ip_proto/tos</p></li>
+<li><p>VLAN: vlan_id/vlan_prio/vlan_tpid/vlan_dei</p></li>
+<li><p>L4: dst_port/src_port</p></li>
+</ul>
+</div></blockquote>
+<p>Also, the matchall filter can be used to redirect the entire traffic received
+on a port.</p>
+<p>As per flow actions, the following are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>drop</p></li>
+<li><p>mirred egress redirect</p></li>
+<li><p>trap</p></li>
+</ul>
+</div></blockquote>
+<p>Each ACL entry (filter) can be setup with only one of the listed
+actions.</p>
+<p>Example 1: send frames received on eth4 with a SA of 00:01:02:03:04:05 to the
+CPU:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc qdisc add dev eth4 clsact
+$ tc filter add dev eth4 ingress flower src_mac 00:01:02:03:04:05 skip_sw action trap
+</pre></div>
+</div>
+<p>Example 2: drop frames received on eth4 with VID 100 and PCP of 3:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc filter add dev eth4 ingress protocol 802.1q flower skip_sw vlan_id 100 vlan_prio 3 action drop
+</pre></div>
+</div>
+<p>Example 3: redirect all frames received on eth4 to eth1:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc filter add dev eth4 ingress matchall action mirred egress redirect dev eth1
+</pre></div>
+</div>
+<p>Example 4: Use a single shared filter block on both eth5 and eth6:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc qdisc add dev eth5 ingress_block 1 clsact
+$ tc qdisc add dev eth6 ingress_block 1 clsact
+$ tc filter add block 1 ingress flower dst_mac 00:01:02:03:04:04 skip_sw \
+        action trap
+$ tc filter add block 1 ingress protocol ipv4 flower src_ip 192.168.1.1 skip_sw \
+        action mirred egress redirect dev eth3
+</pre></div>
+</div>
+<section id="mirroring">
+<h4>Mirroring<a class="headerlink" href="#mirroring" title="Link to this heading">¶</a></h4>
+<p>The DPAA2 switch supports only per port mirroring and per VLAN mirroring.
+Adding mirroring filters in shared blocks is also supported.</p>
+<p>When using the tc-flower classifier with the 802.1q protocol, only the
+‘’vlan_id’’ key will be accepted. Mirroring based on any other fields from the
+802.1q protocol will be rejected:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc qdisc add dev eth8 ingress_block 1 clsact
+$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_prio 3 action mirred egress mirror dev eth6
+Error: fsl_dpaa2_switch: Only matching on VLAN ID supported.
+We have an error talking to the kernel
+</pre></div>
+</div>
+<p>If a mirroring VLAN filter is requested on a port, the VLAN must to be
+installed on the switch port in question either using ‘’bridge’’ or by creating
+a VLAN upper device if the switch port is used as a standalone interface:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc qdisc add dev eth8 ingress_block 1 clsact
+$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_id 200 action mirred egress mirror dev eth6
+Error: VLAN must be installed on the switch port.
+We have an error talking to the kernel
+
+$ bridge vlan add vid 200 dev eth8
+$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_id 200 action mirred egress mirror dev eth6
+
+$ ip link add link eth8 name eth8.200 type vlan id 200
+$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_id 200 action mirred egress mirror dev eth6
+</pre></div>
+</div>
+<p>Also, it should be noted that the mirrored traffic will be subject to the same
+egress restrictions as any other traffic. This means that when a mirrored
+packet will reach the mirror port, if the VLAN found in the packet is not
+installed on the port it will get dropped.</p>
+<p>The DPAA2 switch supports only a single mirroring destination, thus multiple
+mirror rules can be installed but their ‘’to’’ port has to be the same:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_id 200 action mirred egress mirror dev eth6
+$ tc filter add block 1 ingress protocol 802.1q flower skip_sw vlan_id 100 action mirred egress mirror dev eth7
+Error: fsl_dpaa2_switch: Multiple mirror ports not supported.
+We have an error talking to the kernel
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">DPAA2 Switch driver</a><ul>
+<li><a class="reference internal" href="#creating-an-ethernet-switch">Creating an Ethernet Switch</a></li>
+<li><a class="reference internal" href="#switching-features">Switching features</a></li>
+<li><a class="reference internal" href="#offloads">Offloads</a><ul>
+<li><a class="reference internal" href="#routing-actions-redirect-trap-drop">Routing actions (redirect, trap, drop)</a><ul>
+<li><a class="reference internal" href="#mirroring">Mirroring</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="mac-phy-support.html">
+                    <span class="icon">&lt;</span><span>DPAA2 MAC / PHY support</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../gianfar.html"><span>The Gianfar Ethernet Driver</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

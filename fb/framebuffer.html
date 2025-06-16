@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The Frame Buffer Device &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="What is gxfb?" href="gxfb.html" />
+    <link rel="prev" title="The Framebuffer Console" href="fbcon.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/fb/framebuffer.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="the-frame-buffer-device">
+<h1>The Frame Buffer Device<a class="headerlink" href="#the-frame-buffer-device" title="Link to this heading">¶</a></h1>
+<p>Last revised: May 10, 2001</p>
+<section id="introduction">
+<h2>0. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The frame buffer device provides an abstraction for the graphics hardware. It
+represents the frame buffer of some video hardware and allows application
+software to access the graphics hardware through a well-defined interface, so
+the software doesn’t need to know anything about the low-level (hardware
+register) stuff.</p>
+<p>The device is accessed through special device nodes, usually located in the
+/dev directory, i.e. /dev/fb*.</p>
+</section>
+<section id="user-s-view-of-dev-fb">
+<h2>1. User’s View of /dev/fb*<a class="headerlink" href="#user-s-view-of-dev-fb" title="Link to this heading">¶</a></h2>
+<p>From the user’s point of view, the frame buffer device looks just like any
+other device in /dev. It’s a character device using major 29; the minor
+specifies the frame buffer number.</p>
+<p>By convention, the following device nodes are used (numbers indicate the device
+minor numbers):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 0 = /dev/fb0      First frame buffer
+ 1 = /dev/fb1      Second frame buffer
+     ...
+31 = /dev/fb31     32nd frame buffer
+</pre></div>
+</div>
+<p>For backwards compatibility, you may want to create the following symbolic
+links:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/dev/fb0current -&gt; fb0
+/dev/fb1current -&gt; fb1
+</pre></div>
+</div>
+<p>and so on...</p>
+<p>The frame buffer devices are also <cite>normal</cite> memory devices, this means, you can
+read and write their contents. You can, for example, make a screen snapshot by:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /dev/fb0 myfile
+</pre></div>
+</div>
+<p>There also can be more than one frame buffer at a time, e.g. if you have a
+graphics card in addition to the built-in hardware. The corresponding frame
+buffer devices (/dev/fb0 and /dev/fb1 etc.) work independently.</p>
+<p>Application software that uses the frame buffer device (e.g. the X server) will
+use /dev/fb0 by default (older software uses /dev/fb0current). You can specify
+an alternative frame buffer device by setting the environment variable
+$FRAMEBUFFER to the path name of a frame buffer device, e.g. (for sh/bash
+users):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export FRAMEBUFFER=/dev/fb1
+</pre></div>
+</div>
+<p>or (for csh users):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>setenv FRAMEBUFFER /dev/fb1
+</pre></div>
+</div>
+<p>After this the X server will use the second frame buffer.</p>
+</section>
+<section id="programmer-s-view-of-dev-fb">
+<h2>2. Programmer’s View of /dev/fb*<a class="headerlink" href="#programmer-s-view-of-dev-fb" title="Link to this heading">¶</a></h2>
+<p>As you already know, a frame buffer device is a memory device like /dev/mem and
+it has the same features. You can read it, write it, seek to some location in
+it and mmap() it (the main usage). The difference is just that the memory that
+appears in the special file is not the whole memory, but the frame buffer of
+some video hardware.</p>
+<p>/dev/fb* also allows several ioctls on it, by which lots of information about
+the hardware can be queried and set. The color map handling works via ioctls,
+too. Look into &lt;linux/fb.h&gt; for more information on what ioctls exist and on
+which data structures they work. Here’s just a brief overview:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>You can request unchangeable information about the hardware, like name,
+organization of the screen memory (planes, packed pixels, ...) and address
+and length of the screen memory.</p></li>
+<li><p>You can request and change variable information about the hardware, like
+visible and virtual geometry, depth, color map format, timing, and so on.
+If you try to change that information, the driver maybe will round up some
+values to meet the hardware’s capabilities (or return EINVAL if that isn’t
+possible).</p></li>
+<li><p>You can get and set parts of the color map. Communication is done with 16
+bits per color part (red, green, blue, transparency) to support all
+existing hardware. The driver does all the computations needed to apply
+it to the hardware (round it down to less bits, maybe throw away
+transparency).</p></li>
+</ul>
+</div></blockquote>
+<p>All this hardware abstraction makes the implementation of application programs
+easier and more portable. E.g. the X server works completely on /dev/fb* and
+thus doesn’t need to know, for example, how the color registers of the concrete
+hardware are organized. XF68_FBDev is a general X server for bitmapped,
+unaccelerated video hardware. The only thing that has to be built into
+application programs is the screen organization (bitplanes or chunky pixels
+etc.), because it works on the frame buffer image data directly.</p>
+<p>For the future it is planned that frame buffer drivers for graphics cards and
+the like can be implemented as kernel modules that are loaded at runtime. Such
+a driver just has to call <a class="reference internal" href="../driver-api/frame-buffer.html#c.register_framebuffer" title="register_framebuffer"><code class="xref c c-func docutils literal notranslate"><span class="pre">register_framebuffer()</span></code></a> and supply some functions.
+Writing and distributing such drivers independently from the kernel will save
+much trouble...</p>
+</section>
+<section id="frame-buffer-resolution-maintenance">
+<h2>3. Frame Buffer Resolution Maintenance<a class="headerlink" href="#frame-buffer-resolution-maintenance" title="Link to this heading">¶</a></h2>
+<p>Frame buffer resolutions are maintained using the utility <cite>fbset</cite>. It can
+change the video mode properties of a frame buffer device. Its main usage is
+to change the current video mode, e.g. during boot up in one of your <cite>/etc/rc.*</cite>
+or <cite>/etc/init.d/*</cite> files.</p>
+<p>Fbset uses a video mode database stored in a configuration file, so you can
+easily add your own modes and refer to them with a simple identifier.</p>
+</section>
+<section id="the-x-server">
+<h2>4. The X Server<a class="headerlink" href="#the-x-server" title="Link to this heading">¶</a></h2>
+<p>The X server (XF68_FBDev) is the most notable application program for the frame
+buffer device. Starting with XFree86 release 3.2, the X server is part of
+XFree86 and has 2 modes:</p>
+<blockquote>
+<div><ul>
+<li><p>If the <cite>Display</cite> subsection for the <cite>fbdev</cite> driver in the /etc/XF86Config
+file contains a:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Modes &quot;default&quot;
+</pre></div>
+</div>
+<p>line, the X server will use the scheme discussed above, i.e. it will start
+up in the resolution determined by /dev/fb0 (or $FRAMEBUFFER, if set). You
+still have to specify the color depth (using the Depth keyword) and virtual
+resolution (using the Virtual keyword) though. This is the default for the
+configuration file supplied with XFree86. It’s the most simple
+configuration, but it has some limitations.</p>
+</li>
+<li><p>Therefore it’s also possible to specify resolutions in the /etc/XF86Config
+file. This allows for on-the-fly resolution switching while retaining the
+same virtual desktop size. The frame buffer device that’s used is still
+/dev/fb0current (or $FRAMEBUFFER), but the available resolutions are
+defined by /etc/XF86Config now. The disadvantage is that you have to
+specify the timings in a different format (but <cite>fbset -x</cite> may help).</p></li>
+</ul>
+</div></blockquote>
+<p>To tune a video mode, you can use fbset or xvidtune. Note that xvidtune doesn’t
+work 100% with XF68_FBDev: the reported clock values are always incorrect.</p>
+</section>
+<section id="video-mode-timings">
+<h2>5. Video Mode Timings<a class="headerlink" href="#video-mode-timings" title="Link to this heading">¶</a></h2>
+<p>A monitor draws an image on the screen by using an electron beam (3 electron
+beams for color models, 1 electron beam for monochrome monitors). The front of
+the screen is covered by a pattern of colored phosphors (pixels). If a phosphor
+is hit by an electron, it emits a photon and thus becomes visible.</p>
+<p>The electron beam draws horizontal lines (scanlines) from left to right, and
+from the top to the bottom of the screen. By modifying the intensity of the
+electron beam, pixels with various colors and intensities can be shown.</p>
+<p>After each scanline the electron beam has to move back to the left side of the
+screen and to the next line: this is called the horizontal retrace. After the
+whole screen (frame) was painted, the beam moves back to the upper left corner:
+this is called the vertical retrace. During both the horizontal and vertical
+retrace, the electron beam is turned off (blanked).</p>
+<p>The speed at which the electron beam paints the pixels is determined by the
+dotclock in the graphics board. For a dotclock of e.g. 28.37516 MHz (millions
+of cycles per second), each pixel is 35242 ps (picoseconds) long:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1/(28.37516E6 Hz) = 35.242E-9 s
+</pre></div>
+</div>
+<p>If the screen resolution is 640x480, it will take:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>640*35.242E-9 s = 22.555E-6 s
+</pre></div>
+</div>
+<p>to paint the 640 (xres) pixels on one scanline. But the horizontal retrace
+also takes time (e.g. 272 <cite>pixels</cite>), so a full scanline takes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(640+272)*35.242E-9 s = 32.141E-6 s
+</pre></div>
+</div>
+<p>We’ll say that the horizontal scanrate is about 31 kHz:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1/(32.141E-6 s) = 31.113E3 Hz
+</pre></div>
+</div>
+<p>A full screen counts 480 (yres) lines, but we have to consider the vertical
+retrace too (e.g. 49 <cite>lines</cite>). So a full screen will take:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(480+49)*32.141E-6 s = 17.002E-3 s
+</pre></div>
+</div>
+<p>The vertical scanrate is about 59 Hz:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1/(17.002E-3 s) = 58.815 Hz
+</pre></div>
+</div>
+<p>This means the screen data is refreshed about 59 times per second. To have a
+stable picture without visible flicker, VESA recommends a vertical scanrate of
+at least 72 Hz. But the perceived flicker is very human dependent: some people
+can use 50 Hz without any trouble, while I’ll notice if it’s less than 80 Hz.</p>
+<p>Since the monitor doesn’t know when a new scanline starts, the graphics board
+will supply a synchronization pulse (horizontal sync or hsync) for each
+scanline.  Similarly it supplies a synchronization pulse (vertical sync or
+vsync) for each new frame. The position of the image on the screen is
+influenced by the moments at which the synchronization pulses occur.</p>
+<p>The following picture summarizes all timings. The horizontal retrace time is
+the sum of the left margin, the right margin and the hsync length, while the
+vertical retrace time is the sum of the upper margin, the lower margin and the
+vsync length:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+----------+---------------------------------------------+----------+-------+
+|          |                ↑                            |          |       |
+|          |                |upper_margin                |          |       |
+|          |                ↓                            |          |       |
++----------###############################################----------+-------+
+|          #                ↑                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|   left   #                |                            #  right   | hsync |
+|  margin  #                |       xres                 #  margin  |  len  |
+|&lt;--------&gt;#&lt;---------------+---------------------------&gt;#&lt;--------&gt;|&lt;-----&gt;|
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |yres                        #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                |                            #          |       |
+|          #                ↓                            #          |       |
++----------###############################################----------+-------+
+|          |                ↑                            |          |       |
+|          |                |lower_margin                |          |       |
+|          |                ↓                            |          |       |
++----------+---------------------------------------------+----------+-------+
+|          |                ↑                            |          |       |
+|          |                |vsync_len                   |          |       |
+|          |                ↓                            |          |       |
++----------+---------------------------------------------+----------+-------+
+</pre></div>
+</div>
+<p>The frame buffer device expects all horizontal timings in number of dotclocks
+(in picoseconds, 1E-12 s), and vertical timings in number of scanlines.</p>
+</section>
+<section id="converting-xfree86-timing-values-info-frame-buffer-device-timings">
+<h2>6. Converting XFree86 timing values info frame buffer device timings<a class="headerlink" href="#converting-xfree86-timing-values-info-frame-buffer-device-timings" title="Link to this heading">¶</a></h2>
+<p>An XFree86 mode line consists of the following fields:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;800x600&quot;     50      800  856  976 1040    600  637  643  666
+&lt; name &gt;     DCF       HR  SH1  SH2  HFL     VR  SV1  SV2  VFL
+</pre></div>
+</div>
+<p>The frame buffer device uses the following fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>pixclock: pixel clock in ps (pico seconds)</p></li>
+<li><p>left_margin: time from sync to picture</p></li>
+<li><p>right_margin: time from picture to sync</p></li>
+<li><p>upper_margin: time from sync to picture</p></li>
+<li><p>lower_margin: time from picture to sync</p></li>
+<li><p>hsync_len: length of horizontal sync</p></li>
+<li><p>vsync_len: length of vertical sync</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Pixelclock:</p>
+<p>xfree: in MHz</p>
+<p>fb: in picoseconds (ps)</p>
+<p>pixclock = 1000000 / DCF</p>
+</li>
+<li><p>horizontal timings:</p>
+<p>left_margin = HFL - SH2</p>
+<p>right_margin = SH1 - HR</p>
+<p>hsync_len = SH2 - SH1</p>
+</li>
+<li><p>vertical timings:</p>
+<p>upper_margin = VFL - SV2</p>
+<p>lower_margin = SV1 - VR</p>
+<p>vsync_len = SV2 - SV1</p>
+</li>
+</ol>
+<p>Good examples for VESA timings can be found in the XFree86 source tree,
+under “xc/programs/Xserver/hw/xfree86/doc/modeDB.txt”.</p>
+</section>
+<section id="references">
+<h2>7. References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<p>For more specific information about the frame buffer device and its
+applications, please refer to the Linux-fbdev website:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://linux-fbdev.sourceforge.net/">http://linux-fbdev.sourceforge.net/</a></p>
+</div></blockquote>
+<p>and to the following documentation:</p>
+<blockquote>
+<div><ul>
+<li><p>The manual pages for fbset: fbset(8), fb.modes(5)</p></li>
+<li><p>The manual pages for XFree86: XF68_FBDev(1), XF86Config(4/5)</p></li>
+<li><p>The mighty kernel sources:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>linux/drivers/video/</p></li>
+<li><p>linux/include/linux/fb.h</p></li>
+<li><p>linux/include/video/</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="mailing-list">
+<h2>8. Mailing list<a class="headerlink" href="#mailing-list" title="Link to this heading">¶</a></h2>
+<p>There is a frame buffer device related mailing list at kernel.org:
+<a class="reference external" href="mailto:linux-fbdev&#37;&#52;&#48;vger&#46;kernel&#46;org">linux-fbdev<span>&#64;</span>vger<span>&#46;</span>kernel<span>&#46;</span>org</a>.</p>
+<p>Point your web browser to <a class="reference external" href="http://sourceforge.net/projects/linux-fbdev/">http://sourceforge.net/projects/linux-fbdev/</a> for
+subscription information and archive browsing.</p>
+</section>
+<section id="downloading">
+<h2>9. Downloading<a class="headerlink" href="#downloading" title="Link to this heading">¶</a></h2>
+<p>All necessary files can be found at</p>
+<blockquote>
+<div><p><a class="reference external" href="ftp://ftp.uni-erlangen.de/pub/Linux/LOCAL/680x0/">ftp://ftp.uni-erlangen.de/pub/Linux/LOCAL/680x0/</a></p>
+</div></blockquote>
+<p>and on its mirrors.</p>
+<p>The latest version of fbset can be found at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.linux-fbdev.org/">http://www.linux-fbdev.org/</a></p>
+</div></blockquote>
+</section>
+<section id="credits">
+<h2>10. Credits<a class="headerlink" href="#credits" title="Link to this heading">¶</a></h2>
+<p>This readme was written by Geert Uytterhoeven, partly based on the original
+<cite>X-framebuffer.README</cite> by Roman Hodek and Martin Schaller. Section 6 was
+provided by Frank Neumann.</p>
+<p>The frame buffer device abstraction was designed by Martin Schaller.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">The Frame Buffer Device</a><ul>
+<li><a class="reference internal" href="#introduction">0. Introduction</a></li>
+<li><a class="reference internal" href="#user-s-view-of-dev-fb">1. User’s View of /dev/fb*</a></li>
+<li><a class="reference internal" href="#programmer-s-view-of-dev-fb">2. Programmer’s View of /dev/fb*</a></li>
+<li><a class="reference internal" href="#frame-buffer-resolution-maintenance">3. Frame Buffer Resolution Maintenance</a></li>
+<li><a class="reference internal" href="#the-x-server">4. The X Server</a></li>
+<li><a class="reference internal" href="#video-mode-timings">5. Video Mode Timings</a></li>
+<li><a class="reference internal" href="#converting-xfree86-timing-values-info-frame-buffer-device-timings">6. Converting XFree86 timing values info frame buffer device timings</a></li>
+<li><a class="reference internal" href="#references">7. References</a></li>
+<li><a class="reference internal" href="#mailing-list">8. Mailing list</a></li>
+<li><a class="reference internal" href="#downloading">9. Downloading</a></li>
+<li><a class="reference internal" href="#credits">10. Credits</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="fbcon.html">
+                    <span class="icon">&lt;</span><span>The Framebuffer Console</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="gxfb.html"><span>What is gxfb?</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

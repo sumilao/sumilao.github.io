@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Delay and sleep mechanisms &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Locking" href="../locking/index.html" />
+    <link rel="prev" title="Clock sources, Clock events, sched_clock() and delay timers" href="timekeeping.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/timers/delay_sleep_functions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="delay-and-sleep-mechanisms">
+<h1>Delay and sleep mechanisms<a class="headerlink" href="#delay-and-sleep-mechanisms" title="Link to this heading">¶</a></h1>
+<p>This document seeks to answer the common question: “What is the
+RightWay (TM) to insert a delay?”</p>
+<p>This question is most often faced by driver writers who have to
+deal with hardware delays and who may not be the most intimately
+familiar with the inner workings of the Linux Kernel.</p>
+<p>The following table gives a rough overview about the existing function
+‘families’ and their limitations. This overview table does not replace the
+reading of the function description before usage!</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><cite>*delay()</cite></p></th>
+<th class="head"><p><cite>usleep_range*()</cite></p></th>
+<th class="head"><p><cite>*sleep()</cite></p></th>
+<th class="head"><p><cite><a class="reference internal" href="#c.fsleep" title="fsleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">fsleep()</span></code></a></cite></p></th>
+</tr>
+<tr class="row-even"><th class="head"></th>
+<th class="head"><p>busy-wait loop</p></th>
+<th class="head"><p>hrtimers based</p></th>
+<th class="head"><p>timer list timers based</p></th>
+<th class="head"><p>combines the others</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Usage in atomic Context</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>precise on “short intervals”</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>depends</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>precise on “long intervals”</p></td>
+<td><p>Do not use!</p></td>
+<td><p>yes</p></td>
+<td><p>max 12.5% slack</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>interruptible variant</p></td>
+<td><p>no</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+<p>A generic advice for non atomic contexts could be:</p>
+<ol class="arabic simple">
+<li><p>Use <cite><a class="reference internal" href="#c.fsleep" title="fsleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">fsleep()</span></code></a></cite> whenever unsure (as it combines all the advantages of the
+others)</p></li>
+<li><p>Use <cite>*sleep()</cite> whenever possible</p></li>
+<li><p>Use <cite>usleep_range*()</cite> whenever accuracy of <cite>*sleep()</cite> is not sufficient</p></li>
+<li><p>Use <cite>*delay()</cite> for very, very short delays</p></li>
+</ol>
+<p>Find some more detailed information about the function ‘families’ in the next
+sections.</p>
+<section id="delay-family-of-functions">
+<h2><cite>*delay()</cite> family of functions<a class="headerlink" href="#delay-family-of-functions" title="Link to this heading">¶</a></h2>
+<p>These functions use the jiffy estimation of clock speed and will busy wait for
+enough loop cycles to achieve the desired delay. <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> is the basic
+implementation and <a class="reference internal" href="#c.ndelay" title="ndelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">ndelay()</span></code></a> as well as <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> are variants.</p>
+<p>These functions are mainly used to add a delay in atomic context. Please make
+sure to ask yourself before adding a delay in atomic context: Is this really
+required?</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.udelay">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">udelay</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">usec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.udelay" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Inserting a delay based on microseconds with busy waiting</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">usec</span></code></dt><dd><p>requested delay in microseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>When delaying in an atomic context <a class="reference internal" href="#c.ndelay" title="ndelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">ndelay()</span></code></a>, <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> and <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> are the
+only valid variants of delaying/sleeping to go with.</p>
+<p>When inserting delays in non atomic context which are shorter than the time
+which is required to queue e.g. an hrtimer and to enter then the scheduler,
+it is also valuable to use <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a>. But it is not simple to specify a
+generic threshold for this which will fit for all systems. An approximation
+is a threshold for all delays up to 10 microseconds.</p>
+<p>When having a delay which is larger than the architecture specific
+<code class="docutils literal notranslate"><span class="pre">MAX_UDELAY_MS</span></code> value, please make sure <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> is used. Otherwise a overflow
+risk is given.</p>
+<p>Please note that <a class="reference internal" href="#c.ndelay" title="ndelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">ndelay()</span></code></a>, <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> and <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> may return early for several
+reasons (<a class="reference external" href="https://lists.openwall.net/linux-kernel/2011/01/09/56">https://lists.openwall.net/linux-kernel/2011/01/09/56</a>):</p>
+<ol class="arabic simple">
+<li><p>computed loops_per_jiffy too low (due to the time taken to execute the
+timer interrupt.)</p></li>
+<li><p>cache behaviour affecting the time it takes to execute the loop function.</p></li>
+<li><p>CPU clock rate changes.</p></li>
+</ol>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.ndelay">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ndelay</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">nsec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ndelay" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Inserting a delay based on nanoseconds with busy waiting</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">nsec</span></code></dt><dd><p>requested delay in nanoseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>See <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> for basic information about <a class="reference internal" href="#c.ndelay" title="ndelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">ndelay()</span></code></a> and it’s variants.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.mdelay">
+<span class="sig-name descname"><span class="n"><span class="pre">mdelay</span></span></span><a class="headerlink" href="#c.mdelay" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">mdelay</span> <span class="pre">(n)</span></code></p>
+<blockquote>
+<div><p>Inserting a delay based on milliseconds with busy waiting</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">n</span></code></dt><dd><p>requested delay in milliseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>See <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> for basic information about <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> and it’s variants.</p>
+<p>Please double check, whether <a class="reference internal" href="#c.mdelay" title="mdelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">mdelay()</span></code></a> is the right way to go or whether a
+refactoring of the code is the better variant to be able to use <a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a>
+instead.</p>
+</div>
+</section>
+<section id="usleep-range-and-sleep-family-of-functions">
+<h2><cite>usleep_range*()</cite> and <cite>*sleep()</cite> family of functions<a class="headerlink" href="#usleep-range-and-sleep-family-of-functions" title="Link to this heading">¶</a></h2>
+<p>These functions use hrtimers or timer list timers to provide the requested
+sleeping duration. In order to decide which function is the right one to use,
+take some basic information into account:</p>
+<ol class="arabic simple">
+<li><p>hrtimers are more expensive as they are using an rb-tree (instead of hashing)</p></li>
+<li><p>hrtimers are more expensive when the requested sleeping duration is the first
+timer which means real hardware has to be programmed</p></li>
+<li><p>timer list timers always provide some sort of slack as they are jiffy based</p></li>
+</ol>
+<p>The generic advice is repeated here:</p>
+<ol class="arabic simple">
+<li><p>Use <cite><a class="reference internal" href="#c.fsleep" title="fsleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">fsleep()</span></code></a></cite> whenever unsure (as it combines all the advantages of the
+others)</p></li>
+<li><p>Use <cite>*sleep()</cite> whenever possible</p></li>
+<li><p>Use <cite>usleep_range*()</cite> whenever accuracy of <cite>*sleep()</cite> is not sufficient</p></li>
+</ol>
+<p>First check <a class="reference internal" href="#c.fsleep" title="fsleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">fsleep()</span></code></a> function description and to learn more about accuracy,
+please check <a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> function description.</p>
+<section id="usleep-range">
+<h3><cite>usleep_range*()</cite><a class="headerlink" href="#usleep-range" title="Link to this heading">¶</a></h3>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.usleep_range">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">usleep_range</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">min</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">max</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.usleep_range" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Sleep for an approximate time</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">min</span></code></dt><dd><p>Minimum time in microseconds to sleep</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">max</span></code></dt><dd><p>Maximum time in microseconds to sleep</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>For basic information please refere to <a class="reference internal" href="#c.usleep_range_state" title="usleep_range_state"><code class="xref c c-func docutils literal notranslate"><span class="pre">usleep_range_state()</span></code></a>.</p>
+<p>The task will be in the state TASK_UNINTERRUPTIBLE during the sleep.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.usleep_range_idle">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">usleep_range_idle</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">min</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">max</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.usleep_range_idle" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Sleep for an approximate time with idle time accounting</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">min</span></code></dt><dd><p>Minimum time in microseconds to sleep</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">max</span></code></dt><dd><p>Maximum time in microseconds to sleep</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>For basic information please refere to <a class="reference internal" href="#c.usleep_range_state" title="usleep_range_state"><code class="xref c c-func docutils literal notranslate"><span class="pre">usleep_range_state()</span></code></a>.</p>
+<p>The sleeping task has the state TASK_IDLE during the sleep to prevent
+contribution to the load avarage.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.usleep_range_state">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">usleep_range_state</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">min</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">max</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.usleep_range_state" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Sleep for an approximate time in a given state</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">min</span></code></dt><dd><p>Minimum time in usecs to sleep</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">max</span></code></dt><dd><p>Maximum time in usecs to sleep</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">state</span></code></dt><dd><p>State of the current task that will be while sleeping</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p><a class="reference internal" href="#c.usleep_range_state" title="usleep_range_state"><code class="xref c c-func docutils literal notranslate"><span class="pre">usleep_range_state()</span></code></a> sleeps at least for the minimum specified time but not
+longer than the maximum specified amount of time. The range might reduce
+power usage by allowing hrtimers to coalesce an already scheduled interrupt
+with this hrtimer. In the worst case, an interrupt is scheduled for the upper
+bound.</p>
+<p>The sleeping task is set to the specified state before starting the sleep.</p>
+<p>In non-atomic context where the exact wakeup time is flexible, use
+<a class="reference internal" href="#c.usleep_range" title="usleep_range"><code class="xref c c-func docutils literal notranslate"><span class="pre">usleep_range()</span></code></a> or its variants instead of <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a>. The sleep improves
+responsiveness by avoiding the CPU-hogging busy-wait of <a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a>.</p>
+</div>
+</section>
+<section id="sleep">
+<h3><cite>*sleep()</cite><a class="headerlink" href="#sleep" title="Link to this heading">¶</a></h3>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.msleep">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">msleep</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">msecs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.msleep" title="Link to this definition">¶</a><br /></dt>
+<dd><p>sleep safely even with waitqueue interruptions</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">msecs</span></code></dt><dd><p>Requested sleep duration in milliseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p><a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> uses jiffy based timeouts for the sleep duration. Because of the
+design of the timer wheel, the maximum additional percentage delay (slack) is
+12.5%. This is only valid for timers which will end up in level 1 or a higher
+level of the timer wheel. For explanation of those 12.5% please check the
+detailed description about the basics of the timer wheel.</p>
+<p>The slack of timers which will end up in level 0 depends on sleep duration
+(msecs) and HZ configuration and can be calculated in the following way (with
+the timer wheel design restriction that the slack is not less than 12.5%):</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">slack</span> <span class="pre">=</span> <span class="pre">MSECS_PER_TICK</span> <span class="pre">/</span> <span class="pre">msecs</span></code></p>
+</div></blockquote>
+<p>When the allowed slack of the callsite is known, the calculation could be
+turned around to find the minimal allowed sleep duration to meet the
+constraints. For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HZ=1000</span></code> with <code class="docutils literal notranslate"><span class="pre">slack=25%</span></code>: <code class="docutils literal notranslate"><span class="pre">MSECS_PER_TICK</span> <span class="pre">/</span> <span class="pre">slack</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">/</span> <span class="pre">(1/4)</span> <span class="pre">=</span> <span class="pre">4</span></code>:
+all sleep durations greater or equal 4ms will meet the constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HZ=1000</span></code> with <code class="docutils literal notranslate"><span class="pre">slack=12.5%</span></code>: <code class="docutils literal notranslate"><span class="pre">MSECS_PER_TICK</span> <span class="pre">/</span> <span class="pre">slack</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">/</span> <span class="pre">(1/8)</span> <span class="pre">=</span> <span class="pre">8</span></code>:
+all sleep durations greater or equal 8ms will meet the constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HZ=250</span></code> with <code class="docutils literal notranslate"><span class="pre">slack=25%</span></code>: <code class="docutils literal notranslate"><span class="pre">MSECS_PER_TICK</span> <span class="pre">/</span> <span class="pre">slack</span> <span class="pre">=</span> <span class="pre">4</span> <span class="pre">/</span> <span class="pre">(1/4)</span> <span class="pre">=</span> <span class="pre">16</span></code>:
+all sleep durations greater or equal 16ms will meet the constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HZ=250</span></code> with <code class="docutils literal notranslate"><span class="pre">slack=12.5%</span></code>: <code class="docutils literal notranslate"><span class="pre">MSECS_PER_TICK</span> <span class="pre">/</span> <span class="pre">slack</span> <span class="pre">=</span> <span class="pre">4</span> <span class="pre">/</span> <span class="pre">(1/8)</span> <span class="pre">=</span> <span class="pre">32</span></code>:
+all sleep durations greater or equal 32ms will meet the constraints.</p></li>
+</ul>
+<p>See also the signal aware variant <a class="reference internal" href="#c.msleep_interruptible" title="msleep_interruptible"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep_interruptible()</span></code></a>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.msleep_interruptible">
+<span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">msleep_interruptible</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">msecs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.msleep_interruptible" title="Link to this definition">¶</a><br /></dt>
+<dd><p>sleep waiting for signals</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">msecs</span></code></dt><dd><p>Requested sleep duration in milliseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>See <a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> for some basic information.</p>
+<p>The difference between <a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> and <a class="reference internal" href="#c.msleep_interruptible" title="msleep_interruptible"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep_interruptible()</span></code></a> is that the sleep
+could be interrupted by a signal delivery and then returns early.</p>
+<p><strong>Return</strong></p>
+<p>The remaining time of the sleep duration transformed to msecs (see
+schedule_timeout() for details).</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.ssleep">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ssleep</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">seconds</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.ssleep" title="Link to this definition">¶</a><br /></dt>
+<dd><p>wrapper for seconds around msleep</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">seconds</span></code></dt><dd><p>Requested sleep duration in seconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Please refere to <a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> for detailed information.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.fsleep">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fsleep</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="n"><span class="pre">usecs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.fsleep" title="Link to this definition">¶</a><br /></dt>
+<dd><p>flexible sleep which autoselects the best mechanism</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">usecs</span></code></dt><dd><p>requested sleep duration in microseconds</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>flseep() selects the best mechanism that will provide maximum 25% slack
+to the requested sleep duration. Therefore it uses:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.udelay" title="udelay"><code class="xref c c-func docutils literal notranslate"><span class="pre">udelay()</span></code></a> loop for sleep durations &lt;= 10 microseconds to avoid hrtimer
+overhead for really short sleep durations.</p></li>
+<li><p><a class="reference internal" href="#c.usleep_range" title="usleep_range"><code class="xref c c-func docutils literal notranslate"><span class="pre">usleep_range()</span></code></a> for sleep durations which would lead with the usage of
+<a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> to a slack larger than 25%. This depends on the granularity of
+jiffies.</p></li>
+<li><p><a class="reference internal" href="#c.msleep" title="msleep"><code class="xref c c-func docutils literal notranslate"><span class="pre">msleep()</span></code></a> for all other sleep durations.</p></li>
+</ul>
+<p><strong>Note</strong></p>
+<p>When <code class="docutils literal notranslate"><span class="pre">CONFIG_HIGH_RES_TIMERS</span></code> is not set, all sleeps are processed with
+the granularity of jiffies and the slack might exceed 25% especially for
+short sleep durations.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Delay and sleep mechanisms</a><ul>
+<li><a class="reference internal" href="#delay-family-of-functions"><cite>*delay()</cite> family of functions</a></li>
+<li><a class="reference internal" href="#usleep-range-and-sleep-family-of-functions"><cite>usleep_range*()</cite> and <cite>*sleep()</cite> family of functions</a><ul>
+<li><a class="reference internal" href="#usleep-range"><cite>usleep_range*()</cite></a></li>
+<li><a class="reference internal" href="#sleep"><cite>*sleep()</cite></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="timekeeping.html">
+                    <span class="icon">&lt;</span><span>Clock sources, Clock events, sched_clock() and delay timers</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../locking/index.html"><span>Locking</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

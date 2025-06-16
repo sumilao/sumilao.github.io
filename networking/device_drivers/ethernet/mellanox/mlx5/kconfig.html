@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Enabling the driver and kconfig options &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <script src="../../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Switchdev" href="switchdev.html" />
+    <link rel="prev" title="Mellanox ConnectX(R) mlx5 core VPI Network Driver" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../../index.html" title="Go to homepage"><img src="../../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/networking/device_drivers/ethernet/mellanox/mlx5/kconfig.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="enabling-the-driver-and-kconfig-options">
+<h1>Enabling the driver and kconfig options<a class="headerlink" href="#enabling-the-driver-and-kconfig-options" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>© 2023, NVIDIA CORPORATION &amp; AFFILIATES. All rights reserved.</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">mlx5 core is modular and most of the major mlx5 core driver features can be selected (compiled in/out)</div>
+<div class="line">at build time via kernel Kconfig flags.</div>
+<div class="line">Basic features, ethernet net device rx/tx offloads and XDP, are available with the most basic flags</div>
+<div class="line">CONFIG_MLX5_CORE=y/m and CONFIG_MLX5_CORE_EN=y.</div>
+<div class="line">For the list of advanced features, please see below.</div>
+</div>
+<p><strong>CONFIG_MLX5_BRIDGE=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Enable <a class="reference internal" href="switchdev.html#mlx5-bridge-offload"><span class="std std-ref">Ethernet Bridging (BRIDGE) offloading support</span></a>.</div>
+<div class="line">This will provide the ability to add representors of mlx5 uplink and VF</div>
+<div class="line">ports to Bridge and offloading rules for traffic between such ports.</div>
+<div class="line">Supports VLANs (trunk and access modes).</div>
+</div>
+<p><strong>CONFIG_MLX5_CORE=(y/m/n)</strong> (module mlx5_core.ko)</p>
+<div class="line-block">
+<div class="line">The driver can be enabled by choosing CONFIG_MLX5_CORE=y/m in kernel config.</div>
+<div class="line">This will provide mlx5 core driver for mlx5 ulps to interface with (mlx5e, mlx5_ib).</div>
+</div>
+<p><strong>CONFIG_MLX5_CORE_EN=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Choosing this option will allow basic ethernet netdevice support with all of the standard rx/tx offloads.</div>
+<div class="line">mlx5e is the mlx5 ulp driver which provides netdevice kernel interface, when chosen, mlx5e will be</div>
+<div class="line">built-in into mlx5_core.ko.</div>
+</div>
+<p><strong>CONFIG_MLX5_CORE_EN_DCB=(y/n)</strong>:</p>
+<div class="line-block">
+<div class="line">Enables <a class="reference external" href="https://enterprise-support.nvidia.com/s/article/howto-auto-config-pfc-and-ets-on-connectx-4-via-lldp-dcbx">Data Center Bridging (DCB) Support</a>.</div>
+</div>
+<p><strong>CONFIG_MLX5_CORE_IPOIB=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">IPoIB offloads &amp; acceleration support.</div>
+<div class="line">Requires CONFIG_MLX5_CORE_EN to provide an accelerated interface for the rdma</div>
+<div class="line">IPoIB ulp netdevice.</div>
+</div>
+<p><strong>CONFIG_MLX5_CLS_ACT=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Enables offload support for TC classifier action (NET_CLS_ACT).</div>
+<div class="line">Works in both native NIC mode and Switchdev SRIOV mode.</div>
+<div class="line">Flow-based classifiers, such as those registered through</div>
+<div class="line"><cite>tc-flower(8)</cite>, are processed by the device, rather than the</div>
+<div class="line">host. Actions that would then overwrite matching classification</div>
+<div class="line">results would then be instant due to the offload.</div>
+</div>
+<p><strong>CONFIG_MLX5_EN_ARFS=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Enables Hardware-accelerated receive flow steering (arfs) support, and ntuple filtering.</div>
+<div class="line"><a class="reference external" href="https://enterprise-support.nvidia.com/s/article/howto-configure-arfs-on-connectx-4">https://enterprise-support.nvidia.com/s/article/howto-configure-arfs-on-connectx-4</a></div>
+</div>
+<p><strong>CONFIG_MLX5_EN_IPSEC=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Enables <a class="reference internal" href="../../../../xfrm_device.html#xfrm-device"><span class="std std-ref">IPSec XFRM cryptography-offload acceleration</span></a>.</div>
+</div>
+<p><strong>CONFIG_MLX5_MACSEC=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for MACsec cryptography-offload acceleration in the NIC.</div>
+</div>
+<p><strong>CONFIG_MLX5_EN_RXNFC=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Enables ethtool receive network flow classification, which allows user defined</div>
+<div class="line">flow rules to direct traffic into arbitrary rx queue via ethtool set/get_rxnfc API.</div>
+</div>
+<p><strong>CONFIG_MLX5_EN_TLS=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">TLS cryptography-offload acceleration.</div>
+</div>
+<p><strong>CONFIG_MLX5_ESWITCH=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Ethernet SRIOV E-Switch support in ConnectX NIC. E-Switch provides internal SRIOV packet steering</div>
+<div class="line">and switching for the enabled VFs and PF in two available modes:</div>
+<div class="line-block">
+<div class="line">1) <a class="reference external" href="https://enterprise-support.nvidia.com/s/article/HowTo-Configure-SR-IOV-for-ConnectX-4-ConnectX-5-ConnectX-6-with-KVM-Ethernet">Legacy SRIOV mode (L2 mac vlan steering based)</a>.</div>
+<div class="line">2) <a class="reference internal" href="../../../../switchdev.html#switchdev"><span class="std std-ref">Switchdev mode (eswitch offloads)</span></a>.</div>
+</div>
+</div>
+<p><strong>CONFIG_MLX5_FPGA=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for the Innova family of network cards by Mellanox Technologies.</div>
+<div class="line">Innova network cards are comprised of a ConnectX chip and an FPGA chip on one board.</div>
+<div class="line">If you select this option, the mlx5_core driver will include the Innova FPGA core and allow</div>
+<div class="line">building sandbox-specific client drivers.</div>
+</div>
+<p><strong>CONFIG_MLX5_INFINIBAND=(y/n/m)</strong> (module mlx5_ib.ko)</p>
+<div class="line-block">
+<div class="line">Provides low-level InfiniBand/RDMA and <a class="reference external" href="https://enterprise-support.nvidia.com/s/article/recommended-network-configuration-examples-for-roce-deployment">RoCE</a> support.</div>
+</div>
+<p><strong>CONFIG_MLX5_MPFS=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Ethernet Multi-Physical Function Switch (MPFS) support in ConnectX NIC.</div>
+<div class="line">MPFs is required for when <a class="reference external" href="https://www.nvidia.com/en-us/networking/multi-host/">Multi-Host</a> configuration is enabled to allow passing</div>
+<div class="line">user configured unicast MAC addresses to the requesting PF.</div>
+</div>
+<p><strong>CONFIG_MLX5_SF=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for subfunction.</div>
+<div class="line">Subfunctons are more light weight than PCI SRIOV VFs. Choosing this option</div>
+<div class="line">will enable support for creating subfunction devices.</div>
+</div>
+<p><strong>CONFIG_MLX5_SF_MANAGER=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for subfuction port in the NIC. A Mellanox subfunction</div>
+<div class="line">port is managed through devlink.  A subfunction supports RDMA, netdevice</div>
+<div class="line">and vdpa device. It is similar to a SRIOV VF but it doesn’t require</div>
+<div class="line">SRIOV support.</div>
+</div>
+<p><strong>CONFIG_MLX5_SW_STEERING=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for software-managed steering in the NIC.</div>
+</div>
+<p><strong>CONFIG_MLX5_HW_STEERING=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Build support for hardware-managed steering in the NIC.</div>
+</div>
+<p><strong>CONFIG_MLX5_TC_CT=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Support offloading connection tracking rules via tc ct action.</div>
+</div>
+<p><strong>CONFIG_MLX5_TC_SAMPLE=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Support offloading sample rules via tc sample action.</div>
+</div>
+<p><strong>CONFIG_MLX5_VDPA=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">Support library for Mellanox VDPA drivers. Provides code that is</div>
+<div class="line">common for all types of VDPA drivers. The following drivers are planned:</div>
+<div class="line">net, block.</div>
+</div>
+<p><strong>CONFIG_MLX5_VDPA_NET=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">VDPA network driver for ConnectX6 and newer. Provides offloading</div>
+<div class="line">of virtio net datapath such that descriptors put on the ring will</div>
+<div class="line">be executed by the hardware. It also supports a variety of stateless</div>
+<div class="line">offloads depending on the actual device used and firmware version.</div>
+</div>
+<p><strong>CONFIG_MLX5_VFIO_PCI=(y/n)</strong></p>
+<div class="line-block">
+<div class="line">This provides migration support for MLX5 devices using the VFIO framework.</div>
+</div>
+<p><strong>External options</strong> ( Choose if the corresponding mlx5 feature is required )</p>
+<ul class="simple">
+<li><p>CONFIG_MLXFW: When chosen, mlx5 firmware flashing support will be enabled (via devlink and ethtool).</p></li>
+<li><p>CONFIG_PTP_1588_CLOCK: When chosen, mlx5 ptp support will be enabled</p></li>
+<li><p>CONFIG_VXLAN: When chosen, mlx5 vxlan support will be enabled.</p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>Mellanox ConnectX(R) mlx5 core VPI Network Driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="switchdev.html"><span>Switchdev</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Family nlctrl netlink specification &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Family ovs_datapath netlink specification" href="ovs_datapath.html" />
+    <link rel="prev" title="Family nl80211 netlink specification" href="nl80211.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/networking/netlink_spec/nlctrl.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="family-nlctrl-netlink-specification">
+<h1><a class="toc-backref" href="#id2" role="doc-backlink">Family <code class="docutils literal notranslate"><span class="pre">nlctrl</span></code> netlink specification</a><a class="headerlink" href="#family-nlctrl-netlink-specification" title="Link to this heading">¶</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#family-nlctrl-netlink-specification" id="id2">Family <code class="docutils literal notranslate"><span class="pre">nlctrl</span></code> netlink specification</a></p>
+<ul>
+<li><p><a class="reference internal" href="#summary" id="id3">Summary</a></p></li>
+<li><p><a class="reference internal" href="#operations" id="id4">Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getfamily" id="id5">getfamily</a></p></li>
+<li><p><a class="reference internal" href="#getpolicy" id="id6">getpolicy</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#definitions" id="id7">Definitions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#op-flags" id="id8">op-flags</a></p></li>
+<li><p><a class="reference internal" href="#attr-type" id="id9">attr-type</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#attribute-sets" id="id10">Attribute sets</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ctrl-attrs" id="id11">ctrl-attrs</a></p></li>
+<li><p><a class="reference internal" href="#mcast-group-attrs" id="id12">mcast-group-attrs</a></p></li>
+<li><p><a class="reference internal" href="#op-attrs" id="id13">op-attrs</a></p></li>
+<li><p><a class="reference internal" href="#policy-attrs" id="id14">policy-attrs</a></p></li>
+<li><p><a class="reference internal" href="#op-policy-attrs" id="id15">op-policy-attrs</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="summary">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>genetlink meta-family that exposes information about all genetlink
+families registered in the kernel (including itself).</p>
+</section>
+<section id="operations">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Operations</a><a class="headerlink" href="#operations" title="Link to this heading">¶</a></h2>
+<section id="getfamily">
+<span id="nlctrl-operation-getfamily"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">getfamily</a><a class="headerlink" href="#getfamily" title="Link to this heading">¶</a></h3>
+<p>Get / dump genetlink families</p>
+<dl class="field-list simple">
+<dt class="field-odd">attribute-set<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nlctrl-attribute-set-ctrl-attrs"><span class="std std-ref">ctrl-attrs</span></a></p>
+</dd>
+<dt class="field-even">do<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">family-name</span></code>]</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">family-id</span></code>, <code class="docutils literal notranslate"><span class="pre">family-name</span></code>, <code class="docutils literal notranslate"><span class="pre">hdrsize</span></code>, <code class="docutils literal notranslate"><span class="pre">maxattr</span></code>, <code class="docutils literal notranslate"><span class="pre">mcast-groups</span></code>, <code class="docutils literal notranslate"><span class="pre">ops</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">dump<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">family-id</span></code>, <code class="docutils literal notranslate"><span class="pre">family-name</span></code>, <code class="docutils literal notranslate"><span class="pre">hdrsize</span></code>, <code class="docutils literal notranslate"><span class="pre">maxattr</span></code>, <code class="docutils literal notranslate"><span class="pre">mcast-groups</span></code>, <code class="docutils literal notranslate"><span class="pre">ops</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="getpolicy">
+<span id="nlctrl-operation-getpolicy"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">getpolicy</a><a class="headerlink" href="#getpolicy" title="Link to this heading">¶</a></h3>
+<p>Get / dump genetlink policies</p>
+<dl class="field-list simple">
+<dt class="field-odd">attribute-set<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nlctrl-attribute-set-ctrl-attrs"><span class="std std-ref">ctrl-attrs</span></a></p>
+</dd>
+<dt class="field-even">dump<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>request</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">family-name</span></code>, <code class="docutils literal notranslate"><span class="pre">family-id</span></code>, <code class="docutils literal notranslate"><span class="pre">op</span></code>]</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>reply</strong></dt><dd><dl class="field-list simple">
+<dt class="field-odd">attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<code class="docutils literal notranslate"><span class="pre">family-id</span></code>, <code class="docutils literal notranslate"><span class="pre">op-policy</span></code>, <code class="docutils literal notranslate"><span class="pre">policy</span></code>]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+<section id="definitions">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Definitions</a><a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<section id="op-flags">
+<span id="nlctrl-definition-op-flags"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">op-flags</a><a class="headerlink" href="#op-flags" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>flags</p>
+</dd>
+<dt class="field-even">enum-name<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">entries<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">admin-perm</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd-cap-do</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd-cap-dump</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd-cap-haspol</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uns-admin-perm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="attr-type">
+<span id="nlctrl-definition-attr-type"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">attr-type</a><a class="headerlink" href="#attr-type" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">enum-name<span class="colon">:</span></dt>
+<dd class="field-odd"><p>netlink-attribute-type</p>
+</dd>
+<dt class="field-even">type<span class="colon">:</span></dt>
+<dd class="field-even"><p>enum</p>
+</dd>
+<dt class="field-odd">entries<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">invalid</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flag</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u8</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u16</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u32</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u64</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s8</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s16</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s32</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s64</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nul-string</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nested</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nested-array</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitfield32</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sint</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="attribute-sets">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Attribute sets</a><a class="headerlink" href="#attribute-sets" title="Link to this heading">¶</a></h2>
+<section id="ctrl-attrs">
+<span id="nlctrl-attribute-set-ctrl-attrs"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">ctrl-attrs</a><a class="headerlink" href="#ctrl-attrs" title="Link to this heading">¶</a></h3>
+<section id="family-id-u16">
+<h4>family-id (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)<a class="headerlink" href="#family-id-u16" title="Link to this heading">¶</a></h4>
+</section>
+<section id="family-name-string">
+<h4>family-name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)<a class="headerlink" href="#family-name-string" title="Link to this heading">¶</a></h4>
+</section>
+<section id="version-u32">
+<h4>version (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#version-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="hdrsize-u32">
+<h4>hdrsize (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#hdrsize-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="maxattr-u32">
+<h4>maxattr (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#maxattr-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="ops-indexed-array">
+<h4>ops (<code class="docutils literal notranslate"><span class="pre">indexed-array</span></code>)<a class="headerlink" href="#ops-indexed-array" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">sub-type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nest</p>
+</dd>
+<dt class="field-even">nested-attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#nlctrl-attribute-set-op-attrs"><span class="std std-ref">op-attrs</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="mcast-groups-indexed-array">
+<h4>mcast-groups (<code class="docutils literal notranslate"><span class="pre">indexed-array</span></code>)<a class="headerlink" href="#mcast-groups-indexed-array" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">sub-type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nest</p>
+</dd>
+<dt class="field-even">nested-attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#nlctrl-attribute-set-mcast-group-attrs"><span class="std std-ref">mcast-group-attrs</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="policy-nest-type-value">
+<h4>policy (<code class="docutils literal notranslate"><span class="pre">nest-type-value</span></code>)<a class="headerlink" href="#policy-nest-type-value" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">type-value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[‘policy-id’, ‘attr-id’]</p>
+</dd>
+<dt class="field-even">nested-attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#nlctrl-attribute-set-policy-attrs"><span class="std std-ref">policy-attrs</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="op-policy-nest-type-value">
+<h4>op-policy (<code class="docutils literal notranslate"><span class="pre">nest-type-value</span></code>)<a class="headerlink" href="#op-policy-nest-type-value" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">type-value<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[‘op-id’]</p>
+</dd>
+<dt class="field-even">nested-attributes<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#nlctrl-attribute-set-op-policy-attrs"><span class="std std-ref">op-policy-attrs</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="op-u32">
+<h4>op (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#op-u32" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+<section id="mcast-group-attrs">
+<span id="nlctrl-attribute-set-mcast-group-attrs"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">mcast-group-attrs</a><a class="headerlink" href="#mcast-group-attrs" title="Link to this heading">¶</a></h3>
+<section id="name-string">
+<h4>name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)<a class="headerlink" href="#name-string" title="Link to this heading">¶</a></h4>
+</section>
+<section id="id-u32">
+<h4>id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#id-u32" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+<section id="op-attrs">
+<span id="nlctrl-attribute-set-op-attrs"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">op-attrs</a><a class="headerlink" href="#op-attrs" title="Link to this heading">¶</a></h3>
+<section id="id1">
+<h4>id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+</section>
+<section id="flags-u32">
+<h4>flags (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#flags-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">enum<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nlctrl-definition-op-flags"><span class="std std-ref">op-flags</span></a></p>
+</dd>
+<dt class="field-even">enum-as-flags<span class="colon">:</span></dt>
+<dd class="field-even"><p>True</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="policy-attrs">
+<span id="nlctrl-attribute-set-policy-attrs"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">policy-attrs</a><a class="headerlink" href="#policy-attrs" title="Link to this heading">¶</a></h3>
+<section id="type-u32">
+<h4>type (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#type-u32" title="Link to this heading">¶</a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">enum<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nlctrl-definition-attr-type"><span class="std std-ref">attr-type</span></a></p>
+</dd>
+</dl>
+</section>
+<section id="min-value-s-s64">
+<h4>min-value-s (<code class="docutils literal notranslate"><span class="pre">s64</span></code>)<a class="headerlink" href="#min-value-s-s64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="max-value-s-s64">
+<h4>max-value-s (<code class="docutils literal notranslate"><span class="pre">s64</span></code>)<a class="headerlink" href="#max-value-s-s64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="min-value-u-u64">
+<h4>min-value-u (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#min-value-u-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="max-value-u-u64">
+<h4>max-value-u (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#max-value-u-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="min-length-u32">
+<h4>min-length (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#min-length-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="max-length-u32">
+<h4>max-length (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#max-length-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="policy-idx-u32">
+<h4>policy-idx (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#policy-idx-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="policy-maxtype-u32">
+<h4>policy-maxtype (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#policy-maxtype-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="bitfield32-mask-u32">
+<h4>bitfield32-mask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#bitfield32-mask-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="mask-u64">
+<h4>mask (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)<a class="headerlink" href="#mask-u64" title="Link to this heading">¶</a></h4>
+</section>
+<section id="pad-pad">
+<h4>pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)<a class="headerlink" href="#pad-pad" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+<section id="op-policy-attrs">
+<span id="nlctrl-attribute-set-op-policy-attrs"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">op-policy-attrs</a><a class="headerlink" href="#op-policy-attrs" title="Link to this heading">¶</a></h3>
+<section id="do-u32">
+<h4>do (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#do-u32" title="Link to this heading">¶</a></h4>
+</section>
+<section id="dump-u32">
+<h4>dump (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)<a class="headerlink" href="#dump-u32" title="Link to this heading">¶</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Family <code class="docutils literal notranslate"><span class="pre">nlctrl</span></code> netlink specification</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#operations">Operations</a><ul>
+<li><a class="reference internal" href="#getfamily">getfamily</a></li>
+<li><a class="reference internal" href="#getpolicy">getpolicy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li><a class="reference internal" href="#op-flags">op-flags</a></li>
+<li><a class="reference internal" href="#attr-type">attr-type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-sets">Attribute sets</a><ul>
+<li><a class="reference internal" href="#ctrl-attrs">ctrl-attrs</a><ul>
+<li><a class="reference internal" href="#family-id-u16">family-id (<code class="docutils literal notranslate"><span class="pre">u16</span></code>)</a></li>
+<li><a class="reference internal" href="#family-name-string">family-name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)</a></li>
+<li><a class="reference internal" href="#version-u32">version (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#hdrsize-u32">hdrsize (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#maxattr-u32">maxattr (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#ops-indexed-array">ops (<code class="docutils literal notranslate"><span class="pre">indexed-array</span></code>)</a></li>
+<li><a class="reference internal" href="#mcast-groups-indexed-array">mcast-groups (<code class="docutils literal notranslate"><span class="pre">indexed-array</span></code>)</a></li>
+<li><a class="reference internal" href="#policy-nest-type-value">policy (<code class="docutils literal notranslate"><span class="pre">nest-type-value</span></code>)</a></li>
+<li><a class="reference internal" href="#op-policy-nest-type-value">op-policy (<code class="docutils literal notranslate"><span class="pre">nest-type-value</span></code>)</a></li>
+<li><a class="reference internal" href="#op-u32">op (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mcast-group-attrs">mcast-group-attrs</a><ul>
+<li><a class="reference internal" href="#name-string">name (<code class="docutils literal notranslate"><span class="pre">string</span></code>)</a></li>
+<li><a class="reference internal" href="#id-u32">id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#op-attrs">op-attrs</a><ul>
+<li><a class="reference internal" href="#id1">id (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#flags-u32">flags (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#policy-attrs">policy-attrs</a><ul>
+<li><a class="reference internal" href="#type-u32">type (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#min-value-s-s64">min-value-s (<code class="docutils literal notranslate"><span class="pre">s64</span></code>)</a></li>
+<li><a class="reference internal" href="#max-value-s-s64">max-value-s (<code class="docutils literal notranslate"><span class="pre">s64</span></code>)</a></li>
+<li><a class="reference internal" href="#min-value-u-u64">min-value-u (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#max-value-u-u64">max-value-u (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#min-length-u32">min-length (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#max-length-u32">max-length (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#policy-idx-u32">policy-idx (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#policy-maxtype-u32">policy-maxtype (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#bitfield32-mask-u32">bitfield32-mask (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#mask-u64">mask (<code class="docutils literal notranslate"><span class="pre">u64</span></code>)</a></li>
+<li><a class="reference internal" href="#pad-pad">pad (<code class="docutils literal notranslate"><span class="pre">pad</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#op-policy-attrs">op-policy-attrs</a><ul>
+<li><a class="reference internal" href="#do-u32">do (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+<li><a class="reference internal" href="#dump-u32">dump (<code class="docutils literal notranslate"><span class="pre">u32</span></code>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="nl80211.html">
+                    <span class="icon">&lt;</span><span>Family <code class="docutils literal notranslate"><span class="pre">nl80211</span></code> netlink specification</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="ovs_datapath.html"><span>Family <code class="docutils literal notranslate"><span class="pre">ovs_datapath</span></code> netlink specification</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

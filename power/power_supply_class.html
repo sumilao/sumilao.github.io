@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux power supply class &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Runtime Power Management Framework for I/O Devices" href="runtime_pm.html" />
+    <link rel="prev" title="PM Quality Of Service Interface" href="pm_qos_interface.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/power/power_supply_class.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="linux-power-supply-class">
+<h1>Linux power supply class<a class="headerlink" href="#linux-power-supply-class" title="Link to this heading">¶</a></h1>
+<section id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Link to this heading">¶</a></h2>
+<p>Power supply class used to represent battery, UPS, AC or DC power supply
+properties to user-space.</p>
+<p>It defines core set of attributes, which should be applicable to (almost)
+every power supply out there. Attributes are available via sysfs and uevent
+interfaces.</p>
+<p>Each attribute has well defined meaning, up to unit of measure used. While
+the attributes provided are believed to be universally applicable to any
+power supply, specific monitoring hardware may not be able to provide them
+all, so any of them may be skipped.</p>
+<p>Power supply class is extensible, and allows to define drivers own attributes.
+The core attribute set is subject to the standard Linux evolution (i.e.
+if it will be found that some attribute is applicable to many power supply
+types or their drivers, it can be added to the core set).</p>
+<p>It also integrates with LED framework, for the purpose of providing
+typically expected feedback of battery charging/fully charged status and
+AC/USB power supply online status. (Note that specific details of the
+indication (including whether to use it at all) are fully controllable by
+user and/or specific machine defaults, per design principles of LED
+framework).</p>
+</section>
+<section id="attributes-properties">
+<h2>Attributes/properties<a class="headerlink" href="#attributes-properties" title="Link to this heading">¶</a></h2>
+<p>Power supply class has predefined set of attributes, this eliminates code
+duplication across drivers. Power supply class insist on reusing its
+predefined attributes <em>and</em> their units.</p>
+<p>So, userspace gets predictable set of attributes and their units for any
+kind of power supply, and can process/present them to a user in consistent
+manner. Results for different power supplies and machines are also directly
+comparable.</p>
+<p>See drivers/power/supply/ds2760_battery.c for the example how to declare
+and handle attributes.</p>
+</section>
+<section id="units">
+<h2>Units<a class="headerlink" href="#units" title="Link to this heading">¶</a></h2>
+<p>Quoting include/linux/power_supply.h:</p>
+<blockquote>
+<div><p>All voltages, currents, charges, energies, time and temperatures in µV,
+µA, µAh, µWh, seconds and tenths of degree Celsius unless otherwise
+stated. It’s driver’s job to convert its raw values to units in which
+this class operates.</p>
+</div></blockquote>
+</section>
+<section id="attributes-properties-detailed">
+<h2>Attributes/properties detailed<a class="headerlink" href="#attributes-properties-detailed" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>Charge/Energy/Capacity - how to not confuse</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Because both “charge” (µAh) and “energy” (µWh) represents “capacity”
+of battery, this class distinguish these terms. Don’t mix them!</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><cite>CHARGE_*</cite></dt><dd><p>attributes represents capacity in µAh only.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>ENERGY_*</cite></dt><dd><p>attributes represents capacity in µWh only.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>CAPACITY</cite></dt><dd><p>attribute represents capacity in <em>percents</em>, from 0 to 100.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Postfixes:</p>
+<dl class="simple">
+<dt>_AVG</dt><dd><p><em>hardware</em> averaged value, use it if your hardware is really able to
+report averaged values.</p>
+</dd>
+<dt>_NOW</dt><dd><p>momentary/instantaneous values.</p>
+</dd>
+<dt>STATUS</dt><dd><p>this attribute represents operating status (charging, full,
+discharging (i.e. powering a load), etc.). This corresponds to
+<cite>BATTERY_STATUS_*</cite> values, as defined in battery.h.</p>
+</dd>
+<dt>CHARGE_TYPE</dt><dd><p>batteries can typically charge at different rates.
+This defines trickle and fast charges.  For batteries that
+are already charged or discharging, ‘n/a’ can be displayed (or
+‘unknown’, if the status is not known).</p>
+</dd>
+<dt>AUTHENTIC</dt><dd><p>indicates the power supply (battery or charger) connected
+to the platform is authentic(1) or non authentic(0).</p>
+</dd>
+<dt>HEALTH</dt><dd><p>represents health of the battery, values corresponds to
+POWER_SUPPLY_HEALTH_*, defined in battery.h.</p>
+</dd>
+<dt>VOLTAGE_OCV</dt><dd><p>open circuit voltage of the battery.</p>
+</dd>
+<dt>VOLTAGE_MAX_DESIGN, VOLTAGE_MIN_DESIGN</dt><dd><p>design values for maximal and minimal power supply voltages.
+Maximal/minimal means values of voltages when battery considered
+“full”/”empty” at normal conditions. Yes, there is no direct relation
+between voltage and battery capacity, but some dumb
+batteries use voltage for very approximated calculation of capacity.
+Battery driver also can use this attribute just to inform userspace
+about maximal and minimal voltage thresholds of a given battery.</p>
+</dd>
+<dt>VOLTAGE_MAX, VOLTAGE_MIN</dt><dd><p>same as _DESIGN voltage values except that these ones should be used
+if hardware could only guess (measure and retain) the thresholds of a
+given power supply.</p>
+</dd>
+<dt>VOLTAGE_BOOT</dt><dd><p>Reports the voltage measured during boot</p>
+</dd>
+<dt>CURRENT_BOOT</dt><dd><p>Reports the current measured during boot</p>
+</dd>
+<dt>CHARGE_FULL_DESIGN, CHARGE_EMPTY_DESIGN</dt><dd><p>design charge values, when battery considered full/empty.</p>
+</dd>
+<dt>ENERGY_FULL_DESIGN, ENERGY_EMPTY_DESIGN</dt><dd><p>same as above but for energy.</p>
+</dd>
+<dt>CHARGE_FULL, CHARGE_EMPTY</dt><dd><p>These attributes means “last remembered value of charge when battery
+became full/empty”. It also could mean “value of charge when battery
+considered full/empty at given conditions (temperature, age)”.
+I.e. these attributes represents real thresholds, not design values.</p>
+</dd>
+<dt>ENERGY_FULL, ENERGY_EMPTY</dt><dd><p>same as above but for energy.</p>
+</dd>
+<dt>CHARGE_COUNTER</dt><dd><p>the current charge counter (in µAh).  This could easily
+be negative; there is no empty or full value.  It is only useful for
+relative, time-based measurements.</p>
+</dd>
+<dt>PRECHARGE_CURRENT</dt><dd><p>the maximum charge current during precharge phase of charge cycle
+(typically 20% of battery capacity).</p>
+</dd>
+<dt>CHARGE_TERM_CURRENT</dt><dd><p>Charge termination current. The charge cycle terminates when battery
+voltage is above recharge threshold, and charge current is below
+this setting (typically 10% of battery capacity).</p>
+</dd>
+<dt>CONSTANT_CHARGE_CURRENT</dt><dd><p>constant charge current programmed by charger.</p>
+</dd>
+<dt>CONSTANT_CHARGE_CURRENT_MAX</dt><dd><p>maximum charge current supported by the power supply object.</p>
+</dd>
+<dt>CONSTANT_CHARGE_VOLTAGE</dt><dd><p>constant charge voltage programmed by charger.</p>
+</dd>
+<dt>CONSTANT_CHARGE_VOLTAGE_MAX</dt><dd><p>maximum charge voltage supported by the power supply object.</p>
+</dd>
+<dt>INPUT_CURRENT_LIMIT</dt><dd><p>input current limit programmed by charger. Indicates
+the current drawn from a charging source.</p>
+</dd>
+<dt>INPUT_VOLTAGE_LIMIT</dt><dd><p>input voltage limit programmed by charger. Indicates
+the voltage limit from a charging source.</p>
+</dd>
+<dt>INPUT_POWER_LIMIT</dt><dd><p>input power limit programmed by charger. Indicates
+the power limit from a charging source.</p>
+</dd>
+<dt>CHARGE_CONTROL_LIMIT</dt><dd><p>current charge control limit setting</p>
+</dd>
+<dt>CHARGE_CONTROL_LIMIT_MAX</dt><dd><p>maximum charge control limit setting</p>
+</dd>
+<dt>CALIBRATE</dt><dd><p>battery or coulomb counter calibration status</p>
+</dd>
+<dt>CAPACITY</dt><dd><p>capacity in percents.</p>
+</dd>
+<dt>CAPACITY_ALERT_MIN</dt><dd><p>minimum capacity alert value in percents.</p>
+</dd>
+<dt>CAPACITY_ALERT_MAX</dt><dd><p>maximum capacity alert value in percents.</p>
+</dd>
+<dt>CAPACITY_LEVEL</dt><dd><p>capacity level. This corresponds to POWER_SUPPLY_CAPACITY_LEVEL_*.</p>
+</dd>
+<dt>TEMP</dt><dd><p>temperature of the power supply.</p>
+</dd>
+<dt>TEMP_ALERT_MIN</dt><dd><p>minimum battery temperature alert.</p>
+</dd>
+<dt>TEMP_ALERT_MAX</dt><dd><p>maximum battery temperature alert.</p>
+</dd>
+<dt>TEMP_AMBIENT</dt><dd><p>ambient temperature.</p>
+</dd>
+<dt>TEMP_AMBIENT_ALERT_MIN</dt><dd><p>minimum ambient temperature alert.</p>
+</dd>
+<dt>TEMP_AMBIENT_ALERT_MAX</dt><dd><p>maximum ambient temperature alert.</p>
+</dd>
+<dt>TEMP_MIN</dt><dd><p>minimum operatable temperature</p>
+</dd>
+<dt>TEMP_MAX</dt><dd><p>maximum operatable temperature</p>
+</dd>
+<dt>TIME_TO_EMPTY</dt><dd><p>seconds left for battery to be considered empty
+(i.e. while battery powers a load)</p>
+</dd>
+<dt>TIME_TO_FULL</dt><dd><p>seconds left for battery to be considered full
+(i.e. while battery is charging)</p>
+</dd>
+</dl>
+</section>
+<section id="battery-external-power-supply-interaction">
+<h2>Battery &lt;-&gt; external power supply interaction<a class="headerlink" href="#battery-external-power-supply-interaction" title="Link to this heading">¶</a></h2>
+<p>Often power supplies are acting as supplies and supplicants at the same
+time. Batteries are good example. So, batteries usually care if they’re
+externally powered or not.</p>
+<p>For that case, power supply class implements notification mechanism for
+batteries.</p>
+<p>External power supply (AC) lists supplicants (batteries) names in
+“supplied_to” struct member, and each power_supply_changed() call
+issued by external power supply will notify supplicants via
+external_power_changed callback.</p>
+</section>
+<section id="devicetree-battery-characteristics">
+<h2>Devicetree battery characteristics<a class="headerlink" href="#devicetree-battery-characteristics" title="Link to this heading">¶</a></h2>
+<p>Drivers should call power_supply_get_battery_info() to obtain battery
+characteristics from a devicetree battery node, defined in
+Documentation/devicetree/bindings/power/supply/battery.yaml. This is
+implemented in drivers/power/supply/bq27xxx_battery.c.</p>
+<p>Properties in struct power_supply_battery_info and their counterparts in the
+battery node have names corresponding to elements in enum power_supply_property,
+for naming consistency between sysfs attributes and battery node properties.</p>
+</section>
+<section id="qa">
+<h2>QA<a class="headerlink" href="#qa" title="Link to this heading">¶</a></h2>
+<dl>
+<dt>Q:</dt><dd><p>Where is POWER_SUPPLY_PROP_XYZ attribute?</p>
+</dd>
+<dt>A:</dt><dd><p>If you cannot find attribute suitable for your driver needs, feel free
+to add it and send patch along with your driver.</p>
+<p>The attributes available currently are the ones currently provided by the
+drivers written.</p>
+<p>Good candidates to add in future: model/part#, cycle_time, manufacturer,
+etc.</p>
+</dd>
+<dt>Q:</dt><dd><p>I have some very specific attribute (e.g. battery color), should I add
+this attribute to standard ones?</p>
+</dd>
+<dt>A:</dt><dd><p>Most likely, no. Such attribute can be placed in the driver itself, if
+it is useful. Of course, if the attribute in question applicable to
+large set of batteries, provided by many drivers, and/or comes from
+some general battery specification/standard, it may be a candidate to
+be added to the core attribute set.</p>
+</dd>
+<dt>Q:</dt><dd><p>Suppose, my battery monitoring chip/firmware does not provides capacity
+in percents, but provides charge_{now,full,empty}. Should I calculate
+percentage capacity manually, inside the driver, and register CAPACITY
+attribute? The same question about time_to_empty/time_to_full.</p>
+</dd>
+<dt>A:</dt><dd><p>Most likely, no. This class is designed to export properties which are
+directly measurable by the specific hardware available.</p>
+<p>Inferring not available properties using some heuristics or mathematical
+model is not subject of work for a battery driver. Such functionality
+should be factored out, and in fact, apm_power, the driver to serve
+legacy APM API on top of power supply class, uses a simple heuristic of
+approximating remaining battery capacity based on its charge, current,
+voltage and so on. But full-fledged battery model is likely not subject
+for kernel at all, as it would require floating point calculation to deal
+with things like differential equations and Kalman filters. This is
+better be handled by batteryd/libbattery, yet to be written.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux power supply class</a><ul>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li><a class="reference internal" href="#attributes-properties">Attributes/properties</a></li>
+<li><a class="reference internal" href="#units">Units</a></li>
+<li><a class="reference internal" href="#attributes-properties-detailed">Attributes/properties detailed</a></li>
+<li><a class="reference internal" href="#battery-external-power-supply-interaction">Battery &lt;-&gt; external power supply interaction</a></li>
+<li><a class="reference internal" href="#devicetree-battery-characteristics">Devicetree battery characteristics</a></li>
+<li><a class="reference internal" href="#qa">QA</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="pm_qos_interface.html">
+                    <span class="icon">&lt;</span><span>PM Quality Of Service Interface</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="runtime_pm.html"><span>Runtime Power Management Framework for I/O Devices</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

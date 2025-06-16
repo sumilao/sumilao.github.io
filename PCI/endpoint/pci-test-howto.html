@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9.5. PCI Test User Guide &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9.6. PCI NTB Function" href="pci-ntb-function.html" />
+    <link rel="prev" title="9.4. PCI Test Function" href="pci-test-function.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usb/index.html">USB support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/PCI/endpoint/pci-test-howto.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="pci-test-user-guide">
+<h1><span class="section-number">9.5. </span>PCI Test User Guide<a class="headerlink" href="#pci-test-user-guide" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kishon Vijay Abraham I &lt;<a class="reference external" href="mailto:kishon&#37;&#52;&#48;ti&#46;com">kishon<span>&#64;</span>ti<span>&#46;</span>com</a>&gt;</p>
+</dd>
+</dl>
+<p>This document is a guide to help users use pci-epf-test function driver
+and pci_endpoint_test host driver for testing PCI. The list of steps to
+be followed in the host side and EP side is given below.</p>
+<section id="endpoint-device">
+<h2><span class="section-number">9.5.1. </span>Endpoint Device<a class="headerlink" href="#endpoint-device" title="Link to this heading">¶</a></h2>
+<section id="endpoint-controller-devices">
+<h3><span class="section-number">9.5.1.1. </span>Endpoint Controller Devices<a class="headerlink" href="#endpoint-controller-devices" title="Link to this heading">¶</a></h3>
+<p>To find the list of endpoint controller devices in the system:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls /sys/class/pci_epc/
+  51000000.pcie_ep
+</pre></div>
+</div>
+<p>If PCI_ENDPOINT_CONFIGFS is enabled:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls /sys/kernel/config/pci_ep/controllers
+  51000000.pcie_ep
+</pre></div>
+</div>
+</section>
+<section id="endpoint-function-drivers">
+<h3><span class="section-number">9.5.1.2. </span>Endpoint Function Drivers<a class="headerlink" href="#endpoint-function-drivers" title="Link to this heading">¶</a></h3>
+<p>To find the list of endpoint function drivers in the system:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls /sys/bus/pci-epf/drivers
+  pci_epf_test
+</pre></div>
+</div>
+<p>If PCI_ENDPOINT_CONFIGFS is enabled:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls /sys/kernel/config/pci_ep/functions
+  pci_epf_test
+</pre></div>
+</div>
+</section>
+<section id="creating-pci-epf-test-device">
+<h3><span class="section-number">9.5.1.3. </span>Creating pci-epf-test Device<a class="headerlink" href="#creating-pci-epf-test-device" title="Link to this heading">¶</a></h3>
+<p>PCI endpoint function device can be created using the configfs. To create
+pci-epf-test device, the following commands can be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># mount -t configfs none /sys/kernel/config
+# cd /sys/kernel/config/pci_ep/
+# mkdir functions/pci_epf_test/func1
+</pre></div>
+</div>
+<p>The “mkdir func1” above creates the pci-epf-test function device that will
+be probed by pci_epf_test driver.</p>
+<p>The PCI endpoint framework populates the directory with the following
+configurable fields:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ls functions/pci_epf_test/func1
+  baseclass_code        interrupt_pin   progif_code     subsys_id
+  cache_line_size       msi_interrupts  revid           subsys_vendorid
+  deviceid              msix_interrupts subclass_code   vendorid
+</pre></div>
+</div>
+<p>The PCI endpoint function driver populates these entries with default values
+when the device is bound to the driver. The pci-epf-test driver populates
+vendorid with 0xffff and interrupt_pin with 0x0001:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cat functions/pci_epf_test/func1/vendorid
+  0xffff
+# cat functions/pci_epf_test/func1/interrupt_pin
+  0x0001
+</pre></div>
+</div>
+</section>
+<section id="configuring-pci-epf-test-device">
+<h3><span class="section-number">9.5.1.4. </span>Configuring pci-epf-test Device<a class="headerlink" href="#configuring-pci-epf-test-device" title="Link to this heading">¶</a></h3>
+<p>The user can configure the pci-epf-test device using configfs entry. In order
+to change the vendorid and the number of MSI interrupts used by the function
+device, the following commands can be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo 0x104c &gt; functions/pci_epf_test/func1/vendorid
+# echo 0xb500 &gt; functions/pci_epf_test/func1/deviceid
+# echo 32 &gt; functions/pci_epf_test/func1/msi_interrupts
+# echo 2048 &gt; functions/pci_epf_test/func1/msix_interrupts
+</pre></div>
+</div>
+</section>
+<section id="binding-pci-epf-test-device-to-ep-controller">
+<h3><span class="section-number">9.5.1.5. </span>Binding pci-epf-test Device to EP Controller<a class="headerlink" href="#binding-pci-epf-test-device-to-ep-controller" title="Link to this heading">¶</a></h3>
+<p>In order for the endpoint function device to be useful, it has to be bound to
+a PCI endpoint controller driver. Use the configfs to bind the function
+device to one of the controller driver present in the system:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ln -s functions/pci_epf_test/func1 controllers/51000000.pcie_ep/
+</pre></div>
+</div>
+<p>Once the above step is completed, the PCI endpoint is ready to establish a link
+with the host.</p>
+</section>
+<section id="start-the-link">
+<h3><span class="section-number">9.5.1.6. </span>Start the Link<a class="headerlink" href="#start-the-link" title="Link to this heading">¶</a></h3>
+<p>In order for the endpoint device to establish a link with the host, the _start_
+field should be populated with ‘1’:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo 1 &gt; controllers/51000000.pcie_ep/start
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rootcomplex-device">
+<h2><span class="section-number">9.5.2. </span>RootComplex Device<a class="headerlink" href="#rootcomplex-device" title="Link to this heading">¶</a></h2>
+<section id="lspci-output">
+<h3><span class="section-number">9.5.2.1. </span>lspci Output<a class="headerlink" href="#lspci-output" title="Link to this heading">¶</a></h3>
+<p>Note that the devices listed here correspond to the value populated in 1.4
+above:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00:00.0 PCI bridge: Texas Instruments Device 8888 (rev 01)
+01:00.0 Unassigned class [ff00]: Texas Instruments Device b500
+</pre></div>
+</div>
+</section>
+<section id="using-endpoint-test-function-device">
+<h3><span class="section-number">9.5.2.2. </span>Using Endpoint Test function Device<a class="headerlink" href="#using-endpoint-test-function-device" title="Link to this heading">¶</a></h3>
+<p>Kselftest added in tools/testing/selftests/pci_endpoint can be used to run all
+the default PCI endpoint tests. To build the Kselftest for PCI endpoint
+subsystem, the following commands should be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cd &lt;kernel-dir&gt;
+# make -C tools/testing/selftests/pci_endpoint
+</pre></div>
+</div>
+<p>or if you desire to compile and install in your system:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cd &lt;kernel-dir&gt;
+# make -C tools/testing/selftests/pci_endpoint INSTALL_PATH=/usr/bin install
+</pre></div>
+</div>
+<p>The test will be located in &lt;rootfs&gt;/usr/bin/</p>
+<section id="kselftest-output">
+<h4><span class="section-number">9.5.2.2.1. </span>Kselftest Output<a class="headerlink" href="#kselftest-output" title="Link to this heading">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># pci_endpoint_test
+TAP version 13
+1..16
+# Starting 16 tests from 9 test cases.
+#  RUN           pci_ep_bar.BAR0.BAR_TEST ...
+#            OK  pci_ep_bar.BAR0.BAR_TEST
+ok 1 pci_ep_bar.BAR0.BAR_TEST
+#  RUN           pci_ep_bar.BAR1.BAR_TEST ...
+#            OK  pci_ep_bar.BAR1.BAR_TEST
+ok 2 pci_ep_bar.BAR1.BAR_TEST
+#  RUN           pci_ep_bar.BAR2.BAR_TEST ...
+#            OK  pci_ep_bar.BAR2.BAR_TEST
+ok 3 pci_ep_bar.BAR2.BAR_TEST
+#  RUN           pci_ep_bar.BAR3.BAR_TEST ...
+#            OK  pci_ep_bar.BAR3.BAR_TEST
+ok 4 pci_ep_bar.BAR3.BAR_TEST
+#  RUN           pci_ep_bar.BAR4.BAR_TEST ...
+#            OK  pci_ep_bar.BAR4.BAR_TEST
+ok 5 pci_ep_bar.BAR4.BAR_TEST
+#  RUN           pci_ep_bar.BAR5.BAR_TEST ...
+#            OK  pci_ep_bar.BAR5.BAR_TEST
+ok 6 pci_ep_bar.BAR5.BAR_TEST
+#  RUN           pci_ep_basic.CONSECUTIVE_BAR_TEST ...
+#            OK  pci_ep_basic.CONSECUTIVE_BAR_TEST
+ok 7 pci_ep_basic.CONSECUTIVE_BAR_TEST
+#  RUN           pci_ep_basic.LEGACY_IRQ_TEST ...
+#            OK  pci_ep_basic.LEGACY_IRQ_TEST
+ok 8 pci_ep_basic.LEGACY_IRQ_TEST
+#  RUN           pci_ep_basic.MSI_TEST ...
+#            OK  pci_ep_basic.MSI_TEST
+ok 9 pci_ep_basic.MSI_TEST
+#  RUN           pci_ep_basic.MSIX_TEST ...
+#            OK  pci_ep_basic.MSIX_TEST
+ok 10 pci_ep_basic.MSIX_TEST
+#  RUN           pci_ep_data_transfer.memcpy.READ_TEST ...
+#            OK  pci_ep_data_transfer.memcpy.READ_TEST
+ok 11 pci_ep_data_transfer.memcpy.READ_TEST
+#  RUN           pci_ep_data_transfer.memcpy.WRITE_TEST ...
+#            OK  pci_ep_data_transfer.memcpy.WRITE_TEST
+ok 12 pci_ep_data_transfer.memcpy.WRITE_TEST
+#  RUN           pci_ep_data_transfer.memcpy.COPY_TEST ...
+#            OK  pci_ep_data_transfer.memcpy.COPY_TEST
+ok 13 pci_ep_data_transfer.memcpy.COPY_TEST
+#  RUN           pci_ep_data_transfer.dma.READ_TEST ...
+#            OK  pci_ep_data_transfer.dma.READ_TEST
+ok 14 pci_ep_data_transfer.dma.READ_TEST
+#  RUN           pci_ep_data_transfer.dma.WRITE_TEST ...
+#            OK  pci_ep_data_transfer.dma.WRITE_TEST
+ok 15 pci_ep_data_transfer.dma.WRITE_TEST
+#  RUN           pci_ep_data_transfer.dma.COPY_TEST ...
+#            OK  pci_ep_data_transfer.dma.COPY_TEST
+ok 16 pci_ep_data_transfer.dma.COPY_TEST
+# PASSED: 16 / 16 tests passed.
+# Totals: pass:16 fail:0 xfail:0 xpass:0 skip:0 error:0
+</pre></div>
+</div>
+<p>Testcase 16 (pci_ep_data_transfer.dma.COPY_TEST) will fail for most of the DMA
+capable endpoint controllers due to the absence of the MEMCPY over DMA. For such
+controllers, it is advisable to skip this testcase using this
+command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># pci_endpoint_test -f pci_ep_bar -f pci_ep_basic -v memcpy -T COPY_TEST -v dma
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">9.5. PCI Test User Guide</a><ul>
+<li><a class="reference internal" href="#endpoint-device">9.5.1. Endpoint Device</a><ul>
+<li><a class="reference internal" href="#endpoint-controller-devices">9.5.1.1. Endpoint Controller Devices</a></li>
+<li><a class="reference internal" href="#endpoint-function-drivers">9.5.1.2. Endpoint Function Drivers</a></li>
+<li><a class="reference internal" href="#creating-pci-epf-test-device">9.5.1.3. Creating pci-epf-test Device</a></li>
+<li><a class="reference internal" href="#configuring-pci-epf-test-device">9.5.1.4. Configuring pci-epf-test Device</a></li>
+<li><a class="reference internal" href="#binding-pci-epf-test-device-to-ep-controller">9.5.1.5. Binding pci-epf-test Device to EP Controller</a></li>
+<li><a class="reference internal" href="#start-the-link">9.5.1.6. Start the Link</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rootcomplex-device">9.5.2. RootComplex Device</a><ul>
+<li><a class="reference internal" href="#lspci-output">9.5.2.1. lspci Output</a></li>
+<li><a class="reference internal" href="#using-endpoint-test-function-device">9.5.2.2. Using Endpoint Test function Device</a><ul>
+<li><a class="reference internal" href="#kselftest-output">9.5.2.2.1. Kselftest Output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="pci-test-function.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">9.4. </span>PCI Test Function</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="pci-ntb-function.html"><span><span class="section-number">9.6. </span>PCI NTB Function</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

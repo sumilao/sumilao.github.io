@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.17. V4L2 DV Timings functions &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.18. V4L2 flash functions and data structures" href="v4l2-flash-led-class.html" />
+    <link rel="prev" title="2.16. V4L2 videobuf2 functions and data structures" href="v4l2-videobuf2.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Driver APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-information-for-driver-authors">General information for driver authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#useful-support-libraries">Useful support libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#bus-level-documentation">Bus-level documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#subsystem-specific-apis">Subsystem-specific APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../80211/index.html">Linux 802.11 Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../acpi/index.html">ACPI Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backlight/lp855x-driver.html">Kernel driver lp855x</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../clk.html">The Common Clk Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../console.html">Console Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dmaengine/index.html">DMAEngine documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dpll.html">The Linux kernel dpll subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac.html">Error Detection And Correction (EDAC) Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extcon.html">Extcon Device Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../firmware/index.html">Linux Firmware API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../frame-buffer.html">Frame Buffer Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../aperture.html">Managing Ownership of the Framebuffer Aperture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generic-counter.html">Generic Counter Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">General Purpose Input/Output (GPIO)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hsi.html">High Speed Synchronous Serial Interface (HSI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hte/index.html">The Linux Hardware Timestamping Engine (HTE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c.html">I<sup>2</sup>C and SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband.html">InfiniBand and Remote DMA (RDMA) Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../input.html">Input Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interconnect.html">Generic System Interconnect Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmb.html">IPMB Driver for a Satellite MC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmi.html">The Linux IPMI Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../libata.html">libATA Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mailbox.html">The Common Mailbox Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../md/index.html">RAID</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Media subsystem kernel internal API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mei/index.html">Intel(R) Management Engine Interface (Intel(R) MEI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory-devices/index.html">Memory Controller drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../message-based.html">Message-based devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc_devices.html">Miscellaneous Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html">Parallel Port Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#x50-uart-driver">16x50 UART Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#pulse-width-modulation-pwm">Pulse-Width Modulation (PWM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mmc/index.html">MMC/SD/SDIO card support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtd/index.html">Memory Technology Device (MTD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtdnand.html">MTD NAND Driver Programming Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nfc/index.html">Near Field Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ntb.html">NTB Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvdimm/index.html">Non-Volatile Memory Device (NVDIMM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvmem.html">NVMEM Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parport-lowlevel.html">PARPORT interface documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../phy/index.html">Generic PHY Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pin-control.html">PINCTRL (PIN CONTROL) subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html">PLDM Firmware Flash Update Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html#overview-of-the-pldmfw-library">Overview of the <code class="docutils literal notranslate"><span class="pre">pldmfw</span></code> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pps.html">PPS - Pulse Per Second</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ptp.html">PTP hardware clock infrastructure for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm.html">Pulse Width Modulation (PWM) interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwrseq.html">Power Sequencing API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regulator.html">Voltage and current regulator API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reset.html">Reset controller API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rfkill.html">rfkill - RF kill switch support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../s390-drivers.html">Writing s390 channel device drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi.html">SCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serial/index.html">Support for Serial devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sm501.html">SM501 Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soundwire/index.html">SoundWire Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../surface_aggregator/index.html">Surface System Aggregator Module (SSAM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../switchtec.html">Linux Switchtec Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sync_file.html">Sync File API Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target.html">target and iSCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee.html">TEE (Trusted Execution Environment) driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermal/index.html">Thermal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tty/index.html">TTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wbrf.html">WBRF - Wifi Band RFI Mitigations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi.html">WMI Driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xilinx/index.html">Xilinx FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zorro.html">Writing Device Drivers for Zorro Devices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/driver-api/media/v4l2-dv-timings.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="v4l2-dv-timings-functions">
+<h1><span class="section-number">2.17. </span>V4L2 DV Timings functions<a class="headerlink" href="#v4l2-dv-timings-functions" title="Link to this heading">¶</a></h1>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_calc_timeperframe">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_fract</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_calc_timeperframe</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_calc_timeperframe" title="Link to this definition">¶</a><br /></dt>
+<dd><p>helper function to calculate timeperframe based v4l2_dv_timings fields.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>Timings for the video mode.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Calculates the expected timeperframe using the pixel clock value and
+horizontal/vertical measures. This means that v4l2_dv_timings structure
+must be correctly and fully filled.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_check_dv_timings_fnc">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_check_dv_timings_fnc</span></span></span><a class="headerlink" href="#c.v4l2_check_dv_timings_fnc" title="Link to this definition">¶</a><br /></dt>
+<dd><p><strong>Typedef</strong>: timings check callback</p>
+</dd></dl>
+
+<p><strong>Syntax</strong></p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">v4l2_check_dv_timings_fnc</span> <span class="pre">(const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t,</span> <span class="pre">void</span> <span class="pre">*handle)</span></code></p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the v4l2_dv_timings struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*handle</span></code></dt><dd><p>a handle from the driver.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Returns true if the given timings are valid.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_valid_dv_timings">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_valid_dv_timings</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings_cap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cap</span></span>, <a class="reference internal" href="#c.v4l2_check_dv_timings_fnc" title="v4l2_check_dv_timings_fnc"><span class="n"><span class="pre">v4l2_check_dv_timings_fnc</span></span></a><span class="w"> </span><span class="n"><span class="pre">fnc</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fnc_handle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_valid_dv_timings" title="Link to this definition">¶</a><br /></dt>
+<dd><p>are these timings valid?</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the v4l2_dv_timings struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings_cap</span> <span class="pre">*cap</span></code></dt><dd><p>the v4l2_dv_timings_cap capabilities.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_check_dv_timings_fnc</span> <span class="pre">fnc</span></code></dt><dd><p>callback to check if this timing is OK. May be NULL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*fnc_handle</span></code></dt><dd><p>a handle that is passed on to <strong>fnc</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Returns true if the given dv_timings struct is supported by the
+hardware capabilities and the callback function (if non-NULL), returns
+false otherwise.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_enum_dv_timings_cap">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_enum_dv_timings_cap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_enum_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings_cap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cap</span></span>, <a class="reference internal" href="#c.v4l2_check_dv_timings_fnc" title="v4l2_check_dv_timings_fnc"><span class="n"><span class="pre">v4l2_check_dv_timings_fnc</span></span></a><span class="w"> </span><span class="n"><span class="pre">fnc</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fnc_handle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_enum_dv_timings_cap" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Helper function to enumerate possible DV timings based on capabilities</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_enum_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the v4l2_enum_dv_timings struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings_cap</span> <span class="pre">*cap</span></code></dt><dd><p>the v4l2_dv_timings_cap capabilities.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_check_dv_timings_fnc</span> <span class="pre">fnc</span></code></dt><dd><p>callback to check if this timing is OK. May be NULL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*fnc_handle</span></code></dt><dd><p>a handle that is passed on to <strong>fnc</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This enumerates dv_timings using the full list of possible CEA-861 and DMT
+timings, filtering out any timings that are not supported based on the
+hardware capabilities and the callback function (if non-NULL).</p>
+<p>If a valid timing for the given index is found, it will fill in <strong>t</strong> and
+return 0, otherwise it returns -EINVAL.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_find_dv_timings_cap">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_find_dv_timings_cap</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings_cap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cap</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n"><span class="pre">pclock_delta</span></span>, <a class="reference internal" href="#c.v4l2_check_dv_timings_fnc" title="v4l2_check_dv_timings_fnc"><span class="n"><span class="pre">v4l2_check_dv_timings_fnc</span></span></a><span class="w"> </span><span class="n"><span class="pre">fnc</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fnc_handle</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_find_dv_timings_cap" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Find the closest timings struct</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the v4l2_enum_dv_timings struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings_cap</span> <span class="pre">*cap</span></code></dt><dd><p>the v4l2_dv_timings_cap capabilities.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">pclock_delta</span></code></dt><dd><p>maximum delta between t-&gt;pixelclock and the timing struct
+under consideration.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_check_dv_timings_fnc</span> <span class="pre">fnc</span></code></dt><dd><p>callback to check if a given timings struct is OK. May be NULL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*fnc_handle</span></code></dt><dd><p>a handle that is passed on to <strong>fnc</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function tries to map the given timings to an entry in the
+full list of possible CEA-861 and DMT timings, filtering out any timings
+that are not supported based on the hardware capabilities and the callback
+function (if non-NULL).</p>
+<p>On success it will fill in <strong>t</strong> with the found timings and it returns true.
+On failure it will return false.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_find_dv_timings_cea861_vic">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_find_dv_timings_cea861_vic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="n"><span class="pre">u8</span></span><span class="w"> </span><span class="n"><span class="pre">vic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_find_dv_timings_cea861_vic" title="Link to this definition">¶</a><br /></dt>
+<dd><p>find timings based on CEA-861 VIC</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the timings data.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">u8</span> <span class="pre">vic</span></code></dt><dd><p>CEA-861 VIC code</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>On success it will fill in <strong>t</strong> with the found timings and it returns true.
+On failure it will return false.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_match_dv_timings">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_match_dv_timings</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">measured</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">standard</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n"><span class="pre">pclock_delta</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">match_reduced_fps</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_match_dv_timings" title="Link to this definition">¶</a><br /></dt>
+<dd><p>do two timings match?</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*measured</span></code></dt><dd><p>the measured timings data.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*standard</span></code></dt><dd><p>the timings according to the standard.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">pclock_delta</span></code></dt><dd><p>maximum delta in Hz between standard-&gt;pixelclock and
+the measured timings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">match_reduced_fps</span></code></dt><dd><p>if true, then fail if V4L2_DV_FL_REDUCED_FPS does not
+match.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Returns true if the two timings match, returns false otherwise.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_print_dv_timings">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_print_dv_timings</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dev_prefix</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">prefix</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">detailed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_print_dv_timings" title="Link to this definition">¶</a><br /></dt>
+<dd><p>log the contents of a dv_timings struct</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*dev_prefix</span></code></dt><dd><p>device prefix for each log line.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*prefix</span></code></dt><dd><p>additional prefix for each log line, may be NULL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the timings data.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">detailed</span></code></dt><dd><p>if true, give a detailed log.</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_detect_cvt">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_detect_cvt</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">frame_height</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">hfreq</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">vsync</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">active_width</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">polarities</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">interlaced</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings_cap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cap</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fmt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_detect_cvt" title="Link to this definition">¶</a><br /></dt>
+<dd><p>detect if the given timings follow the CVT standard</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">frame_height</span></code></dt><dd><p>the total height of the frame (including blanking) in lines.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">hfreq</span></code></dt><dd><p>the horizontal frequency in Hz.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">vsync</span></code></dt><dd><p>the height of the vertical sync in lines.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">active_width</span></code></dt><dd><p>active width of image (does not include blanking). This
+information is needed only in case of version 2 of reduced blanking.
+In other cases, this parameter does not have any effect on timings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">u32</span> <span class="pre">polarities</span></code></dt><dd><p>the horizontal and vertical polarities (same as struct
+v4l2_bt_timings polarities).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">interlaced</span></code></dt><dd><p>if this flag is true, it indicates interlaced format</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings_cap</span> <span class="pre">*cap</span></code></dt><dd><p>the v4l2_dv_timings_cap capabilities.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*fmt</span></code></dt><dd><p>the resulting timings.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function will attempt to detect if the given values correspond to a
+valid CVT format. If so, then it will return true, and fmt will be filled
+in with the found CVT timings.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_detect_gtf">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_detect_gtf</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">frame_height</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">hfreq</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">vsync</span></span>, <span class="n"><span class="pre">u32</span></span><span class="w"> </span><span class="n"><span class="pre">polarities</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">interlaced</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_fract</span></span><span class="w"> </span><span class="n"><span class="pre">aspect</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings_cap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cap</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fmt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_detect_gtf" title="Link to this definition">¶</a><br /></dt>
+<dd><p>detect if the given timings follow the GTF standard</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">frame_height</span></code></dt><dd><p>the total height of the frame (including blanking) in lines.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">hfreq</span></code></dt><dd><p>the horizontal frequency in Hz.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">vsync</span></code></dt><dd><p>the height of the vertical sync in lines.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">u32</span> <span class="pre">polarities</span></code></dt><dd><p>the horizontal and vertical polarities (same as struct
+v4l2_bt_timings polarities).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">interlaced</span></code></dt><dd><p>if this flag is true, it indicates interlaced format</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_fract</span> <span class="pre">aspect</span></code></dt><dd><p>preferred aspect ratio. GTF has no method of determining the
+aspect ratio in order to derive the image width from the
+image height, so it has to be passed explicitly. Usually
+the native screen aspect ratio is used for this. If it
+is not filled in correctly, then 16:9 will be assumed.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings_cap</span> <span class="pre">*cap</span></code></dt><dd><p>the v4l2_dv_timings_cap capabilities.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*fmt</span></code></dt><dd><p>the resulting timings.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function will attempt to detect if the given values correspond to a
+valid GTF format. If so, then it will return true, and fmt will be filled
+in with the found GTF timings.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_calc_aspect_ratio">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_fract</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_calc_aspect_ratio</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">u8</span></span><span class="w"> </span><span class="n"><span class="pre">hor_landscape</span></span>, <span class="n"><span class="pre">u8</span></span><span class="w"> </span><span class="n"><span class="pre">vert_portrait</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_calc_aspect_ratio" title="Link to this definition">¶</a><br /></dt>
+<dd><p>calculate the aspect ratio based on bytes 0x15 and 0x16 from the EDID.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">u8</span> <span class="pre">hor_landscape</span></code></dt><dd><p>byte 0x15 from the EDID.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">u8</span> <span class="pre">vert_portrait</span></code></dt><dd><p>byte 0x16 from the EDID.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Determines the aspect ratio from the EDID.
+See VESA Enhanced EDID standard, release A, rev 2, section 3.6.2:
+“Horizontal and Vertical Screen Size or Aspect Ratio”</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_dv_timings_aspect_ratio">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_fract</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_dv_timings_aspect_ratio</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_dv_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_dv_timings_aspect_ratio" title="Link to this definition">¶</a><br /></dt>
+<dd><p>calculate the aspect ratio based on the v4l2_dv_timings information.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">v4l2_dv_timings</span> <span class="pre">*t</span></code></dt><dd><p>the timings data.</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.can_reduce_fps">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">can_reduce_fps</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">v4l2_bt_timings</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.can_reduce_fps" title="Link to this definition">¶</a><br /></dt>
+<dd><p>check if conditions for reduced fps are true.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_bt_timings</span> <span class="pre">*bt</span></code></dt><dd><p>v4l2 timing structure</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>For different timings reduced fps is allowed if the following conditions
+are met:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For CVT timings: if reduced blanking v2 (vsync == 8) is true.</p></li>
+<li><p>For CEA861 timings: if <code class="docutils literal notranslate"><span class="pre">V4L2_DV_FL_CAN_REDUCE_FPS</span></code> flag is true.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_hdmi_colorimetry">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_hdmi_colorimetry</span></span></span><a class="headerlink" href="#c.v4l2_hdmi_colorimetry" title="Link to this definition">¶</a><br /></dt>
+<dd><p>describes the HDMI colorimetry information</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_hdmi_colorimetry {
+    enum v4l2_colorspace colorspace;
+    enum v4l2_ycbcr_encoding ycbcr_enc;
+    enum v4l2_quantization quantization;
+    enum v4l2_xfer_func xfer_func;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">colorspace</span></code></dt><dd><p><a class="reference internal" href="../../userspace-api/media/v4l/colorspaces-defs.html#c.v4l2_colorspace" title="v4l2_colorspace"><code class="xref c c-enum docutils literal notranslate"><span class="pre">enum</span> <span class="pre">v4l2_colorspace</span></code></a>, the colorspace</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ycbcr_enc</span></code></dt><dd><p><a class="reference internal" href="../../userspace-api/media/v4l/colorspaces-defs.html#c.v4l2_ycbcr_encoding" title="v4l2_ycbcr_encoding"><code class="xref c c-enum docutils literal notranslate"><span class="pre">enum</span> <span class="pre">v4l2_ycbcr_encoding</span></code></a>, Y’CbCr encoding</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">quantization</span></code></dt><dd><p><a class="reference internal" href="../../userspace-api/media/v4l/colorspaces-defs.html#c.v4l2_quantization" title="v4l2_quantization"><code class="xref c c-enum docutils literal notranslate"><span class="pre">enum</span> <span class="pre">v4l2_quantization</span></code></a>, colorspace quantization</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">xfer_func</span></code></dt><dd><p><a class="reference internal" href="../../userspace-api/media/v4l/colorspaces-defs.html#c.v4l2_xfer_func" title="v4l2_xfer_func"><code class="xref c c-enum docutils literal notranslate"><span class="pre">enum</span> <span class="pre">v4l2_xfer_func</span></code></a>, colorspace transfer function</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="v4l2-videobuf2.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">2.16. </span>V4L2 videobuf2 functions and data structures</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="v4l2-flash-led-class.html"><span><span class="section-number">2.18. </span>V4L2 flash functions and data structures</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>18. Driver documentation for yealink usb-p1k phones &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Human Interface Devices (HID)" href="../../hid/index.html" />
+    <link rel="prev" title="17. xpad - Linux USB driver for Xbox compatible controllers" href="xpad.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/input/devices/yealink.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="driver-documentation-for-yealink-usb-p1k-phones">
+<h1><span class="section-number">18. </span>Driver documentation for yealink usb-p1k phones<a class="headerlink" href="#driver-documentation-for-yealink-usb-p1k-phones" title="Link to this heading">¶</a></h1>
+<section id="status">
+<h2><span class="section-number">18.1. </span>Status<a class="headerlink" href="#status" title="Link to this heading">¶</a></h2>
+<p>The p1k is a relatively cheap usb 1.1 phone with:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>keyboard            full support, yealink.ko / input event API</p></li>
+<li><p>LCD                 full support, yealink.ko / sysfs API</p></li>
+<li><p>LED                 full support, yealink.ko / sysfs API</p></li>
+<li><p>dialtone            full support, yealink.ko / sysfs API</p></li>
+<li><p>ringtone            full support, yealink.ko / sysfs API</p></li>
+<li><p>audio playback      full support, snd_usb_audio.ko / alsa API</p></li>
+<li><p>audio record        full support, snd_usb_audio.ko / alsa API</p></li>
+</ul>
+</div></blockquote>
+<p>For vendor documentation see <a class="reference external" href="http://www.yealink.com">http://www.yealink.com</a></p>
+</section>
+<section id="keyboard-features">
+<h2><span class="section-number">18.2. </span>keyboard features<a class="headerlink" href="#keyboard-features" title="Link to this heading">¶</a></h2>
+<p>The current mapping in the kernel is provided by the map_p1k_to_key
+function:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Physical USB-P1K button layout       input events
+
+
+           up                             up
+     IN           OUT                left,   right
+          down                           down
+
+   pickup   C    hangup              enter, backspace, escape
+     1      2      3                 1, 2, 3
+     4      5      6                 4, 5, 6,
+     7      8      9                 7, 8, 9,
+     *      0      #                 *, 0, #,
+</pre></div>
+</div>
+<p>The “up” and “down” keys, are symbolised by arrows on the button.
+The “pickup” and “hangup” keys are symbolised by a green and red phone
+on the button.</p>
+</section>
+<section id="lcd-features">
+<h2><span class="section-number">18.3. </span>LCD features<a class="headerlink" href="#lcd-features" title="Link to this heading">¶</a></h2>
+<p>The LCD is divided and organised as a 3 line display:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  |[]   [][]   [][]   [][]   in   |[][]
+  |[] M [][] D [][] : [][]   out  |[][]
+                            store
+
+  NEW REP         SU MO TU WE TH FR SA
+
+  [] [] [] [] [] [] [] [] [] [] [] []
+  [] [] [] [] [] [] [] [] [] [] [] []
+
+
+Line 1  Format (see below)    : 18.e8.M8.88...188
+        Icon names            :   M  D  :  IN OUT STORE
+Line 2  Format                : .........
+        Icon name             : NEW REP SU MO TU WE TH FR SA
+Line 3  Format                : 888888888888
+</pre></div>
+</div>
+<dl>
+<dt>Format description:</dt><dd><p>From a userspace perspective the world is separated into “digits” and “icons”.
+A digit can have a character set, an icon can only be ON or OFF.</p>
+<p>Format specifier:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;8&#39; :  Generic 7 segment digit with individual addressable segments
+
+Reduced capability 7 segment digit, when segments are hard wired together.
+&#39;1&#39; : 2 segments digit only able to produce a 1.
+&#39;e&#39; : Most significant day of the month digit,
+      able to produce at least 1 2 3.
+&#39;M&#39; : Most significant minute digit,
+      able to produce at least 0 1 2 3 4 5.
+
+Icons or pictograms:
+&#39;.&#39; : For example like AM, PM, SU, a &#39;dot&#39; .. or other single segment
+      elements.
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="driver-usage">
+<h2><span class="section-number">18.4. </span>Driver usage<a class="headerlink" href="#driver-usage" title="Link to this heading">¶</a></h2>
+<p>For userland the following interfaces are available using the sysfs interface:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/sys/.../
+         line1        Read/Write, lcd line1
+         line2        Read/Write, lcd line2
+         line3        Read/Write, lcd line3
+
+         get_icons    Read, returns a set of available icons.
+         hide_icon    Write, hide the element by writing the icon name.
+         show_icon    Write, display the element by writing the icon name.
+
+         map_seg7     Read/Write, the 7 segments char set, common for all
+                      yealink phones. (see map_to_7segment.h)
+
+         ringtone     Write, upload binary representation of a ringtone,
+                      see yealink.c. status EXPERIMENTAL due to potential
+                      races between async. and sync usb calls.
+</pre></div>
+</div>
+<section id="linex">
+<h3><span class="section-number">18.4.1. </span>lineX<a class="headerlink" href="#linex" title="Link to this heading">¶</a></h3>
+<p>Reading /sys/../lineX will return the format string with its current value.</p>
+<blockquote>
+<div><p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat ./line3
+888888888888
+Linux Rocks!
+</pre></div>
+</div>
+</div></blockquote>
+<p>Writing to /sys/../lineX will set the corresponding LCD line.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Excess characters are ignored.</p></li>
+<li><p>If less characters are written than allowed, the remaining digits are
+unchanged.</p></li>
+<li><p>The tab ‘t’and ‘n’ char does not overwrite the original content.</p></li>
+<li><p>Writing a space to an icon will always hide its content.</p></li>
+</ul>
+<blockquote>
+<div><p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>date +&quot;%m.%e.%k:%M&quot;  | sed &#39;s/^0/ /&#39; &gt; ./line1
+</pre></div>
+</div>
+<p>Will update the LCD with the current date &amp; time.</p>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="get-icons">
+<h3><span class="section-number">18.4.2. </span>get_icons<a class="headerlink" href="#get-icons" title="Link to this heading">¶</a></h3>
+<p>Reading will return all available icon names and its current settings:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat ./get_icons
+on M
+on D
+on :
+   IN
+   OUT
+   STORE
+   NEW
+   REP
+   SU
+   MO
+   TU
+   WE
+   TH
+   FR
+   SA
+   LED
+   DIALTONE
+   RINGTONE
+</pre></div>
+</div>
+</section>
+<section id="show-hide-icons">
+<h3><span class="section-number">18.4.3. </span>show/hide icons<a class="headerlink" href="#show-hide-icons" title="Link to this heading">¶</a></h3>
+<p>Writing to these files will update the state of the icon.
+Only one icon at a time can be updated.</p>
+<p>If an icon is also on a ./lineX the corresponding value is
+updated with the first letter of the icon.</p>
+<blockquote>
+<div><p>Example - light up the store icon:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo -n &quot;STORE&quot; &gt; ./show_icon
+
+cat ./line1
+18.e8.M8.88...188
+              S
+</pre></div>
+</div>
+<p>Example - sound the ringtone for 10 seconds:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo -n RINGTONE &gt; /sys/..../show_icon
+sleep 10
+echo -n RINGTONE &gt; /sys/..../hide_icon
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="sound-features">
+<h2><span class="section-number">18.5. </span>Sound features<a class="headerlink" href="#sound-features" title="Link to this heading">¶</a></h2>
+<p>Sound is supported by the ALSA driver: snd_usb_audio</p>
+<p>One 16-bit channel with sample and playback rates of 8000 Hz is the practical
+limit of the device.</p>
+<blockquote>
+<div><p>Example - recording test:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>arecord -v -d 10 -r 8000 -f S16_LE -t wav  foobar.wav
+</pre></div>
+</div>
+<p>Example - playback test:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>aplay foobar.wav
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="troubleshooting">
+<h2><span class="section-number">18.6. </span>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Q<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module yealink compiled and installed without any problem but phone
+is not initialized and does not react to any actions.</p>
+</dd>
+<dt class="field-even">A<span class="colon">:</span></dt>
+<dd class="field-even"><p>If you see something like:
+hiddev0: USB HID v1.00 Device [Yealink Network Technology Ltd. VOIP USB Phone
+in dmesg, it means that the hid driver has grabbed the device first. Try to
+load module yealink before any other usb hid driver. Please see the
+instructions provided by your distribution on module configuration.</p>
+</dd>
+<dt class="field-odd">Q<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Phone is working now (displays version and accepts keypad input) but I can’t
+find the sysfs files.</p>
+</dd>
+<dt class="field-even">A<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sysfs files are located on the particular usb endpoint. On most
+distributions you can do: “find /sys/ -name get_icons” for a hint.</p>
+</dd>
+</dl>
+</section>
+<section id="credits-acknowledgments">
+<h2><span class="section-number">18.7. </span>Credits &amp; Acknowledgments<a class="headerlink" href="#credits-acknowledgments" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>Olivier Vandorpe, for starting the usbb2k-api project doing much of
+the reverse engineering.</p></li>
+<li><p>Martin Diehl, for pointing out how to handle USB memory allocation.</p></li>
+<li><p>Dmitry Torokhov, for the numerous code reviews and suggestions.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">18. Driver documentation for yealink usb-p1k phones</a><ul>
+<li><a class="reference internal" href="#status">18.1. Status</a></li>
+<li><a class="reference internal" href="#keyboard-features">18.2. keyboard features</a></li>
+<li><a class="reference internal" href="#lcd-features">18.3. LCD features</a></li>
+<li><a class="reference internal" href="#driver-usage">18.4. Driver usage</a><ul>
+<li><a class="reference internal" href="#linex">18.4.1. lineX</a></li>
+<li><a class="reference internal" href="#get-icons">18.4.2. get_icons</a></li>
+<li><a class="reference internal" href="#show-hide-icons">18.4.3. show/hide icons</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sound-features">18.5. Sound features</a></li>
+<li><a class="reference internal" href="#troubleshooting">18.6. Troubleshooting</a></li>
+<li><a class="reference internal" href="#credits-acknowledgments">18.7. Credits &amp; Acknowledgments</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="xpad.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">17. </span>xpad - Linux USB driver for Xbox compatible controllers</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../../hid/index.html"><span>Human Interface Devices (HID)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

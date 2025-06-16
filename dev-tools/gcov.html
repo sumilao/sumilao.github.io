@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using gcov with the Linux kernel &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Kernel Address Sanitizer (KASAN)" href="kasan.html" />
+    <link rel="prev" title="KCOV: code coverage for fuzzing" href="kcov.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Development tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="testing-overview.html">Kernel Testing Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checkpatch.html">Checkpatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clang-format.html">clang-format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coccinelle.html">Coccinelle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sparse.html">Sparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kcov.html">KCOV: code coverage for fuzzing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using gcov with the Linux kernel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customization">Customization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-specific-configs">Module specific configs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#separated-build-and-test-machines">Separated build and test machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#note-on-compilers">Note on compilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appendix-a-gather-on-build-sh">Appendix A: gather_on_build.sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appendix-b-gather-on-test-sh">Appendix B: gather_on_test.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kasan.html">Kernel Address Sanitizer (KASAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kmsan.html">Kernel Memory Sanitizer (KMSAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubsan.html">Undefined Behavior Sanitizer - UBSAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kmemleak.html">Kernel Memory Leak Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kcsan.html">Kernel Concurrency Sanitizer (KCSAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfence.html">Kernel Electric-Fence (KFENCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kselftest.html">Linux Kernel Selftests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kunit/index.html">KUnit - Linux Kernel Unit Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ktap.html">The Kernel Test Anything Protocol (KTAP), version 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checkuapi.html">UAPI Checker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpio-sloppy-logic-analyzer.html">Linux Kernel GPIO based sloppy logic analyzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autofdo.html">Using AutoFDO with the Linux kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="propeller.html">Using Propeller with the Linux kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dev-tools/gcov.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/dev-tools/gcov.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/zh_TW/dev-tools/gcov.html">Chinese (Traditional)</a></li>
+
+</ul>
+</div>
+<section id="using-gcov-with-the-linux-kernel">
+<h1>Using gcov with the Linux kernel<a class="headerlink" href="#using-gcov-with-the-linux-kernel" title="Link to this heading">¶</a></h1>
+<p>gcov profiling kernel support enables the use of GCC’s coverage testing
+tool <a class="reference external" href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> with the Linux kernel. Coverage data of a running kernel
+is exported in gcov-compatible format via the “gcov” debugfs directory.
+To get coverage data for a specific file, change to the kernel build
+directory and use gcov with the <code class="docutils literal notranslate"><span class="pre">-o</span></code> option as follows (requires root):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cd /tmp/linux-out
+# gcov -o /sys/kernel/debug/gcov/tmp/linux-out/kernel spinlock.c
+</pre></div>
+</div>
+<p>This will create source code files annotated with execution counts
+in the current directory. In addition, graphical gcov front-ends such
+as <a class="reference external" href="https://github.com/linux-test-project/lcov">lcov</a> can be used to automate the process of collecting data
+for the entire kernel and provide coverage overviews in HTML format.</p>
+<p>Possible uses:</p>
+<ul class="simple">
+<li><p>debugging (has this line been reached at all?)</p></li>
+<li><p>test improvement (how do I change my test to cover these lines?)</p></li>
+<li><p>minimizing kernel configurations (do I need this option if the
+associated code is never run?)</p></li>
+</ul>
+<section id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Link to this heading">¶</a></h2>
+<p>Configure the kernel with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_DEBUG_FS=y
+CONFIG_GCOV_KERNEL=y
+</pre></div>
+</div>
+<p>and to get coverage data for the entire kernel:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_GCOV_PROFILE_ALL=y
+</pre></div>
+</div>
+<p>Note that kernels compiled with profiling flags will be significantly
+larger and run slower. Also CONFIG_GCOV_PROFILE_ALL may not be supported
+on all architectures.</p>
+<p>Profiling data will only become accessible once debugfs has been
+mounted:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount -t debugfs none /sys/kernel/debug
+</pre></div>
+</div>
+</section>
+<section id="customization">
+<h2>Customization<a class="headerlink" href="#customization" title="Link to this heading">¶</a></h2>
+<p>To enable profiling for specific files or directories, add a line
+similar to the following to the respective kernel Makefile:</p>
+<ul>
+<li><p>For a single file (e.g. main.o):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GCOV_PROFILE_main.o := y
+</pre></div>
+</div>
+</li>
+<li><p>For all files in one directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GCOV_PROFILE := y
+</pre></div>
+</div>
+</li>
+</ul>
+<p>To exclude files from being profiled even when CONFIG_GCOV_PROFILE_ALL
+is specified, use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GCOV_PROFILE_main.o := n
+</pre></div>
+</div>
+<p>and:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GCOV_PROFILE := n
+</pre></div>
+</div>
+<p>Only files which are linked to the main kernel image or are compiled as
+kernel modules are supported by this mechanism.</p>
+</section>
+<section id="module-specific-configs">
+<h2>Module specific configs<a class="headerlink" href="#module-specific-configs" title="Link to this heading">¶</a></h2>
+<p>Gcov kernel configs for specific modules are described below:</p>
+<dl class="simple">
+<dt>CONFIG_GCOV_PROFILE_RDS:</dt><dd><p>Enables GCOV profiling on RDS for checking which functions or
+lines are executed. This config is used by the rds selftest to
+generate coverage reports. If left unset the report is omitted.</p>
+</dd>
+</dl>
+</section>
+<section id="files">
+<h2>Files<a class="headerlink" href="#files" title="Link to this heading">¶</a></h2>
+<p>The gcov kernel support creates the following files in debugfs:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/gcov</span></code></dt><dd><p>Parent directory for all gcov-related files.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/gcov/reset</span></code></dt><dd><p>Global reset file: resets all coverage data to zero when
+written to.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/gcov/path/to/compile/dir/file.gcda</span></code></dt><dd><p>The actual gcov data file as understood by the gcov
+tool. Resets file coverage data to zero when written to.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/gcov/path/to/compile/dir/file.gcno</span></code></dt><dd><p>Symbolic link to a static data file required by the gcov
+tool. This file is generated by gcc when compiling with
+option <code class="docutils literal notranslate"><span class="pre">-ftest-coverage</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading">¶</a></h2>
+<p>Kernel modules may contain cleanup code which is only run during
+module unload time. The gcov mechanism provides a means to collect
+coverage data for such code by keeping a copy of the data associated
+with the unloaded module. This data remains available through debugfs.
+Once the module is loaded again, the associated coverage counters are
+initialized with the data from its previous instantiation.</p>
+<p>This behavior can be deactivated by specifying the gcov_persist kernel
+parameter:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gcov_persist=0
+</pre></div>
+</div>
+<p>At run-time, a user can also choose to discard data for an unloaded
+module by writing to its data file or the global reset file.</p>
+</section>
+<section id="separated-build-and-test-machines">
+<h2>Separated build and test machines<a class="headerlink" href="#separated-build-and-test-machines" title="Link to this heading">¶</a></h2>
+<p>The gcov kernel profiling infrastructure is designed to work out-of-the
+box for setups where kernels are built and run on the same machine. In
+cases where the kernel runs on a separate machine, special preparations
+must be made, depending on where the gcov tool is used:</p>
+<ol class="loweralpha" id="gcov-test">
+<li><p>gcov is run on the TEST machine</p>
+<blockquote>
+<div><p>The gcov tool version on the test machine must be compatible with the
+gcc version used for kernel build. Also the following files need to be
+copied from build to test machine:</p>
+<dl class="simple">
+<dt>from the source tree:</dt><dd><ul class="simple">
+<li><p>all C source files + headers</p></li>
+</ul>
+</dd>
+<dt>from the build tree:</dt><dd><ul class="simple">
+<li><p>all C source files + headers</p></li>
+<li><p>all .gcda and .gcno files</p></li>
+<li><p>all links to directories</p></li>
+</ul>
+</dd>
+</dl>
+<p>It is important to note that these files need to be placed into the
+exact same file system location on the test machine as on the build
+machine. If any of the path components is symbolic link, the actual
+directory needs to be used instead (due to make’s CURDIR handling).</p>
+</div></blockquote>
+</li>
+</ol>
+<ol class="loweralpha" id="gcov-build" start="2">
+<li><p>gcov is run on the BUILD machine</p>
+<blockquote>
+<div><p>The following files need to be copied after each test case from test
+to build machine:</p>
+<dl class="simple">
+<dt>from the gcov directory in sysfs:</dt><dd><ul class="simple">
+<li><p>all .gcda files</p></li>
+<li><p>all links to .gcno files</p></li>
+</ul>
+</dd>
+</dl>
+<p>These files can be copied to any location on the build machine. gcov
+must then be called with the -o option pointing to that directory.</p>
+<p>Example directory setup on the build machine:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/linux:    kernel source tree
+/tmp/out:      kernel build directory as specified by make O=
+/tmp/coverage: location of the files copied from the test machine
+
+[user@build] cd /tmp/out
+[user@build] gcov -o /tmp/coverage/tmp/out/init main.c
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="note-on-compilers">
+<h2>Note on compilers<a class="headerlink" href="#note-on-compilers" title="Link to this heading">¶</a></h2>
+<p>GCC and LLVM gcov tools are not necessarily compatible. Use <a class="reference external" href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> to work with
+GCC-generated .gcno and .gcda files, and use <a class="reference external" href="https://llvm.org/docs/CommandGuide/llvm-cov.html">llvm-cov</a> for Clang.</p>
+<p>Build differences between GCC and Clang gcov are handled by Kconfig. It
+automatically selects the appropriate gcov format depending on the detected
+toolchain.</p>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Problem</dt><dd><p>Compilation aborts during linker step.</p>
+</dd>
+<dt>Cause</dt><dd><p>Profiling flags are specified for source files which are not
+linked to the main kernel or which are linked by a custom
+linker procedure.</p>
+</dd>
+<dt>Solution</dt><dd><p>Exclude affected source files from profiling by specifying
+<code class="docutils literal notranslate"><span class="pre">GCOV_PROFILE</span> <span class="pre">:=</span> <span class="pre">n</span></code> or <code class="docutils literal notranslate"><span class="pre">GCOV_PROFILE_basename.o</span> <span class="pre">:=</span> <span class="pre">n</span></code> in the
+corresponding Makefile.</p>
+</dd>
+<dt>Problem</dt><dd><p>Files copied from sysfs appear empty or incomplete.</p>
+</dd>
+<dt>Cause</dt><dd><p>Due to the way seq_file works, some tools such as cp or tar
+may not correctly copy files from sysfs.</p>
+</dd>
+<dt>Solution</dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">cat</span></code> to read <code class="docutils literal notranslate"><span class="pre">.gcda</span></code> files and <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-d</span></code> to copy links.
+Alternatively use the mechanism shown in Appendix B.</p>
+</dd>
+</dl>
+</section>
+<section id="appendix-a-gather-on-build-sh">
+<h2>Appendix A: gather_on_build.sh<a class="headerlink" href="#appendix-a-gather-on-build-sh" title="Link to this heading">¶</a></h2>
+<p>Sample script to gather coverage meta files on the build machine
+(see <a class="reference internal" href="#gcov-test"><span class="std std-ref">Separated build and test machines a.</span></a>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nv">KSRC</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">KOBJ</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">DEST</span><span class="o">=</span><span class="nv">$3</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KSRC</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KOBJ</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;ksrc directory&gt; &lt;kobj directory&gt; &lt;output.tar.gz&gt;&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">KSRC</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="nv">$KSRC</span><span class="p">;</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;all:\n\t@echo \${CURDIR}\n&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>make<span class="w"> </span>-f<span class="w"> </span>-<span class="k">)</span>
+<span class="nv">KOBJ</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="nv">$KOBJ</span><span class="p">;</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;all:\n\t@echo \${CURDIR}\n&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>make<span class="w"> </span>-f<span class="w"> </span>-<span class="k">)</span>
+
+find<span class="w"> </span><span class="nv">$KSRC</span><span class="w"> </span><span class="nv">$KOBJ</span><span class="w"> </span><span class="se">\(</span><span class="w"> </span>-name<span class="w"> </span><span class="s1">&#39;*.gcno&#39;</span><span class="w"> </span>-o<span class="w"> </span>-name<span class="w"> </span><span class="s1">&#39;*.[ch]&#39;</span><span class="w"> </span>-o<span class="w"> </span>-type<span class="w"> </span>l<span class="w"> </span><span class="se">\)</span><span class="w"> </span>-a<span class="w"> </span><span class="se">\</span>
+<span class="w">                 </span>-perm<span class="w"> </span>/u+r,g+r<span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>cfz<span class="w"> </span><span class="nv">$DEST</span><span class="w"> </span>-P<span class="w"> </span>-T<span class="w"> </span>-
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2"> successfully created, copy to test system and unpack with:&quot;</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  tar xfz </span><span class="nv">$DEST</span><span class="s2"> -P&quot;</span>
+<span class="k">else</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Could not create file </span><span class="nv">$DEST</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="appendix-b-gather-on-test-sh">
+<h2>Appendix B: gather_on_test.sh<a class="headerlink" href="#appendix-b-gather-on-test-sh" title="Link to this heading">¶</a></h2>
+<p>Sample script to gather coverage data files on the test machine
+(see <a class="reference internal" href="#gcov-build"><span class="std std-ref">Separated build and test machines b.</span></a>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
+
+<span class="nv">DEST</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">GCDA</span><span class="o">=</span>/sys/kernel/debug/gcov
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;output.tar.gz&gt;&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">TEMPDIR</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span>Collecting<span class="w"> </span>data..
+find<span class="w"> </span><span class="nv">$GCDA</span><span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span>-exec<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$TEMPDIR</span>/<span class="se">\{\}</span><span class="w"> </span><span class="se">\;</span>
+find<span class="w"> </span><span class="nv">$GCDA</span><span class="w"> </span>-name<span class="w"> </span><span class="s1">&#39;*.gcda&#39;</span><span class="w"> </span>-exec<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;cat &lt; $0 &gt; &#39;</span><span class="nv">$TEMPDIR</span><span class="s1">&#39;/$0&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+find<span class="w"> </span><span class="nv">$GCDA</span><span class="w"> </span>-name<span class="w"> </span><span class="s1">&#39;*.gcno&#39;</span><span class="w"> </span>-exec<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;cp -d $0 &#39;</span><span class="nv">$TEMPDIR</span><span class="s1">&#39;/$0&#39;</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+tar<span class="w"> </span>czf<span class="w"> </span><span class="nv">$DEST</span><span class="w"> </span>-C<span class="w"> </span><span class="nv">$TEMPDIR</span><span class="w"> </span>sys
+rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$TEMPDIR</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$DEST</span><span class="s2"> successfully created, copy to build system and unpack with:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;  tar xfz </span><span class="nv">$DEST</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Using gcov with the Linux kernel</a><ul>
+<li><a class="reference internal" href="#preparation">Preparation</a></li>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+<li><a class="reference internal" href="#module-specific-configs">Module specific configs</a></li>
+<li><a class="reference internal" href="#files">Files</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#separated-build-and-test-machines">Separated build and test machines</a></li>
+<li><a class="reference internal" href="#note-on-compilers">Note on compilers</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li><a class="reference internal" href="#appendix-a-gather-on-build-sh">Appendix A: gather_on_build.sh</a></li>
+<li><a class="reference internal" href="#appendix-b-gather-on-test-sh">Appendix B: gather_on_test.sh</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="kcov.html">
+                    <span class="icon">&lt;</span><span>KCOV: code coverage for fuzzing</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="kasan.html"><span>Kernel Address Sanitizer (KASAN)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

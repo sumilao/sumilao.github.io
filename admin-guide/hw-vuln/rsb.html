@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>RSB-related mitigations &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Indirect Target Selection (ITS)" href="indirect-target-selection.html" />
+    <link rel="prev" title="Register File Data Sampling (RFDS)" href="reg-file-data-sampling.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administration</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../README.html">Linux kernel release 6.x &lt;http://kernel.org/&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../devices.html">Linux allocated devices (4.x+ version)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features.html">Feature status on all architectures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sysfs-rules.html">Rules on how to access information in sysfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sysctl/index.html">Documentation for /proc/sys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cputopology.html">How CPU topology info is exported via sysfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../abi.html">Linux ABI description</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Hardware vulnerabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../LSM/index.html">Linux Security Module Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perf-security.html">Perf events and tool security</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/admin-guide/hw-vuln/rsb.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="rsb-related-mitigations">
+<h1>RSB-related mitigations<a class="headerlink" href="#rsb-related-mitigations" title="Link to this heading">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please keep this document up-to-date, otherwise you will be
+volunteered to update it and convert it to a very long comment in
+bugs.c!</p>
+</div>
+<p>Since 2018 there have been many Spectre CVEs related to the Return Stack
+Buffer (RSB) (sometimes referred to as the Return Address Stack (RAS) or
+Return Address Predictor (RAP) on AMD).</p>
+<p>Information about these CVEs and how to mitigate them is scattered
+amongst a myriad of microarchitecture-specific documents.</p>
+<p>This document attempts to consolidate all the relevant information in
+once place and clarify the reasoning behind the current RSB-related
+mitigations.  It’s meant to be as concise as possible, focused only on
+the current kernel mitigations: what are the RSB-related attack vectors
+and how are they currently being mitigated?</p>
+<p>It’s <em>not</em> meant to describe how the RSB mechanism operates or how the
+exploits work.  More details about those can be found in the references
+below.</p>
+<p>Rather, this is basically a glorified comment, but too long to actually
+be one.  So when the next CVE comes along, a kernel developer can
+quickly refer to this as a refresher to see what we’re actually doing
+and why.</p>
+<p>At a high level, there are two classes of RSB attacks: RSB poisoning
+(Intel and AMD) and RSB underflow (Intel only).  They must each be
+considered individually for each attack vector (and microarchitecture
+where applicable).</p>
+<hr class="docutils" />
+<section id="rsb-poisoning-intel-and-amd">
+<h2>RSB poisoning (Intel and AMD)<a class="headerlink" href="#rsb-poisoning-intel-and-amd" title="Link to this heading">¶</a></h2>
+<section id="spectrersb">
+<h3>SpectreRSB<a class="headerlink" href="#spectrersb" title="Link to this heading">¶</a></h3>
+<p>RSB poisoning is a technique used by SpectreRSB <a class="footnote-reference brackets" href="#spectre-rsb" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> where
+an attacker poisons an RSB entry to cause a victim’s return instruction
+to speculate to an attacker-controlled address.  This can happen when
+there are unbalanced CALLs/RETs after a context switch or VMEXIT.</p>
+<ul>
+<li><p>All attack vectors can potentially be mitigated by flushing out any
+poisoned RSB entries using an RSB filling sequence
+<a class="footnote-reference brackets" href="#intel-rsb-filling" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#amd-rsb-filling" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> when transitioning between
+untrusted and trusted domains.  But this has a performance impact and
+should be avoided whenever possible.</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p><strong>FIXME</strong>: Currently we’re flushing 32 entries.  However, some CPU
+models have more than 32 entries.  The loop count needs to be
+increased for those.  More detailed information is needed about RSB
+sizes.</p>
+</div>
+</li>
+<li><p>On context switch, the user-&gt;user mitigation requires ensuring the
+RSB gets filled or cleared whenever IBPB gets written <a class="footnote-reference brackets" href="#cond-ibpb" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>
+during a context switch:</p>
+<ul>
+<li><dl>
+<dt>AMD:</dt><dd><p>On Zen 4+, IBPB (or SBPB <a class="footnote-reference brackets" href="#amd-sbpb" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> if used) clears the RSB.
+This is indicated by IBPB_RET in CPUID <a class="footnote-reference brackets" href="#amd-ibpb-rsb" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+<p>On Zen &lt; 4, the RSB filling sequence <a class="footnote-reference brackets" href="#amd-rsb-filling" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> must be
+always be done in addition to IBPB <a class="footnote-reference brackets" href="#amd-ibpb-no-rsb" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.  This is
+indicated by X86_BUG_IBPB_NO_RET.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Intel:</dt><dd><p>IBPB always clears the RSB:</p>
+<p>“Software that executed before the IBPB command cannot control
+the predicted targets of indirect branches executed after the
+command on the same logical processor. The term indirect branch
+in this context includes near return instructions, so these
+predicted targets may come from the RSB.” <a class="footnote-reference brackets" href="#intel-ibpb-rsb" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li><p>On context switch, user-&gt;kernel attacks are prevented by SMEP.  User
+space can only insert user space addresses into the RSB.  Even
+non-canonical addresses can’t be inserted due to the page gap at the
+end of the user canonical address space reserved by TASK_SIZE_MAX.
+A SMEP #PF at instruction fetch prevents the kernel from speculatively
+executing user space.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>AMD:</dt><dd><p>“Finally, branches that are predicted as ‘ret’ instructions get
+their predicted targets from the Return Address Predictor (RAP).
+AMD recommends software use a RAP stuffing sequence (mitigation
+V2-3 in [2]) and/or Supervisor Mode Execution Protection (SMEP)
+to ensure that the addresses in the RAP are safe for
+speculation. Collectively, we refer to these mitigations as “RAP
+Protection”.” <a class="footnote-reference brackets" href="#amd-smep-rsb" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Intel:</dt><dd><p>“On processors with enhanced IBRS, an RSB overwrite sequence may
+not suffice to prevent the predicted target of a near return
+from using an RSB entry created in a less privileged predictor
+mode.  Software can prevent this by enabling SMEP (for
+transitions from user mode to supervisor mode) and by having
+IA32_SPEC_CTRL.IBRS set during VM exits.” <a class="footnote-reference brackets" href="#intel-smep-rsb" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a></p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li><p>On VMEXIT, guest-&gt;host attacks are mitigated by eIBRS (and PBRSB
+mitigation if needed):</p>
+<ul>
+<li><dl class="simple">
+<dt>AMD:</dt><dd><p>“When Automatic IBRS is enabled, the internal return address
+stack used for return address predictions is cleared on VMEXIT.”
+<a class="footnote-reference brackets" href="#amd-eibrs-vmexit" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Intel:</dt><dd><p>“On processors with enhanced IBRS, an RSB overwrite sequence may
+not suffice to prevent the predicted target of a near return
+from using an RSB entry created in a less privileged predictor
+mode.  Software can prevent this by enabling SMEP (for
+transitions from user mode to supervisor mode) and by having
+IA32_SPEC_CTRL.IBRS set during VM exits. Processors with
+enhanced IBRS still support the usage model where IBRS is set
+only in the OS/VMM for OSes that enable SMEP. To do this, such
+processors will ensure that guest behavior cannot control the
+RSB after a VM exit once IBRS is set, even if IBRS was not set
+at the time of the VM exit.” <a class="footnote-reference brackets" href="#intel-eibrs-vmexit" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a></p>
+</dd>
+</dl>
+<p>Note that some Intel CPUs are susceptible to Post-barrier Return
+Stack Buffer Predictions (PBRSB) <a class="footnote-reference brackets" href="#intel-pbrsb" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>, where the last
+CALL from the guest can be used to predict the first unbalanced RET.
+In this case the PBRSB mitigation is needed in addition to eIBRS.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="amd-retbleed-srso-branch-type-confusion">
+<h3>AMD RETBleed / SRSO / Branch Type Confusion<a class="headerlink" href="#amd-retbleed-srso-branch-type-confusion" title="Link to this heading">¶</a></h3>
+<p>On AMD, poisoned RSB entries can also be created by the AMD RETBleed
+variant <a class="footnote-reference brackets" href="#retbleed-paper" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#amd-btc" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a> or by Speculative Return Stack
+Overflow <a class="footnote-reference brackets" href="#amd-srso" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></a> (Inception <a class="footnote-reference brackets" href="#inception-paper" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></a>).  The kernel
+protects itself by replacing every RET in the kernel with a branch to a
+single safe RET.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="rsb-underflow-intel-only">
+<h2>RSB underflow (Intel only)<a class="headerlink" href="#rsb-underflow-intel-only" title="Link to this heading">¶</a></h2>
+<section id="rsb-alternate-rsba-intel-retbleed">
+<h3>RSB Alternate (RSBA) (“Intel Retbleed”)<a class="headerlink" href="#rsb-alternate-rsba-intel-retbleed" title="Link to this heading">¶</a></h3>
+<p>Some Intel Skylake-generation CPUs are susceptible to the Intel variant
+of RETBleed <a class="footnote-reference brackets" href="#retbleed-paper" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a> (Return Stack Buffer Underflow
+<a class="footnote-reference brackets" href="#intel-rsbu" id="id20" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a>).  If a RET is executed when the RSB buffer is empty due
+to mismatched CALLs/RETs or returning from a deep call stack, the branch
+predictor can fall back to using the Branch Target Buffer (BTB).  If a
+user forces a BTB collision then the RET can speculatively branch to a
+user-controlled address.</p>
+<ul>
+<li><p>Note that RSB filling doesn’t fully mitigate this issue.  If there
+are enough unbalanced RETs, the RSB may still underflow and fall back
+to using a poisoned BTB entry.</p></li>
+<li><p>On context switch, user-&gt;user underflow attacks are mitigated by the
+conditional IBPB <a class="footnote-reference brackets" href="#cond-ibpb" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> on context switch which effectively
+clears the BTB:</p>
+<ul class="simple">
+<li><p>“The indirect branch predictor barrier (IBPB) is an indirect branch
+control mechanism that establishes a barrier, preventing software
+that executed before the barrier from controlling the predicted
+targets of indirect branches executed after the barrier on the same
+logical processor.” <a class="footnote-reference brackets" href="#intel-ibpb-btb" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></a></p></li>
+</ul>
+</li>
+<li><p>On context switch and VMEXIT, user-&gt;kernel and guest-&gt;host RSB
+underflows are mitigated by IBRS or eIBRS:</p>
+<ul class="simple">
+<li><p>“Enabling IBRS (including enhanced IBRS) will mitigate the “RSBU”
+attack demonstrated by the researchers. As previously documented,
+Intel recommends the use of enhanced IBRS, where supported. This
+includes any processor that enumerates RRSBA but not RRSBA_DIS_S.”
+<a class="footnote-reference brackets" href="#intel-rsbu" id="id23" role="doc-noteref"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></a></p></li>
+</ul>
+<p>However, note that eIBRS and IBRS do not mitigate intra-mode attacks.
+Like RRSBA below, this is mitigated by clearing the BHB on kernel
+entry.</p>
+<p>As an alternative to classic IBRS, call depth tracking (combined with
+retpolines) can be used to track kernel returns and fill the RSB when
+it gets close to being empty.</p>
+</li>
+</ul>
+</section>
+<section id="restricted-rsb-alternate-rrsba">
+<h3>Restricted RSB Alternate (RRSBA)<a class="headerlink" href="#restricted-rsb-alternate-rrsba" title="Link to this heading">¶</a></h3>
+<p>Some newer Intel CPUs have Restricted RSB Alternate (RRSBA) behavior,
+which, similar to RSBA described above, also falls back to using the BTB
+on RSB underflow.  The only difference is that the predicted targets are
+restricted to the current domain when eIBRS is enabled:</p>
+<ul class="simple">
+<li><p>“Restricted RSB Alternate (RRSBA) behavior allows alternate branch
+predictors to be used by near RET instructions when the RSB is
+empty.  When eIBRS is enabled, the predicted targets of these
+alternate predictors are restricted to those belonging to the
+indirect branch predictor entries of the current prediction domain.
+<a class="footnote-reference brackets" href="#intel-eibrs-rrsba" id="id24" role="doc-noteref"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></a></p></li>
+</ul>
+<p>When a CPU with RRSBA is vulnerable to Branch History Injection
+<a class="footnote-reference brackets" href="#bhi-paper" id="id25" role="doc-noteref"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#intel-bhi" id="id26" role="doc-noteref"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></a>, an RSB underflow could be used for an
+intra-mode BTI attack.  This is mitigated by clearing the BHB on
+kernel entry.</p>
+<p>However if the kernel uses retpolines instead of eIBRS, it needs to
+disable RRSBA:</p>
+<ul class="simple">
+<li><p>“Where software is using retpoline as a mitigation for BHI or
+intra-mode BTI, and the processor both enumerates RRSBA and
+enumerates RRSBA_DIS controls, it should disable this behavior.”
+<a class="footnote-reference brackets" href="#intel-retpoline-rrsba" id="id27" role="doc-noteref"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></a></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="spectre-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://arxiv.org/pdf/1807.07940.pdf">Spectre Returns! Speculation Attacks using the Return Stack Buffer</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-rsb-filling" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>“Empty RSB Mitigation on Skylake-generation” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/retpoline-branch-target-injection-mitigation.html#inpage-nav-5-1">Retpoline: A Branch Target Injection Mitigation</a></p>
+</aside>
+<aside class="footnote brackets" id="amd-rsb-filling" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id7">2</a>)</span>
+<p>“Mitigation V2-3” in <a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/software-techniques-for-managing-speculation.pdf">Software Techniques for Managing Speculation</a></p>
+</aside>
+<aside class="footnote brackets" id="cond-ibpb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id4">1</a>,<a role="doc-backlink" href="#id21">2</a>)</span>
+<p>Whether IBPB is written depends on whether the prev and/or next task is protected from Spectre attacks.  It typically requires opting in per task or system-wide.  For more details see the documentation for the <code class="docutils literal notranslate"><span class="pre">spectre_v2_user</span></code> cmdline option in <a class="reference internal" href="../kernel-parameters.html"><span class="doc">The kernel’s command-line parameters</span></a>.</p>
+</aside>
+<aside class="footnote brackets" id="amd-sbpb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>IBPB without flushing of branch type predictions.  Only exists for AMD.</p>
+</aside>
+<aside class="footnote brackets" id="amd-ibpb-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>“Function 8000_0008h -- Processor Capacity Parameters and Extended Feature Identification” in <a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24594.pdf">AMD64 Architecture Programmer’s Manual Volume 3: General-Purpose and System Instructions</a>.  SBPB behaves the same way according to <a class="reference external" href="https://lore.kernel.org/5175b163a3736ca5fd01cedf406735636c99a">this email</a>.</p>
+</aside>
+<aside class="footnote brackets" id="amd-ibpb-no-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://comsec.ethz.ch/wp-content/files/ibpb_sp25.pdf">Spectre Attacks: Exploiting Speculative Execution</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-ibpb-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">8</a><span class="fn-bracket">]</span></span>
+<p>“Introduction” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/post-barrier-return-stack-buffer-predictions.html">Post-barrier Return Stack Buffer Predictions / CVE-2022-26373 / INTEL-SA-00706</a></p>
+</aside>
+<aside class="footnote brackets" id="amd-smep-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">9</a><span class="fn-bracket">]</span></span>
+<p>“Existing Mitigations” in <a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/resources/technical-guidance-for-mitigating-branch-type-confusion.pdf">Technical Guidance for Mitigating Branch Type Confusion</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-smep-rsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">10</a><span class="fn-bracket">]</span></span>
+<p>“Enhanced IBRS” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/indirect-branch-restricted-speculation.html">Indirect Branch Restricted Speculation</a></p>
+</aside>
+<aside class="footnote brackets" id="amd-eibrs-vmexit" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">11</a><span class="fn-bracket">]</span></span>
+<p>“Extended Feature Enable Register (EFER)” in <a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf">AMD64 Architecture Programmer’s Manual Volume 2: System Programming</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-eibrs-vmexit" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">12</a><span class="fn-bracket">]</span></span>
+<p>“Enhanced IBRS” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/indirect-branch-restricted-speculation.html">Indirect Branch Restricted Speculation</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-pbrsb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">13</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/post-barrier-return-stack-buffer-predictions.html">Post-barrier Return Stack Buffer Predictions / CVE-2022-26373 / INTEL-SA-00706</a></p>
+</aside>
+<aside class="footnote brackets" id="retbleed-paper" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id15">1</a>,<a role="doc-backlink" href="#id19">2</a>)</span>
+<p><a class="reference external" href="https://comsec.ethz.ch/wp-content/files/retbleed_sec22.pdf">RETBleed: Arbitrary Speculative Code Execution with Return Instruction</a></p>
+</aside>
+<aside class="footnote brackets" id="amd-btc" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">15</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/resources/technical-guidance-for-mitigating-branch-type-confusion.pdf">Technical Guidance for Mitigating Branch Type Confusion</a></p>
+</aside>
+<aside class="footnote brackets" id="amd-srso" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">16</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf">Technical Update Regarding Speculative Return Stack Overflow</a></p>
+</aside>
+<aside class="footnote brackets" id="inception-paper" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">17</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://comsec.ethz.ch/wp-content/files/inception_sec23.pdf">Inception: Exposing New Attack Surfaces with Training in Transient Execution</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-rsbu" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id20">1</a>,<a role="doc-backlink" href="#id23">2</a>)</span>
+<p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/return-stack-buffer-underflow.html">Return Stack Buffer Underflow / Return Stack Buffer Underflow / CVE-2022-29901, CVE-2022-28693 / INTEL-SA-00702</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-ibpb-btb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">19</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/indirect-branch-predictor-barrier.html">Indirect Branch Predictor Barrier’</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-eibrs-rrsba" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">20</a><span class="fn-bracket">]</span></span>
+<p>“Guidance for RSBU” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/return-stack-buffer-underflow.html">Return Stack Buffer Underflow / Return Stack Buffer Underflow / CVE-2022-29901, CVE-2022-28693 / INTEL-SA-00702</a></p>
+</aside>
+<aside class="footnote brackets" id="bhi-paper" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">21</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="http://download.vusec.net/papers/bhi-spectre-bhb_sec22.pdf">Branch History Injection: On the Effectiveness of Hardware Mitigations Against Cross-Privilege Spectre-v2 Attacks</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-bhi" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">22</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/branch-history-injection.html">Branch History Injection and Intra-mode Branch Target Injection / CVE-2022-0001, CVE-2022-0002 / INTEL-SA-00598</a></p>
+</aside>
+<aside class="footnote brackets" id="intel-retpoline-rrsba" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id27">23</a><span class="fn-bracket">]</span></span>
+<p>“Retpoline” in <a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/branch-history-injection.html">Branch History Injection and Intra-mode Branch Target Injection / CVE-2022-0001, CVE-2022-0002 / INTEL-SA-00598</a></p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">RSB-related mitigations</a><ul>
+<li><a class="reference internal" href="#rsb-poisoning-intel-and-amd">RSB poisoning (Intel and AMD)</a><ul>
+<li><a class="reference internal" href="#spectrersb">SpectreRSB</a></li>
+<li><a class="reference internal" href="#amd-retbleed-srso-branch-type-confusion">AMD RETBleed / SRSO / Branch Type Confusion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rsb-underflow-intel-only">RSB underflow (Intel only)</a><ul>
+<li><a class="reference internal" href="#rsb-alternate-rsba-intel-retbleed">RSB Alternate (RSBA) (“Intel Retbleed”)</a></li>
+<li><a class="reference internal" href="#restricted-rsb-alternate-rrsba">Restricted RSB Alternate (RRSBA)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="reg-file-data-sampling.html">
+                    <span class="icon">&lt;</span><span>Register File Data Sampling (RFDS)</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="indirect-target-selection.html"><span>Indirect Target Selection (ITS)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

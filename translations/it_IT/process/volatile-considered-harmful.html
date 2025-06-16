@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Perché la parola chiave “volatile” non dovrebbe essere usata &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="(Come evitare di) Raffazzonare delle ioctl" href="botching-up-ioctls.html" />
+    <link rel="prev" title="Aggiungere una nuova chiamata di sistema" href="adding-syscalls.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">La documentazione del kernel Linux</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#avvertenze">Avvertenze</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#lavorare-con-la-comunita-di-sviluppo">Lavorare con la comunità di sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#manuali-sull-api-interna">Manuali sull’API interna</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#strumenti-e-processi-per-lo-sviluppo">Strumenti e processi per lo sviluppo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-per-gli-utenti">Documentazione per gli utenti</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-relativa-ai-firmware">Documentazione relativa ai firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-specifica-per-architettura">Documentazione specifica per architettura</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#documentazione-varia">Documentazione varia</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/it_IT/process/volatile-considered-harmful.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Italian
+
+<ul>
+
+<li><a href="../../../process/volatile-considered-harmful.html">English</a></li>
+
+<li><a href="../../zh_CN/process/volatile-considered-harmful.html">Chinese (Simplified)</a></li>
+
+<li><a href="../../zh_TW/process/volatile-considered-harmful.html">Chinese (Traditional)</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In caso di dubbi sulla correttezza del contenuto di questa traduzione,
+l’unico riferimento valido è la documentazione ufficiale in inglese.
+Per maggiori informazioni consultate le <a class="reference internal" href="../index.html#it-disclaimer"><span class="std std-ref">avvertenze</span></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../process/volatile-considered-harmful.html#volatile-considered-harmful"><span class="std std-ref">Documentation/process/volatile-considered-harmful.rst</span></a></p>
+</dd>
+<dt class="field-even">Translator<span class="colon">:</span></dt>
+<dd class="field-even"><p>Federico Vaga &lt;<a class="reference external" href="mailto:federico&#46;vaga&#37;&#52;&#48;vaga&#46;pv&#46;it">federico<span>&#46;</span>vaga<span>&#64;</span>vaga<span>&#46;</span>pv<span>&#46;</span>it</a>&gt;</p>
+</dd>
+</dl>
+<section id="perche-la-parola-chiave-volatile-non-dovrebbe-essere-usata">
+<span id="it-volatile-considered-harmful"></span><h1>Perché la parola chiave “volatile” non dovrebbe essere usata<a class="headerlink" href="#perche-la-parola-chiave-volatile-non-dovrebbe-essere-usata" title="Link to this heading">¶</a></h1>
+<p>Spesso i programmatori C considerano volatili quelle variabili che potrebbero
+essere cambiate al di fuori dal thread di esecuzione corrente; come risultato,
+a volte saranno tentati dall’utilizzare <em>volatile</em> nel kernel per le
+strutture dati condivise.  In altre parole, gli è stato insegnato ad usare
+<em>volatile</em> come una variabile atomica di facile utilizzo, ma non è così.
+L’uso di <em>volatile</em> nel kernel non è quasi mai corretto; questo documento ne
+descrive le ragioni.</p>
+<p>Il punto chiave da capire su <em>volatile</em> è che il suo scopo è quello di
+sopprimere le ottimizzazioni, che non è quasi mai quello che si vuole.
+Nel kernel si devono proteggere le strutture dati condivise contro accessi
+concorrenti e indesiderati: questa è un’attività completamente diversa.
+Il processo di protezione contro gli accessi concorrenti indesiderati eviterà
+anche la maggior parte dei problemi relativi all’ottimizzazione in modo più
+efficiente.</p>
+<p>Come <em>volatile</em>, le primitive del kernel che rendono sicuro l’accesso ai dati
+(spinlock, mutex, barriere di sincronizzazione, ecc) sono progettate per
+prevenire le ottimizzazioni indesiderate.  Se vengono usate opportunamente,
+non ci sarà bisogno di utilizzare <em>volatile</em>.  Se vi sembra che <em>volatile</em> sia
+comunque necessario, ci dev’essere quasi sicuramente un baco da qualche parte.
+In un pezzo di codice kernel scritto a dovere, <em>volatile</em> può solo servire a
+rallentare le cose.</p>
+<p>Considerate questo tipico blocco di codice kernel:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>spin_lock(&amp;the_lock);
+do_something_on(&amp;shared_data);
+do_something_else_with(&amp;shared_data);
+spin_unlock(&amp;the_lock);
+</pre></div>
+</div>
+<p>Se tutto il codice seguisse le regole di sincronizzazione, il valore di un
+dato condiviso non potrebbe cambiare inaspettatamente mentre si trattiene un
+lock.  Un qualsiasi altro blocco di codice che vorrà usare quel dato rimarrà
+in attesa del lock.  Gli spinlock agiscono come barriere di sincronizzazione
+- sono stati esplicitamente scritti per agire così - il che significa che gli
+accessi al dato condiviso non saranno ottimizzati.  Quindi il compilatore
+potrebbe pensare di sapere cosa ci sarà nel dato condiviso ma la chiamata
+spin_lock(), che agisce come una barriera di sincronizzazione, gli imporrà di
+dimenticarsi tutto ciò che sapeva su di esso.</p>
+<p>Se il dato condiviso fosse stato dichiarato come <em>volatile</em>, la
+sincronizzazione rimarrebbe comunque necessaria.  Ma verrà impedito al
+compilatore di ottimizzare gli accessi al dato anche _dentro_ alla sezione
+critica, dove sappiamo che in realtà nessun altro può accedervi.  Mentre si
+trattiene un lock, il dato condiviso non è <em>volatile</em>.  Quando si ha a che
+fare con dei dati condivisi, un’opportuna sincronizzazione rende inutile
+l’uso di <em>volatile</em> - anzi potenzialmente dannoso.</p>
+<p>L’uso di <em>volatile</em> fu originalmente pensato per l’accesso ai registri di I/O
+mappati in memoria.  All’interno del kernel, l’accesso ai registri, dovrebbe
+essere protetto dai lock, ma si potrebbe anche desiderare che il compilatore
+non “ottimizzi” l’accesso ai registri all’interno di una sezione critica.
+Ma, all’interno del kernel, l’accesso alla memoria di I/O viene sempre fatto
+attraverso funzioni d’accesso; accedere alla memoria di I/O direttamente
+con i puntatori è sconsigliato e non funziona su tutte le architetture.
+Queste funzioni d’accesso sono scritte per evitare ottimizzazioni indesiderate,
+quindi, di nuovo, <em>volatile</em> è inutile.</p>
+<p>Un’altra situazione dove qualcuno potrebbe essere tentato dall’uso di
+<em>volatile</em>, è nel caso in cui il processore è in un’attesa attiva sul valore
+di una variabile.  Il modo giusto di fare questo tipo di attesa è il seguente:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>while (my_variable != what_i_want)
+    cpu_relax();
+</pre></div>
+</div>
+<p>La chiamata cpu_relax() può ridurre il consumo di energia del processore
+o cedere il passo ad un processore hyperthreaded gemello; funziona anche come
+una barriera per il compilatore, quindi, ancora una volta, <em>volatile</em> non è
+necessario.  Ovviamente, tanto per puntualizzare, le attese attive sono
+generalmente un atto antisociale.</p>
+<p>Ci sono comunque alcune rare situazioni dove l’uso di <em>volatile</em> nel kernel
+ha senso:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Le funzioni d’accesso sopracitate potrebbero usare <em>volatile</em> su quelle
+architetture che supportano l’accesso diretto alla memoria di I/O.
+In pratica, ogni chiamata ad una funzione d’accesso diventa una piccola
+sezione critica a se stante, e garantisce che l’accesso avvenga secondo
+le aspettative del programmatore.</p></li>
+<li><p>I codice <em>inline assembly</em> che fa cambiamenti nella memoria, ma che non
+ha altri effetti espliciti, rischia di essere rimosso da GCC.  Aggiungere
+la parola chiave <em>volatile</em> a questo codice ne previene la rimozione.</p></li>
+<li><p>La variabile jiffies è speciale in quanto assume un valore diverso ogni
+volta che viene letta ma può essere lette senza alcuna sincronizzazione.
+Quindi jiffies può essere <em>volatile</em>, ma l’aggiunta ad altre variabili di
+questo è sconsigliata.  Jiffies è considerata uno “stupido retaggio”
+(parole di Linus) in questo contesto; correggerla non ne varrebbe la pena e
+causerebbe più problemi.</p></li>
+<li><p>I puntatori a delle strutture dati in una memoria coerente che potrebbe
+essere modificata da dispositivi di I/O può, a volte, essere legittimamente
+<em>volatile</em>.  Un esempio pratico può essere quello di un adattatore di rete
+che utilizza un puntatore ad un buffer circolare, questo viene cambiato
+dall’adattatore per indicare quali descrittori sono stati processati.</p></li>
+</ul>
+</div></blockquote>
+<p>Per la maggior parte del codice, nessuna delle giustificazioni sopracitate può
+essere considerata.  Di conseguenza, l’uso di <em>volatile</em> è probabile che venga
+visto come un baco e porterà a verifiche aggiuntive.  Gli sviluppatori tentati
+dall’uso di <em>volatile</em> dovrebbero fermarsi e pensare a cosa vogliono davvero
+ottenere.</p>
+<p>Le modifiche che rimuovono variabili <em>volatile</em> sono generalmente ben accette
+- purché accompagnate da una giustificazione che dimostri che i problemi di
+concorrenza siano stati opportunamente considerati.</p>
+<section id="riferimenti">
+<h2>Riferimenti<a class="headerlink" href="#riferimenti" title="Link to this heading">¶</a></h2>
+<p>[1] <a class="reference external" href="https://lwn.net/Articles/233481/">https://lwn.net/Articles/233481/</a></p>
+<p>[2] <a class="reference external" href="https://lwn.net/Articles/233482/">https://lwn.net/Articles/233482/</a></p>
+</section>
+<section id="crediti">
+<h2>Crediti<a class="headerlink" href="#crediti" title="Link to this heading">¶</a></h2>
+<p>Impulso e ricerca originale di Randy Dunlap</p>
+<p>Scritto da Jonathan Corbet</p>
+<p>Migliorato dai commenti di Satyam Sharma, Johannes Stezenbach, Jesper
+Juhl, Heikki Orsila, H. Peter Anvin, Philipp Hahn, e Stefan Richter.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Perché la parola chiave “volatile” non dovrebbe essere usata</a><ul>
+<li><a class="reference internal" href="#riferimenti">Riferimenti</a></li>
+<li><a class="reference internal" href="#crediti">Crediti</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="adding-syscalls.html">
+                    <span class="icon">&lt;</span><span>Aggiungere una nuova chiamata di sistema</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="botching-up-ioctls.html"><span>(Come evitare di) Raffazzonare delle ioctl</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

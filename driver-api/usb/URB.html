@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>USB Request Block (URB) &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Power Management for USB" href="power-management.html" />
+    <link rel="prev" title="USB DMA" href="dma.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Driver APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-information-for-driver-authors">General information for driver authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#useful-support-libraries">Useful support libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#bus-level-documentation">Bus-level documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../auxiliary_bus.html">Auxiliary Bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cxl/index.html">Compute Express Link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eisa.html">EISA bus support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../firewire.html">Firewire (IEEE 1394) driver Interface Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i3c/index.html">I3C subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isa.html">ISA Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../men-chameleon-bus.html">MEN Chameleon Bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pci/index.html">The Linux PCI driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rapidio/index.html">The Linux RapidIO Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../slimbus.html">Linux kernel SLIMbus support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Linux USB API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virtio/index.html">Virtio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vme.html">VME Device Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1.html">W1: Dallas’ 1-wire bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xillybus.html">Xillybus driver for generic FPGA interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#subsystem-specific-apis">Subsystem-specific APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/driver-api/usb/URB.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="usb-request-block-urb">
+<span id="usb-urb"></span><h1>USB Request Block (URB)<a class="headerlink" href="#usb-request-block-urb" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Revised<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2000-Dec-05</p>
+</dd>
+<dt class="field-even">Again<span class="colon">:</span></dt>
+<dd class="field-even"><p>2002-Jul-06</p>
+</dd>
+<dt class="field-odd">Again<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2005-Sep-19</p>
+</dd>
+<dt class="field-even">Again<span class="colon">:</span></dt>
+<dd class="field-even"><p>2017-Mar-29</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The USB subsystem now has a substantial section at <a class="reference internal" href="usb.html#usb-hostside-api"><span class="std std-ref">The Linux-USB Host Side API</span></a>
+section, generated from the current source code.
+This particular documentation file isn’t complete and may not be
+updated to the last version; don’t rely on it except for a quick
+overview.</p>
+</div>
+<section id="basic-concept-or-what-is-an-urb">
+<h2>Basic concept or ‘What is an URB?’<a class="headerlink" href="#basic-concept-or-what-is-an-urb" title="Link to this heading">¶</a></h2>
+<p>The basic idea of the new driver is message passing, the message itself is
+called USB Request Block, or URB for short.</p>
+<ul class="simple">
+<li><p>An URB consists of all relevant information to execute any USB transaction
+and deliver the data and status back.</p></li>
+<li><p>Execution of an URB is inherently an asynchronous operation, i.e. the
+<a class="reference internal" href="usb.html#c.usb_submit_urb" title="usb_submit_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_submit_urb()</span></code></a> call returns immediately after it has successfully
+queued the requested action.</p></li>
+<li><p>Transfers for one URB can be canceled with <a class="reference internal" href="usb.html#c.usb_unlink_urb" title="usb_unlink_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_unlink_urb()</span></code></a>
+at any time.</p></li>
+<li><p>Each URB has a completion handler, which is called after the action
+has been successfully completed or canceled. The URB also contains a
+context-pointer for passing information to the completion handler.</p></li>
+<li><p>Each endpoint for a device logically supports a queue of requests.
+You can fill that queue, so that the USB hardware can still transfer
+data to an endpoint while your driver handles completion of another.
+This maximizes use of USB bandwidth, and supports seamless streaming
+of data to (or from) devices when using periodic transfer modes.</p></li>
+</ul>
+</section>
+<section id="the-urb-structure">
+<h2>The URB structure<a class="headerlink" href="#the-urb-structure" title="Link to this heading">¶</a></h2>
+<p>Some of the fields in <a class="reference internal" href="usb.html#c.urb" title="urb"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">urb</span></code></a> are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct urb
+{
+// (IN) device and pipe specify the endpoint queue
+      struct usb_device *dev;         // pointer to associated USB device
+      unsigned int pipe;              // endpoint information
+
+      unsigned int transfer_flags;    // URB_ISO_ASAP, URB_SHORT_NOT_OK, etc.
+
+// (IN) all urbs need completion routines
+      void *context;                  // context for completion routine
+      usb_complete_t complete;        // pointer to completion routine
+
+// (OUT) status after each completion
+      int status;                     // returned status
+
+// (IN) buffer used for data transfers
+      void *transfer_buffer;          // associated data buffer
+      u32 transfer_buffer_length;     // data buffer length
+      int number_of_packets;          // size of iso_frame_desc
+
+// (OUT) sometimes only part of CTRL/BULK/INTR transfer_buffer is used
+      u32 actual_length;              // actual data buffer length
+
+// (IN) setup stage for CTRL (pass a struct usb_ctrlrequest)
+      unsigned char *setup_packet;    // setup packet (control only)
+
+// Only for PERIODIC transfers (ISO, INTERRUPT)
+  // (IN/OUT) start_frame is set unless URB_ISO_ASAP isn&#39;t set
+      int start_frame;                // start frame
+      int interval;                   // polling interval
+
+  // ISO only: packets are only &quot;best effort&quot;; each can have errors
+      int error_count;                // number of errors
+      struct usb_iso_packet_descriptor iso_frame_desc[0];
+};
+</pre></div>
+</div>
+<p>Your driver must create the “pipe” value using values from the appropriate
+endpoint descriptor in an interface that it’s claimed.</p>
+</section>
+<section id="how-to-get-an-urb">
+<h2>How to get an URB?<a class="headerlink" href="#how-to-get-an-urb" title="Link to this heading">¶</a></h2>
+<p>URBs are allocated by calling <a class="reference internal" href="usb.html#c.usb_alloc_urb" title="usb_alloc_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_alloc_urb()</span></code></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct urb *usb_alloc_urb(int isoframes, int mem_flags)
+</pre></div>
+</div>
+<p>Return value is a pointer to the allocated URB, 0 if allocation failed.
+The parameter isoframes specifies the number of isochronous transfer frames
+you want to schedule. For CTRL/BULK/INT, use 0.  The mem_flags parameter
+holds standard memory allocation flags, letting you control (among other
+things) whether the underlying code may block or not.</p>
+<p>To free an URB, use <a class="reference internal" href="usb.html#c.usb_free_urb" title="usb_free_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_free_urb()</span></code></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void usb_free_urb(struct urb *urb)
+</pre></div>
+</div>
+<p>You may free an urb that you’ve submitted, but which hasn’t yet been
+returned to you in a completion callback.  It will automatically be
+deallocated when it is no longer in use.</p>
+</section>
+<section id="what-has-to-be-filled-in">
+<h2>What has to be filled in?<a class="headerlink" href="#what-has-to-be-filled-in" title="Link to this heading">¶</a></h2>
+<p>Depending on the type of transaction, there are some inline functions
+defined in <code class="docutils literal notranslate"><span class="pre">linux/usb.h</span></code> to simplify the initialization, such as
+<a class="reference internal" href="usb.html#c.usb_fill_control_urb" title="usb_fill_control_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_fill_control_urb()</span></code></a>, <a class="reference internal" href="usb.html#c.usb_fill_bulk_urb" title="usb_fill_bulk_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_fill_bulk_urb()</span></code></a> and
+<a class="reference internal" href="usb.html#c.usb_fill_int_urb" title="usb_fill_int_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_fill_int_urb()</span></code></a>.  In general, they need the usb device pointer,
+the pipe (usual format from usb.h), the transfer buffer, the desired transfer
+length, the completion handler, and its context. Take a look at the some
+existing drivers to see how they’re used.</p>
+<p>Flags:</p>
+<ul class="simple">
+<li><p>For ISO there are two startup behaviors: Specified start_frame or ASAP.</p></li>
+<li><p>For ASAP set <code class="docutils literal notranslate"><span class="pre">URB_ISO_ASAP</span></code> in transfer_flags.</p></li>
+</ul>
+<p>If short packets should NOT be tolerated, set <code class="docutils literal notranslate"><span class="pre">URB_SHORT_NOT_OK</span></code> in
+transfer_flags.</p>
+</section>
+<section id="how-to-submit-an-urb">
+<h2>How to submit an URB?<a class="headerlink" href="#how-to-submit-an-urb" title="Link to this heading">¶</a></h2>
+<p>Just call <a class="reference internal" href="usb.html#c.usb_submit_urb" title="usb_submit_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_submit_urb()</span></code></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int usb_submit_urb(struct urb *urb, int mem_flags)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">mem_flags</span></code> parameter, such as <code class="docutils literal notranslate"><span class="pre">GFP_ATOMIC</span></code>, controls memory
+allocation, such as whether the lower levels may block when memory is tight.</p>
+<p>It immediately returns, either with status 0 (request queued) or some
+error code, usually caused by the following:</p>
+<ul class="simple">
+<li><p>Out of memory (<code class="docutils literal notranslate"><span class="pre">-ENOMEM</span></code>)</p></li>
+<li><p>Unplugged device (<code class="docutils literal notranslate"><span class="pre">-ENODEV</span></code>)</p></li>
+<li><p>Stalled endpoint (<code class="docutils literal notranslate"><span class="pre">-EPIPE</span></code>)</p></li>
+<li><p>Too many queued ISO transfers (<code class="docutils literal notranslate"><span class="pre">-EAGAIN</span></code>)</p></li>
+<li><p>Too many requested ISO frames (<code class="docutils literal notranslate"><span class="pre">-EFBIG</span></code>)</p></li>
+<li><p>Invalid INT interval (<code class="docutils literal notranslate"><span class="pre">-EINVAL</span></code>)</p></li>
+<li><p>More than one packet for INT (<code class="docutils literal notranslate"><span class="pre">-EINVAL</span></code>)</p></li>
+</ul>
+<p>After submission, <code class="docutils literal notranslate"><span class="pre">urb-&gt;status</span></code> is <code class="docutils literal notranslate"><span class="pre">-EINPROGRESS</span></code>; however, you should
+never look at that value except in your completion callback.</p>
+<p>For isochronous endpoints, your completion handlers should (re)submit
+URBs to the same endpoint with the <code class="docutils literal notranslate"><span class="pre">URB_ISO_ASAP</span></code> flag, using
+multi-buffering, to get seamless ISO streaming.</p>
+</section>
+<section id="how-to-cancel-an-already-running-urb">
+<h2>How to cancel an already running URB?<a class="headerlink" href="#how-to-cancel-an-already-running-urb" title="Link to this heading">¶</a></h2>
+<p>There are two ways to cancel an URB you’ve submitted but which hasn’t
+been returned to your driver yet.  For an asynchronous cancel, call
+<a class="reference internal" href="usb.html#c.usb_unlink_urb" title="usb_unlink_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_unlink_urb()</span></code></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int usb_unlink_urb(struct urb *urb)
+</pre></div>
+</div>
+<p>It removes the urb from the internal list and frees all allocated
+HW descriptors. The status is changed to reflect unlinking.  Note
+that the URB will not normally have finished when <a class="reference internal" href="usb.html#c.usb_unlink_urb" title="usb_unlink_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_unlink_urb()</span></code></a>
+returns; you must still wait for the completion handler to be called.</p>
+<p>To cancel an URB synchronously, call <a class="reference internal" href="usb.html#c.usb_kill_urb" title="usb_kill_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_kill_urb()</span></code></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void usb_kill_urb(struct urb *urb)
+</pre></div>
+</div>
+<p>It does everything <a class="reference internal" href="usb.html#c.usb_unlink_urb" title="usb_unlink_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_unlink_urb()</span></code></a> does, and in addition it waits
+until after the URB has been returned and the completion handler
+has finished.  It also marks the URB as temporarily unusable, so
+that if the completion handler or anyone else tries to resubmit it
+they will get a <code class="docutils literal notranslate"><span class="pre">-EPERM</span></code> error.  Thus you can be sure that when
+<a class="reference internal" href="usb.html#c.usb_kill_urb" title="usb_kill_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_kill_urb()</span></code></a> returns, the URB is totally idle.</p>
+<p>There is a lifetime issue to consider.  An URB may complete at any
+time, and the completion handler may free the URB.  If this happens
+while <a class="reference internal" href="usb.html#c.usb_unlink_urb" title="usb_unlink_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_unlink_urb()</span></code></a> or <a class="reference internal" href="usb.html#c.usb_kill_urb" title="usb_kill_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_kill_urb()</span></code></a> is running, it will
+cause a memory-access violation.  The driver is responsible for avoiding this,
+which often means some sort of lock will be needed to prevent the URB
+from being deallocated while it is still in use.</p>
+<p>On the other hand, since usb_unlink_urb may end up calling the
+completion handler, the handler must not take any lock that is held
+when usb_unlink_urb is invoked.  The general solution to this problem
+is to increment the URB’s reference count while holding the lock, then
+drop the lock and call usb_unlink_urb or usb_kill_urb, and then
+decrement the URB’s reference count.  You increment the reference
+count by calling :c:func`usb_get_urb`:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct urb *usb_get_urb(struct urb *urb)
+</pre></div>
+</div>
+<p>(ignore the return value; it is the same as the argument) and
+decrement the reference count by calling <a class="reference internal" href="usb.html#c.usb_free_urb" title="usb_free_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_free_urb()</span></code></a>.  Of course,
+none of this is necessary if there’s no danger of the URB being freed
+by the completion handler.</p>
+</section>
+<section id="what-about-the-completion-handler">
+<h2>What about the completion handler?<a class="headerlink" href="#what-about-the-completion-handler" title="Link to this heading">¶</a></h2>
+<p>The handler is of the following type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>typedef void (*usb_complete_t)(struct urb *)
+</pre></div>
+</div>
+<p>I.e., it gets the URB that caused the completion call. In the completion
+handler, you should have a look at <code class="docutils literal notranslate"><span class="pre">urb-&gt;status</span></code> to detect any USB errors.
+Since the context parameter is included in the URB, you can pass
+information to the completion handler.</p>
+<p>Note that even when an error (or unlink) is reported, data may have been
+transferred.  That’s because USB transfers are packetized; it might take
+sixteen packets to transfer your 1KByte buffer, and ten of them might
+have transferred successfully before the completion was called.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>NEVER SLEEP IN A COMPLETION HANDLER.</p>
+<p>These are often called in atomic context.</p>
+</div>
+<p>In the current kernel, completion handlers run with local interrupts
+disabled, but in the future this will be changed, so don’t assume that
+local IRQs are always disabled inside completion handlers.</p>
+</section>
+<section id="how-to-do-isochronous-iso-transfers">
+<h2>How to do isochronous (ISO) transfers?<a class="headerlink" href="#how-to-do-isochronous-iso-transfers" title="Link to this heading">¶</a></h2>
+<p>Besides the fields present on a bulk transfer, for ISO, you also
+have to set <code class="docutils literal notranslate"><span class="pre">urb-&gt;interval</span></code> to say how often to make transfers; it’s
+often one per frame (which is once every microframe for highspeed devices).
+The actual interval used will be a power of two that’s no bigger than what
+you specify. You can use the <a class="reference internal" href="usb.html#c.usb_fill_int_urb" title="usb_fill_int_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_fill_int_urb()</span></code></a> macro to fill
+most ISO transfer fields.</p>
+<p>For ISO transfers you also have to fill a <code class="xref c c-type docutils literal notranslate"><span class="pre">usb_iso_packet_descriptor</span></code>
+structure, allocated at the end of the URB by <a class="reference internal" href="usb.html#c.usb_alloc_urb" title="usb_alloc_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_alloc_urb()</span></code></a>, for
+each packet you want to schedule.</p>
+<p>The <a class="reference internal" href="usb.html#c.usb_submit_urb" title="usb_submit_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_submit_urb()</span></code></a> call modifies <code class="docutils literal notranslate"><span class="pre">urb-&gt;interval</span></code> to the implemented
+interval value that is less than or equal to the requested interval value.  If
+<code class="docutils literal notranslate"><span class="pre">URB_ISO_ASAP</span></code> scheduling is used, <code class="docutils literal notranslate"><span class="pre">urb-&gt;start_frame</span></code> is also updated.</p>
+<p>For each entry you have to specify the data offset for this frame (base is
+transfer_buffer), and the length you want to write/expect to read.
+After completion, actual_length contains the actual transferred length and
+status contains the resulting status for the ISO transfer for this frame.
+It is allowed to specify a varying length from frame to frame (e.g. for
+audio synchronisation/adaptive transfer rates). You can also use the length
+0 to omit one or more frames (striping).</p>
+<p>For scheduling you can choose your own start frame or <code class="docutils literal notranslate"><span class="pre">URB_ISO_ASAP</span></code>. As
+explained earlier, if you always keep at least one URB queued and your
+completion keeps (re)submitting a later URB, you’ll get smooth ISO streaming
+(if usb bandwidth utilization allows).</p>
+<p>If you specify your own start frame, make sure it’s several frames in advance
+of the current frame.  You might want this model if you’re synchronizing
+ISO data with some other event stream.</p>
+</section>
+<section id="how-to-start-interrupt-int-transfers">
+<h2>How to start interrupt (INT) transfers?<a class="headerlink" href="#how-to-start-interrupt-int-transfers" title="Link to this heading">¶</a></h2>
+<p>Interrupt transfers, like isochronous transfers, are periodic, and happen
+in intervals that are powers of two (1, 2, 4 etc) units.  Units are frames
+for full and low speed devices, and microframes for high speed ones.
+You can use the <a class="reference internal" href="usb.html#c.usb_fill_int_urb" title="usb_fill_int_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_fill_int_urb()</span></code></a> macro to fill INT transfer fields.</p>
+<p>The <a class="reference internal" href="usb.html#c.usb_submit_urb" title="usb_submit_urb"><code class="xref c c-func docutils literal notranslate"><span class="pre">usb_submit_urb()</span></code></a> call modifies <code class="docutils literal notranslate"><span class="pre">urb-&gt;interval</span></code> to the implemented
+interval value that is less than or equal to the requested interval value.</p>
+<p>In Linux 2.6, unlike earlier versions, interrupt URBs are not automagically
+restarted when they complete.  They end when the completion handler is
+called, just like other URBs.  If you want an interrupt URB to be restarted,
+your completion handler must resubmit it.
+s</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">USB Request Block (URB)</a><ul>
+<li><a class="reference internal" href="#basic-concept-or-what-is-an-urb">Basic concept or ‘What is an URB?’</a></li>
+<li><a class="reference internal" href="#the-urb-structure">The URB structure</a></li>
+<li><a class="reference internal" href="#how-to-get-an-urb">How to get an URB?</a></li>
+<li><a class="reference internal" href="#what-has-to-be-filled-in">What has to be filled in?</a></li>
+<li><a class="reference internal" href="#how-to-submit-an-urb">How to submit an URB?</a></li>
+<li><a class="reference internal" href="#how-to-cancel-an-already-running-urb">How to cancel an already running URB?</a></li>
+<li><a class="reference internal" href="#what-about-the-completion-handler">What about the completion handler?</a></li>
+<li><a class="reference internal" href="#how-to-do-isochronous-iso-transfers">How to do isochronous (ISO) transfers?</a></li>
+<li><a class="reference internal" href="#how-to-start-interrupt-int-transfers">How to start interrupt (INT) transfers?</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="dma.html">
+                    <span class="icon">&lt;</span><span>USB DMA</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="power-management.html"><span>Power Management for USB</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

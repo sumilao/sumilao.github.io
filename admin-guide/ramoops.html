@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ramoops oops/panic logger &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dynamic debug" href="dynamic-debug-howto.html" />
+    <link rel="prev" title="Tainted kernels" href="tainted-kernels.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reporting-regressions.html">Reporting regressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickly-build-trimmed-linux.html">How to quickly build a trimmed Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="verify-bugs-and-bisect-regressions.html">How to verify bugs and bisect regressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bug-hunting.html">Bug hunting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bug-bisect.html">Bisecting a regression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tainted-kernels.html">Tainted kernels</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ramoops oops/panic logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic-debug-howto.html">Dynamic debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="init.html">Explaining the “No working init found.” boot hang message</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kdump/index.html">Documentation for Kdump - The kexec-based Crash Dumping Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perf/index.html">Performance monitor support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pstore-blk.html">pstore block oops/panic logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clearing-warn-once.html">Clearing WARN_ONCE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kernel-per-CPU-kthreads.html">Reducing OS jitter due to per-cpu kthreads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lockup-watchdogs.html">Softlockup detector and hardlockup detector (aka nmi_watchdog)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/main.html">Reliability, Availability and Serviceability (RAS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/error-decoding.html">Error decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RAS/address-translation.html">Address translation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysrq.html">Linux Magic System Request Key Hacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin-guide/ramoops.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="ramoops-oops-panic-logger">
+<h1>Ramoops oops/panic logger<a class="headerlink" href="#ramoops-oops-panic-logger" title="Link to this heading">¶</a></h1>
+<p>Sergiu Iordache &lt;<a class="reference external" href="mailto:sergiu&#37;&#52;&#48;chromium&#46;org">sergiu<span>&#64;</span>chromium<span>&#46;</span>org</a>&gt;</p>
+<p>Updated: 10 Feb 2021</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Ramoops is an oops/panic logger that writes its logs to RAM before the system
+crashes. It works by logging oopses and panics in a circular buffer. Ramoops
+needs a system with persistent RAM so that the content of that area can
+survive after a restart.</p>
+</section>
+<section id="ramoops-concepts">
+<h2>Ramoops concepts<a class="headerlink" href="#ramoops-concepts" title="Link to this heading">¶</a></h2>
+<p>Ramoops uses a predefined memory area to store the dump. The start and size
+and type of the memory area are set using three variables:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mem_address</span></code> for the start</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mem_size</span></code> for the size. The memory size will be rounded down to a
+power of two.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mem_type</span></code> to specify if the memory type (default is pgprot_writecombine).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mem_name</span></code> to specify a memory region defined by <code class="docutils literal notranslate"><span class="pre">reserve_mem</span></code> command
+line parameter.</p></li>
+</ul>
+</div></blockquote>
+<p>Typically the default value of <code class="docutils literal notranslate"><span class="pre">mem_type=0</span></code> should be used as that sets the pstore
+mapping to pgprot_writecombine. Setting <code class="docutils literal notranslate"><span class="pre">mem_type=1</span></code> attempts to use
+<code class="docutils literal notranslate"><span class="pre">pgprot_noncached</span></code>, which only works on some platforms. This is because pstore
+depends on atomic operations. At least on ARM, pgprot_noncached causes the
+memory to be mapped strongly ordered, and atomic operations on strongly ordered
+memory are implementation defined, and won’t work on many ARMs such as omaps.
+Setting <code class="docutils literal notranslate"><span class="pre">mem_type=2</span></code> attempts to treat the memory region as normal memory,
+which enables full cache on it. This can improve the performance.</p>
+<p>The memory area is divided into <code class="docutils literal notranslate"><span class="pre">record_size</span></code> chunks (also rounded down to
+power of two) and each kmesg dump writes a <code class="docutils literal notranslate"><span class="pre">record_size</span></code> chunk of
+information.</p>
+<p>Limiting which kinds of kmsg dumps are stored can be controlled via
+the <code class="docutils literal notranslate"><span class="pre">max_reason</span></code> value, as defined in include/linux/kmsg_dump.h’s
+<code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">kmsg_dump_reason</span></code>. For example, to store both Oopses and Panics,
+<code class="docutils literal notranslate"><span class="pre">max_reason</span></code> should be set to 2 (KMSG_DUMP_OOPS), to store only Panics
+<code class="docutils literal notranslate"><span class="pre">max_reason</span></code> should be set to 1 (KMSG_DUMP_PANIC). Setting this to 0
+(KMSG_DUMP_UNDEF), means the reason filtering will be controlled by the
+<code class="docutils literal notranslate"><span class="pre">printk.always_kmsg_dump</span></code> boot param: if unset, it’ll be KMSG_DUMP_OOPS,
+otherwise KMSG_DUMP_MAX.</p>
+<p>The module uses a counter to record multiple dumps but the counter gets reset
+on restart (i.e. new dumps after the restart will overwrite old ones).</p>
+<p>Ramoops also supports software ECC protection of persistent memory regions.
+This might be useful when a hardware reset was used to bring the machine back
+to life (i.e. a watchdog triggered). In such cases, RAM may be somewhat
+corrupt, but usually it is restorable.</p>
+</section>
+<section id="setting-the-parameters">
+<h2>Setting the parameters<a class="headerlink" href="#setting-the-parameters" title="Link to this heading">¶</a></h2>
+<p>Setting the ramoops parameters can be done in several different manners:</p>
+<blockquote>
+<div><p>A. Use the module parameters (which have the names of the variables described
+as before). For quick debugging, you can also reserve parts of memory during
+boot and then use the reserved memory for ramoops. For example, assuming a
+machine with &gt; 128 MB of memory, the following kernel command line will tell
+the kernel to use only the first 128 MB of memory, and place ECC-protected
+ramoops region at 128 MB boundary:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mem=128M ramoops.mem_address=0x8000000 ramoops.ecc=1
+</pre></div>
+</div>
+<p>B. Use Device Tree bindings, as described in
+<code class="docutils literal notranslate"><span class="pre">Documentation/devicetree/bindings/reserved-memory/ramoops.yaml</span></code>.
+For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>reserved-memory {
+        #address-cells = &lt;2&gt;;
+        #size-cells = &lt;2&gt;;
+        ranges;
+
+        ramoops@8f000000 {
+                compatible = &quot;ramoops&quot;;
+                reg = &lt;0 0x8f000000 0 0x100000&gt;;
+                record-size = &lt;0x4000&gt;;
+                console-size = &lt;0x4000&gt;;
+        };
+};
+</pre></div>
+</div>
+<p>C. Use a platform device and set the platform data. The parameters can then
+be set through that platform data. An example of doing that is:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/pstore_ram.h&gt;</span>
+<span class="p">[...]</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">ramoops_platform_data</span><span class="w"> </span><span class="n">ramoops_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">.</span><span class="n">mem_size</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">mem_address</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">mem_type</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">record_size</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">max_reason</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">ecc</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">platform_device</span><span class="w"> </span><span class="n">ramoops_dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ramoops&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">.</span><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="p">.</span><span class="n">platform_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ramoops_data</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="p">};</span>
+
+<span class="p">[...</span><span class="w"> </span><span class="n">inside</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="p">...]</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">platform_device_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ramoops_dev</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_ERR</span><span class="w"> </span><span class="s">&quot;unable to register platform device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="upperalpha" start="4">
+<li><p>Using a region of memory reserved via <code class="docutils literal notranslate"><span class="pre">reserve_mem</span></code> command line
+parameter. The address and size will be defined by the <code class="docutils literal notranslate"><span class="pre">reserve_mem</span></code>
+parameter. Note, that <code class="docutils literal notranslate"><span class="pre">reserve_mem</span></code> may not always allocate memory
+in the same location, and cannot be relied upon. Testing will need
+to be done, and it may not work on every machine, nor every kernel.
+Consider this a “best effort” approach. The <code class="docutils literal notranslate"><span class="pre">reserve_mem</span></code> option
+takes a size, alignment and name as arguments. The name is used
+to map the memory to a label that can be retrieved by ramoops.</p>
+<blockquote>
+<div><p>reserve_mem=2M:4096:oops  ramoops.mem_name=oops</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<p>You can specify either RAM memory or peripheral devices’ memory. However, when
+specifying RAM, be sure to reserve the memory by issuing memblock_reserve()
+very early in the architecture code, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#include &lt;linux/memblock.h&gt;
+
+memblock_reserve(ramoops_data.mem_address, ramoops_data.mem_size);
+</pre></div>
+</div>
+</section>
+<section id="dump-format">
+<h2>Dump format<a class="headerlink" href="#dump-format" title="Link to this heading">¶</a></h2>
+<p>The data dump begins with a header, currently defined as <code class="docutils literal notranslate"><span class="pre">====</span></code> followed by a
+timestamp and a new line. The dump then continues with the actual data.</p>
+</section>
+<section id="reading-the-data">
+<h2>Reading the data<a class="headerlink" href="#reading-the-data" title="Link to this heading">¶</a></h2>
+<p>The dump data can be read from the pstore filesystem. The format for these
+files is <code class="docutils literal notranslate"><span class="pre">dmesg-ramoops-N</span></code>, where N is the record number in memory. To delete
+a stored record from RAM, simply unlink the respective pstore file.</p>
+</section>
+<section id="persistent-function-tracing">
+<h2>Persistent function tracing<a class="headerlink" href="#persistent-function-tracing" title="Link to this heading">¶</a></h2>
+<p>Persistent function tracing might be useful for debugging software or hardware
+related hangs. The functions call chain log is stored in a <code class="docutils literal notranslate"><span class="pre">ftrace-ramoops</span></code>
+file. Here is an example of usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># mount -t debugfs debugfs /sys/kernel/debug/
+# echo 1 &gt; /sys/kernel/debug/pstore/record_ftrace
+# reboot -f
+[...]
+# mount -t pstore pstore /mnt/
+# tail /mnt/ftrace-ramoops
+0 ffffffff8101ea64  ffffffff8101bcda  native_apic_mem_read &lt;- disconnect_bsp_APIC+0x6a/0xc0
+0 ffffffff8101ea44  ffffffff8101bcf6  native_apic_mem_write &lt;- disconnect_bsp_APIC+0x86/0xc0
+0 ffffffff81020084  ffffffff8101a4b5  hpet_disable &lt;- native_machine_shutdown+0x75/0x90
+0 ffffffff81005f94  ffffffff8101a4bb  iommu_shutdown_noop &lt;- native_machine_shutdown+0x7b/0x90
+0 ffffffff8101a6a1  ffffffff8101a437  native_machine_emergency_restart &lt;- native_machine_restart+0x37/0x40
+0 ffffffff811f9876  ffffffff8101a73a  acpi_reboot &lt;- native_machine_emergency_restart+0xaa/0x1e0
+0 ffffffff8101a514  ffffffff8101a772  mach_reboot_fixups &lt;- native_machine_emergency_restart+0xe2/0x1e0
+0 ffffffff811d9c54  ffffffff8101a7a0  __const_udelay &lt;- native_machine_emergency_restart+0x110/0x1e0
+0 ffffffff811d9c34  ffffffff811d9c80  __delay &lt;- __const_udelay+0x30/0x40
+0 ffffffff811d9d14  ffffffff811d9c3f  delay_tsc &lt;- __delay+0xf/0x20
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Ramoops oops/panic logger</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#ramoops-concepts">Ramoops concepts</a></li>
+<li><a class="reference internal" href="#setting-the-parameters">Setting the parameters</a></li>
+<li><a class="reference internal" href="#dump-format">Dump format</a></li>
+<li><a class="reference internal" href="#reading-the-data">Reading the data</a></li>
+<li><a class="reference internal" href="#persistent-function-tracing">Persistent function tracing</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="tainted-kernels.html">
+                    <span class="icon">&lt;</span><span>Tainted kernels</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="dynamic-debug-howto.html"><span>Dynamic debug</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

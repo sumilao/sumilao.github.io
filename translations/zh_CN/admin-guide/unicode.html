@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Unicode（统一码）支持 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux 魔法系统请求键骇客" href="sysrq.html" />
+    <link rel="prev" title="Numa策略命中/未命中统计" href="numastat.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/admin-guide/unicode.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../admin-guide/unicode.html">English</a></li>
+
+<li><a href="../../zh_TW/admin-guide/unicode.html">Chinese (Traditional)</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../admin-guide/unicode.html"><span class="doc">Unicode support</span></a></p>
+</dd>
+<dt class="field-even">译者<span class="colon">:</span></dt>
+<dd class="field-even"><p>吴想成 Wu XiangCheng &lt;<a class="reference external" href="mailto:bobwxc&#37;&#52;&#48;email&#46;cn">bobwxc<span>&#64;</span>email<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="unicode">
+<h1>Unicode（统一码）支持<a class="headerlink" href="#unicode" title="Link to this heading">¶</a></h1>
+<blockquote>
+<div><p>（英文版）上次更新：2005-01-17，版本号 1.4</p>
+</div></blockquote>
+<p>此文档由H. Peter Anvin &lt;<a class="reference external" href="mailto:unicode&#37;&#52;&#48;lanana&#46;org">unicode<span>&#64;</span>lanana<span>&#46;</span>org</a>&gt;管理，是Linux注册名称与编号管理局
+（Linux Assigned Names And Numbers Authority，LANANA）项目的一部分。
+现行版本请见：</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.lanana.org/docs/unicode/admin-guide/unicode.rst">http://www.lanana.org/docs/unicode/admin-guide/unicode.rst</a></p>
+</div></blockquote>
+<section id="id1">
+<h2>简介<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>Linux内核代码已被重写以使用Unicode来将字符映射到字体。下载一个Unicode到字体
+（Unicode-to-font）表，八位字符集与UTF-8模式都将改用此字体来显示。</p>
+<p>这微妙地改变了八位字符表的语义。现在的四个字符表是：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>映射代号</p></th>
+<th class="head"><p>映射名称</p></th>
+<th class="head"><p>Escape代码 (G0)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>LAT1_MAP</p></td>
+<td><p>Latin-1 (ISO 8859-1)</p></td>
+<td><p>ESC ( B</p></td>
+</tr>
+<tr class="row-odd"><td><p>GRAF_MAP</p></td>
+<td><p>DEC VT100 pseudographics</p></td>
+<td><p>ESC ( 0</p></td>
+</tr>
+<tr class="row-even"><td><p>IBMPC_MAP</p></td>
+<td><p>IBM code page 437</p></td>
+<td><p>ESC ( U</p></td>
+</tr>
+<tr class="row-odd"><td><p>USER_MAP</p></td>
+<td><p>User defined</p></td>
+<td><p>ESC ( K</p></td>
+</tr>
+</tbody>
+</table>
+<p>特别是 ESC ( U 不再是“直通字体”，因为字体可能与IBM字符集完全不同。
+例如，即使加载了一个Latin-1字体，也允许使用块图形（block graphics）。</p>
+<p>请注意，尽管这些代码与ISO 2022类似，但这些代码及其用途都与ISO 2022不匹配；
+Linux有两个八位代码（G0和G1），而ISO 2022有四个七位代码（G0-G3）。</p>
+<p>根据Unicode标准/ISO 10646，U+F000到U+F8FF被保留用于操作系统范围内的分配
+（Unicode标准将其称为“团体区域（Corporate Zone）”，因为这对于Linux是不准确
+的，所以我们称之为“Linux区域”）。选择U+F000作为起点，因为它允许直接映射
+区域以2的大倍数开始（以防需要1024或2048个字符的字体）。这就留下U+E000到
+U+EFFF作为最终用户区。</p>
+<p>[v1.2]：Unicodes范围从U+F000到U+F7FF已经被硬编码为直接映射到加载的字体，
+绕过了翻译表。用户定义的映射现在默认为U+F000到U+F0FF，模拟前述行为。实际上，
+此范围可能较短；例如，vgacon只能处理256字符（U+F000..U+F0FF）或512字符
+（U+F000..U+F1FF）字体。</p>
+</section>
+<section id="linux">
+<h2>Linux 区域中定义的实际字符<a class="headerlink" href="#linux" title="Link to this heading">¶</a></h2>
+<p>此外，还定义了Unicode 1.1.4中不存在的以下字符；这些字符由DEC VT图形映射使用。
+[v1.2]此用法已过时，不应再使用；请参见下文。</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>U+F800</p></td>
+<td><p>DEC VT GRAPHICS HORIZONTAL LINE SCAN 1</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F801</p></td>
+<td><p>DEC VT GRAPHICS HORIZONTAL LINE SCAN 3</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F803</p></td>
+<td><p>DEC VT GRAPHICS HORIZONTAL LINE SCAN 7</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F804</p></td>
+<td><p>DEC VT GRAPHICS HORIZONTAL LINE SCAN 9</p></td>
+</tr>
+</tbody>
+</table>
+<p>DEC VT220使用6x10字符矩阵，这些字符在DEC VT图形字符集中形成一个平滑的过渡。
+我省略了扫描5行，因为它也被用作块图形字符，因此被编码为U+2500 FORMS LIGHT
+HORIZONTAL。</p>
+<p>[v1.3]：这些字符已正式添加到Unicode 3.2.0中；它们在U+23BA、U+23BB、U+23BC、
+U+23BD处添加。Linux现在使用新值。</p>
+<p>[v1.2]：添加了以下字符来表示常见的键盘符号，这些符号不太可能被添加到Unicode
+中，因为它们非常讨厌地取决于特定供应商。当然，这是糟糕设计的一个好例子。</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>U+F810</p></td>
+<td><p>KEYBOARD SYMBOL FLYING FLAG</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F811</p></td>
+<td><p>KEYBOARD SYMBOL PULLDOWN MENU</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F812</p></td>
+<td><p>KEYBOARD SYMBOL OPEN APPLE</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F813</p></td>
+<td><p>KEYBOARD SYMBOL SOLID APPLE</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="klingon">
+<h2>克林贡（Klingon）语支持<a class="headerlink" href="#klingon" title="Link to this heading">¶</a></h2>
+<p>1996年，Linux是世界上第一个添加对人工语言克林贡支持的操作系统，克林贡是由
+Marc Okrand为《星际迷航》电视连续剧创造的。这种编码后来被征募Unicode注册表
+（ConScript Unicode Registry，CSUR）采用，并建议（但最终被拒绝）纳入Unicode
+平面一。不过，它仍然是Linux区域中的Linux/CSUR私有分配。</p>
+<p>这种编码已经得到克林贡语言研究所（Klingon Language Institute）的认可。
+有关更多信息，请联系他们：</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.kli.org/">http://www.kli.org/</a></p>
+</div></blockquote>
+<p>由于Linux CZ开头部分的字符大多是dingbats/symbols/forms类型，而且这是一种
+语言，因此根据标准Unicode惯例，我将它放置在16单元的边界上。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这个范围现在由征募Unicode注册表正式管理。规范性引用文件为：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.evertype.com/standards/csur/klingon.html">https://www.evertype.com/standards/csur/klingon.html</a></p>
+</div></blockquote>
+</div>
+<p>克林贡语有一个26个字符的字母表，一个10位数的位置数字书写系统，从左到右
+，从上到下书写。</p>
+<p>克林贡字母的几种字形已经被提出。但是由于这组符号看起来始终是一致的，只有实际
+的形状不同，因此按照标准Unicode惯例，这些差异被认为是字体变体。</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>U+F8D0</p></td>
+<td><p>KLINGON LETTER A</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8D1</p></td>
+<td><p>KLINGON LETTER B</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8D2</p></td>
+<td><p>KLINGON LETTER CH</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8D3</p></td>
+<td><p>KLINGON LETTER D</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8D4</p></td>
+<td><p>KLINGON LETTER E</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8D5</p></td>
+<td><p>KLINGON LETTER GH</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8D6</p></td>
+<td><p>KLINGON LETTER H</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8D7</p></td>
+<td><p>KLINGON LETTER I</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8D8</p></td>
+<td><p>KLINGON LETTER J</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8D9</p></td>
+<td><p>KLINGON LETTER L</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8DA</p></td>
+<td><p>KLINGON LETTER M</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8DB</p></td>
+<td><p>KLINGON LETTER N</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8DC</p></td>
+<td><p>KLINGON LETTER NG</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8DD</p></td>
+<td><p>KLINGON LETTER O</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8DE</p></td>
+<td><p>KLINGON LETTER P</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8DF</p></td>
+<td><p>KLINGON LETTER Q
+- Written &lt;q&gt; in standard Okrand Latin transliteration</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8E0</p></td>
+<td><p>KLINGON LETTER QH
+- Written &lt;Q&gt; in standard Okrand Latin transliteration</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8E1</p></td>
+<td><p>KLINGON LETTER R</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8E2</p></td>
+<td><p>KLINGON LETTER S</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8E3</p></td>
+<td><p>KLINGON LETTER T</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8E4</p></td>
+<td><p>KLINGON LETTER TLH</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8E5</p></td>
+<td><p>KLINGON LETTER U</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8E6</p></td>
+<td><p>KLINGON LETTER V</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8E7</p></td>
+<td><p>KLINGON LETTER W</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8E8</p></td>
+<td><p>KLINGON LETTER Y</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8E9</p></td>
+<td><p>KLINGON LETTER GLOTTAL STOP</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8F0</p></td>
+<td><p>KLINGON DIGIT ZERO</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8F1</p></td>
+<td><p>KLINGON DIGIT ONE</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8F2</p></td>
+<td><p>KLINGON DIGIT TWO</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8F3</p></td>
+<td><p>KLINGON DIGIT THREE</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8F4</p></td>
+<td><p>KLINGON DIGIT FOUR</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8F5</p></td>
+<td><p>KLINGON DIGIT FIVE</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8F6</p></td>
+<td><p>KLINGON DIGIT SIX</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8F7</p></td>
+<td><p>KLINGON DIGIT SEVEN</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8F8</p></td>
+<td><p>KLINGON DIGIT EIGHT</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8F9</p></td>
+<td><p>KLINGON DIGIT NINE</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8FD</p></td>
+<td><p>KLINGON COMMA</p></td>
+</tr>
+<tr class="row-even"><td><p>U+F8FE</p></td>
+<td><p>KLINGON FULL STOP</p></td>
+</tr>
+<tr class="row-odd"><td><p>U+F8FF</p></td>
+<td><p>KLINGON SYMBOL FOR EMPIRE</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2>其他虚构和人工字母<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>自从分配了克林贡Linux Unicode块之后，John Cowan &lt;<a class="reference external" href="mailto:jcowan&#37;&#52;&#48;reutershealth&#46;com">jcowan<span>&#64;</span>reutershealth<span>&#46;</span>com</a>&gt;
+和 Michael Everson &lt;<a class="reference external" href="mailto:everson&#37;&#52;&#48;evertype&#46;com">everson<span>&#64;</span>evertype<span>&#46;</span>com</a>&gt; 建立了一个虚构和人工字母的注册表。
+征募Unicode注册表请访问：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.evertype.com/standards/csur/">https://www.evertype.com/standards/csur/</a></p>
+</div></blockquote>
+<p>所使用的范围位于最终用户区域的低端，因此无法进行规范化分配，但建议希望对虚构
+字母进行编码的人员使用这些代码，以实现互操作性。对于克林贡语，CSUR采用了Linux
+编码。CSUR的人正在推动将Tengwar和Cirth添加到Unicode平面一；将克林贡添加到
+Unicode平面一被拒绝，因此上述编码仍然是官方的。</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Unicode（统一码）支持</a><ul>
+<li><a class="reference internal" href="#id1">简介</a></li>
+<li><a class="reference internal" href="#linux">Linux 区域中定义的实际字符</a></li>
+<li><a class="reference internal" href="#klingon">克林贡（Klingon）语支持</a></li>
+<li><a class="reference internal" href="#id2">其他虚构和人工字母</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="numastat.html">
+                    <span class="icon">&lt;</span><span>Numa策略命中/未命中统计</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="sysrq.html"><span>Linux 魔法系统请求键骇客</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

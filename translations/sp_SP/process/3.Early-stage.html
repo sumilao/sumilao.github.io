@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Planificación en etapa inicial &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="4. Conseguir el código correcto" href="4.Coding.html" />
+    <link rel="prev" title="2. Cómo funciona el proceso de desarrollo" href="2.Process.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Traducción al español</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#advertencia">Advertencia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#la-documentacion-del-kernel-linux">La documentación del kernel Linux</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#traducciones-al-espanol">Traducciones al español</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/sp_SP/process/3.Early-stage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Spanish
+
+<ul>
+
+<li><a href="../../../process/3.Early-stage.html">English</a></li>
+
+<li><a href="../../zh_CN/process/3.Early-stage.html">Chinese (Simplified)</a></li>
+
+<li><a href="../../zh_TW/process/3.Early-stage.html">Chinese (Traditional)</a></li>
+
+<li><a href="../../it_IT/process/3.Early-stage.html">Italian</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Si tiene alguna duda sobre la exactitud del contenido de esta
+traducción, la única referencia válida es la documentación oficial en
+inglés.
+Además, por defecto, los enlaces a documentos redirigen a la
+documentación en inglés, incluso si existe una versión traducida.
+Consulte el índice para más información.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Documentation/process/3.Early-stage.rst</p>
+</dd>
+<dt class="field-even">Translator<span class="colon">:</span></dt>
+<dd class="field-even"><p>Carlos Bilbao &lt;<a class="reference external" href="mailto:carlos&#46;bilbao&#46;osdev&#37;&#52;&#48;gmail&#46;com">carlos<span>&#46;</span>bilbao<span>&#46;</span>osdev<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt; and Avadhut Naik &lt;<a class="reference external" href="mailto:avadhut&#46;naik&#37;&#52;&#48;amd&#46;com">avadhut<span>&#46;</span>naik<span>&#64;</span>amd<span>&#46;</span>com</a>&gt;</p>
+</dd>
+</dl>
+<section id="planificacion-en-etapa-inicial">
+<span id="sp-development-early-stage"></span><h1><span class="section-number">3. </span>Planificación en etapa inicial<a class="headerlink" href="#planificacion-en-etapa-inicial" title="Link to this heading">¶</a></h1>
+<p>Cuando uno se sienta a planear un proyecto de desarrollo del kernel Linux,
+puede ser tentador lanzarse directamente a escribir código. Sin embargo,
+como ocurre con cualquier proyecto significativo, gran parte del trabajo
+que conduce al éxito es mejor realizarlo antes de escribir la primera línea
+de código. Dedicar tiempo a la planificación y comunicación temprana puede
+ahorrar mucho más tiempo en adelante.</p>
+<section id="especificar-el-problema">
+<h2><span class="section-number">3.1. </span>Especificar el problema<a class="headerlink" href="#especificar-el-problema" title="Link to this heading">¶</a></h2>
+<p>Como en cualquier proyecto de ingeniería, una mejora exitosa del kernel
+comienza con una descripción clara del problema a resolver. En algunos
+casos, este paso es sencillo: cuando se necesita un driver para un hardware
+específico, por ejemplo. En otros, sin embargo, es tentador confundir el
+problema real con la solución propuesta, lo que puede generar dificultades.</p>
+<p>Consideremos un ejemplo: hace algunos años, los desarrolladores que
+trabajaban con audio en Linux buscaban una forma de ejecutar aplicaciones
+sin interrupciones u otros artefactos causados por la latencia excesiva en
+el sistema. La solución a la que llegaron fue un módulo del kernel
+destinado a integrarse en el marco del Módulo de Seguridad de Linux (LSM,
+por sus siglas en inglés); este módulo podía configurarse para dar acceso a
+aplicaciones específicas al planificador en tiempo real. Este módulo fue
+implementado y enviado a la lista de correo del kernel de Linux, donde
+inmediatamente encontró problemas.</p>
+<p>Para los desarrolladores de audio, este módulo de seguridad era suficiente
+para resolver su problema inmediato. Sin embargo, para la comunidad más
+amplia del kernel, se veía como un uso indebido del marco LSM (que no está
+diseñado para otorgar privilegios a procesos que de otro modo no los
+tendrían) y como un riesgo para la estabilidad del sistema. Sus soluciones
+preferidas implicaban el acceso a la programación en tiempo real a través
+del mecanismo de rlimit a corto plazo, y trabajo continuo para reducir la
+latencia a largo plazo.</p>
+<p>La comunidad de audio, sin embargo, no podía ver más allá de la solución
+particular que habían implementado; no estaban dispuestos a aceptar
+alternativas. El desacuerdo resultante dejó a esos desarrolladores
+desilusionados con todo el proceso de desarrollo del kernel; uno de ellos
+volvió a una lista de audio y publicó esto (traducido):</p>
+<blockquote>
+<div><p>“Hay un buen número de desarrolladores muy competentes del kernel de Linux, pero tienden a ser opacados por una multitud de arrogantes necios. Intentar comunicar los requisitos de los usuarios a estas personas es una pérdida de tiempo. Son demasiado ‘inteligentes’ como para escuchar a simples mortales”.</p>
+</div></blockquote>
+<p>Siendo el texto original:</p>
+<blockquote>
+<div><p>There are a number of very good Linux kernel developers, but they
+tend to get outshouted by a large crowd of arrogant fools. Trying
+to communicate user requirements to these people is a waste of
+time. They are much too “intelligent” to listen to lesser mortals.</p>
+</div></blockquote>
+<p>(<a class="reference external" href="https://lwn.net/Articles/131776/">https://lwn.net/Articles/131776/</a>).</p>
+<p>La realidad de la situación era diferente; los desarrolladores del kernel
+estaban mucho más preocupados por la estabilidad del sistema, el
+mantenimiento a largo plazo y encontrar la solución correcta al problema
+que por un módulo específico. La moraleja de la historia es centrarse en el
+problema, no en una solución específica, y discutirlo con la comunidad de
+desarrollo antes de invertir en la creación de un cuerpo de código.</p>
+<p>Por lo tanto, al contemplar un proyecto de desarrollo del kernel, se deben
+obtener respuestas a un conjunto corto de preguntas:</p>
+<ul class="simple">
+<li><p>¿Cuál es exactamente el problema que necesita ser resuelto?</p></li>
+<li><p>¿Quiénes son los usuarios afectados por este problema? ¿Qué casos de uso
+debería abordar la solución?</p></li>
+<li><p>¿En qué aspectos el kernel actual no logra abordar ese problema?</p></li>
+</ul>
+<p>Solo entonces tiene sentido comenzar a considerar posibles soluciones.</p>
+</section>
+<section id="discusion-temprana">
+<h2><span class="section-number">3.2. </span>Discusión temprana<a class="headerlink" href="#discusion-temprana" title="Link to this heading">¶</a></h2>
+<p>Al planificar un proyecto de desarrollo del kernel, tiene mucho sentido
+realizar discusiones con la comunidad antes de lanzarse a la
+implementación. La comunicación temprana puede ahorrar tiempo y problemas
+de varias maneras:</p>
+<ul class="simple">
+<li><p>Es posible que el problema ya esté siendo abordado por el kernel de
+maneras que no haya comprendido. El kernel de Linux es grande y tiene
+una serie de características y capacidades que no son inmediatamente
+obvias. No todas las capacidades del kernel están documentadas tan bien
+como uno quisiera, y es fácil pasar cosas por alto. El autor de este
+texto ha visto la publicación de un driver completo que duplicaba uno
+existente del que el nuevo autor no tenía conocimiento. El código que
+reinventa ruedas existentes no solo es desperdicio; tampoco será aceptado
+en el kernel principal.</p></li>
+<li><p>Puede haber elementos de la solución propuesta que no serán aceptables
+para su inclusión en el kernel principal. Es mejor descubrir problemas
+como este antes de escribir el código.</p></li>
+<li><p>Es completamente posible que otros desarrolladores ya hayan pensado en el
+problema; pueden tener ideas para una mejor solución y estar dispuestos a
+ayudar en la creación de esa solución.</p></li>
+</ul>
+<p>Años de experiencia con la comunidad de desarrollo del kernel han enseñado
+una lección clara: el código del kernel que se diseña y desarrolla a
+puertas cerradas invariablemente tiene problemas que solo se revelan cuando
+el código se libera a la comunidad. A veces, estos problemas son graves,
+requiriendo meses o años de esfuerzo antes de que el código pueda cumplir
+con los estándares de la comunidad del kernel. Algunos ejemplos incluyen:</p>
+<ul class="simple">
+<li><p>La pila de red Devicescape fue diseñada e implementada para sistemas de
+un solo procesador. No pudo fusionarse en la rama principal hasta que se
+hizo adecuada para sistemas multiprocesador. Adaptar el bloqueo y otros
+aspectos en el código es una tarea difícil; como resultado, la fusión de
+este código (ahora llamado mac80211) se retrasó más de un año.</p></li>
+<li><p>El sistema de archivos Reiser4 incluía una serie de capacidades que, en
+opinión de los desarrolladores principales del kernel, deberían haberse
+implementado en la capa de sistemas de archivos virtuales. También
+incluía funciones que no podían implementarse fácilmente sin exponer el
+sistema a bloqueos causados por los usuarios. La revelación tardía de
+estos problemas, y la negativa a abordar algunos de ellos, ha mantenido a
+Reiser4 fuera del kernel principal.</p></li>
+<li><p>El módulo de seguridad AppArmor hacía uso de estructuras de datos
+internas del sistema de archivos virtual de maneras que se consideraban
+inseguras y poco fiables. Esta preocupación (entre otras) mantuvo a
+AppArmor fuera de la rama principal durante años.</p></li>
+</ul>
+<p>En cada uno de estos casos, se podría haber evitado mucho dolor y trabajo
+adicional con algunas discusiones tempranas con los desarrolladores del
+kernel.</p>
+</section>
+<section id="con-quien-hablar">
+<h2><span class="section-number">3.3. </span>¿Con quién hablar?<a class="headerlink" href="#con-quien-hablar" title="Link to this heading">¶</a></h2>
+<p>Cuando los desarrolladores deciden hacer públicas sus ideas, la siguiente
+pregunta será: ¿dónde empezar? La respuesta es encontrar la lista de correo
+adecuada y el maintainer correcto. Para las listas de correo, la mejor
+opción es buscar en el archivo MAINTAINERS un lugar relevante para
+publicar. Si existe una lista de subsistema adecuada, es preferible
+publicarla allí en lugar de en linux-kernel; es más probable que llegues a
+desarrolladores con experiencia en el subsistema relevante y el ambiente
+puede ser más propicio.</p>
+<p>Encontrar a los maintainers puede ser un poco más difícil. Nuevamente, el
+archivo MAINTAINERS es el lugar para empezar. Sin embargo, ese archivo
+tiende a no estar siempre actualizado, y no todos los subsistemas están
+representados allí. La persona listada en el archivo MAINTAINERS puede, de
+hecho, no ser la persona que está actuando en ese rol actualmente. Por lo
+tanto, cuando haya dudas sobre a quién contactar, un truco útil es usar git
+(y “git log” en particular) para ver quién está activo actualmente en el
+subsistema de interés. Mira quién está escribiendo parches y quién, si
+alguien, está adjuntando líneas de Signed-off-by a esos parches. Esas son
+las personas que estarán mejor posicionadas para ayudar con un nuevo
+proyecto de desarrollo.</p>
+<p>La tarea de encontrar al maintainer correcto es lo suficientemente
+desafiante como para que los desarrolladores del kernel hayan añadido un
+script para facilitar el proceso:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.../scripts/get_maintainer.pl
+</pre></div>
+</div>
+<p>Este script devolverá los maintainers actuales de un archivo o directorio
+dado cuando se le pase la opción “-f”. Si se le pasa un parche en la línea
+de comandos, listará a los maintainers que probablemente deberían recibir
+copias del parche. Esta es la manera preferida (a diferencia de la opción
+“-f”) de obtener la lista de personas a las que hay que enviar las copias
+de sus parches. Hay varias opciones que regulan cuán agresivamente
+get_maintainer.pl buscará maintainers; por favor, ten cuidado al usar las
+opciones más agresivas, ya que podrías terminar incluyendo desarrolladores
+que no tienen ningún interés real en el código que estás modificando.</p>
+<p>Si todo lo demás falla, hablar con Andrew Morton puede ser una forma
+efectiva de encontrar a un maintainer para un código específico.</p>
+</section>
+<section id="cuando-publicar">
+<h2><span class="section-number">3.4. </span>¿Cuándo publicar?<a class="headerlink" href="#cuando-publicar" title="Link to this heading">¶</a></h2>
+<p>Si es posible, publicar sus planes en las primeras etapas solo puede ser
+útil. Describa el problema que se está resolviendo y cualquier plan que se
+haya hecho sobre cómo se llevará a cabo la implementación. Cualquier
+información que puedas proporcionar puede ayudar a la comunidad de
+desarrollo a ofrecer comentarios útiles sobre el proyecto.</p>
+<p>Una cosa desalentadora que puede suceder en esta etapa no es una reacción
+hostil, sino, en cambio, poca o ninguna reacción en absoluto. La triste
+realidad es que (1) los desarrolladores del kernel tienden a estar
+ocupados, (2) no hay escasez de personas con grandes planes y poco código
+(o incluso perspectivas de código) para respaldarlos, y (3) nadie está
+obligado a revisar o comentar las ideas publicadas por otros. Además, los
+diseños de alto nivel a menudo esconden problemas que solo se revelan
+cuando alguien realmente intenta implementar esos diseños; por esa razón,
+los desarrolladores del kernel prefieren ver el código.</p>
+<p>Si una publicación de solicitud de comentarios genera pocos comentarios, no
+asuma que significa que no hay interés en el proyecto. Desafortunadamente,
+tampoco puedes asumir que no hay problemas con tu idea. Lo mejor que puede
+hacer en esta situación es seguir adelante, manteniendo informada a
+comunidad a medida que avanza.</p>
+</section>
+<section id="obtener-respaldo-oficial">
+<h2><span class="section-number">3.5. </span>Obtener respaldo oficial<a class="headerlink" href="#obtener-respaldo-oficial" title="Link to this heading">¶</a></h2>
+<p>Si su trabajo se está realizando en un entorno corporativo — como ocurre
+con la mayoría del trabajo en el kernel de Linux — es obvio que debe tener
+permiso de los jefes debidamente autorizados antes de poder publicar los
+planes o el código de su empresa en una lista de correo pública. La
+publicación de código que no ha sido autorizado para su liberación bajo una
+licencia compatible con la GPL puede ser especialmente problemática; cuanto
+antes la gerencia y el personal legal de una empresa lleguen a un acuerdo
+sobre la publicación de un proyecto de desarrollo del kernel, mejor será
+para todos los involucrados.</p>
+<p>Algunos lectores pueden estar pensando en este momento que su trabajo en el
+kernel está destinado a respaldar un producto que aún no ha sido reconocido
+oficialmente. Revelar los planes de su empleador en una lista de correo
+pública puede no ser una opción viable. En casos como este, vale la pena
+considerar si realmente es necesario mantener el secreto; a menudo no hay
+una necesidad real de mantener los planes de desarrollo en secreto.</p>
+<p>Dicho esto, también hay casos en los que una empresa legítimamente no puede
+revelar sus planes al inicio del proceso de desarrollo. Las empresas con
+desarrolladores experimentados en el kernel pueden optar por proceder de
+manera abierta, bajo el supuesto de que podrán evitar problemas graves de
+integración más adelante. Para las empresas sin ese tipo de experiencia
+interna, la mejor opción suele ser contratar a un desarrollador externo
+para que revise los planes bajo un acuerdo de confidencialidad (NDA). La
+Linux Foundation opera un programa de NDA diseñado para ayudar en este tipo
+de situaciones; se puede encontrar más información en:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.linuxfoundation.org/nda/">https://www.linuxfoundation.org/nda/</a></p>
+</div></blockquote>
+<p>Este tipo de revisión suele ser suficiente para evitar problemas graves más
+adelante sin necesidad de revelar públicamente el proyecto.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">3. Planificación en etapa inicial</a><ul>
+<li><a class="reference internal" href="#especificar-el-problema">3.1. Especificar el problema</a></li>
+<li><a class="reference internal" href="#discusion-temprana">3.2. Discusión temprana</a></li>
+<li><a class="reference internal" href="#con-quien-hablar">3.3. ¿Con quién hablar?</a></li>
+<li><a class="reference internal" href="#cuando-publicar">3.4. ¿Cuándo publicar?</a></li>
+<li><a class="reference internal" href="#obtener-respaldo-oficial">3.5. Obtener respaldo oficial</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="2.Process.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">2. </span>Cómo funciona el proceso de desarrollo</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="4.Coding.html"><span><span class="section-number">4. </span>Conseguir el código correcto</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

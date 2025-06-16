@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>配置目标和编辑器 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="导出内核头文件供用户空间使用" href="headers_install.html" />
+    <link rel="prev" title="内核编译系统" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/kbuild/kconfig.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../kbuild/kconfig.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../kbuild/kconfig.html"><span class="doc">Configuration targets and editors</span></a></p>
+</dd>
+<dt class="field-even">Translator<span class="colon">:</span></dt>
+<dd class="field-even"><p>慕冬亮 Dongliang Mu &lt;<a class="reference external" href="mailto:dzm91&#37;&#52;&#48;hust&#46;edu&#46;cn">dzm91<span>&#64;</span>hust<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="id1">
+<h1>配置目标和编辑器<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>本文件包含使用 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">*config</span></code> 的一些帮助。</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code> 列出所有可能的配置目标。</p>
+<p>xconfig（’qconf’）、menuconfig（’mconf’）和 nconfig（’nconf’）程序也包含
+内嵌的帮助文本。请务必查看这些帮助文本以获取导航、搜索和其他帮助信息。</p>
+<p>gconfig（’gconf’）程序的帮助文本较少。</p>
+<section id="id2">
+<h2>通用信息<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>新的内核版本通常会引入新的配置符号。更重要的是，新的内核版本可能会重命名配置符号。
+当这种情况发生时，使用之前正常工作的 .config 文件并运行 “make oldconfig”
+不一定会生成一个可正常工作的新内核，因此，你可能需要查看哪些新的内核符号被引入。</p>
+<p>要查看新配置符号的列表，请使用:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp user/some/old.config .config
+make listnewconfig
+</pre></div>
+</div>
+<p>配置程序将列出所有新配置符号，每行一个。</p>
+<p>或者，你可以使用暴力破解方法:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make oldconfig
+scripts/diffconfig .config.old .config | less
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>环境变量<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">*config</span></code> 的环境变量：</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_CONFIG</span></code></dt><dd><p>该环境变量可用于指定一个默认的内核配置文件名，以覆盖默认的 “.config”。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_DEFCONFIG_LIST</span></code></dt><dd><p>该环境变量指定了一个配置文件列表，当 .config 不存在时，这些文件可用作基础配置。
+列表中的条目以空格分隔，只有第一个存在的文件会被使用。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_OVERWRITECONFIG</span></code></dt><dd><p>如果该环境变量被设置，当 .config 是指向其他位置的符号链接时，Kconfig 不会
+破坏符号链接。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_WARN_UNKNOWN_SYMBOLS</span></code></dt><dd><p>该环境变量使 Kconfig 对配置输入中所有无法识别的符号发出警告。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_WERROR</span></code></dt><dd><p>如果该环境变量被设置，Kconfig 将所有警告视为错误。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CONFIG_</span></code></dt><dd><p>如果该环境变量被设置，Kconfig 将在保存配置时，为所有符号添加其值作为前缀，
+而不是使用默认值。</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">{allyes/allmod/allno/rand}config</span></code> 的环境变量：</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_ALLCONFIG</span></code></dt><dd><p>allyesconfig/allmodconfig/allnoconfig/randconfig 这些变体也可以使用环境
+变量 KCONFIG_ALLCONFIG 作为标志或包含用户要求设置为特定值的配置符号的文件名。
+如果 KCONFIG_ALLCONFIG 未指定文件名，即 KCONFIG_ALLCONFIG == “” 或
+KCONFIG_ALLCONFIG == “1”，则 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">*config</span></code> 将查找名为
+“all{yes/mod/no/def/random}.config” 的文件（对应于所使用的 <code class="docutils literal notranslate"><span class="pre">*config</span></code>
+命令）以强制符号值。如果找不到此文件，它会查找名为 “all.config” 的文件以包含
+强制值。</p>
+<p>这可以创建“微型”配置（miniconfig）或自定义配置文件，其中仅包含感兴趣的配置符号。
+然后，内核配置系统将生成完整的 .config 文件，包括 miniconfig 文件中的符号。</p>
+<p><code class="docutils literal notranslate"><span class="pre">KCONFIG_ALLCONFIG</span></code> 文件包含许多预设配置符号（通常是所有符号的子集）。
+这些变量设置仍需遵守正常的依赖性检查。</p>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>KCONFIG_ALLCONFIG=custom-notebook.config make allnoconfig
+</pre></div>
+</div>
+<p>或:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>KCONFIG_ALLCONFIG=mini.config make allnoconfig
+</pre></div>
+</div>
+<p>或:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make KCONFIG_ALLCONFIG=mini.config allnoconfig
+</pre></div>
+</div>
+<p>这些示例将禁用大多数配置选项（allnoconfig），但启用或禁用 miniconfig 文件
+中显式列出的选项。</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">randconfig</span></code> 的环境变量：</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_SEED</span></code></dt><dd><p>如果你想调试 kconfig 解析器/前端的行为，你可以将此变量设置整数值，用于初始化
+随机数生成器。如果未设置，将使用当前时间。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_PROBABILITY</span></code></dt><dd><p>该变量可用于倾斜概率分布。此变量可不设置或设置为空，或设置为以下三种不同格式：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>KCONFIG_PROBABILITY</p></th>
+<th class="head"><p>y:n 分配</p></th>
+<th class="head"><p>y:m:n 分配</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>未设置或设置为空</p></td>
+<td><p>50  : 50</p></td>
+<td><p>33  : 33  : 34</p></td>
+</tr>
+<tr class="row-odd"><td><p>N</p></td>
+<td><p>N  : 100-N</p></td>
+<td><p>N/2 : N/2 : 100-N</p></td>
+</tr>
+<tr class="row-even"><td><p>[1] N:M</p></td>
+<td><p>N+M : 100-(N+M)</p></td>
+<td><p>N  :  M  : 100-(N+M)</p></td>
+</tr>
+<tr class="row-odd"><td><p>[2] N:M:L</p></td>
+<td><p>N  : 100-N</p></td>
+<td><p>M  :  L  : 100-(M+L)</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p>其中 N、M 和 L 是范围在 [0,100] 内的整数（以十进制表示），并且需满足：</p>
+<blockquote>
+<div><p>[1] N+M 的范围在 [0,100] 之间</p>
+<p>[2] M+L 的范围在 [0,100] 之间</p>
+</div></blockquote>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>KCONFIG_PROBABILITY=10
+    10% 的布尔值将设置为 &#39;y&#39;，90% 设置为 &#39;n&#39;
+    5% 的三态值将设置为 &#39;y&#39;，5% 设置为 &#39;m&#39;，90% 设置为 &#39;n&#39;
+KCONFIG_PROBABILITY=15:25
+    40% 的布尔值将设置为 &#39;y&#39;，60% 设置为 &#39;n&#39;
+    15% 的三态值将设置为 &#39;y&#39;，25% 设置为 &#39;m&#39;，60% 设置为 &#39;n&#39;
+KCONFIG_PROBABILITY=10:15:15
+    10% 的布尔值将设置为 &#39;y&#39;，90% 设置为 &#39;n&#39;
+    15% 的三态值将设置为 &#39;y&#39;，15% 设置为 &#39;m&#39;，70% 设置为 &#39;n&#39;
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">syncconfig</span></code> 的环境变量：</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_NOSILENTUPDATE</span></code></dt><dd><p>如果该变量非空，它将阻止静默的内核配置更新（需要明确更新）。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_AUTOCONFIG</span></code></dt><dd><p>该环境变量可以设置为 “auto.conf” 文件的路径和名称。默认值为
+“include/config/auto.conf”。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">KCONFIG_AUTOHEADER</span></code></dt><dd><p>该环境变量可以设置为 “autoconf.h” 头文件的路径和名称。默认值为
+“include/generated/autoconf.h”。</p>
+</dd>
+</dl>
+</section>
+<section id="menuconfig">
+<h2>menuconfig<a class="headerlink" href="#menuconfig" title="Link to this heading">¶</a></h2>
+<p>在 menuconfig 中搜索：</p>
+<blockquote>
+<div><p>搜索功能会搜索内核配置符号名称，因此你必须知道欲搜索内容的大致名称。</p>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/hotplug
+这会列出所有包含 &quot;hotplug&quot; 的配置符号，例如，HOTPLUG_CPU，
+MEMORY_HOTPLUG。
+</pre></div>
+</div>
+<p>若需要搜索帮助，输入 / 后跟 TAB-TAB（高亮显示 &lt;Help&gt;）并按回车键。
+这说明你还可以在搜索字符串中使用正则表达式（regex），所以如果你对
+MEMORY_HOTPLUG 不感兴趣，你可以尝试:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/^hotplug
+</pre></div>
+</div>
+<p>在搜索时，符号将按以下顺序排序：</p>
+<ul class="simple">
+<li><p>首先，完全匹配的符号，按字母顺序排列（完全匹配是指搜索与符号名称完全匹配）；</p></li>
+<li><p>然后是其他匹配项，按字母顺序排列。</p></li>
+</ul>
+<p>例如，^ATH.K 匹配:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ATH5K ATH9K ATH5K_AHB ATH5K_DEBUG [...] ATH6KL ATH6KL_DEBUG
+[...] ATH9K_AHB ATH9K_BTCOEX_SUPPORT ATH9K_COMMON [...]
+</pre></div>
+</div>
+<p>其中只有 ATH5K 和 ATH9K 完全匹配，因此它们排在前面（按字母顺序），
+接下来是其他符号，同样按字母顺序排列。</p>
+<p>在此菜单中，按下以 (#) 为前缀的键将直接跳转到该位置。退出此新菜单后，
+你将返回当前的搜索结果。</p>
+</div></blockquote>
+<p>‘menuconfig’ 的用户界面选项：</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">MENUCONFIG_COLOR</span></code></dt><dd><p>可以使用变量 MENUCONFIG_COLOR 选择不同的配色主题。使用以下命令选择主题:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make MENUCONFIG_COLOR=&lt;theme&gt; menuconfig
+</pre></div>
+</div>
+<p>可用的主题有:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- mono       =&gt; 选择适合单色显示器的颜色
+- blackbg    =&gt; 选择具有黑色背景的配色方案
+- classic    =&gt; 经典外观，蓝色背景
+- bluetitle  =&gt; 经典外观的 LCD 友好版本（默认）
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">MENUCONFIG_MODE</span></code></dt><dd><p>此模式会将所有子菜单显示为一个大树状结构。</p>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make MENUCONFIG_MODE=single_menu menuconfig
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="nconfig">
+<h2>nconfig<a class="headerlink" href="#nconfig" title="Link to this heading">¶</a></h2>
+<p>nconfig 是一个替代的基于文本的配置工具。它在终端（窗口）底部列出功能键，用于执行
+命令。除非你在数据输入窗口中，否则你也可以直接使用相应的数字键来执行命令。例如，你
+可以直接按 6，而非 F6 进行保存。</p>
+<p>使用 F1 获取全局帮助或 F3 打开简短帮助菜单。</p>
+<p>在 nconfig 中搜索：</p>
+<blockquote>
+<div><p>你可以在菜单项“提示”字符串中或配置符号中进行搜索。</p>
+<p>使用 / 开始在菜单项中搜索。这不支持正则表达式。使用 &lt;Down&gt; 或 &lt;Up&gt;
+分别为下一个命中项和上一个命中项。使用 &lt;Esc&gt; 退出搜索模式。</p>
+<p>F8（SymSearch）在配置符号中搜索给定的字符串或正则表达式（regex）。</p>
+<p>在 SymSearch 中，按下 (#) 前缀的键会直接跳转到该位置。退出该新菜单后，
+你将返回到当前的搜索结果。</p>
+</div></blockquote>
+<p>环境变量：</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">NCONFIG_MODE</span></code></dt><dd><p>此模式会将所有子菜单显示为一个大型树结构。</p>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make NCONFIG_MODE=single_menu nconfig
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="xconfig">
+<h2>xconfig<a class="headerlink" href="#xconfig" title="Link to this heading">¶</a></h2>
+<p>在 xconfig 中搜索：</p>
+<blockquote>
+<div><p>搜索功能会搜索内核配置符号名称，因此你必须知道欲搜索内容的大致名称。</p>
+<p>示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Ctrl-F hotplug
+</pre></div>
+</div>
+<p>或:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>菜单：File, Search, hotplug
+</pre></div>
+</div>
+<p>列出所有符号名称中包含 “hotplug” 的配置符号项。在此搜索对话框中，
+你可以更改任何未灰显条目的配置设置。你还可以输入不同的搜索字符串，
+而无需返回主菜单。</p>
+</div></blockquote>
+</section>
+<section id="gconfig">
+<h2>gconfig<a class="headerlink" href="#gconfig" title="Link to this heading">¶</a></h2>
+<p>在 gconfig 中搜索：</p>
+<blockquote>
+<div><p>gconfig 中没有搜索命令。然而，gconfig 具有几种不同的查看选择、模式和选项。</p>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">配置目标和编辑器</a><ul>
+<li><a class="reference internal" href="#id2">通用信息</a></li>
+<li><a class="reference internal" href="#id3">环境变量</a></li>
+<li><a class="reference internal" href="#menuconfig">menuconfig</a></li>
+<li><a class="reference internal" href="#nconfig">nconfig</a></li>
+<li><a class="reference internal" href="#xconfig">xconfig</a></li>
+<li><a class="reference internal" href="#gconfig">gconfig</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>内核编译系统</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="headers_install.html"><span>导出内核头文件供用户空间使用</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

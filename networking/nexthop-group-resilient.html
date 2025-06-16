@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Resilient Next-hop Groups &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Netfilter Conntrack Sysfs variables" href="nf_conntrack-sysctl.html" />
+    <link rel="prev" title="Netmem Support for Network Drivers" href="netmem.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/nexthop-group-resilient.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="resilient-next-hop-groups">
+<h1>Resilient Next-hop Groups<a class="headerlink" href="#resilient-next-hop-groups" title="Link to this heading">¶</a></h1>
+<p>Resilient groups are a type of next-hop group that is aimed at minimizing
+disruption in flow routing across changes to the group composition and
+weights of constituent next hops.</p>
+<p>The idea behind resilient hashing groups is best explained in contrast to
+the legacy multipath next-hop group, which uses the hash-threshold
+algorithm, described in RFC 2992.</p>
+<p>To select a next hop, hash-threshold algorithm first assigns a range of
+hashes to each next hop in the group, and then selects the next hop by
+comparing the SKB hash with the individual ranges. When a next hop is
+removed from the group, the ranges are recomputed, which leads to
+reassignment of parts of hash space from one next hop to another. RFC 2992
+illustrates it thus:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+-------+-------+-------+-------+
+|   1   |   2   |   3   |   4   |   5   |
++-------+-+-----+---+---+-----+-+-------+
+|    1    |    2    |    4    |    5    |
++---------+---------+---------+---------+
+
+ Before and after deletion of next hop 3
+ under the hash-threshold algorithm.
+</pre></div>
+</div>
+<p>Note how next hop 2 gave up part of the hash space in favor of next hop 1,
+and 4 in favor of 5. While there will usually be some overlap between the
+previous and the new distribution, some traffic flows change the next hop
+that they resolve to.</p>
+<p>If a multipath group is used for load-balancing between multiple servers,
+this hash space reassignment causes an issue that packets from a single
+flow suddenly end up arriving at a server that does not expect them. This
+can result in TCP connections being reset.</p>
+<p>If a multipath group is used for load-balancing among available paths to
+the same server, the issue is that different latencies and reordering along
+the way causes the packets to arrive in the wrong order, resulting in
+degraded application performance.</p>
+<p>To mitigate the above-mentioned flow redirection, resilient next-hop groups
+insert another layer of indirection between the hash space and its
+constituent next hops: a hash table. The selection algorithm uses SKB hash
+to choose a hash table bucket, then reads the next hop that this bucket
+contains, and forwards traffic there.</p>
+<p>This indirection brings an important feature. In the hash-threshold
+algorithm, the range of hashes associated with a next hop must be
+continuous. With a hash table, mapping between the hash table buckets and
+the individual next hops is arbitrary. Therefore when a next hop is deleted
+the buckets that held it are simply reassigned to other next hops:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|1|1|1|1|2|2|2|2|3|3|3|3|4|4|4|4|5|5|5|5|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                 v v v v
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|1|1|1|1|2|2|2|2|1|2|4|5|4|4|4|4|5|5|5|5|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+Before and after deletion of next hop 3
+under the resilient hashing algorithm.
+</pre></div>
+</div>
+<p>When weights of next hops in a group are altered, it may be possible to
+choose a subset of buckets that are currently not used for forwarding
+traffic, and use those to satisfy the new next-hop distribution demands,
+keeping the “busy” buckets intact. This way, established flows are ideally
+kept being forwarded to the same endpoints through the same paths as before
+the next-hop group change.</p>
+<section id="algorithm">
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="Link to this heading">¶</a></h2>
+<p>In a nutshell, the algorithm works as follows. Each next hop deserves a
+certain number of buckets, according to its weight and the number of
+buckets in the hash table. In accordance with the source code, we will call
+this number a “wants count” of a next hop. In case of an event that might
+cause bucket allocation change, the wants counts for individual next hops
+are updated.</p>
+<p>Next hops that have fewer buckets than their wants count, are called
+“underweight”. Those that have more are “overweight”. If there are no
+overweight (and therefore no underweight) next hops in the group, it is
+said to be “balanced”.</p>
+<p>Each bucket maintains a last-used timer. Every time a packet is forwarded
+through a bucket, this timer is updated to current jiffies value. One
+attribute of a resilient group is then the “idle timer”, which is the
+amount of time that a bucket must not be hit by traffic in order for it to
+be considered “idle”. Buckets that are not idle are busy.</p>
+<p>After assigning wants counts to next hops, an “upkeep” algorithm runs. For
+buckets:</p>
+<ol class="arabic simple">
+<li><p>that have no assigned next hop, or</p></li>
+<li><p>whose next hop has been removed, or</p></li>
+<li><p>that are idle and their next hop is overweight,</p></li>
+</ol>
+<p>upkeep changes the next hop that the bucket references to one of the
+underweight next hops. If, after considering all buckets in this manner,
+there are still underweight next hops, another upkeep run is scheduled to a
+future time.</p>
+<p>There may not be enough “idle” buckets to satisfy the updated wants counts
+of all next hops. Another attribute of a resilient group is the “unbalanced
+timer”. This timer can be set to 0, in which case the table will stay out
+of balance until idle buckets do appear, possibly never. If set to a
+non-zero value, the value represents the period of time that the table is
+permitted to stay out of balance.</p>
+<p>With this in mind, we update the above list of conditions with one more
+item. Thus buckets:</p>
+<ol class="arabic simple" start="4">
+<li><p>whose next hop is overweight, and the amount of time that the table has
+been out of balance exceeds the unbalanced timer, if that is non-zero,</p></li>
+</ol>
+<p>... are migrated as well.</p>
+</section>
+<section id="offloading-driver-feedback">
+<h2>Offloading &amp; Driver Feedback<a class="headerlink" href="#offloading-driver-feedback" title="Link to this heading">¶</a></h2>
+<p>When offloading resilient groups, the algorithm that distributes buckets
+among next hops is still the one in SW. Drivers are notified of updates to
+next hop groups in the following three ways:</p>
+<ul class="simple">
+<li><p>Full group notification with the type
+<code class="docutils literal notranslate"><span class="pre">NH_NOTIFIER_INFO_TYPE_RES_TABLE</span></code>. This is used just after the group is
+created and buckets populated for the first time.</p></li>
+<li><p>Single-bucket notifications of the type
+<code class="docutils literal notranslate"><span class="pre">NH_NOTIFIER_INFO_TYPE_RES_BUCKET</span></code>, which is used for notifications of
+individual migrations within an already-established group.</p></li>
+<li><p>Pre-replace notification, <code class="docutils literal notranslate"><span class="pre">NEXTHOP_EVENT_RES_TABLE_PRE_REPLACE</span></code>. This
+is sent before the group is replaced, and is a way for the driver to veto
+the group before committing anything to the HW.</p></li>
+</ul>
+<p>Some single-bucket notifications are forced, as indicated by the “force”
+flag in the notification. Those are used for the cases where e.g. the next
+hop associated with the bucket was removed, and the bucket really must be
+migrated.</p>
+<p>Non-forced notifications can be overridden by the driver by returning an
+error code. The use case for this is that the driver notifies the HW that a
+bucket should be migrated, but the HW discovers that the bucket has in fact
+been hit by traffic.</p>
+<p>A second way for the HW to report that a bucket is busy is through the
+<code class="docutils literal notranslate"><span class="pre">nexthop_res_grp_activity_update()</span></code> API. The buckets identified this way
+as busy are treated as if traffic hit them.</p>
+<p>Offloaded buckets should be flagged as either “offload” or “trap”. This is
+done through the <code class="docutils literal notranslate"><span class="pre">nexthop_bucket_set_hw_flags()</span></code> API.</p>
+</section>
+<section id="netlink-uapi">
+<h2>Netlink UAPI<a class="headerlink" href="#netlink-uapi" title="Link to this heading">¶</a></h2>
+<section id="resilient-group-replacement">
+<h3>Resilient Group Replacement<a class="headerlink" href="#resilient-group-replacement" title="Link to this heading">¶</a></h3>
+<p>Resilient groups are configured using the <code class="docutils literal notranslate"><span class="pre">RTM_NEWNEXTHOP</span></code> message in the
+same manner as other multipath groups. The following changes apply to the
+attributes passed in the netlink message:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_GROUP_TYPE</span></code></p></td>
+<td><p>Should be <code class="docutils literal notranslate"><span class="pre">NEXTHOP_GRP_TYPE_RES</span></code> for resilient group.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP</span></code></p></td>
+<td><p>A nest that contains attributes specific to resilient
+groups.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP</span></code> payload:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP_BUCKETS</span></code></p></td>
+<td><p>Number of buckets in the hash table.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP_IDLE_TIMER</span></code></p></td>
+<td><p>Idle timer in units of clock_t.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP_UNBALANCED_TIMER</span></code></p></td>
+<td><p>Unbalanced timer in units of clock_t.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="next-hop-get">
+<h3>Next Hop Get<a class="headerlink" href="#next-hop-get" title="Link to this heading">¶</a></h3>
+<p>Requests to get resilient next-hop groups use the <code class="docutils literal notranslate"><span class="pre">RTM_GETNEXTHOP</span></code>
+message in exactly the same way as other next hop get requests. The
+response attributes match the replacement attributes cited above, except
+<code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP</span></code> payload will include the following attribute:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_GROUP_UNBALANCED_TIME</span></code></p></td>
+<td><p>How long has the resilient group been out
+of balance, in units of clock_t.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="bucket-get">
+<h3>Bucket Get<a class="headerlink" href="#bucket-get" title="Link to this heading">¶</a></h3>
+<p>The message <code class="docutils literal notranslate"><span class="pre">RTM_GETNEXTHOPBUCKET</span></code> without the <code class="docutils literal notranslate"><span class="pre">NLM_F_DUMP</span></code> flag is
+used to request a single bucket. The attributes recognized at get requests
+are:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_ID</span></code></p></td>
+<td><p>ID of the next-hop group that the bucket belongs to.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET</span></code></p></td>
+<td><p>A nest that contains attributes specific to bucket.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET</span></code> payload:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET_INDEX</span></code></p></td>
+<td><p>Index of bucket in the resilient table.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="bucket-dumps">
+<h3>Bucket Dumps<a class="headerlink" href="#bucket-dumps" title="Link to this heading">¶</a></h3>
+<p>The message <code class="docutils literal notranslate"><span class="pre">RTM_GETNEXTHOPBUCKET</span></code> with the <code class="docutils literal notranslate"><span class="pre">NLM_F_DUMP</span></code> flag is used
+to request a dump of matching buckets. The attributes recognized at dump
+requests are:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_ID</span></code></p></td>
+<td><p>If specified, limits the dump to just the next-hop group
+with this ID.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_OIF</span></code></p></td>
+<td><p>If specified, limits the dump to buckets that contain
+next hops that use the device with this ifindex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_MASTER</span></code></p></td>
+<td><p>If specified, limits the dump to buckets that contain
+next hops that use a device in the VRF with this ifindex.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET</span></code></p></td>
+<td><p>A nest that contains attributes specific to bucket.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET</span></code> payload:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NHA_RES_BUCKET_NH_ID</span></code></p></td>
+<td><p>If specified, limits the dump to just the buckets
+that contain the next hop with this ID.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>To illustrate the usage, consider the following commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ip nexthop add id 1 via 192.0.2.2 dev eth0
+# ip nexthop add id 2 via 192.0.2.3 dev eth0
+# ip nexthop add id 10 group 1/2 type resilient \
+        buckets 8 idle_timer 60 unbalanced_timer 300
+</pre></div>
+</div>
+<p>The last command creates a resilient next-hop group. It will have 8 buckets
+(which is unusually low number, and used here for demonstration purposes
+only), each bucket will be considered idle when no traffic hits it for at
+least 60 seconds, and if the table remains out of balance for 300 seconds,
+it will be forcefully brought into balance.</p>
+<p>Changing next-hop weights leads to change in bucket allocation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ip nexthop replace id 10 group 1,3/2 type resilient
+</pre></div>
+</div>
+<p>This can be confirmed by looking at individual buckets:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ip nexthop bucket show id 10
+id 10 index 0 idle_time 5.59 nhid 1
+id 10 index 1 idle_time 5.59 nhid 1
+id 10 index 2 idle_time 8.74 nhid 2
+id 10 index 3 idle_time 8.74 nhid 2
+id 10 index 4 idle_time 8.74 nhid 1
+id 10 index 5 idle_time 8.74 nhid 1
+id 10 index 6 idle_time 8.74 nhid 1
+id 10 index 7 idle_time 8.74 nhid 1
+</pre></div>
+</div>
+<p>Note the two buckets that have a shorter idle time. Those are the ones that
+were migrated after the next-hop replace command to satisfy the new demand
+that next hop 1 be given 6 buckets instead of 4.</p>
+</section>
+<section id="netdevsim">
+<h2>Netdevsim<a class="headerlink" href="#netdevsim" title="Link to this heading">¶</a></h2>
+<p>The netdevsim driver implements a mock offload of resilient groups, and
+exposes debugfs interface that allows marking individual buckets as busy.
+For example, the following will mark bucket 23 in next-hop group 10 as
+active:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo 10 23 &gt; /sys/kernel/debug/netdevsim/netdevsim10/fib/nexthop_bucket_activity
+</pre></div>
+</div>
+<p>In addition, another debugfs interface can be used to configure that the
+next attempt to migrate a bucket should fail:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># echo 1 &gt; /sys/kernel/debug/netdevsim/netdevsim10/fib/fail_nexthop_bucket_replace
+</pre></div>
+</div>
+<p>Besides serving as an example, the interfaces that netdevsim exposes are
+useful in automated testing, and
+<code class="docutils literal notranslate"><span class="pre">tools/testing/selftests/drivers/net/netdevsim/nexthop.sh</span></code> makes use of
+them to test the algorithm.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Resilient Next-hop Groups</a><ul>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#offloading-driver-feedback">Offloading &amp; Driver Feedback</a></li>
+<li><a class="reference internal" href="#netlink-uapi">Netlink UAPI</a><ul>
+<li><a class="reference internal" href="#resilient-group-replacement">Resilient Group Replacement</a></li>
+<li><a class="reference internal" href="#next-hop-get">Next Hop Get</a></li>
+<li><a class="reference internal" href="#bucket-get">Bucket Get</a></li>
+<li><a class="reference internal" href="#bucket-dumps">Bucket Dumps</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#netdevsim">Netdevsim</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="netmem.html">
+                    <span class="icon">&lt;</span><span>Netmem Support for Network Drivers</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="nf_conntrack-sysctl.html"><span>Netfilter Conntrack Sysfs variables</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

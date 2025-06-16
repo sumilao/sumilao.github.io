@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Crypto API &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Kernel Crypto API Interface Specification" href="intro.html" />
+    <link rel="prev" title="Integrity Policy Enforcement (IPE) - Kernel Documentation" href="../security/ipe.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/crypto/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="crypto-api">
+<h1>Crypto API<a class="headerlink" href="#crypto-api" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Stephan Mueller</p>
+</dd>
+<dt class="field-even">Author<span class="colon">:</span></dt>
+<dd class="field-even"><p>Marek Vasut</p>
+</dd>
+</dl>
+<p>This documentation outlines the Linux kernel crypto API with its
+concepts, details about developing cipher implementations, employment of the API
+for cryptographic use cases, as well as programming examples.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Table of contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Kernel Crypto API Interface Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-intro.html">Scatterlist Cryptographic API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#details">Details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#developer-notes">Developer Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#adding-new-algorithms">Adding New Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#bugs">Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#further-information">Further Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#authors">Authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-intro.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Kernel Crypto API Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#cipher-algorithm-types">Cipher algorithm types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#ciphers-and-templates">Ciphers And Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#synchronous-and-asynchronous-operation">Synchronous And Asynchronous Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#crypto-api-cipher-references-and-priority">Crypto API Cipher References And Priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#key-sizes">Key Sizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#cipher-allocation-type-and-masks">Cipher Allocation Type And Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#internal-structure-of-kernel-crypto-api">Internal Structure of Kernel Crypto API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async-tx-api.html">Asynchronous Transfers/Transforms API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="async-tx-api.html#introduction">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-tx-api.html#genealogy">2.Genealogy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-tx-api.html#usage">3. Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-tx-api.html#driver-development-notes">4. Driver Development Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="asymmetric-keys.html">Asymmetric / Public-key Cryptography Key Type</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#key-identification">Key Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#accessing-asymmetric-keys">Accessing Asymmetric Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#asymmetric-key-subtypes">Asymmetric Key Subtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#instantiation-data-parsers">Instantiation Data Parsers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymmetric-keys.html#keyring-link-restrictions">Keyring Link Restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="devel-algos.html">Developing Cipher Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devel-algos.html#registering-and-unregistering-transformation">Registering And Unregistering Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devel-algos.html#single-block-symmetric-ciphers-cipher">Single-Block Symmetric Ciphers [CIPHER]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devel-algos.html#multi-block-ciphers">Multi-Block Ciphers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devel-algos.html#hashing-hash">Hashing [HASH]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userspace-if.html">User Space Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#user-space-api-general-remarks">User Space API General Remarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#in-place-cipher-operation">In-place Cipher operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#message-digest-api">Message Digest API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#symmetric-cipher-api">Symmetric Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#aead-cipher-api">AEAD Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#random-number-generator-api">Random Number Generator API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#zero-copy-interface">Zero-Copy Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#setsockopt-interface">Setsockopt Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userspace-if.html#user-space-api-example">User space API example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crypto_engine.html">Crypto Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="crypto_engine.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypto_engine.html#requirement">Requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypto_engine.html#order-of-operations">Order of operations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Programming Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-skcipher.html">Block Cipher Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-skcipher.html#symmetric-key-cipher-api">Symmetric Key Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-skcipher.html#symmetric-key-cipher-request-handle">Symmetric Key Cipher Request Handle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-skcipher.html#single-block-cipher-api">Single Block Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-aead.html">Authenticated Encryption With Associated Data (AEAD) Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-aead.html#authenticated-encryption-with-associated-data-aead-cipher-api">Authenticated Encryption With Associated Data (AEAD) Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-aead.html#asynchronous-aead-request-handle">Asynchronous AEAD Request Handle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-digest.html">Message Digest Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-digest.html#asynchronous-message-digest-api">Asynchronous Message Digest API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-digest.html#asynchronous-hash-request-handle">Asynchronous Hash Request Handle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-digest.html#synchronous-message-digest-api">Synchronous Message Digest API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-rng.html">Random Number Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-rng.html#crypto-api-random-number-api">Crypto API Random Number API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-akcipher.html">Asymmetric Cipher Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-akcipher.html#asymmetric-cipher-api">Asymmetric Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-akcipher.html#asymmetric-cipher-request-handle">Asymmetric Cipher Request Handle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-sig.html">Asymmetric Signature Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-sig.html#asymmetric-signature-api">Asymmetric Signature API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kpp.html">Key-agreement Protocol Primitives (KPP) Cipher Algorithm Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kpp.html#key-agreement-protocol-primitives-kpp-cipher-api">Key-agreement Protocol Primitives (KPP) Cipher API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kpp.html#key-agreement-protocol-primitives-kpp-cipher-request-handle">Key-agreement Protocol Primitives (KPP) Cipher Request Handle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kpp.html#ecdh-helper-functions">ECDH Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kpp.html#dh-helper-functions">DH Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-samples.html">Code Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-samples.html#code-example-for-symmetric-key-cipher-operation">Code Example For Symmetric Key Cipher Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-samples.html#code-example-for-use-of-operational-state-memory-with-shash">Code Example For Use of Operational State Memory With SHASH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-samples.html#code-example-for-random-number-generator-usage">Code Example For Random Number Generator Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="descore-readme.html">Fast &amp; Portable DES encryption &amp; decryption</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#motivation-and-history">motivation and history</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#porting-notes">porting notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#optional-performance-optimizations">OPTIONAL performance optimizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#coding-notes">coding notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#special-efficient-data-format">special efficient data format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#getting-it-to-compile-on-your-machine">Getting it to compile on your machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#speeding-up-kerberos-and-or-its-des-library">Speeding up kerberos (and/or its des library)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descore-readme.html#other-uses">Other uses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="device_drivers/index.html">Hardware Device Driver Specific Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="device_drivers/octeontx2.html">octeontx2 devlink support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="krb5.html">Kerberos V Cryptography API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="krb5.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="krb5.html#encoding-type">Encoding Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="krb5.html#key-derivation">Key Derivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="krb5.html#crypto-functions">Crypto Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="krb5.html#the-krb5enc-aead-algorithm">The krb5enc AEAD algorithm</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="../security/ipe.html">
+                    <span class="icon">&lt;</span><span>Integrity Policy Enforcement (IPE) - Kernel Documentation</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="intro.html"><span>Kernel Crypto API Interface Specification</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

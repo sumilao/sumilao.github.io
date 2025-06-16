@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Email clients info for Linux &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Applying Patches To The Linux Kernel" href="applying-patches.html" />
+    <link rel="prev" title="Kernel Maintainer PGP guide" href="maintainer-pgp-guide.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">All development-process docs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#an-introduction-to-how-kernel-development-works">An introduction to how kernel development works</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#tools-and-technical-guides-for-kernel-developers">Tools and technical guides for kernel developers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="changes.html">Minimal requirements to compile the Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programming-language.html">Programming Language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding-style.html">Linux kernel coding style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="maintainer-pgp-guide.html">Kernel Maintainer PGP guide</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Email clients info for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="applying-patches.html">Applying Patches To The Linux Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backporting.html">Backporting and conflict resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="adding-syscalls.html">Adding a New System Call</a></li>
+<li class="toctree-l3"><a class="reference internal" href="volatile-considered-harmful.html">Why the “volatile” type class should not be used</a></li>
+<li class="toctree-l3"><a class="reference internal" href="botching-up-ioctls.html">(How to avoid) Botching up ioctls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#policy-guides-and-developer-statements">Policy guides and developer statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#dealing-with-bugs">Dealing with bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#maintainer-information">Maintainer information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#other-material">Other material</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/process/email-clients.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/process/email-clients.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/zh_TW/process/email-clients.html">Chinese (Traditional)</a></li>
+
+<li><a href="../translations/it_IT/process/email-clients.html">Italian</a></li>
+
+<li><a href="../translations/sp_SP/process/email-clients.html">Spanish</a></li>
+
+</ul>
+</div>
+<section id="email-clients-info-for-linux">
+<span id="email-clients"></span><h1>Email clients info for Linux<a class="headerlink" href="#email-clients-info-for-linux" title="Link to this heading">¶</a></h1>
+<section id="git">
+<h2>Git<a class="headerlink" href="#git" title="Link to this heading">¶</a></h2>
+<p>These days most developers use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">send-email</span></code> instead of regular
+email clients.  The man page for this is quite good.  On the receiving
+end, maintainers use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span></code> to apply the patches.</p>
+<p>If you are new to <code class="docutils literal notranslate"><span class="pre">git</span></code> then send your first patch to yourself.  Save it
+as raw text including all the headers.  Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span> <span class="pre">raw_email.txt</span></code> and
+then review the changelog with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>.  When that works then send
+the patch to the appropriate mailing list(s).</p>
+</section>
+<section id="general-preferences">
+<h2>General Preferences<a class="headerlink" href="#general-preferences" title="Link to this heading">¶</a></h2>
+<p>Patches for the Linux kernel are submitted via email, preferably as
+inline text in the body of the email.  Some maintainers accept
+attachments, but then the attachments should have content-type
+<code class="docutils literal notranslate"><span class="pre">text/plain</span></code>.  However, attachments are generally frowned upon because
+it makes quoting portions of the patch more difficult in the patch
+review process.</p>
+<p>It’s also strongly recommended that you use plain text in your email body,
+for patches and other emails alike. <a class="reference external" href="https://useplaintext.email">https://useplaintext.email</a> may be useful
+for information on how to configure your preferred email client, as well as
+listing recommended email clients should you not already have a preference.</p>
+<p>Email clients that are used for Linux kernel patches should send the
+patch text untouched.  For example, they should not modify or delete tabs
+or spaces, even at the beginning or end of lines.</p>
+<p>Don’t send patches with <code class="docutils literal notranslate"><span class="pre">format=flowed</span></code>.  This can cause unexpected
+and unwanted line breaks.</p>
+<p>Don’t let your email client do automatic word wrapping for you.
+This can also corrupt your patch.</p>
+<p>Email clients should not modify the character set encoding of the text.
+Emailed patches should be in ASCII or UTF-8 encoding only.
+If you configure your email client to send emails with UTF-8 encoding,
+you avoid some possible charset problems.</p>
+<p>Email clients should generate and maintain “References:” or “In-Reply-To:”
+headers so that mail threading is not broken.</p>
+<p>Copy-and-paste (or cut-and-paste) usually does not work for patches
+because tabs are converted to spaces.  Using xclipboard, xclip, and/or
+xcutsel may work, but it’s best to test this for yourself or just avoid
+copy-and-paste.</p>
+<p>Don’t use PGP/GPG signatures in mail that contains patches.
+This breaks many scripts that read and apply the patches.
+(This should be fixable.)</p>
+<p>It’s a good idea to send a patch to yourself, save the received message,
+and successfully apply it with ‘patch’ before sending patches to Linux
+mailing lists.</p>
+</section>
+<section id="some-email-client-mua-hints">
+<h2>Some email client (MUA) hints<a class="headerlink" href="#some-email-client-mua-hints" title="Link to this heading">¶</a></h2>
+<p>Here are some specific MUA configuration hints for editing and sending
+patches for the Linux kernel.  These are not meant to be complete
+software package configuration summaries.</p>
+<p>Legend:</p>
+<ul class="simple">
+<li><p>TUI = text-based user interface</p></li>
+<li><p>GUI = graphical user interface</p></li>
+</ul>
+<section id="alpine-tui">
+<h3>Alpine (TUI)<a class="headerlink" href="#alpine-tui" title="Link to this heading">¶</a></h3>
+<p>Config options:</p>
+<p>In the <span class="menuselection">Sending Preferences</span> section:</p>
+<ul class="simple">
+<li><p><span class="menuselection">Do Not Send Flowed Text</span> must be <code class="docutils literal notranslate"><span class="pre">enabled</span></code></p></li>
+<li><p><span class="menuselection">Strip Whitespace Before Sending</span> must be <code class="docutils literal notranslate"><span class="pre">disabled</span></code></p></li>
+</ul>
+<p>When composing the message, the cursor should be placed where the patch
+should appear, and then pressing <cite>CTRL-R</cite> let you specify the patch file
+to insert into the message.</p>
+</section>
+<section id="claws-mail-gui">
+<h3>Claws Mail (GUI)<a class="headerlink" href="#claws-mail-gui" title="Link to this heading">¶</a></h3>
+<p>Works. Some people use this successfully for patches.</p>
+<p>To insert a patch use <span class="menuselection">Message‣Insert File</span> (<cite>CTRL-I</cite>)
+or an external editor.</p>
+<p>If the inserted patch has to be edited in the Claws composition window
+“Auto wrapping” in
+<span class="menuselection">Configuration‣Preferences‣Compose‣Wrapping</span> should be
+disabled.</p>
+</section>
+<section id="evolution-gui">
+<h3>Evolution (GUI)<a class="headerlink" href="#evolution-gui" title="Link to this heading">¶</a></h3>
+<p>Some people use this successfully for patches.</p>
+<dl class="simple">
+<dt>When composing mail select: Preformat</dt><dd><p>from <span class="menuselection">Format‣Paragraph Style‣Preformatted</span> (<cite>CTRL-7</cite>)
+or the toolbar</p>
+</dd>
+</dl>
+<p>Then use:
+<span class="menuselection">Insert‣Text File...</span> (<cite>ALT-N x</cite>)
+to insert the patch.</p>
+<p>You can also <code class="docutils literal notranslate"><span class="pre">diff</span> <span class="pre">-Nru</span> <span class="pre">old.c</span> <span class="pre">new.c</span> <span class="pre">|</span> <span class="pre">xclip</span></code>, select
+<span class="menuselection">Preformat</span>, then paste with the middle button.</p>
+</section>
+<section id="kmail-gui">
+<h3>Kmail (GUI)<a class="headerlink" href="#kmail-gui" title="Link to this heading">¶</a></h3>
+<p>Some people use Kmail successfully for patches.</p>
+<p>The default setting of not composing in HTML is appropriate; do not
+enable it.</p>
+<p>When composing an email, under options, uncheck “word wrap”. The only
+disadvantage is any text you type in the email will not be word-wrapped
+so you will have to manually word wrap text before the patch. The easiest
+way around this is to compose your email with word wrap enabled, then save
+it as a draft. Once you pull it up again from your drafts it is now hard
+word-wrapped and you can uncheck “word wrap” without losing the existing
+wrapping.</p>
+<p>At the bottom of your email, put the commonly-used patch delimiter before
+inserting your patch:  three hyphens (<code class="docutils literal notranslate"><span class="pre">---</span></code>).</p>
+<p>Then from the <span class="menuselection">Message</span> menu item, select
+<span class="menuselection">insert file</span> and choose your patch.
+As an added bonus you can customise the message creation toolbar menu
+and put the <span class="menuselection">insert file</span> icon there.</p>
+<p>Make the composer window wide enough so that no lines wrap. As of
+KMail 1.13.5 (KDE 4.5.4), KMail will apply word wrapping when sending
+the email if the lines wrap in the composer window. Having word wrapping
+disabled in the Options menu isn’t enough. Thus, if your patch has very
+long lines, you must make the composer window very wide before sending
+the email. See: <a class="reference external" href="https://bugs.kde.org/show_bug.cgi?id=174034">https://bugs.kde.org/show_bug.cgi?id=174034</a></p>
+<p>You can safely GPG sign attachments, but inlined text is preferred for
+patches so do not GPG sign them.  Signing patches that have been inserted
+as inlined text will make them tricky to extract from their 7-bit encoding.</p>
+<p>If you absolutely must send patches as attachments instead of inlining
+them as text, right click on the attachment and select <span class="menuselection">properties</span>,
+and highlight <span class="menuselection">Suggest automatic display</span> to make the attachment
+inlined to make it more viewable.</p>
+<p>When saving patches that are sent as inlined text, select the email that
+contains the patch from the message list pane, right click and select
+<span class="menuselection">save as</span>.  You can use the whole email unmodified as a patch
+if it was properly composed.  Emails are saved as read-write for user only so
+you will have to chmod them to make them group and world readable if you copy
+them elsewhere.</p>
+</section>
+<section id="lotus-notes-gui">
+<h3>Lotus Notes (GUI)<a class="headerlink" href="#lotus-notes-gui" title="Link to this heading">¶</a></h3>
+<p>Run away from it.</p>
+</section>
+<section id="ibm-verse-web-gui">
+<h3>IBM Verse (Web GUI)<a class="headerlink" href="#ibm-verse-web-gui" title="Link to this heading">¶</a></h3>
+<p>See Lotus Notes.</p>
+</section>
+<section id="mutt-tui">
+<h3>Mutt (TUI)<a class="headerlink" href="#mutt-tui" title="Link to this heading">¶</a></h3>
+<p>Plenty of Linux developers use <code class="docutils literal notranslate"><span class="pre">mutt</span></code>, so it must work pretty well.</p>
+<p>Mutt doesn’t come with an editor, so whatever editor you use should be
+used in a way that there are no automatic linebreaks.  Most editors have
+an <span class="menuselection">insert file</span> option that inserts the contents of a file
+unaltered.</p>
+<p>To use <code class="docutils literal notranslate"><span class="pre">vim</span></code> with mutt:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set editor=&quot;vi&quot;
+</pre></div>
+</div>
+<p>If using xclip, type the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:set paste
+</pre></div>
+</div>
+<p>before middle button or shift-insert or use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:r filename
+</pre></div>
+</div>
+<p>if you want to include the patch inline.
+(a)ttach works fine without <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">paste</span></code>.</p>
+<p>You can also generate patches with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">format-patch</span></code> and then use Mutt
+to send them:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mutt -H 0001-some-bug-fix.patch
+</pre></div>
+</div>
+<p>Config options:</p>
+<p>It should work with default settings.
+However, it’s a good idea to set the <code class="docutils literal notranslate"><span class="pre">send_charset</span></code> to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set send_charset=&quot;us-ascii:utf-8&quot;
+</pre></div>
+</div>
+<p>Mutt is highly customizable. Here is a minimum configuration to start
+using Mutt to send patches through Gmail:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># .muttrc
+# ================  IMAP  ====================
+set imap_user = &#39;yourusername@gmail.com&#39;
+set imap_pass = &#39;yourpassword&#39;
+set spoolfile = imaps://imap.gmail.com/INBOX
+set folder = imaps://imap.gmail.com/
+set record=&quot;imaps://imap.gmail.com/[Gmail]/Sent Mail&quot;
+set postponed=&quot;imaps://imap.gmail.com/[Gmail]/Drafts&quot;
+set mbox=&quot;imaps://imap.gmail.com/[Gmail]/All Mail&quot;
+
+# ================  SMTP  ====================
+set smtp_url = &quot;smtp://username@smtp.gmail.com:587/&quot;
+set smtp_pass = $imap_pass
+set ssl_force_tls = yes # Require encrypted connection
+
+# ================  Composition  ====================
+set editor = `echo \$EDITOR`
+set edit_headers = yes  # See the headers when editing
+set charset = UTF-8     # value of $LANG; also fallback for send_charset
+# Sender, email address, and sign-off line must match
+unset use_domain        # because joe@localhost is just embarrassing
+set realname = &quot;YOUR NAME&quot;
+set from = &quot;username@gmail.com&quot;
+set use_from = yes
+</pre></div>
+</div>
+<p>The Mutt docs have lots more information:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail">https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail</a></p>
+<p><a class="reference external" href="http://www.mutt.org/doc/manual/">http://www.mutt.org/doc/manual/</a></p>
+</div></blockquote>
+</section>
+<section id="pine-tui">
+<h3>Pine (TUI)<a class="headerlink" href="#pine-tui" title="Link to this heading">¶</a></h3>
+<p>Pine has had some whitespace truncation issues in the past, but these
+should all be fixed now.</p>
+<p>Use alpine (pine’s successor) if you can.</p>
+<p>Config options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quell-flowed-text</span></code> is needed for recent versions</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">no-strip-whitespace-before-send</span></code> option is needed</p></li>
+</ul>
+</section>
+<section id="sylpheed-gui">
+<h3>Sylpheed (GUI)<a class="headerlink" href="#sylpheed-gui" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Works well for inlining text (or using attachments).</p></li>
+<li><p>Allows use of an external editor.</p></li>
+<li><p>Is slow on large folders.</p></li>
+<li><p>Won’t do TLS SMTP auth over a non-SSL connection.</p></li>
+<li><p>Has a helpful ruler bar in the compose window.</p></li>
+<li><p>Adding addresses to address book doesn’t understand the display name
+properly.</p></li>
+</ul>
+</section>
+<section id="thunderbird-gui">
+<h3>Thunderbird (GUI)<a class="headerlink" href="#thunderbird-gui" title="Link to this heading">¶</a></h3>
+<p>Thunderbird is an Outlook clone that likes to mangle text, but there are ways
+to coerce it into behaving.</p>
+<p>After doing the modifications, this includes installing the extensions,
+you need to restart Thunderbird.</p>
+<ul>
+<li><p>Allow use of an external editor:</p>
+<p>The easiest thing to do with Thunderbird and patches is to use extensions
+which open your favorite external editor.</p>
+<p>Here are some example extensions which are capable of doing this.</p>
+<ul>
+<li><p>“External Editor Revived”</p>
+<p><a class="reference external" href="https://github.com/Frederick888/external-editor-revived">https://github.com/Frederick888/external-editor-revived</a></p>
+<p><a class="reference external" href="https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/">https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/</a></p>
+<p>It requires installing a “native messaging host”.
+Please read the wiki which can be found here:
+<a class="reference external" href="https://github.com/Frederick888/external-editor-revived/wiki">https://github.com/Frederick888/external-editor-revived/wiki</a></p>
+</li>
+<li><p>“External Editor”</p>
+<p><a class="reference external" href="https://github.com/exteditor/exteditor">https://github.com/exteditor/exteditor</a></p>
+<p>To do this, download and install the extension, then open the
+<span class="menuselection">compose</span> window, add a button for it using
+<span class="menuselection">View‣Toolbars‣Customize...</span>
+then just click on the new button when you wish to use the external editor.</p>
+<p>Please note that “External Editor” requires that your editor must not
+fork, or in other words, the editor must not return before closing.
+You may have to pass additional flags or change the settings of your
+editor. Most notably if you are using gvim then you must pass the -f
+option to gvim by putting <code class="docutils literal notranslate"><span class="pre">/usr/bin/gvim</span> <span class="pre">--nofork&quot;</span></code> (if the binary is in
+<code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code>) to the text editor field in <span class="menuselection">external editor</span>
+settings. If you are using some other editor then please read its manual
+to find out how to do this.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>To beat some sense out of the internal editor, do this:</p>
+<ul class="simple">
+<li><p>Edit your Thunderbird config settings so that it won’t use <code class="docutils literal notranslate"><span class="pre">format=flowed</span></code>!
+Go to your main window and find the button for your main dropdown menu.
+<span class="menuselection">Main Menu‣Preferences‣General‣Config Editor...</span>
+to bring up the thunderbird’s registry editor.</p>
+<ul>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">mailnews.send_plaintext_flowed</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">mailnews.wraplength</span></code> from <code class="docutils literal notranslate"><span class="pre">72</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</li>
+<li><p>Don’t write HTML messages! Go to the main window
+<span class="menuselection">Main Menu‣Account Settings‣youracc&#64;server.something‣Composition &amp; Addressing</span>!
+There you can disable the option “Compose messages in HTML format”.</p></li>
+<li><p>Open messages only as plain text! Go to the main window
+<span class="menuselection">Main Menu‣View‣Message Body As‣Plain Text</span>!</p></li>
+</ul>
+</section>
+<section id="tkrat-gui">
+<h3>TkRat (GUI)<a class="headerlink" href="#tkrat-gui" title="Link to this heading">¶</a></h3>
+<p>Works.  Use “Insert file...” or external editor.</p>
+</section>
+<section id="gmail-web-gui">
+<h3>Gmail (Web GUI)<a class="headerlink" href="#gmail-web-gui" title="Link to this heading">¶</a></h3>
+<p>Does not work for sending patches.</p>
+<p>Gmail web client converts tabs to spaces automatically.</p>
+<p>At the same time it wraps lines every 78 chars with CRLF style line breaks
+although tab2space problem can be solved with external editor.</p>
+<p>Another problem is that Gmail will base64-encode any message that has a
+non-ASCII character. That includes things like European names.</p>
+</section>
+<section id="hackermail-tui">
+<h3>HacKerMaiL (TUI)<a class="headerlink" href="#hackermail-tui" title="Link to this heading">¶</a></h3>
+<p>HacKerMaiL (hkml) is a public-inbox based simple mails management tool that
+doesn’t require subscription of mailing lists.  It is developed and maintained
+by the DAMON maintainer and aims to support simple development workflows for
+DAMON and general kernel subsystems.  Refer to the README
+(<a class="reference external" href="https://github.com/sjp38/hackermail/blob/master/README.md">https://github.com/sjp38/hackermail/blob/master/README.md</a>) for details.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Email clients info for Linux</a><ul>
+<li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#general-preferences">General Preferences</a></li>
+<li><a class="reference internal" href="#some-email-client-mua-hints">Some email client (MUA) hints</a><ul>
+<li><a class="reference internal" href="#alpine-tui">Alpine (TUI)</a></li>
+<li><a class="reference internal" href="#claws-mail-gui">Claws Mail (GUI)</a></li>
+<li><a class="reference internal" href="#evolution-gui">Evolution (GUI)</a></li>
+<li><a class="reference internal" href="#kmail-gui">Kmail (GUI)</a></li>
+<li><a class="reference internal" href="#lotus-notes-gui">Lotus Notes (GUI)</a></li>
+<li><a class="reference internal" href="#ibm-verse-web-gui">IBM Verse (Web GUI)</a></li>
+<li><a class="reference internal" href="#mutt-tui">Mutt (TUI)</a></li>
+<li><a class="reference internal" href="#pine-tui">Pine (TUI)</a></li>
+<li><a class="reference internal" href="#sylpheed-gui">Sylpheed (GUI)</a></li>
+<li><a class="reference internal" href="#thunderbird-gui">Thunderbird (GUI)</a></li>
+<li><a class="reference internal" href="#tkrat-gui">TkRat (GUI)</a></li>
+<li><a class="reference internal" href="#gmail-web-gui">Gmail (Web GUI)</a></li>
+<li><a class="reference internal" href="#hackermail-tui">HacKerMaiL (TUI)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="maintainer-pgp-guide.html">
+                    <span class="icon">&lt;</span><span>Kernel Maintainer PGP guide</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="applying-patches.html"><span>Applying Patches To The Linux Kernel</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

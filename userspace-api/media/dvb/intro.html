@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. Introduction &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="2. Digital TV Frontend API" href="frontend.html" />
+    <link rel="prev" title="Part II - Digital TV API" href="dvbapi.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Userspace API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#system-calls">System calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#security-related-interfaces">Security-related interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#devices-and-i-o">Devices and I/O</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accelerators/ocxl.html">OpenCAPI (Open Coherent Accelerator Processor Interface)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-heaps.html">Allocating dma-buf using heaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dma-buf-alloc-exchange.html">Exchanging pixel buffers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fwctl/index.html">Firmware Control (FWCTL) Userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpio/index.html">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iommufd.html">IOMMUFD</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Linux Media Infrastructure userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dcdbas.html">Dell Systems Management Base Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../vduse.html">VDUSE - “vDPA Device in Userspace”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../isapnp.html">ISA Plug &amp; Play support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/userspace-api/media/dvb/intro.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="introduction">
+<span id="dvb-introdution"></span><h1><span class="section-number">1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<section id="what-you-need-to-know">
+<span id="requisites"></span><h2><span class="section-number">1.1. </span>What you need to know<a class="headerlink" href="#what-you-need-to-know" title="Link to this heading">¶</a></h2>
+<p>The reader of this document is required to have some knowledge in the
+area of digital video broadcasting (Digital TV) and should be familiar with
+part I of the MPEG2 specification ISO/IEC 13818 (aka ITU-T H.222), i.e
+you should know what a program/transport stream (PS/TS) is and what is
+meant by a packetized elementary stream (PES) or an I-frame.</p>
+<p>Various Digital TV standards documents are available for download at:</p>
+<ul class="simple">
+<li><p>European standards (DVB): <a class="reference external" href="http://www.dvb.org">http://www.dvb.org</a> and/or <a class="reference external" href="http://www.etsi.org">http://www.etsi.org</a>.</p></li>
+<li><p>American standards (ATSC): <a class="reference external" href="https://www.atsc.org/standards/">https://www.atsc.org/standards/</a></p></li>
+<li><p>Japanese standards (ISDB): <a class="reference external" href="http://www.dibeg.org/">http://www.dibeg.org/</a></p></li>
+</ul>
+<p>It is also necessary to know how to access Linux devices and how to
+use ioctl calls. This also includes the knowledge of C or C++.</p>
+</section>
+<section id="history">
+<span id="id1"></span><h2><span class="section-number">1.2. </span>History<a class="headerlink" href="#history" title="Link to this heading">¶</a></h2>
+<p>The first API for Digital TV cards we used at Convergence in late 1999 was an
+extension of the Video4Linux API which was primarily developed for frame
+grabber cards. As such it was not really well suited to be used for Digital
+TV cards and their new features like recording MPEG streams and filtering
+several section and PES data streams at the same time.</p>
+<p>In early 2000, Convergence was approached by Nokia with a proposal for a new
+standard Linux Digital TV API. As a commitment to the development of terminals
+based on open standards, Nokia and Convergence made it available to all
+Linux developers and published it on <a class="reference external" href="https://linuxtv.org">https://linuxtv.org</a> in September
+2000. With the Linux driver for the Siemens/Hauppauge DVB PCI card,
+Convergence provided a first implementation of the Linux Digital TV API.
+Convergence was the maintainer of the Linux Digital TV API in the early
+days.</p>
+<p>Now, the API is maintained by the LinuxTV community (i.e. you, the reader
+of this document). The Linux  Digital TV API is constantly reviewed and
+improved together with the improvements at the subsystem’s core at the
+Kernel.</p>
+</section>
+<section id="overview">
+<span id="id2"></span><h2><span class="section-number">1.3. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<figure class="align-center" id="id3">
+<img alt="dvbstb.svg" src="../../../_images/dvbstb.svg" />
+<figcaption>
+<p><span class="caption-text">Components of a Digital TV card/STB</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A Digital TV card or set-top-box (STB) usually consists of the
+following main hardware components:</p>
+<dl>
+<dt>Frontend consisting of tuner and digital TV demodulator</dt><dd><p>Here the raw signal reaches the digital TV hardware from a satellite dish or
+antenna or directly from cable. The frontend down-converts and
+demodulates this signal into an MPEG transport stream (TS). In case
+of a satellite frontend, this includes a facility for satellite
+equipment control (SEC), which allows control of LNB polarization,
+multi feed switches or dish rotors.</p>
+</dd>
+<dt>Conditional Access (CA) hardware like CI adapters and smartcard slots</dt><dd><p>The complete TS is passed through the CA hardware. Programs to which
+the user has access (controlled by the smart card) are decoded in
+real time and re-inserted into the TS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not every digital TV hardware provides conditional access hardware.</p>
+</div>
+</dd>
+<dt>Demultiplexer which filters the incoming Digital TV MPEG-TS stream</dt><dd><p>The demultiplexer splits the TS into its components like audio and
+video streams. Besides usually several of such audio and video
+streams it also contains data streams with information about the
+programs offered in this or other streams of the same provider.</p>
+</dd>
+<dt>Audio and video decoder</dt><dd><p>The main targets of the demultiplexer are audio and video
+decoders. After decoding, they pass on the uncompressed audio and
+video to the computer screen or to a TV set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Modern hardware usually doesn’t have a separate decoder hardware, as
+such functionality can be provided by the main CPU, by the graphics
+adapter of the system or by a signal processing hardware embedded on
+a Systems on a Chip (SoC) integrated circuit.</p>
+<p>It may also not be needed for certain usages (e.g. for data-only
+uses like “internet over satellite”).</p>
+</div>
+</dd>
+</dl>
+<p><a class="reference internal" href="#stb-components"><span class="std std-ref">Components of a Digital TV card/STB</span></a> shows a crude schematic of the control and data
+flow between those components.</p>
+</section>
+<section id="linux-digital-tv-devices">
+<span id="dvb-devices"></span><h2><span class="section-number">1.4. </span>Linux Digital TV Devices<a class="headerlink" href="#linux-digital-tv-devices" title="Link to this heading">¶</a></h2>
+<p>The Linux Digital TV API lets you control these hardware components through
+currently six Unix-style character devices for video, audio, frontend,
+demux, CA and IP-over-DVB networking. The video and audio devices
+control the MPEG2 decoder hardware, the frontend device the tuner and
+the Digital TV demodulator. The demux device gives you control over the PES
+and section filters of the hardware. If the hardware does not support
+filtering these filters can be implemented in software. Finally, the CA
+device controls all the conditional access capabilities of the hardware.
+It can depend on the individual security requirements of the platform,
+if and how many of the CA functions are made available to the
+application through this device.</p>
+<p>All devices can be found in the <code class="docutils literal notranslate"><span class="pre">/dev</span></code> tree under <code class="docutils literal notranslate"><span class="pre">/dev/dvb</span></code>. The
+individual devices are called:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/audioM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/videoM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/frontendM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/netM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/demuxM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/dvrM</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/caM</span></code>,</p></li>
+</ul>
+<p>where <code class="docutils literal notranslate"><span class="pre">N</span></code> enumerates the Digital TV cards in a system starting from 0, and
+<code class="docutils literal notranslate"><span class="pre">M</span></code> enumerates the devices of each type within each adapter, starting
+from 0, too. We will omit the “<code class="docutils literal notranslate"><span class="pre">/dev/dvb/adapterN/</span></code>“ in the further
+discussion of these devices.</p>
+<p>More details about the data structures and function calls of all the
+devices are described in the following chapters.</p>
+</section>
+<section id="api-include-files">
+<span id="include-files"></span><h2><span class="section-number">1.5. </span>API include files<a class="headerlink" href="#api-include-files" title="Link to this heading">¶</a></h2>
+<p>For each of the Digital TV devices a corresponding include file exists. The
+Digital TV API include files should be included in application sources with a
+partial path like:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/dvb/ca.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/dvb/dmx.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/dvb/frontend.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/dvb/net.h&gt;</span>
+</pre></div>
+</div>
+<p>To enable applications to support different API version, an additional
+include file <code class="docutils literal notranslate"><span class="pre">linux/dvb/version.h</span></code> exists, which defines the constant
+<code class="docutils literal notranslate"><span class="pre">DVB_API_VERSION</span></code>. This document describes <code class="docutils literal notranslate"><span class="pre">DVB_API_VERSION</span> <span class="pre">5.10</span></code>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">1. Introduction</a><ul>
+<li><a class="reference internal" href="#what-you-need-to-know">1.1. What you need to know</a></li>
+<li><a class="reference internal" href="#history">1.2. History</a></li>
+<li><a class="reference internal" href="#overview">1.3. Overview</a></li>
+<li><a class="reference internal" href="#linux-digital-tv-devices">1.4. Linux Digital TV Devices</a></li>
+<li><a class="reference internal" href="#api-include-files">1.5. API include files</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="dvbapi.html">
+                    <span class="icon">&lt;</span><span>Part II - Digital TV API</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="frontend.html"><span><span class="section-number">2. </span>Digital TV Frontend API</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

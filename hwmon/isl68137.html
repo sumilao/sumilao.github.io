@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kernel driver isl68137 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Kernel driver it87" href="it87.html" />
+    <link rel="prev" title="Kernel driver isl28022" href="isl28022.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">USB support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../PCI/index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/hwmon/isl68137.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="kernel-driver-isl68137">
+<h1>Kernel driver isl68137<a class="headerlink" href="#kernel-driver-isl68137" title="Link to this heading">¶</a></h1>
+<p>Supported chips:</p>
+<blockquote>
+<div><ul>
+<li><p>Renesas ISL68137</p>
+<p>Prefix: ‘isl68137’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available at the Renesas website
+<a class="reference external" href="https://www.renesas.com/us/en/www/doc/datasheet/isl68137.pdf">https://www.renesas.com/us/en/www/doc/datasheet/isl68137.pdf</a></p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68220</p>
+<p>Prefix: ‘isl68220’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68221</p>
+<p>Prefix: ‘isl68221’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68222</p>
+<p>Prefix: ‘isl68222’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68223</p>
+<p>Prefix: ‘isl68223’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68224</p>
+<p>Prefix: ‘isl68224’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68225</p>
+<p>Prefix: ‘isl68225’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68226</p>
+<p>Prefix: ‘isl68226’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68227</p>
+<p>Prefix: ‘isl68227’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68229</p>
+<p>Prefix: ‘isl68229’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68233</p>
+<p>Prefix: ‘isl68233’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL68239</p>
+<p>Prefix: ‘isl68239’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69222</p>
+<p>Prefix: ‘isl69222’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69223</p>
+<p>Prefix: ‘isl69223’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69224</p>
+<p>Prefix: ‘isl69224’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69225</p>
+<p>Prefix: ‘isl69225’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69227</p>
+<p>Prefix: ‘isl69227’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69228</p>
+<p>Prefix: ‘isl69228’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69234</p>
+<p>Prefix: ‘isl69234’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69236</p>
+<p>Prefix: ‘isl69236’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69239</p>
+<p>Prefix: ‘isl69239’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69242</p>
+<p>Prefix: ‘isl69242’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69243</p>
+<p>Prefix: ‘isl69243’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69247</p>
+<p>Prefix: ‘isl69247’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69248</p>
+<p>Prefix: ‘isl69248’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69254</p>
+<p>Prefix: ‘isl69254’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69255</p>
+<p>Prefix: ‘isl69255’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69256</p>
+<p>Prefix: ‘isl69256’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69259</p>
+<p>Prefix: ‘isl69259’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69260</p>
+<p>Prefix: ‘isl69260’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69268</p>
+<p>Prefix: ‘isl69268’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69269</p>
+<p>Prefix: ‘isl69269’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas ISL69298</p>
+<p>Prefix: ‘isl69298’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA228000</p>
+<p>Prefix: ‘raa228000’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA228004</p>
+<p>Prefix: ‘raa228004’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA228006</p>
+<p>Prefix: ‘raa228006’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA228228</p>
+<p>Prefix: ‘raa228228’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA229001</p>
+<p>Prefix: ‘raa229001’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+<li><p>Renesas RAA229004</p>
+<p>Prefix: ‘raa229004’</p>
+<p>Addresses scanned: -</p>
+<p>Datasheet:</p>
+<blockquote>
+<div><p>Publicly available (after August 2020 launch) at the Renesas website</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Maxim Sloyko &lt;<a class="reference external" href="mailto:maxims&#37;&#52;&#48;google&#46;com">maxims<span>&#64;</span>google<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>Robert Lippert &lt;<a class="reference external" href="mailto:rlippert&#37;&#52;&#48;google&#46;com">rlippert<span>&#64;</span>google<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>Patrick Venture &lt;<a class="reference external" href="mailto:venture&#37;&#52;&#48;google&#46;com">venture<span>&#64;</span>google<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>Grant Peltier &lt;<a class="reference external" href="mailto:grant&#46;peltier&#46;jg&#37;&#52;&#48;renesas&#46;com">grant<span>&#46;</span>peltier<span>&#46;</span>jg<span>&#64;</span>renesas<span>&#46;</span>com</a>&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>This driver supports the Renesas ISL68137 and all 2nd generation Renesas
+digital multiphase voltage regulators (raa_dmpvr2). The ISL68137 is a digital
+output 7-phase configurable PWM controller with an AVSBus interface. 2nd
+generation devices are grouped into 4 distinct configurations: ‘1rail’ for
+single-rail devices, ‘2rail’ for dual-rail devices, ‘3rail’ for 3-rail devices,
+and ‘hv’ for high voltage single-rail devices. Consult the individual datasheets
+for more information.</p>
+</section>
+<section id="usage-notes">
+<h2>Usage Notes<a class="headerlink" href="#usage-notes" title="Link to this heading">¶</a></h2>
+<p>This driver does not probe for PMBus devices. You will have to instantiate
+devices explicitly.</p>
+<p>The ISL68137 AVS operation mode must be enabled/disabled at runtime.</p>
+<p>Beyond the normal sysfs pmbus attributes, the driver exposes a control attribute
+for the ISL68137.</p>
+<p>For 2nd generation Renesas digital multiphase voltage regulators, only the
+normal sysfs pmbus attributes are supported.</p>
+</section>
+<section id="isl68137-sysfs-attributes">
+<h2>ISL68137 sysfs attributes<a class="headerlink" href="#isl68137-sysfs-attributes" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>avs(0|1)_enable</p></td>
+<td><p>Controls the AVS state of each rail.</p></td>
+</tr>
+<tr class="row-even"><td><p>curr1_label</p></td>
+<td><p>“iin”</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr1_input</p></td>
+<td><p>Measured input current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr1_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr1_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[2-3]_label</p></td>
+<td><p>“iout[1-2]”</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[2-3]_input</p></td>
+<td><p>Measured output current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[2-3]_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[2-3]_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_label</p></td>
+<td><p>“vin”</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_input</p></td>
+<td><p>Measured input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_lcrit</p></td>
+<td><p>Critical minimum input voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_lcrit_alarm</p></td>
+<td><p>Input voltage critical low alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_crit</p></td>
+<td><p>Critical maximum input voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_crit_alarm</p></td>
+<td><p>Input voltage critical high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>in[2-3]_label</p></td>
+<td><p>“vout[1-2]”</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[2-3]_input</p></td>
+<td><p>Measured output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in[2-3]_lcrit</p></td>
+<td><p>Critical minimum output voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[2-3]_lcrit_alarm</p></td>
+<td><p>Output voltage critical low alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>in[2-3]_crit</p></td>
+<td><p>Critical maximum output voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[2-3]_crit_alarm</p></td>
+<td><p>Output voltage critical high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>power1_label</p></td>
+<td><p>“pin”</p></td>
+</tr>
+<tr class="row-odd"><td><p>power1_input</p></td>
+<td><p>Measured input power</p></td>
+</tr>
+<tr class="row-even"><td><p>power1_alarm</p></td>
+<td><p>Input power high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[2-3]_label</p></td>
+<td><p>“pout[1-2]”</p></td>
+</tr>
+<tr class="row-even"><td><p>power[2-3]_input</p></td>
+<td><p>Measured output power</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-3]_input</p></td>
+<td><p>Measured temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-3]_crit</p></td>
+<td><p>Critical high temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-3]_crit_alarm</p></td>
+<td><p>Chip temperature critical high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-3]_max</p></td>
+<td><p>Maximum temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-3]_max_alarm</p></td>
+<td><p>Chip temperature high alarm</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="raa-dmpvr2-1rail-hv-sysfs-attributes">
+<h2>raa_dmpvr2_1rail/hv sysfs attributes<a class="headerlink" href="#raa-dmpvr2-1rail-hv-sysfs-attributes" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>curr1_label</p></td>
+<td><p>“iin”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr1_input</p></td>
+<td><p>Measured input current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr1_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr1_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr2_label</p></td>
+<td><p>“iout”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr2_input</p></td>
+<td><p>Measured output current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr2_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr2_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_label</p></td>
+<td><p>“vin”</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_input</p></td>
+<td><p>Measured input voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_lcrit</p></td>
+<td><p>Critical minimum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_lcrit_alarm</p></td>
+<td><p>Input voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_crit</p></td>
+<td><p>Critical maximum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_crit_alarm</p></td>
+<td><p>Input voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in2_label</p></td>
+<td><p>“vmon”</p></td>
+</tr>
+<tr class="row-even"><td><p>in2_input</p></td>
+<td><p>Scaled VMON voltage read from the VMON pin</p></td>
+</tr>
+<tr class="row-odd"><td><p>in3_label</p></td>
+<td><p>“vout”</p></td>
+</tr>
+<tr class="row-even"><td><p>in3_input</p></td>
+<td><p>Measured output voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in3_lcrit</p></td>
+<td><p>Critical minimum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in3_lcrit_alarm</p></td>
+<td><p>Output voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in3_crit</p></td>
+<td><p>Critical maximum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in3_crit_alarm</p></td>
+<td><p>Output voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>power1_label</p></td>
+<td><p>“pin”</p></td>
+</tr>
+<tr class="row-even"><td><p>power1_input</p></td>
+<td><p>Measured input power</p></td>
+</tr>
+<tr class="row-odd"><td><p>power1_alarm</p></td>
+<td><p>Input power high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>power2_label</p></td>
+<td><p>“pout”</p></td>
+</tr>
+<tr class="row-odd"><td><p>power2_input</p></td>
+<td><p>Measured output power</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-3]_input</p></td>
+<td><p>Measured temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-3]_crit</p></td>
+<td><p>Critical high temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-3]_crit_alarm</p></td>
+<td><p>Chip temperature critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-3]_max</p></td>
+<td><p>Maximum temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-3]_max_alarm</p></td>
+<td><p>Chip temperature high alarm</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="raa-dmpvr2-2rail-sysfs-attributes">
+<h2>raa_dmpvr2_2rail sysfs attributes<a class="headerlink" href="#raa-dmpvr2-2rail-sysfs-attributes" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>curr[1-2]_label</p></td>
+<td><p>“iin[1-2]”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[1-2]_input</p></td>
+<td><p>Measured input current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[1-2]_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[1-2]_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[3-4]_label</p></td>
+<td><p>“iout[1-2]”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[3-4]_input</p></td>
+<td><p>Measured output current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[3-4]_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[3-4]_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_label</p></td>
+<td><p>“vin”</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_input</p></td>
+<td><p>Measured input voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_lcrit</p></td>
+<td><p>Critical minimum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_lcrit_alarm</p></td>
+<td><p>Input voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_crit</p></td>
+<td><p>Critical maximum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_crit_alarm</p></td>
+<td><p>Input voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in2_label</p></td>
+<td><p>“vmon”</p></td>
+</tr>
+<tr class="row-even"><td><p>in2_input</p></td>
+<td><p>Scaled VMON voltage read from the VMON pin</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-4]_label</p></td>
+<td><p>“vout[1-2]”</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-4]_input</p></td>
+<td><p>Measured output voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-4]_lcrit</p></td>
+<td><p>Critical minimum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-4]_lcrit_alarm</p></td>
+<td><p>Output voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-4]_crit</p></td>
+<td><p>Critical maximum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-4]_crit_alarm</p></td>
+<td><p>Output voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[1-2]_label</p></td>
+<td><p>“pin[1-2]”</p></td>
+</tr>
+<tr class="row-even"><td><p>power[1-2]_input</p></td>
+<td><p>Measured input power</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[1-2]_alarm</p></td>
+<td><p>Input power high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>power[3-4]_label</p></td>
+<td><p>“pout[1-2]”</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[3-4]_input</p></td>
+<td><p>Measured output power</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-5]_input</p></td>
+<td><p>Measured temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-5]_crit</p></td>
+<td><p>Critical high temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-5]_crit_alarm</p></td>
+<td><p>Chip temperature critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-5]_max</p></td>
+<td><p>Maximum temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-5]_max_alarm</p></td>
+<td><p>Chip temperature high alarm</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="raa-dmpvr2-3rail-sysfs-attributes">
+<h2>raa_dmpvr2_3rail sysfs attributes<a class="headerlink" href="#raa-dmpvr2-3rail-sysfs-attributes" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>curr[1-3]_label</p></td>
+<td><p>“iin[1-3]”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[1-3]_input</p></td>
+<td><p>Measured input current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[1-3]_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[1-3]_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[4-6]_label</p></td>
+<td><p>“iout[1-3]”</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[4-6]_input</p></td>
+<td><p>Measured output current</p></td>
+</tr>
+<tr class="row-odd"><td><p>curr[4-6]_crit</p></td>
+<td><p>Critical maximum current</p></td>
+</tr>
+<tr class="row-even"><td><p>curr[4-6]_crit_alarm</p></td>
+<td><p>Current critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_label</p></td>
+<td><p>“vin”</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_input</p></td>
+<td><p>Measured input voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_lcrit</p></td>
+<td><p>Critical minimum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_lcrit_alarm</p></td>
+<td><p>Input voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in1_crit</p></td>
+<td><p>Critical maximum input voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in1_crit_alarm</p></td>
+<td><p>Input voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in2_label</p></td>
+<td><p>“vmon”</p></td>
+</tr>
+<tr class="row-even"><td><p>in2_input</p></td>
+<td><p>Scaled VMON voltage read from the VMON pin</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-5]_label</p></td>
+<td><p>“vout[1-3]”</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-5]_input</p></td>
+<td><p>Measured output voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-5]_lcrit</p></td>
+<td><p>Critical minimum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-5]_lcrit_alarm</p></td>
+<td><p>Output voltage critical low alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>in[3-5]_crit</p></td>
+<td><p>Critical maximum output voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>in[3-5]_crit_alarm</p></td>
+<td><p>Output voltage critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[1-3]_label</p></td>
+<td><p>“pin[1-3]”</p></td>
+</tr>
+<tr class="row-even"><td><p>power[1-3]_input</p></td>
+<td><p>Measured input power</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[1-3]_alarm</p></td>
+<td><p>Input power high alarm</p></td>
+</tr>
+<tr class="row-even"><td><p>power[4-6]_label</p></td>
+<td><p>“pout[1-3]”</p></td>
+</tr>
+<tr class="row-odd"><td><p>power[4-6]_input</p></td>
+<td><p>Measured output power</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-7]_input</p></td>
+<td><p>Measured temperature</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-7]_crit</p></td>
+<td><p>Critical high temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-7]_crit_alarm</p></td>
+<td><p>Chip temperature critical high alarm</p></td>
+</tr>
+<tr class="row-odd"><td><p>temp[1-7]_max</p></td>
+<td><p>Maximum temperature</p></td>
+</tr>
+<tr class="row-even"><td><p>temp[1-7]_max_alarm</p></td>
+<td><p>Chip temperature high alarm</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Kernel driver isl68137</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#usage-notes">Usage Notes</a></li>
+<li><a class="reference internal" href="#isl68137-sysfs-attributes">ISL68137 sysfs attributes</a></li>
+<li><a class="reference internal" href="#raa-dmpvr2-1rail-hv-sysfs-attributes">raa_dmpvr2_1rail/hv sysfs attributes</a></li>
+<li><a class="reference internal" href="#raa-dmpvr2-2rail-sysfs-attributes">raa_dmpvr2_2rail sysfs attributes</a></li>
+<li><a class="reference internal" href="#raa-dmpvr2-3rail-sysfs-attributes">raa_dmpvr2_3rail sysfs attributes</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="isl28022.html">
+                    <span class="icon">&lt;</span><span>Kernel driver isl28022</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="it87.html"><span>Kernel driver it87</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

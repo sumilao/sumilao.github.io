@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Discovering Linux kernel subsystems used by a workload &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LDM - Logical Disk Manager (Dynamic Disks)" href="ldm.html" />
+    <link rel="prev" title="Video Output Switcher Control" href="video-output.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#workload-analysis">Workload analysis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Discovering Linux kernel subsystems used by a workload</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin-guide/workload-tracing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="discovering-linux-kernel-subsystems-used-by-a-workload">
+<h1>Discovering Linux kernel subsystems used by a workload<a class="headerlink" href="#discovering-linux-kernel-subsystems-used-by-a-workload" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Authors<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Shuah Khan &lt;<a class="reference external" href="mailto:skhan&#37;&#52;&#48;linuxfoundation&#46;org">skhan<span>&#64;</span>linuxfoundation<span>&#46;</span>org</a>&gt;</p></li>
+<li><p>Shefali Sharma &lt;<a class="reference external" href="mailto:sshefali021&#37;&#52;&#48;gmail&#46;com">sshefali021<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+</ul>
+</dd>
+<dt class="field-even">maintained-by<span class="colon">:</span></dt>
+<dd class="field-even"><p>Shuah Khan &lt;<a class="reference external" href="mailto:skhan&#37;&#52;&#48;linuxfoundation&#46;org">skhan<span>&#64;</span>linuxfoundation<span>&#46;</span>org</a>&gt;</p>
+</dd>
+</dl>
+<section id="key-points">
+<h2>Key Points<a class="headerlink" href="#key-points" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>Understanding system resources necessary to build and run a workload
+is important.</p></li>
+<li><p>Linux tracing and strace can be used to discover the system resources
+in use by a workload. The completeness of the system usage information
+depends on the completeness of coverage of a workload.</p></li>
+<li><p>Performance and security of the operating system can be analyzed with
+the help of tools such as:
+<a class="reference external" href="https://man7.org/linux/man-pages/man1/perf.1.html">perf</a>,
+<a class="reference external" href="https://www.mankier.com/1/stress-ng">stress-ng</a>,
+<a class="reference external" href="https://github.com/opntr/paxtest-freebsd">paxtest</a>.</p></li>
+<li><p>Once we discover and understand the workload needs, we can focus on them
+to avoid regressions and use it to evaluate safety considerations.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="methodology">
+<h2>Methodology<a class="headerlink" href="#methodology" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://man7.org/linux/man-pages/man1/strace.1.html">strace</a> is a
+diagnostic, instructional, and debugging tool and can be used to discover
+the system resources in use by a workload. Once we discover and understand
+the workload needs, we can focus on them to avoid regressions and use it
+to evaluate safety considerations. We use strace tool to trace workloads.</p>
+<p>This method of tracing using strace tells us the system calls invoked by
+the workload and doesn’t include all the system calls that can be invoked
+by it. In addition, this tracing method tells us just the code paths within
+these system calls that are invoked. As an example, if a workload opens a
+file and reads from it successfully, then the success path is the one that
+is traced. Any error paths in that system call will not be traced. If there
+is a workload that provides full coverage of a workload then the method
+outlined here will trace and find all possible code paths. The completeness
+of the system usage information depends on the completeness of coverage of a
+workload.</p>
+<p>The goal is tracing a workload on a system running a default kernel without
+requiring custom kernel installs.</p>
+</section>
+<section id="how-do-we-gather-fine-grained-system-information">
+<h2>How do we gather fine-grained system information?<a class="headerlink" href="#how-do-we-gather-fine-grained-system-information" title="Link to this heading">¶</a></h2>
+<p>strace tool can be used to trace system calls made by a process and signals
+it receives. System calls are the fundamental interface between an
+application and the operating system kernel. They enable a program to
+request services from the kernel. For instance, the open() system call in
+Linux is used to provide access to a file in the file system. strace enables
+us to track all the system calls made by an application. It lists all the
+system calls made by a process and their resulting output.</p>
+<p>You can generate profiling data combining strace and perf record tools to
+record the events and information associated with a process. This provides
+insight into the process. “perf annotate” tool generates the statistics of
+each instruction of the program. This document goes over the details of how
+to gather fine-grained information on a workload’s usage of system resources.</p>
+<p>We used strace to trace the perf, stress-ng, paxtest workloads to illustrate
+our methodology to discover resources used by a workload. This process can
+be applied to trace other workloads.</p>
+</section>
+<section id="getting-the-system-ready-for-tracing">
+<h2>Getting the system ready for tracing<a class="headerlink" href="#getting-the-system-ready-for-tracing" title="Link to this heading">¶</a></h2>
+<p>Before we can get started we will show you how to get your system ready.
+We assume that you have a Linux distribution running on a physical system
+or a virtual machine. Most distributions will include strace command. Let’s
+install other tools that aren’t usually included to build Linux kernel.
+Please note that the following works on Debian based distributions. You
+might have to find equivalent packages on other Linux distributions.</p>
+<p>Install tools to build Linux kernel and tools in kernel repository.
+scripts/ver_linux is a good way to check if your system already has
+the necessary tools:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential flex bison yacc
+sudo apt install libelf-dev systemtap-sdt-dev libslang2-dev libperl-dev libdw-dev
+</pre></div>
+</div>
+<p>cscope is a good tool to browse kernel sources. Let’s install it now:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt-get install cscope
+</pre></div>
+</div>
+<p>Install stress-ng and paxtest:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>apt-get install stress-ng
+apt-get install paxtest
+</pre></div>
+</div>
+</section>
+<section id="workload-overview">
+<h2>Workload overview<a class="headerlink" href="#workload-overview" title="Link to this heading">¶</a></h2>
+<p>As mentioned earlier, we used strace to trace perf bench, stress-ng and
+paxtest workloads to show how to analyze a workload and identify Linux
+subsystems used by these workloads. Let’s start with an overview of these
+three workloads to get a better understanding of what they do and how to
+use them.</p>
+<section id="perf-bench-all-workload">
+<h3>perf bench (all) workload<a class="headerlink" href="#perf-bench-all-workload" title="Link to this heading">¶</a></h3>
+<p>The perf bench command contains multiple multi-threaded microkernel
+benchmarks for executing different subsystems in the Linux kernel and
+system calls. This allows us to easily measure the impact of changes,
+which can help mitigate performance regressions. It also acts as a common
+benchmarking framework, enabling developers to easily create test cases,
+integrate transparently, and use performance-rich tooling subsystems.</p>
+</section>
+<section id="stress-ng-netdev-stressor-workload">
+<h3>Stress-ng netdev stressor workload<a class="headerlink" href="#stress-ng-netdev-stressor-workload" title="Link to this heading">¶</a></h3>
+<p>stress-ng is used for performing stress testing on the kernel. It allows
+you to exercise various physical subsystems of the computer, as well as
+interfaces of the OS kernel, using “stressor-s”. They are available for
+CPU, CPU cache, devices, I/O, interrupts, file system, memory, network,
+operating system, pipelines, schedulers, and virtual machines. Please refer
+to the <a class="reference external" href="https://www.mankier.com/1/stress-ng">stress-ng man-page</a> to
+find the description of all the available stressor-s. The netdev stressor
+starts specified number (N) of workers that exercise various netdevice
+ioctl commands across all the available network devices.</p>
+</section>
+<section id="paxtest-kiddie-workload">
+<h3>paxtest kiddie workload<a class="headerlink" href="#paxtest-kiddie-workload" title="Link to this heading">¶</a></h3>
+<p>paxtest is a program that tests buffer overflows in the kernel. It tests
+kernel enforcements over memory usage. Generally, execution in some memory
+segments makes buffer overflows possible. It runs a set of programs that
+attempt to subvert memory usage. It is used as a regression test suite for
+PaX, but might be useful to test other memory protection patches for the
+kernel. We used paxtest kiddie mode which looks for simple vulnerabilities.</p>
+</section>
+</section>
+<section id="what-is-strace-and-how-do-we-use-it">
+<h2>What is strace and how do we use it?<a class="headerlink" href="#what-is-strace-and-how-do-we-use-it" title="Link to this heading">¶</a></h2>
+<p>As mentioned earlier, strace which is a useful diagnostic, instructional,
+and debugging tool and can be used to discover the system resources in use
+by a workload. It can be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>To see how a process interacts with the kernel.</p></li>
+<li><p>To see why a process is failing or hanging.</p></li>
+<li><p>For reverse engineering a process.</p></li>
+<li><p>To find the files on which a program depends.</p></li>
+<li><p>For analyzing the performance of an application.</p></li>
+<li><p>For troubleshooting various problems related to the operating system.</p></li>
+</ul>
+</div></blockquote>
+<p>In addition, strace can generate run-time statistics on times, calls, and
+errors for each system call and report a summary when program exits,
+suppressing the regular output. This attempts to show system time (CPU time
+spent running in the kernel) independent of wall clock time. We plan to use
+these features to get information on workload system usage.</p>
+<p>strace command supports basic, verbose, and stats modes. strace command when
+run in verbose mode gives more detailed information about the system calls
+invoked by a process.</p>
+<p>Running strace -c generates a report of the percentage of time spent in each
+system call, the total time in seconds, the microseconds per call, the total
+number of calls, the count of each system call that has failed with an error
+and the type of system call made.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Usage: strace &lt;command we want to trace&gt;</p></li>
+<li><p>Verbose mode usage: strace -v &lt;command&gt;</p></li>
+<li><p>Gather statistics: strace -c &lt;command&gt;</p></li>
+</ul>
+</div></blockquote>
+<p>We used the “-c” option to gather fine-grained run-time statistics in use
+by three workloads we have chose for this analysis.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>perf</p></li>
+<li><p>stress-ng</p></li>
+<li><p>paxtest</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="what-is-cscope-and-how-do-we-use-it">
+<h2>What is cscope and how do we use it?<a class="headerlink" href="#what-is-cscope-and-how-do-we-use-it" title="Link to this heading">¶</a></h2>
+<p>Now let’s look at <a class="reference external" href="https://cscope.sourceforge.net/">cscope</a>, a command
+line tool for browsing C, C++ or Java code-bases. We can use it to find
+all the references to a symbol, global definitions, functions called by a
+function, functions calling a function, text strings, regular expression
+patterns, files including a file.</p>
+<p>We can use cscope to find which system call belongs to which subsystem.
+This way we can find the kernel subsystems used by a process when it is
+executed.</p>
+<p>Let’s checkout the latest Linux repository and build cscope database:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git linux
+cd linux
+cscope -R -p10  # builds cscope.out database before starting browse session
+cscope -d -p10  # starts browse session on cscope.out database
+</pre></div>
+</div>
+<p>Note: Run “cscope -R -p10” to build the database and c”scope -d -p10” to
+enter into the browsing session. cscope by default cscope.out database.
+To get out of this mode press ctrl+d. -p option is used to specify the
+number of file path components to display. -p10 is optimal for browsing
+kernel sources.</p>
+</section>
+<section id="what-is-perf-and-how-do-we-use-it">
+<h2>What is perf and how do we use it?<a class="headerlink" href="#what-is-perf-and-how-do-we-use-it" title="Link to this heading">¶</a></h2>
+<p>Perf is an analysis tool based on Linux 2.6+ systems, which abstracts the
+CPU hardware difference in performance measurement in Linux, and provides
+a simple command line interface. Perf is based on the perf_events interface
+exported by the kernel. It is very useful for profiling the system and
+finding performance bottlenecks in an application.</p>
+<p>If you haven’t already checked out the Linux mainline repository, you can do
+so and then build kernel and perf tool:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git linux
+cd linux
+make -j3 all
+cd tools/perf
+make
+</pre></div>
+</div>
+<p>Note: The perf command can be built without building the kernel in the
+repository and can be run on older kernels. However matching the kernel
+and perf revisions gives more accurate information on the subsystem usage.</p>
+<p>We used “perf stat” and “perf bench” options. For a detailed information on
+the perf tool, run “perf -h”.</p>
+<section id="perf-stat">
+<h3>perf stat<a class="headerlink" href="#perf-stat" title="Link to this heading">¶</a></h3>
+<p>The perf stat command generates a report of various hardware and software
+events. It does so with the help of hardware counter registers found in
+modern CPUs that keep the count of these activities. “perf stat cal” shows
+stats for cal command.</p>
+</section>
+<section id="perf-bench">
+<h3>Perf bench<a class="headerlink" href="#perf-bench" title="Link to this heading">¶</a></h3>
+<p>The perf bench command contains multiple multi-threaded microkernel
+benchmarks for executing different subsystems in the Linux kernel and
+system calls. This allows us to easily measure the impact of changes,
+which can help mitigate performance regressions. It also acts as a common
+benchmarking framework, enabling developers to easily create test cases,
+integrate transparently, and use performance-rich tooling.</p>
+<p>“perf bench all” command runs the following benchmarks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>sched/messaging</p></li>
+<li><p>sched/pipe</p></li>
+<li><p>syscall/basic</p></li>
+<li><p>mem/memcpy</p></li>
+<li><p>mem/memset</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="what-is-stress-ng-and-how-do-we-use-it">
+<h2>What is stress-ng and how do we use it?<a class="headerlink" href="#what-is-stress-ng-and-how-do-we-use-it" title="Link to this heading">¶</a></h2>
+<p>As mentioned earlier, stress-ng is used for performing stress testing on
+the kernel. It allows you to exercise various physical subsystems of the
+computer, as well as interfaces of the OS kernel, using stressor-s. They
+are available for CPU, CPU cache, devices, I/O, interrupts, file system,
+memory, network, operating system, pipelines, schedulers, and virtual
+machines.</p>
+<p>The netdev stressor starts N workers that exercise various netdevice ioctl
+commands across all the available network devices. The following ioctls are
+exercised:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SIOCGIFCONF, SIOCGIFINDEX, SIOCGIFNAME, SIOCGIFFLAGS</p></li>
+<li><p>SIOCGIFADDR, SIOCGIFNETMASK, SIOCGIFMETRIC, SIOCGIFMTU</p></li>
+<li><p>SIOCGIFHWADDR, SIOCGIFMAP, SIOCGIFTXQLEN</p></li>
+</ul>
+</div></blockquote>
+<p>The following command runs the stressor:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stress-ng --netdev 1 -t 60 --metrics command.
+</pre></div>
+</div>
+<p>We can use the perf record command to record the events and information
+associated with a process. This command records the profiling data in the
+perf.data file in the same directory.</p>
+<p>Using the following commands you can record the events associated with the
+netdev stressor, view the generated report perf.data and annotate the to
+view the statistics of each instruction of the program:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>perf record stress-ng --netdev 1 -t 60 --metrics command.
+perf report
+perf annotate
+</pre></div>
+</div>
+</section>
+<section id="what-is-paxtest-and-how-do-we-use-it">
+<h2>What is paxtest and how do we use it?<a class="headerlink" href="#what-is-paxtest-and-how-do-we-use-it" title="Link to this heading">¶</a></h2>
+<p>paxtest is a program that tests buffer overflows in the kernel. It tests
+kernel enforcements over memory usage. Generally, execution in some memory
+segments makes buffer overflows possible. It runs a set of programs that
+attempt to subvert memory usage. It is used as a regression test suite for
+PaX, and will be useful to test other memory protection patches for the
+kernel.</p>
+<p>paxtest provides kiddie and blackhat modes. The paxtest kiddie mode runs
+in normal mode, whereas the blackhat mode tries to get around the protection
+of the kernel testing for vulnerabilities. We focus on the kiddie mode here
+and combine “paxtest kiddie” run with “perf record” to collect CPU stack
+traces for the paxtest kiddie run to see which function is calling other
+functions in the performance profile. Then the “dwarf” (DWARF’s Call Frame
+Information) mode can be used to unwind the stack.</p>
+<p>The following command can be used to view resulting report in call-graph
+format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>perf record --call-graph dwarf paxtest kiddie
+perf report --stdio
+</pre></div>
+</div>
+</section>
+<section id="tracing-workloads">
+<h2>Tracing workloads<a class="headerlink" href="#tracing-workloads" title="Link to this heading">¶</a></h2>
+<p>Now that we understand the workloads, let’s start tracing them.</p>
+<section id="tracing-perf-bench-all-workload">
+<h3>Tracing perf bench all workload<a class="headerlink" href="#tracing-perf-bench-all-workload" title="Link to this heading">¶</a></h3>
+<p>Run the following command to trace perf bench all workload:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>strace -c perf bench all
+</pre></div>
+</div>
+<p><strong>System Calls made by the workload</strong></p>
+<p>The below table shows the system calls invoked by the workload, number of
+times each system call is invoked, and the corresponding Linux subsystem.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>System Call</p></th>
+<th class="head"><p># calls</p></th>
+<th class="head"><p>Linux Subsystem</p></th>
+<th class="head"><p>System Call (API)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>getppid</p></td>
+<td><p>10000001</p></td>
+<td><p>Process Mgmt</p></td>
+<td><p>sys_getpid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>clone</p></td>
+<td><p>1077</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_clone()</p></td>
+</tr>
+<tr class="row-even"><td><p>prctl</p></td>
+<td><p>23</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_prctl()</p></td>
+</tr>
+<tr class="row-odd"><td><p>prlimit64</p></td>
+<td><p>7</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_prlimit64()</p></td>
+</tr>
+<tr class="row-even"><td><p>getpid</p></td>
+<td><p>10</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getpid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>uname</p></td>
+<td><p>3</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_uname()</p></td>
+</tr>
+<tr class="row-even"><td><p>sysinfo</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_sysinfo()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getuid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getgid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getgid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>geteuid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_geteuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getegid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getegid</p></td>
+</tr>
+<tr class="row-odd"><td><p>close</p></td>
+<td><p>49951</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_close()</p></td>
+</tr>
+<tr class="row-even"><td><p>pipe</p></td>
+<td><p>604</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_pipe()</p></td>
+</tr>
+<tr class="row-odd"><td><p>openat</p></td>
+<td><p>48560</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_opennat()</p></td>
+</tr>
+<tr class="row-even"><td><p>fstat</p></td>
+<td><p>8338</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_fstat()</p></td>
+</tr>
+<tr class="row-odd"><td><p>stat</p></td>
+<td><p>1573</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_stat()</p></td>
+</tr>
+<tr class="row-even"><td><p>pread64</p></td>
+<td><p>9646</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_pread64()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getdents64</p></td>
+<td><p>1873</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_getdents64()</p></td>
+</tr>
+<tr class="row-even"><td><p>access</p></td>
+<td><p>3</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_access()</p></td>
+</tr>
+<tr class="row-odd"><td><p>lstat</p></td>
+<td><p>1880</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_lstat()</p></td>
+</tr>
+<tr class="row-even"><td><p>lseek</p></td>
+<td><p>6</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_lseek()</p></td>
+</tr>
+<tr class="row-odd"><td><p>ioctl</p></td>
+<td><p>3</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_ioctl()</p></td>
+</tr>
+<tr class="row-even"><td><p>dup2</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_dup2()</p></td>
+</tr>
+<tr class="row-odd"><td><p>execve</p></td>
+<td><p>2</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_execve()</p></td>
+</tr>
+<tr class="row-even"><td><p>fcntl</p></td>
+<td><p>8779</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_fcntl()</p></td>
+</tr>
+<tr class="row-odd"><td><p>statfs</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_statfs()</p></td>
+</tr>
+<tr class="row-even"><td><p>epoll_create</p></td>
+<td><p>2</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_epoll_create()</p></td>
+</tr>
+<tr class="row-odd"><td><p>epoll_ctl</p></td>
+<td><p>64</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_epoll_ctl()</p></td>
+</tr>
+<tr class="row-even"><td><p>newfstatat</p></td>
+<td><p>8318</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_newfstatat()</p></td>
+</tr>
+<tr class="row-odd"><td><p>eventfd2</p></td>
+<td><p>192</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_eventfd2()</p></td>
+</tr>
+<tr class="row-even"><td><p>mmap</p></td>
+<td><p>243</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mmap()</p></td>
+</tr>
+<tr class="row-odd"><td><p>mprotect</p></td>
+<td><p>32</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mprotect()</p></td>
+</tr>
+<tr class="row-even"><td><p>brk</p></td>
+<td><p>21</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_brk()</p></td>
+</tr>
+<tr class="row-odd"><td><p>munmap</p></td>
+<td><p>128</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_munmap()</p></td>
+</tr>
+<tr class="row-even"><td><p>set_mempolicy</p></td>
+<td><p>156</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_set_mempolicy()</p></td>
+</tr>
+<tr class="row-odd"><td><p>set_tid_address</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_set_tid_address()</p></td>
+</tr>
+<tr class="row-even"><td><p>set_robust_list</p></td>
+<td><p>1</p></td>
+<td><p>Futex</p></td>
+<td><p>sys_set_robust_list()</p></td>
+</tr>
+<tr class="row-odd"><td><p>futex</p></td>
+<td><p>341</p></td>
+<td><p>Futex</p></td>
+<td><p>sys_futex()</p></td>
+</tr>
+<tr class="row-even"><td><p>sched_getaffinity</p></td>
+<td><p>79</p></td>
+<td><p>Scheduler</p></td>
+<td><p>sys_sched_getaffinity()</p></td>
+</tr>
+<tr class="row-odd"><td><p>sched_setaffinity</p></td>
+<td><p>223</p></td>
+<td><p>Scheduler</p></td>
+<td><p>sys_sched_setaffinity()</p></td>
+</tr>
+<tr class="row-even"><td><p>socketpair</p></td>
+<td><p>202</p></td>
+<td><p>Network</p></td>
+<td><p>sys_socketpair()</p></td>
+</tr>
+<tr class="row-odd"><td><p>rt_sigprocmask</p></td>
+<td><p>21</p></td>
+<td><p>Signal</p></td>
+<td><p><a class="reference internal" href="../driver-api/basics.html#c.sys_rt_sigprocmask" title="sys_rt_sigprocmask"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_rt_sigprocmask()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>rt_sigaction</p></td>
+<td><p>36</p></td>
+<td><p>Signal</p></td>
+<td><p><a class="reference internal" href="../driver-api/basics.html#c.sys_rt_sigaction" title="sys_rt_sigaction"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_rt_sigaction()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>rt_sigreturn</p></td>
+<td><p>2</p></td>
+<td><p>Signal</p></td>
+<td><p>sys_rt_sigreturn()</p></td>
+</tr>
+<tr class="row-even"><td><p>wait4</p></td>
+<td><p>889</p></td>
+<td><p>Time</p></td>
+<td><p>sys_wait4()</p></td>
+</tr>
+<tr class="row-odd"><td><p>clock_nanosleep</p></td>
+<td><p>37</p></td>
+<td><p>Time</p></td>
+<td><p>sys_clock_nanosleep()</p></td>
+</tr>
+<tr class="row-even"><td><p>capget</p></td>
+<td><p>4</p></td>
+<td><p>Capability</p></td>
+<td><p>sys_capget()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tracing-stress-ng-netdev-stressor-workload">
+<h3>Tracing stress-ng netdev stressor workload<a class="headerlink" href="#tracing-stress-ng-netdev-stressor-workload" title="Link to this heading">¶</a></h3>
+<p>Run the following command to trace stress-ng netdev stressor workload:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>strace -c  stress-ng --netdev 1 -t 60 --metrics
+</pre></div>
+</div>
+<p><strong>System Calls made by the workload</strong></p>
+<p>The below table shows the system calls invoked by the workload, number of
+times each system call is invoked, and the corresponding Linux subsystem.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>System Call</p></th>
+<th class="head"><p># calls</p></th>
+<th class="head"><p>Linux Subsystem</p></th>
+<th class="head"><p>System Call (API)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>openat</p></td>
+<td><p>74</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_openat()</p></td>
+</tr>
+<tr class="row-odd"><td><p>close</p></td>
+<td><p>75</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_close()</p></td>
+</tr>
+<tr class="row-even"><td><p>read</p></td>
+<td><p>58</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_read()</p></td>
+</tr>
+<tr class="row-odd"><td><p>fstat</p></td>
+<td><p>20</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_fstat()</p></td>
+</tr>
+<tr class="row-even"><td><p>flock</p></td>
+<td><p>10</p></td>
+<td><p>Filesystem</p></td>
+<td><p><a class="reference internal" href="../filesystems/api-summary.html#c.sys_flock" title="sys_flock"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_flock()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>write</p></td>
+<td><p>7</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_write()</p></td>
+</tr>
+<tr class="row-even"><td><p>getdents64</p></td>
+<td><p>8</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_getdents64()</p></td>
+</tr>
+<tr class="row-odd"><td><p>pread64</p></td>
+<td><p>8</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_pread64()</p></td>
+</tr>
+<tr class="row-even"><td><p>lseek</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_lseek()</p></td>
+</tr>
+<tr class="row-odd"><td><p>access</p></td>
+<td><p>2</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_access()</p></td>
+</tr>
+<tr class="row-even"><td><p>getcwd</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_getcwd()</p></td>
+</tr>
+<tr class="row-odd"><td><p>execve</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_execve()</p></td>
+</tr>
+<tr class="row-even"><td><p>mmap</p></td>
+<td><p>61</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mmap()</p></td>
+</tr>
+<tr class="row-odd"><td><p>munmap</p></td>
+<td><p>3</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_munmap()</p></td>
+</tr>
+<tr class="row-even"><td><p>mprotect</p></td>
+<td><p>20</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mprotect()</p></td>
+</tr>
+<tr class="row-odd"><td><p>mlock</p></td>
+<td><p>2</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mlock()</p></td>
+</tr>
+<tr class="row-even"><td><p>brk</p></td>
+<td><p>3</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_brk()</p></td>
+</tr>
+<tr class="row-odd"><td><p>rt_sigaction</p></td>
+<td><p>21</p></td>
+<td><p>Signal</p></td>
+<td><p><a class="reference internal" href="../driver-api/basics.html#c.sys_rt_sigaction" title="sys_rt_sigaction"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_rt_sigaction()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>rt_sigprocmask</p></td>
+<td><p>1</p></td>
+<td><p>Signal</p></td>
+<td><p><a class="reference internal" href="../driver-api/basics.html#c.sys_rt_sigprocmask" title="sys_rt_sigprocmask"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_rt_sigprocmask()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>sigaltstack</p></td>
+<td><p>1</p></td>
+<td><p>Signal</p></td>
+<td><p>sys_sigaltstack()</p></td>
+</tr>
+<tr class="row-even"><td><p>rt_sigreturn</p></td>
+<td><p>1</p></td>
+<td><p>Signal</p></td>
+<td><p>sys_rt_sigreturn()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getpid</p></td>
+<td><p>8</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getpid()</p></td>
+</tr>
+<tr class="row-even"><td><p>prlimit64</p></td>
+<td><p>5</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_prlimit64()</p></td>
+</tr>
+<tr class="row-odd"><td><p>arch_prctl</p></td>
+<td><p>2</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_arch_prctl()</p></td>
+</tr>
+<tr class="row-even"><td><p>sysinfo</p></td>
+<td><p>2</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_sysinfo()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getuid</p></td>
+<td><p>2</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>uname</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_uname()</p></td>
+</tr>
+<tr class="row-odd"><td><p>setpgid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_setpgid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getrusage</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getrusage()</p></td>
+</tr>
+<tr class="row-odd"><td><p>geteuid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_geteuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getppid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getppid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>sendto</p></td>
+<td><p>3</p></td>
+<td><p>Network</p></td>
+<td><p>sys_sendto()</p></td>
+</tr>
+<tr class="row-even"><td><p>connect</p></td>
+<td><p>1</p></td>
+<td><p>Network</p></td>
+<td><p>sys_connect()</p></td>
+</tr>
+<tr class="row-odd"><td><p>socket</p></td>
+<td><p>1</p></td>
+<td><p>Network</p></td>
+<td><p>sys_socket()</p></td>
+</tr>
+<tr class="row-even"><td><p>clone</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_clone()</p></td>
+</tr>
+<tr class="row-odd"><td><p>set_tid_address</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_set_tid_address()</p></td>
+</tr>
+<tr class="row-even"><td><p>wait4</p></td>
+<td><p>2</p></td>
+<td><p>Time</p></td>
+<td><p>sys_wait4()</p></td>
+</tr>
+<tr class="row-odd"><td><p>alarm</p></td>
+<td><p>1</p></td>
+<td><p>Time</p></td>
+<td><p>sys_alarm()</p></td>
+</tr>
+<tr class="row-even"><td><p>set_robust_list</p></td>
+<td><p>1</p></td>
+<td><p>Futex</p></td>
+<td><p>sys_set_robust_list()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tracing-paxtest-kiddie-workload">
+<h3>Tracing paxtest kiddie workload<a class="headerlink" href="#tracing-paxtest-kiddie-workload" title="Link to this heading">¶</a></h3>
+<p>Run the following command to trace paxtest kiddie workload:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>strace -c paxtest kiddie
+</pre></div>
+</div>
+<p><strong>System Calls made by the workload</strong></p>
+<p>The below table shows the system calls invoked by the workload, number of
+times each system call is invoked, and the corresponding Linux subsystem.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>System Call</p></th>
+<th class="head"><p># calls</p></th>
+<th class="head"><p>Linux Subsystem</p></th>
+<th class="head"><p>System Call (API)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>read</p></td>
+<td><p>3</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_read()</p></td>
+</tr>
+<tr class="row-odd"><td><p>write</p></td>
+<td><p>11</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_write()</p></td>
+</tr>
+<tr class="row-even"><td><p>close</p></td>
+<td><p>41</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_close()</p></td>
+</tr>
+<tr class="row-odd"><td><p>stat</p></td>
+<td><p>24</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_stat()</p></td>
+</tr>
+<tr class="row-even"><td><p>fstat</p></td>
+<td><p>2</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_fstat()</p></td>
+</tr>
+<tr class="row-odd"><td><p>pread64</p></td>
+<td><p>6</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_pread64()</p></td>
+</tr>
+<tr class="row-even"><td><p>access</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_access()</p></td>
+</tr>
+<tr class="row-odd"><td><p>pipe</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_pipe()</p></td>
+</tr>
+<tr class="row-even"><td><p>dup2</p></td>
+<td><p>24</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_dup2()</p></td>
+</tr>
+<tr class="row-odd"><td><p>execve</p></td>
+<td><p>1</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_execve()</p></td>
+</tr>
+<tr class="row-even"><td><p>fcntl</p></td>
+<td><p>26</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_fcntl()</p></td>
+</tr>
+<tr class="row-odd"><td><p>openat</p></td>
+<td><p>14</p></td>
+<td><p>Filesystem</p></td>
+<td><p>sys_openat()</p></td>
+</tr>
+<tr class="row-even"><td><p>rt_sigaction</p></td>
+<td><p>7</p></td>
+<td><p>Signal</p></td>
+<td><p><a class="reference internal" href="../driver-api/basics.html#c.sys_rt_sigaction" title="sys_rt_sigaction"><code class="xref c c-func docutils literal notranslate"><span class="pre">sys_rt_sigaction()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>rt_sigreturn</p></td>
+<td><p>38</p></td>
+<td><p>Signal</p></td>
+<td><p>sys_rt_sigreturn()</p></td>
+</tr>
+<tr class="row-even"><td><p>clone</p></td>
+<td><p>38</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_clone()</p></td>
+</tr>
+<tr class="row-odd"><td><p>wait4</p></td>
+<td><p>44</p></td>
+<td><p>Time</p></td>
+<td><p>sys_wait4()</p></td>
+</tr>
+<tr class="row-even"><td><p>mmap</p></td>
+<td><p>7</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mmap()</p></td>
+</tr>
+<tr class="row-odd"><td><p>mprotect</p></td>
+<td><p>3</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_mprotect()</p></td>
+</tr>
+<tr class="row-even"><td><p>munmap</p></td>
+<td><p>1</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_munmap()</p></td>
+</tr>
+<tr class="row-odd"><td><p>brk</p></td>
+<td><p>3</p></td>
+<td><p>Memory Mgmt.</p></td>
+<td><p>sys_brk()</p></td>
+</tr>
+<tr class="row-even"><td><p>getpid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getpid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getuid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getgid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getgid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>geteuid</p></td>
+<td><p>2</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_geteuid()</p></td>
+</tr>
+<tr class="row-even"><td><p>getegid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getegid()</p></td>
+</tr>
+<tr class="row-odd"><td><p>getppid</p></td>
+<td><p>1</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_getppid()</p></td>
+</tr>
+<tr class="row-even"><td><p>arch_prctl</p></td>
+<td><p>2</p></td>
+<td><p>Process Mgmt.</p></td>
+<td><p>sys_arch_prctl()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>This document is intended to be used as a guide on how to gather fine-grained
+information on the resources in use by workloads using strace.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://elisa.tech/blog/2022/02/02/discovery-linux-kernel-subsystems-used-by-openaps">Discovery Linux Kernel Subsystems used by OpenAPS</a></p></li>
+<li><p><a class="reference external" href="https://github.com/elisa-tech/ELISA-White-Papers/blob/master/Processes/Discovering_Linux_kernel_subsystems_used_by_a_workload.md">ELISA-White-Papers-Discovering Linux kernel subsystems used by a workload</a></p></li>
+<li><p><a class="reference external" href="https://man7.org/linux/man-pages/man1/strace.1.html">strace</a></p></li>
+<li><p><a class="reference external" href="https://man7.org/linux/man-pages/man1/perf.1.html">perf</a></p></li>
+<li><p><a class="reference external" href="https://github.com/opntr/paxtest-freebsd/blob/hardenedbsd/0.9.14-hbsd/README">paxtest README</a></p></li>
+<li><p><a class="reference external" href="https://www.mankier.com/1/stress-ng">stress-ng</a></p></li>
+<li><p><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/monitoring_and_managing_system_status_and_performance/index">Monitoring and managing system status and performance</a></p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Discovering Linux kernel subsystems used by a workload</a><ul>
+<li><a class="reference internal" href="#key-points">Key Points</a></li>
+<li><a class="reference internal" href="#methodology">Methodology</a></li>
+<li><a class="reference internal" href="#how-do-we-gather-fine-grained-system-information">How do we gather fine-grained system information?</a></li>
+<li><a class="reference internal" href="#getting-the-system-ready-for-tracing">Getting the system ready for tracing</a></li>
+<li><a class="reference internal" href="#workload-overview">Workload overview</a><ul>
+<li><a class="reference internal" href="#perf-bench-all-workload">perf bench (all) workload</a></li>
+<li><a class="reference internal" href="#stress-ng-netdev-stressor-workload">Stress-ng netdev stressor workload</a></li>
+<li><a class="reference internal" href="#paxtest-kiddie-workload">paxtest kiddie workload</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-strace-and-how-do-we-use-it">What is strace and how do we use it?</a></li>
+<li><a class="reference internal" href="#what-is-cscope-and-how-do-we-use-it">What is cscope and how do we use it?</a></li>
+<li><a class="reference internal" href="#what-is-perf-and-how-do-we-use-it">What is perf and how do we use it?</a><ul>
+<li><a class="reference internal" href="#perf-stat">perf stat</a></li>
+<li><a class="reference internal" href="#perf-bench">Perf bench</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-stress-ng-and-how-do-we-use-it">What is stress-ng and how do we use it?</a></li>
+<li><a class="reference internal" href="#what-is-paxtest-and-how-do-we-use-it">What is paxtest and how do we use it?</a></li>
+<li><a class="reference internal" href="#tracing-workloads">Tracing workloads</a><ul>
+<li><a class="reference internal" href="#tracing-perf-bench-all-workload">Tracing perf bench all workload</a></li>
+<li><a class="reference internal" href="#tracing-stress-ng-netdev-stressor-workload">Tracing stress-ng netdev stressor workload</a></li>
+<li><a class="reference internal" href="#tracing-paxtest-kiddie-workload">Tracing paxtest kiddie workload</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="video-output.html">
+                    <span class="icon">&lt;</span><span>Video Output Switcher Control</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="ldm.html"><span>LDM - Logical Disk Manager (Dynamic Disks)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

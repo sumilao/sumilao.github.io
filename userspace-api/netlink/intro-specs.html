@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using Netlink protocol specifications &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Netlink protocol specifications (in YAML)" href="specs.html" />
+    <link rel="prev" title="Introduction to Netlink" href="intro.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Userspace API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#system-calls">System calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#security-related-interfaces">Security-related interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#devices-and-i-o">Devices and I/O</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#everything-else">Everything else</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ELF.html">Linux-specific ELF idiosyncrasies</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Netlink Handbook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sysfs-platform_profile.html">Platform Profile Selection (e.g. /sys/firmware/acpi/platform_profile)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vduse.html">VDUSE - “vDPA Device in Userspace”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futex2.html">futex2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perf_ring_buffer.html">Perf ring buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ntsync.html">NT synchronization primitive driver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/userspace-api/netlink/intro-specs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="using-netlink-protocol-specifications">
+<h1>Using Netlink protocol specifications<a class="headerlink" href="#using-netlink-protocol-specifications" title="Link to this heading">¶</a></h1>
+<p>This document is a quick starting guide for using Netlink protocol
+specifications. For more detailed description of the specs see <a class="reference internal" href="specs.html"><span class="doc">Netlink protocol specifications (in YAML)</span></a>.</p>
+<section id="simple-cli">
+<h2>Simple CLI<a class="headerlink" href="#simple-cli" title="Link to this heading">¶</a></h2>
+<p>Kernel comes with a simple CLI tool which should be useful when
+developing Netlink related code. The tool is implemented in Python
+and can use a YAML specification to issue Netlink requests
+to the kernel. Only Generic Netlink is supported.</p>
+<p>The tool is located at <code class="docutils literal notranslate"><span class="pre">tools/net/ynl/pyynl/cli.py</span></code>. It accepts
+a handul of arguments, the most important ones are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--spec</span></code> - point to the spec file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--do</span> <span class="pre">$name</span></code> / <code class="docutils literal notranslate"><span class="pre">--dump</span> <span class="pre">$name</span></code> - issue request <code class="docutils literal notranslate"><span class="pre">$name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--json</span> <span class="pre">$attrs</span></code> - provide attributes for the request</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--subscribe</span> <span class="pre">$group</span></code> - receive notifications from <code class="docutils literal notranslate"><span class="pre">$group</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>YAML specs can be found under <code class="docutils literal notranslate"><span class="pre">Documentation/netlink/specs/</span></code>.</p>
+<p>Example use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./tools/net/ynl/pyynl/cli.py --spec Documentation/netlink/specs/ethtool.yaml \
+      --do rings-get \
+      --json &#39;{&quot;header&quot;:{&quot;dev-index&quot;: 18}}&#39;
+{&#39;header&#39;: {&#39;dev-index&#39;: 18, &#39;dev-name&#39;: &#39;eni1np1&#39;},
+ &#39;rx&#39;: 0,
+ &#39;rx-jumbo&#39;: 0,
+ &#39;rx-jumbo-max&#39;: 4096,
+ &#39;rx-max&#39;: 4096,
+ &#39;rx-mini&#39;: 0,
+ &#39;rx-mini-max&#39;: 4096,
+ &#39;tx&#39;: 0,
+ &#39;tx-max&#39;: 4096,
+ &#39;tx-push&#39;: 0}
+</pre></div>
+</div>
+<p>The input arguments are parsed as JSON, while the output is only
+Python-pretty-printed. This is because some Netlink types can’t
+be expressed as JSON directly. If such attributes are needed in
+the input some hacking of the script will be necessary.</p>
+<p>The spec and Netlink internals are factored out as a standalone
+library - it should be easy to write Python tools / tests reusing
+code from <code class="docutils literal notranslate"><span class="pre">cli.py</span></code>.</p>
+</section>
+<section id="generating-kernel-code">
+<h2>Generating kernel code<a class="headerlink" href="#generating-kernel-code" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/net/ynl/ynl-regen.sh</span></code> scans the kernel tree in search of
+auto-generated files which need to be updated. Using this tool is the easiest
+way to generate / update auto-generated code.</p>
+<p>By default code is re-generated only if spec is newer than the source,
+to force regeneration use <code class="docutils literal notranslate"><span class="pre">-f</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ynl-regen.sh</span></code> searches for <code class="docutils literal notranslate"><span class="pre">YNL-GEN</span></code> in the contents of files
+(note that it only scans files in the git index, that is only files
+tracked by git!) For instance the <code class="docutils literal notranslate"><span class="pre">fou_nl.c</span></code> kernel source contains:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/*    Documentation/netlink/specs/fou.yaml */
+/* YNL-GEN kernel source */
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ynl-regen.sh</span></code> will find this marker and replace the file with
+kernel source based on fou.yaml.</p>
+<p>The simplest way to generate a new file based on a spec is to add
+the two marker lines like above to a file, add that file to git,
+and run the regeneration tool. Grep the tree for <code class="docutils literal notranslate"><span class="pre">YNL-GEN</span></code>
+to see other examples.</p>
+<p>The code generation itself is performed by <code class="docutils literal notranslate"><span class="pre">tools/net/ynl/pyynl/ynl_gen_c.py</span></code>
+but it takes a few arguments so calling it directly for each file
+quickly becomes tedious.</p>
+</section>
+<section id="ynl-lib">
+<h2>YNL lib<a class="headerlink" href="#ynl-lib" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/net/ynl/lib/</span></code> contains an implementation of a C library
+(based on libmnl) which integrates with code generated by
+<code class="docutils literal notranslate"><span class="pre">tools/net/ynl/pyynl/ynl_gen_c.py</span></code> to create easy to use netlink wrappers.</p>
+<section id="ynl-basics">
+<h3>YNL basics<a class="headerlink" href="#ynl-basics" title="Link to this heading">¶</a></h3>
+<p>The YNL library consists of two parts - the generic code (functions
+prefix by <code class="docutils literal notranslate"><span class="pre">ynl_</span></code>) and per-family auto-generated code (prefixed
+with the name of the family).</p>
+<p>To create a YNL socket call ynl_sock_create() passing the family
+struct (family structs are exported by the auto-generated code).
+ynl_sock_destroy() closes the socket.</p>
+</section>
+<section id="ynl-requests">
+<h3>YNL requests<a class="headerlink" href="#ynl-requests" title="Link to this heading">¶</a></h3>
+<p>Steps for issuing YNL requests are best explained on an example.
+All the functions and types in this example come from the auto-generated
+code (for the netdev family in this case):</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 0. Request and response pointers</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">netdev_dev_get_req</span><span class="w"> </span><span class="o">*</span><span class="n">req</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">netdev_dev_get_rsp</span><span class="w"> </span><span class="o">*</span><span class="n">d</span><span class="p">;</span>
+
+<span class="c1">// 1. Allocate a request</span>
+<span class="n">req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netdev_dev_get_req_alloc</span><span class="p">();</span>
+<span class="c1">// 2. Set request parameters (as needed)</span>
+<span class="n">netdev_dev_get_req_set_ifindex</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">ifindex</span><span class="p">);</span>
+
+<span class="c1">// 3. Issues the request</span>
+<span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">netdev_dev_get</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">);</span>
+<span class="c1">// 4. Free the request arguments</span>
+<span class="n">netdev_dev_get_req_free</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+<span class="c1">// 5. Error check (the return value from step 3)</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="c1">// 6. Print the YNL-generated error</span>
+<span class="w">     </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;YNL: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ys</span><span class="o">-&gt;</span><span class="n">err</span><span class="p">.</span><span class="n">msg</span><span class="p">);</span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ... do stuff with the response @d</span>
+
+<span class="c1">// 7. Free response</span>
+<span class="n">netdev_dev_get_rsp_free</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="ynl-dumps">
+<h3>YNL dumps<a class="headerlink" href="#ynl-dumps" title="Link to this heading">¶</a></h3>
+<p>Performing dumps follows similar pattern as requests.
+Dumps return a list of objects terminated by a special marker,
+or NULL on error. Use <code class="docutils literal notranslate"><span class="pre">ynl_dump_foreach()</span></code> to iterate over
+the result.</p>
+</section>
+<section id="ynl-notifications">
+<h3>YNL notifications<a class="headerlink" href="#ynl-notifications" title="Link to this heading">¶</a></h3>
+<p>YNL lib supports using the same socket for notifications and
+requests. In case notifications arrive during processing of a request
+they are queued internally and can be retrieved at a later time.</p>
+<p>To subscribed to notifications use <code class="docutils literal notranslate"><span class="pre">ynl_subscribe()</span></code>.
+The notifications have to be read out from the socket,
+<code class="docutils literal notranslate"><span class="pre">ynl_socket_get_fd()</span></code> returns the underlying socket fd which can
+be plugged into appropriate asynchronous IO API like <code class="docutils literal notranslate"><span class="pre">poll</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">select</span></code>.</p>
+<p>Notifications can be retrieved using <code class="docutils literal notranslate"><span class="pre">ynl_ntf_dequeue()</span></code> and have
+to be freed using <code class="docutils literal notranslate"><span class="pre">ynl_ntf_free()</span></code>. Since we don’t know the notification
+type upfront the notifications are returned as <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">ynl_ntf_base_type</span> <span class="pre">*</span></code>
+and user is expected to cast them to the appropriate full type based
+on the <code class="docutils literal notranslate"><span class="pre">cmd</span></code> member.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Using Netlink protocol specifications</a><ul>
+<li><a class="reference internal" href="#simple-cli">Simple CLI</a></li>
+<li><a class="reference internal" href="#generating-kernel-code">Generating kernel code</a></li>
+<li><a class="reference internal" href="#ynl-lib">YNL lib</a><ul>
+<li><a class="reference internal" href="#ynl-basics">YNL basics</a></li>
+<li><a class="reference internal" href="#ynl-requests">YNL requests</a></li>
+<li><a class="reference internal" href="#ynl-dumps">YNL dumps</a></li>
+<li><a class="reference internal" href="#ynl-notifications">YNL notifications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="intro.html">
+                    <span class="icon">&lt;</span><span>Introduction to Netlink</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="specs.html"><span>Netlink protocol specifications (in YAML)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

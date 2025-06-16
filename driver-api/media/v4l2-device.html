@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.5. V4L2 device instance &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.6. V4L2 File handlers" href="v4l2-fh.html" />
+    <link rel="prev" title="2.4. Video device’ s internal representation" href="v4l2-dev.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Driver APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-information-for-driver-authors">General information for driver authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#useful-support-libraries">Useful support libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#bus-level-documentation">Bus-level documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#subsystem-specific-apis">Subsystem-specific APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../80211/index.html">Linux 802.11 Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../acpi/index.html">ACPI Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backlight/lp855x-driver.html">Kernel driver lp855x</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../clk.html">The Common Clk Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../console.html">Console Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../crypto/index.html">Crypto Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dmaengine/index.html">DMAEngine documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dpll.html">The Linux kernel dpll subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edac.html">Error Detection And Correction (EDAC) Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extcon.html">Extcon Device Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../firmware/index.html">Linux Firmware API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fpga/index.html">FPGA Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../frame-buffer.html">Frame Buffer Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../aperture.html">Managing Ownership of the Framebuffer Aperture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generic-counter.html">Generic Counter Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">General Purpose Input/Output (GPIO)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hsi.html">High Speed Synchronous Serial Interface (HSI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hte/index.html">The Linux Hardware Timestamping Engine (HTE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c.html">I<sup>2</sup>C and SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband.html">InfiniBand and Remote DMA (RDMA) Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../input.html">Input Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interconnect.html">Generic System Interconnect Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmb.html">IPMB Driver for a Satellite MC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipmi.html">The Linux IPMI Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../libata.html">libATA Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mailbox.html">The Common Mailbox Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../md/index.html">RAID</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Media subsystem kernel internal API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mei/index.html">Intel(R) Management Engine Interface (Intel(R) MEI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory-devices/index.html">Memory Controller drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../message-based.html">Message-based devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../misc_devices.html">Miscellaneous Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html">Parallel Port Devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#x50-uart-driver">16x50 UART Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../miscellaneous.html#pulse-width-modulation-pwm">Pulse-Width Modulation (PWM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mmc/index.html">MMC/SD/SDIO card support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtd/index.html">Memory Technology Device (MTD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtdnand.html">MTD NAND Driver Programming Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nfc/index.html">Near Field Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ntb.html">NTB Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvdimm/index.html">Non-Volatile Memory Device (NVDIMM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvmem.html">NVMEM Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parport-lowlevel.html">PARPORT interface documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../phy/index.html">Generic PHY Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pin-control.html">PINCTRL (PIN CONTROL) subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html">PLDM Firmware Flash Update Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pldmfw/index.html#overview-of-the-pldmfw-library">Overview of the <code class="docutils literal notranslate"><span class="pre">pldmfw</span></code> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pps.html">PPS - Pulse Per Second</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ptp.html">PTP hardware clock infrastructure for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm.html">Pulse Width Modulation (PWM) interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwrseq.html">Power Sequencing API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regulator.html">Voltage and current regulator API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reset.html">Reset controller API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rfkill.html">rfkill - RF kill switch support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../s390-drivers.html">Writing s390 channel device drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi.html">SCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serial/index.html">Support for Serial devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sm501.html">SM501 Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soundwire/index.html">SoundWire Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../surface_aggregator/index.html">Surface System Aggregator Module (SSAM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../switchtec.html">Linux Switchtec Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sync_file.html">Sync File API Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target.html">target and iSCSI Interfaces Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tee.html">TEE (Trusted Execution Environment) driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermal/index.html">Thermal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tty/index.html">TTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wbrf.html">WBRF - Wifi Band RFI Mitigations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wmi.html">WMI Driver API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xilinx/index.html">Xilinx FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zorro.html">Writing Device Drivers for Zorro Devices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/driver-api/media/v4l2-device.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="v4l2-device-instance">
+<h1><span class="section-number">2.5. </span>V4L2 device instance<a class="headerlink" href="#v4l2-device-instance" title="Link to this heading">¶</a></h1>
+<p>Each device instance is represented by a <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a>.
+Very simple devices can just allocate this struct, but most of the time you
+would embed this struct inside a larger struct.</p>
+<p>You must register the device instance by calling:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#c.v4l2_device_register" title="v4l2_device_register"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_register</span></code></a>
+(dev, <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>).</p>
+</div></blockquote>
+<p>Registration will initialize the <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> struct. If the
+dev-&gt;driver_data field is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, it will be linked to
+<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a> argument.</p>
+<p>Drivers that want integration with the media device framework need to set
+dev-&gt;driver_data manually to point to the driver-specific device structure
+that embed the <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> instance. This is achieved by a
+<code class="docutils literal notranslate"><span class="pre">dev_set_drvdata()</span></code> call before registering the V4L2 device instance.
+They must also set the <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> mdev field to point to a
+properly initialized and registered <a class="reference internal" href="mc-core.html#c.media_device" title="media_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">media_device</span></code></a> instance.</p>
+<p>If <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>-&gt;name is empty then it will be set to a
+value derived from dev (driver name followed by the bus_id, to be precise).
+If you set it up before  calling <a class="reference internal" href="#c.v4l2_device_register" title="v4l2_device_register"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_register()</span></code></a> then it will
+be untouched. If dev is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, then you <strong>must</strong> setup
+<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>-&gt;name before calling
+<a class="reference internal" href="#c.v4l2_device_register" title="v4l2_device_register"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_register()</span></code></a>.</p>
+<p>You can use <a class="reference internal" href="#c.v4l2_device_set_name" title="v4l2_device_set_name"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_set_name()</span></code></a> to set the name based on a driver
+name and a driver-global atomic_t instance. This will generate names like
+<code class="docutils literal notranslate"><span class="pre">ivtv0</span></code>, <code class="docutils literal notranslate"><span class="pre">ivtv1</span></code>, etc. If the name ends with a digit, then it will insert
+a dash: <code class="docutils literal notranslate"><span class="pre">cx18-0</span></code>, <code class="docutils literal notranslate"><span class="pre">cx18-1</span></code>, etc. This function returns the instance number.</p>
+<p>The first <code class="docutils literal notranslate"><span class="pre">dev</span></code> argument is normally the <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">device</span></code> pointer of a
+<code class="docutils literal notranslate"><span class="pre">pci_dev</span></code>, <code class="docutils literal notranslate"><span class="pre">usb_interface</span></code> or <code class="docutils literal notranslate"><span class="pre">platform_device</span></code>. It is rare for dev to
+be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, but it happens with ISA devices or when one device creates
+multiple PCI devices, thus making it impossible to associate
+<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a> with a particular parent.</p>
+<p>You can also supply a <code class="docutils literal notranslate"><span class="pre">notify()</span></code> callback that can be called by sub-devices
+to notify you of events. Whether you need to set this depends on the
+sub-device. Any notifications a sub-device supports must be defined in a header
+in <code class="docutils literal notranslate"><span class="pre">include/media/subdevice.h</span></code>.</p>
+<p>V4L2 devices are unregistered by calling:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#c.v4l2_device_unregister" title="v4l2_device_unregister"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_unregister()</span></code></a>
+(<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>).</p>
+</div></blockquote>
+<p>If the dev-&gt;driver_data field points to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>,
+it will be reset to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. Unregistering will also automatically unregister
+all subdevs from the device.</p>
+<p>If you have a hotpluggable device (e.g. a USB device), then when a disconnect
+happens the parent device becomes invalid. Since <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> has a
+pointer to that parent device it has to be cleared as well to mark that the
+parent is gone. To do this call:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#c.v4l2_device_disconnect" title="v4l2_device_disconnect"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_disconnect()</span></code></a>
+(<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>).</p>
+</div></blockquote>
+<p>This does <em>not</em> unregister the subdevs, so you still need to call the
+<a class="reference internal" href="#c.v4l2_device_unregister" title="v4l2_device_unregister"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_unregister()</span></code></a> function for that. If your driver is not
+hotpluggable, then there is no need to call <a class="reference internal" href="#c.v4l2_device_disconnect" title="v4l2_device_disconnect"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_disconnect()</span></code></a>.</p>
+<p>Sometimes you need to iterate over all devices registered by a specific
+driver. This is usually the case if multiple device drivers use the same
+hardware. E.g. the ivtvfb driver is a framebuffer driver that uses the ivtv
+hardware. The same is true for alsa drivers for example.</p>
+<p>You can iterate over all registered devices as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">v4l2_device</span><span class="w"> </span><span class="o">*</span><span class="n">v4l2_dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev_get_drvdata</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+
+<span class="w">        </span><span class="cm">/* test if this device was inited */</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v4l2_dev</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">iterate</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="nc">device_driver</span><span class="w"> </span><span class="o">*</span><span class="n">drv</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+
+<span class="w">        </span><span class="cm">/* Find driver &#39;ivtv&#39; on the PCI bus.</span>
+<span class="cm">        pci_bus_type is a global. For USB buses use usb_bus_type. */</span>
+<span class="w">        </span><span class="n">drv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver_find</span><span class="p">(</span><span class="s">&quot;ivtv&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pci_bus_type</span><span class="p">);</span>
+<span class="w">        </span><span class="cm">/* iterate over all ivtv device instances */</span>
+<span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver_for_each_device</span><span class="p">(</span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+<span class="w">        </span><span class="n">put_driver</span><span class="p">(</span><span class="n">drv</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Sometimes you need to keep a running counter of the device instance. This is
+commonly used to map a device instance to an index of a module option array.</p>
+<p>The recommended approach is as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">atomic_t</span><span class="w"> </span><span class="n">drv_instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ATOMIC_INIT</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">drv_probe</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pci_dev</span><span class="w"> </span><span class="o">*</span><span class="n">pdev</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pci_device_id</span><span class="w"> </span><span class="o">*</span><span class="n">pci_id</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">        </span><span class="n">state</span><span class="o">-&gt;</span><span class="n">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atomic_inc_return</span><span class="p">(</span><span class="o">&amp;</span><span class="n">drv_instance</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have multiple device nodes then it can be difficult to know when it is
+safe to unregister <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> for hotpluggable devices. For this
+purpose <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> has refcounting support. The refcount is
+increased whenever <a class="reference internal" href="v4l2-dev.html#c.video_register_device" title="video_register_device"><code class="xref c c-func docutils literal notranslate"><span class="pre">video_register_device()</span></code></a> is called and it is
+decreased whenever that device node is released. When the refcount reaches
+zero, then the <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> release() callback is called. You can
+do your final cleanup there.</p>
+<p>If other device nodes (e.g. ALSA) are created, then you can increase and
+decrease the refcount manually as well by calling:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#c.v4l2_device_get" title="v4l2_device_get"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_get()</span></code></a>
+(<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>).</p>
+</div></blockquote>
+<p>or:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#c.v4l2_device_put" title="v4l2_device_put"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_put()</span></code></a>
+(<a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_dev</span></code></a>).</p>
+</div></blockquote>
+<p>Since the initial refcount is 1 you also need to call
+<a class="reference internal" href="#c.v4l2_device_put" title="v4l2_device_put"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_put()</span></code></a> in the <code class="docutils literal notranslate"><span class="pre">disconnect()</span></code> callback (for USB devices)
+or in the <code class="docutils literal notranslate"><span class="pre">remove()</span></code> callback (for e.g. PCI devices), otherwise the refcount
+will never reach 0.</p>
+<section id="v4l2-device-functions-and-data-structures">
+<h2><span class="section-number">2.5.1. </span>v4l2_device functions and data structures<a class="headerlink" href="#v4l2-device-functions-and-data-structures" title="Link to this heading">¶</a></h2>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.v4l2_device">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device</span></span></span><a class="headerlink" href="#c.v4l2_device" title="Link to this definition">¶</a><br /></dt>
+<dd><p>main struct to for V4L2 device drivers</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct v4l2_device {
+    struct device *dev;
+    struct media_device *mdev;
+    struct list_head subdevs;
+    spinlock_t lock;
+    char name[36];
+    void (*notify)(struct v4l2_subdev *sd, unsigned int notification, void *arg);
+    struct v4l2_ctrl_handler *ctrl_handler;
+    struct v4l2_prio_state prio;
+    struct kref ref;
+    void (*release)(struct v4l2_device *v4l2_dev);
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="../infrastructure.html#c.device" title="device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">device</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">mdev</span></code></dt><dd><p>pointer to <a class="reference internal" href="mc-core.html#c.media_device" title="media_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">media_device</span></code></a>, may be NULL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subdevs</span></code></dt><dd><p>used to keep track of the registered subdevs</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">lock</span></code></dt><dd><p>lock this struct; can be used by the driver as well
+if this struct is embedded into a larger struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>unique device name, by default the driver name + bus ID</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">notify</span></code></dt><dd><p>notify operation called by some sub-devices.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ctrl_handler</span></code></dt><dd><p>The control handler. May be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">prio</span></code></dt><dd><p>Device’s priority state</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ref</span></code></dt><dd><p>Keep track of the references to this struct.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">release</span></code></dt><dd><p>Release function that is called when the ref count
+goes to 0.</p>
+</dd>
+</dl>
+</div>
+<p><strong>Description</strong></p>
+<p>Each instance of a V4L2 device should create the v4l2_device struct,
+either stand-alone or embedded in a larger struct.</p>
+<p>It allows easy access to sub-devices (see v4l2-subdev.h) and provides
+basic V4L2 device-level support.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p><strong>dev-&gt;driver_data</strong> points to this struct.</p></li>
+<li><p><strong>dev</strong> might be <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if there is no parent device</p></li>
+</ol>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_get">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_get</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_get" title="Link to this definition">¶</a><br /></dt>
+<dd><p>gets a V4L2 device reference</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This is an ancillary routine meant to increment the usage for the
+struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> pointed by <strong>v4l2_dev</strong>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_put">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_put</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_put" title="Link to this definition">¶</a><br /></dt>
+<dd><p>puts a V4L2 device reference</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This is an ancillary routine meant to decrement the usage for the
+struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a> pointed by <strong>v4l2_dev</strong>.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_register">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_register</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="../infrastructure.html#c.device" title="device"><span class="n"><span class="pre">device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dev</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_register" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Initialize v4l2_dev and make <strong>dev-&gt;driver_data</strong> point to <strong>v4l2_dev</strong>.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">device</span> <span class="pre">*dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="../infrastructure.html#c.device" title="device"><code class="xref c c-type docutils literal notranslate"><span class="pre">device</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>dev</strong> may be <code class="docutils literal notranslate"><span class="pre">NULL</span></code> in rare cases (ISA devices).
+In such case the caller must fill in the <strong>v4l2_dev-&gt;name</strong> field
+before calling this function.</p>
+</div>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_set_name">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_set_name</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">basename</span></span>, <span class="n"><span class="pre">atomic_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_set_name" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Optional function to initialize the name field of struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*basename</span></code></dt><dd><p>base name for the device name</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">atomic_t</span> <span class="pre">*instance</span></code></dt><dd><p>pointer to a static atomic_t var with the instance usage for
+the device driver.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p><a class="reference internal" href="#c.v4l2_device_set_name" title="v4l2_device_set_name"><code class="xref c c-func docutils literal notranslate"><span class="pre">v4l2_device_set_name()</span></code></a> initializes the name field of struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a>
+using the driver name and a driver-global atomic_t instance.</p>
+<p>This function will increment the instance counter and returns the
+instance value used in the name.</p>
+<p>The first time this is called the name field will be set to foo0 and
+this function returns 0. If the name ends with a digit (e.g. cx18),
+then the name will be set to cx18-0 since cx180 would look really odd.</p>
+<p><strong>Example</strong></p>
+<blockquote>
+<div><p>static atomic_t drv_instance = ATOMIC_INIT(0);</p>
+<p>...</p>
+<p>instance = v4l2_device_set_name(&amp;v4l2_dev, “foo”, &amp;drv_instance);</p>
+</div></blockquote>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_disconnect">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_disconnect</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_disconnect" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Change V4L2 device state to disconnected.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Should be called when the USB parent disconnects.
+Since the parent disappears, this ensures that <strong>v4l2_dev</strong> doesn’t have
+an invalid parent pointer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function sets <strong>v4l2_dev-&gt;dev</strong> to NULL.</p>
+</div>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_unregister">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_unregister</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_unregister" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Unregister all sub-devices and any other resources related to <strong>v4l2_dev</strong>.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_register_subdev">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_register_subdev</span></span></span><a class="headerlink" href="#c.v4l2_device_register_subdev" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_register_subdev</span> <span class="pre">(v4l2_dev,</span> <span class="pre">sd)</span></code></p>
+<blockquote>
+<div><p>Registers a subdev with a v4l2 device.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p>pointer to struct <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>While registered, the subdev module is marked as in-use.</p>
+<p>An error is returned if the module is no longer loaded on any attempts
+to register it.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_unregister_subdev">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_unregister_subdev</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_unregister_subdev" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Unregisters a subdev with a v4l2 device.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Can also be called if the subdev wasn’t registered. In such
+case, it will do nothing.</p>
+</div>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.__v4l2_device_register_subdev_nodes">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">__v4l2_device_register_subdev_nodes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">read_only</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.__v4l2_device_register_subdev_nodes" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Registers device nodes for all subdevs of the v4l2 device that are marked with the <code class="docutils literal notranslate"><span class="pre">V4L2_SUBDEV_FL_HAS_DEVNODE</span></code> flag.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">read_only</span></code></dt><dd><p>subdevices read-only flag. True to register the subdevices
+device nodes in read-only mode, false to allow full access to the
+subdevice userspace API.</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_register_subdev_nodes">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_register_subdev_nodes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_register_subdev_nodes" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Registers subdevices device nodes with unrestricted access to the subdevice userspace operations</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Internally calls <a class="reference internal" href="#c.__v4l2_device_register_subdev_nodes" title="__v4l2_device_register_subdev_nodes"><code class="xref c c-func docutils literal notranslate"><span class="pre">__v4l2_device_register_subdev_nodes()</span></code></a>. See its documentation
+for more details.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_register_ro_subdev_nodes">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_register_ro_subdev_nodes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_register_ro_subdev_nodes" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Registers subdevices device nodes in read-only mode</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Internally calls <a class="reference internal" href="#c.__v4l2_device_register_subdev_nodes" title="__v4l2_device_register_subdev_nodes"><code class="xref c c-func docutils literal notranslate"><span class="pre">__v4l2_device_register_subdev_nodes()</span></code></a>. See its documentation
+for more details.</p>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_subdev_notify">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_subdev_notify</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><span class="n"><span class="pre">v4l2_subdev</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sd</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">notification</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_subdev_notify" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Sends a notification to v4l2_device.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span> <span class="pre">*sd</span></code></dt><dd><p>pointer to <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">notification</span></code></dt><dd><p>type of notification. Please notice that the notification
+type is driver-specific.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*arg</span></code></dt><dd><p>arguments for the notification. Those are specific to each
+notification type.</p>
+</dd>
+</dl>
+</div>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.v4l2_device_supports_requests">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_supports_requests</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><span class="n"><span class="pre">v4l2_device</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">v4l2_dev</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.v4l2_device_supports_requests" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Test if requests are supported.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span> <span class="pre">*v4l2_dev</span></code></dt><dd><p>pointer to <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a></p>
+</dd>
+</dl>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_for_each_subdev">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_for_each_subdev</span></span></span><a class="headerlink" href="#c.v4l2_device_for_each_subdev" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_for_each_subdev</span> <span class="pre">(sd,</span> <span class="pre">v4l2_dev)</span></code></p>
+<blockquote>
+<div><p>Helper macro that interates over all sub-devices of a given <a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_device</span></code></a>.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>pointer that will be filled by the macro with all
+<a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a> pointer used as an iterator by the loop.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This macro iterates over all sub-devices owned by the <strong>v4l2_dev</strong> device.
+It acts as a for loop iterator and executes the next statement with
+the <strong>sd</strong> variable pointing to each sub-device in turn.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.__v4l2_device_call_subdevs_p">
+<span class="sig-name descname"><span class="n"><span class="pre">__v4l2_device_call_subdevs_p</span></span></span><a class="headerlink" href="#c.__v4l2_device_call_subdevs_p" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">__v4l2_device_call_subdevs_p</span> <span class="pre">(v4l2_dev,</span> <span class="pre">sd,</span> <span class="pre">cond,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the condition.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>pointer that will be filled by the macro with all
+<a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a> pointer used as an iterator by the loop.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cond</span></code></dt><dd><p>condition to be match</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Ignore any errors.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.__v4l2_device_call_subdevs">
+<span class="sig-name descname"><span class="n"><span class="pre">__v4l2_device_call_subdevs</span></span></span><a class="headerlink" href="#c.__v4l2_device_call_subdevs" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">__v4l2_device_call_subdevs</span> <span class="pre">(v4l2_dev,</span> <span class="pre">cond,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the condition.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cond</span></code></dt><dd><p>condition to be match</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Ignore any errors.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.__v4l2_device_call_subdevs_until_err_p">
+<span class="sig-name descname"><span class="n"><span class="pre">__v4l2_device_call_subdevs_until_err_p</span></span></span><a class="headerlink" href="#c.__v4l2_device_call_subdevs_until_err_p" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">__v4l2_device_call_subdevs_until_err_p</span> <span class="pre">(v4l2_dev,</span> <span class="pre">sd,</span> <span class="pre">cond,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the condition.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sd</span></code></dt><dd><p>pointer that will be filled by the macro with all
+<a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a> sub-devices associated with <strong>v4l2_dev</strong>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cond</span></code></dt><dd><p>condition to be match</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Return</strong></p>
+<p><strong>Description</strong></p>
+<p>If the operation returns an error other than 0 or <code class="docutils literal notranslate"><span class="pre">-ENOIOCTLCMD</span></code>
+for any subdevice, then abort and return with that error code, zero
+otherwise.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.__v4l2_device_call_subdevs_until_err">
+<span class="sig-name descname"><span class="n"><span class="pre">__v4l2_device_call_subdevs_until_err</span></span></span><a class="headerlink" href="#c.__v4l2_device_call_subdevs_until_err" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">__v4l2_device_call_subdevs_until_err</span> <span class="pre">(v4l2_dev,</span> <span class="pre">cond,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the condition.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cond</span></code></dt><dd><p>condition to be match</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Return</strong></p>
+<p><strong>Description</strong></p>
+<p>If the operation returns an error other than 0 or <code class="docutils literal notranslate"><span class="pre">-ENOIOCTLCMD</span></code>
+for any subdevice, then abort and return with that error code,
+zero otherwise.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_call_all">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_call_all</span></span></span><a class="headerlink" href="#c.v4l2_device_call_all" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_call_all</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpid,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_subdev.grp_id</span></code></a>, as assigned by the bridge driver.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpid</span></code></dt><dd><p><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id group ID to match.
+Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Ignore any errors.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_call_until_err">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_call_until_err</span></span></span><a class="headerlink" href="#c.v4l2_device_call_until_err" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_call_until_err</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpid,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevs matching the <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">v4l2_subdev.grp_id</span></code></a>, as assigned by the bridge driver, until an error occurs.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpid</span></code></dt><dd><p><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id group ID to match.
+Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Return</strong></p>
+<p><strong>Description</strong></p>
+<p>If the operation returns an error other than 0 or <code class="docutils literal notranslate"><span class="pre">-ENOIOCTLCMD</span></code>
+for any subdevice, then abort and return with that error code,
+zero otherwise.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_mask_call_all">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_mask_call_all</span></span></span><a class="headerlink" href="#c.v4l2_device_mask_call_all" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_mask_call_all</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpmsk,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevices where a group ID matches a specified bitmask.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpmsk</span></code></dt><dd><p>bitmask to be checked against <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id
+group ID to be matched. Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Ignore any errors.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_mask_call_until_err">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_mask_call_until_err</span></span></span><a class="headerlink" href="#c.v4l2_device_mask_call_until_err" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_mask_call_until_err</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpmsk,</span> <span class="pre">o,</span> <span class="pre">f,</span> <span class="pre">args...)</span></code></p>
+<blockquote>
+<div><p>Calls the specified operation for all subdevices where a group ID matches a specified bitmask.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpmsk</span></code></dt><dd><p>bitmask to be checked against <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id
+group ID to be matched. Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">args...</span></code></dt><dd><p>arguments for <strong>f</strong>.</p>
+</dd>
+</dl>
+<p><strong>Return</strong></p>
+<p><strong>Description</strong></p>
+<p>If the operation returns an error other than 0 or <code class="docutils literal notranslate"><span class="pre">-ENOIOCTLCMD</span></code>
+for any subdevice, then abort and return with that error code,
+zero otherwise.</p>
+<p><strong>Note</strong></p>
+<p>subdevs cannot be added or deleted while walking
+the subdevs list.</p>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_has_op">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_has_op</span></span></span><a class="headerlink" href="#c.v4l2_device_has_op" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_has_op</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpid,</span> <span class="pre">o,</span> <span class="pre">f)</span></code></p>
+<blockquote>
+<div><p>checks if any subdev with matching grpid has a given ops.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpid</span></code></dt><dd><p><a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id group ID to match.
+Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.v4l2_device_mask_has_op">
+<span class="sig-name descname"><span class="n"><span class="pre">v4l2_device_mask_has_op</span></span></span><a class="headerlink" href="#c.v4l2_device_mask_has_op" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">v4l2_device_mask_has_op</span> <span class="pre">(v4l2_dev,</span> <span class="pre">grpmsk,</span> <span class="pre">o,</span> <span class="pre">f)</span></code></p>
+<blockquote>
+<div><p>checks if any subdev with matching group mask has a given ops.</p>
+</div></blockquote>
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">v4l2_dev</span></code></dt><dd><p><a class="reference internal" href="#c.v4l2_device" title="v4l2_device"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_device</span></code></a> owning the sub-devices to iterate over.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">grpmsk</span></code></dt><dd><p>bitmask to be checked against <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev" title="v4l2_subdev"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev</span></code></a>-&gt;grp_id
+group ID to be matched. Use 0 to match them all.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">o</span></code></dt><dd><p>name of the element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a> that contains <strong>f</strong>.
+Each element there groups a set of operations functions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">f</span></code></dt><dd><p>operation function that will be called if <strong>cond</strong> matches.
+The operation functions are defined in groups, according to
+each element at <a class="reference internal" href="v4l2-subdev.html#c.v4l2_subdev_ops" title="v4l2_subdev_ops"><code class="xref c c-type docutils literal notranslate"><span class="pre">struct</span> <span class="pre">v4l2_subdev_ops</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">2.5. V4L2 device instance</a><ul>
+<li><a class="reference internal" href="#v4l2-device-functions-and-data-structures">2.5.1. v4l2_device functions and data structures</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="v4l2-dev.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">2.4. </span>Video device’ s internal representation</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="v4l2-fh.html"><span><span class="section-number">2.6. </span>V4L2 File handlers</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multi-PF Netdev &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NAPI" href="napi.html" />
+    <link rel="prev" title="HOWTO for multiqueue network device support" href="multiqueue.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/multi-pf-netdev.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="multi-pf-netdev">
+<h1>Multi-PF Netdev<a class="headerlink" href="#multi-pf-netdev" title="Link to this heading">¶</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#background">Background</a></p></li>
+<li><p><a class="reference internal" href="#overview">Overview</a></p></li>
+<li><p><a class="reference internal" href="#mlx5-implementation">mlx5 implementation</a></p></li>
+<li><p><a class="reference internal" href="#channels-distribution">Channels distribution</a></p></li>
+<li><p><a class="reference internal" href="#observability">Observability</a></p></li>
+<li><p><a class="reference internal" href="#steering">Steering</a></p></li>
+<li><p><a class="reference internal" href="#mutually-exclusive-features">Mutually exclusive features</a></p></li>
+</ul>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h2>
+<p>The Multi-PF NIC technology enables several CPUs within a multi-socket server to connect directly to
+the network, each through its own dedicated PCIe interface. Through either a connection harness that
+splits the PCIe lanes between two cards or by bifurcating a PCIe slot for a single card. This
+results in eliminating the network traffic traversing over the internal bus between the sockets,
+significantly reducing overhead and latency, in addition to reducing CPU utilization and increasing
+network throughput.</p>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The feature adds support for combining multiple PFs of the same port in a Multi-PF environment under
+one netdev instance. It is implemented in the netdev layer. Lower-layer instances like pci func,
+sysfs entry, and devlink are kept separate.
+Passing traffic through different devices belonging to different NUMA sockets saves cross-NUMA
+traffic and allows apps running on the same netdev from different NUMAs to still feel a sense of
+proximity to the device and achieve improved performance.</p>
+</section>
+<section id="mlx5-implementation">
+<h2>mlx5 implementation<a class="headerlink" href="#mlx5-implementation" title="Link to this heading">¶</a></h2>
+<p>Multi-PF or Socket-direct in mlx5 is achieved by grouping PFs together which belong to the same
+NIC and has the socket-direct property enabled, once all PFs are probed, we create a single netdev
+to represent all of them, symmetrically, we destroy the netdev whenever any of the PFs is removed.</p>
+<p>The netdev network channels are distributed between all devices, a proper configuration would utilize
+the correct close NUMA node when working on a certain app/CPU.</p>
+<p>We pick one PF to be a primary (leader), and it fills a special role. The other devices
+(secondaries) are disconnected from the network at the chip level (set to silent mode). In silent
+mode, no south &lt;-&gt; north traffic flowing directly through a secondary PF. It needs the assistance of
+the leader PF (east &lt;-&gt; west traffic) to function. All Rx/Tx traffic is steered through the primary
+to/from the secondaries.</p>
+<p>Currently, we limit the support to PFs only, and up to two PFs (sockets).</p>
+</section>
+<section id="channels-distribution">
+<h2>Channels distribution<a class="headerlink" href="#channels-distribution" title="Link to this heading">¶</a></h2>
+<p>We distribute the channels between the different PFs to achieve local NUMA node performance
+on multiple NUMA nodes.</p>
+<p>Each combined channel works against one specific PF, creating all its datapath queues against it. We
+distribute channels to PFs in a round-robin policy.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Example for 2 PFs and 5 channels:
++--------+--------+
+| ch idx | PF idx |
++--------+--------+
+|    0   |    0   |
+|    1   |    1   |
+|    2   |    0   |
+|    3   |    1   |
+|    4   |    0   |
++--------+--------+
+</pre></div>
+</div>
+<p>The reason we prefer round-robin is, it is less influenced by changes in the number of channels. The
+mapping between a channel index and a PF is fixed, no matter how many channels the user configures.
+As the channel stats are persistent across channel’s closure, changing the mapping every single time
+would turn the accumulative stats less representing of the channel’s history.</p>
+<p>This is achieved by using the correct core device instance (mdev) in each channel, instead of them
+all using the same instance under “priv-&gt;mdev”.</p>
+</section>
+<section id="observability">
+<h2>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h2>
+<p>The relation between PF, irq, napi, and queue can be observed via netlink spec:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./tools/net/ynl/pyynl/cli.py --spec Documentation/netlink/specs/netdev.yaml --dump queue-get --json=&#39;{&quot;ifindex&quot;: 13}&#39;
+[{&#39;id&#39;: 0, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 539, &#39;type&#39;: &#39;rx&#39;},
+ {&#39;id&#39;: 1, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 540, &#39;type&#39;: &#39;rx&#39;},
+ {&#39;id&#39;: 2, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 541, &#39;type&#39;: &#39;rx&#39;},
+ {&#39;id&#39;: 3, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 542, &#39;type&#39;: &#39;rx&#39;},
+ {&#39;id&#39;: 4, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 543, &#39;type&#39;: &#39;rx&#39;},
+ {&#39;id&#39;: 0, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 539, &#39;type&#39;: &#39;tx&#39;},
+ {&#39;id&#39;: 1, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 540, &#39;type&#39;: &#39;tx&#39;},
+ {&#39;id&#39;: 2, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 541, &#39;type&#39;: &#39;tx&#39;},
+ {&#39;id&#39;: 3, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 542, &#39;type&#39;: &#39;tx&#39;},
+ {&#39;id&#39;: 4, &#39;ifindex&#39;: 13, &#39;napi-id&#39;: 543, &#39;type&#39;: &#39;tx&#39;}]
+
+$ ./tools/net/ynl/pyynl/cli.py --spec Documentation/netlink/specs/netdev.yaml --dump napi-get --json=&#39;{&quot;ifindex&quot;: 13}&#39;
+[{&#39;id&#39;: 543, &#39;ifindex&#39;: 13, &#39;irq&#39;: 42},
+ {&#39;id&#39;: 542, &#39;ifindex&#39;: 13, &#39;irq&#39;: 41},
+ {&#39;id&#39;: 541, &#39;ifindex&#39;: 13, &#39;irq&#39;: 40},
+ {&#39;id&#39;: 540, &#39;ifindex&#39;: 13, &#39;irq&#39;: 39},
+ {&#39;id&#39;: 539, &#39;ifindex&#39;: 13, &#39;irq&#39;: 36}]
+</pre></div>
+</div>
+<p>Here you can clearly observe our channels distribution policy:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ls /proc/irq/{36,39,40,41,42}/mlx5* -d -1
+/proc/irq/36/mlx5_comp0@pci:0000:08:00.0
+/proc/irq/39/mlx5_comp0@pci:0000:09:00.0
+/proc/irq/40/mlx5_comp1@pci:0000:08:00.0
+/proc/irq/41/mlx5_comp1@pci:0000:09:00.0
+/proc/irq/42/mlx5_comp2@pci:0000:08:00.0
+</pre></div>
+</div>
+</section>
+<section id="steering">
+<h2>Steering<a class="headerlink" href="#steering" title="Link to this heading">¶</a></h2>
+<p>Secondary PFs are set to “silent” mode, meaning they are disconnected from the network.</p>
+<p>In Rx, the steering tables belong to the primary PF only, and it is its role to distribute incoming
+traffic to other PFs, via cross-vhca steering capabilities. Still maintain a single default RSS table,
+that is capable of pointing to the receive queues of a different PF.</p>
+<p>In Tx, the primary PF creates a new Tx flow table, which is aliased by the secondaries, so they can
+go out to the network through it.</p>
+<p>In addition, we set default XPS configuration that, based on the CPU, selects an SQ belonging to the
+PF on the same node as the CPU.</p>
+<p>XPS default config example:</p>
+<p>NUMA node(s):          2
+NUMA node0 CPU(s):     0-11
+NUMA node1 CPU(s):     12-23</p>
+<p>PF0 on node0, PF1 on node1.</p>
+<ul class="simple">
+<li><p>/sys/class/net/eth2/queues/tx-0/xps_cpus:000001</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-1/xps_cpus:001000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-2/xps_cpus:000002</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-3/xps_cpus:002000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-4/xps_cpus:000004</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-5/xps_cpus:004000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-6/xps_cpus:000008</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-7/xps_cpus:008000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-8/xps_cpus:000010</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-9/xps_cpus:010000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-10/xps_cpus:000020</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-11/xps_cpus:020000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-12/xps_cpus:000040</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-13/xps_cpus:040000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-14/xps_cpus:000080</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-15/xps_cpus:080000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-16/xps_cpus:000100</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-17/xps_cpus:100000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-18/xps_cpus:000200</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-19/xps_cpus:200000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-20/xps_cpus:000400</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-21/xps_cpus:400000</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-22/xps_cpus:000800</p></li>
+<li><p>/sys/class/net/eth2/queues/tx-23/xps_cpus:800000</p></li>
+</ul>
+</section>
+<section id="mutually-exclusive-features">
+<h2>Mutually exclusive features<a class="headerlink" href="#mutually-exclusive-features" title="Link to this heading">¶</a></h2>
+<p>The nature of Multi-PF, where different channels work with different PFs, conflicts with
+stateful features where the state is maintained in one of the PFs.
+For example, in the TLS device-offload feature, special context objects are created per connection
+and maintained in the PF.  Transitioning between different RQs/SQs would break the feature. Hence,
+we disable this combination for now.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Multi-PF Netdev</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#mlx5-implementation">mlx5 implementation</a></li>
+<li><a class="reference internal" href="#channels-distribution">Channels distribution</a></li>
+<li><a class="reference internal" href="#observability">Observability</a></li>
+<li><a class="reference internal" href="#steering">Steering</a></li>
+<li><a class="reference internal" href="#mutually-exclusive-features">Mutually exclusive features</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="multiqueue.html">
+                    <span class="icon">&lt;</span><span>HOWTO for multiqueue network device support</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="napi.html"><span>NAPI</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

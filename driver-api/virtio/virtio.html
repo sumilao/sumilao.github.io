@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Virtio on Linux &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Writing Virtio Drivers" href="writing_virtio_drivers.html" />
+    <link rel="prev" title="Virtio" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Driver APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-information-for-driver-authors">General information for driver authors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#useful-support-libraries">Useful support libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#bus-level-documentation">Bus-level documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../auxiliary_bus.html">Auxiliary Bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cxl/index.html">Compute Express Link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eisa.html">EISA bus support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../firewire.html">Firewire (IEEE 1394) driver Interface Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i3c/index.html">I3C subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isa.html">ISA Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../men-chameleon-bus.html">MEN Chameleon Bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pci/index.html">The Linux PCI driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rapidio/index.html">The Linux RapidIO Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../slimbus.html">Linux kernel SLIMbus support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">Linux USB API</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Virtio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vme.html">VME Device Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../w1.html">W1: Dallas’ 1-wire bus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../xillybus.html">Xillybus driver for generic FPGA interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#subsystem-specific-apis">Subsystem-specific APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mm/index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/driver-api/virtio/virtio.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="virtio-on-linux">
+<span id="virtio"></span><h1>Virtio on Linux<a class="headerlink" href="#virtio-on-linux" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Virtio is an open standard that defines a protocol for communication
+between drivers and devices of different types, see Chapter 5 (“Device
+Types”) of the virtio spec (<a class="reference internal" href="#id2">[1]</a>). Originally developed as a standard
+for paravirtualized devices implemented by a hypervisor, it can be used
+to interface any compliant device (real or emulated) with a driver.</p>
+<p>For illustrative purposes, this document will focus on the common case
+of a Linux kernel running in a virtual machine and using paravirtualized
+devices provided by the hypervisor, which exposes them as virtio devices
+via standard mechanisms such as PCI.</p>
+</section>
+<section id="device-driver-communication-virtqueues">
+<h2>Device - Driver communication: virtqueues<a class="headerlink" href="#device-driver-communication-virtqueues" title="Link to this heading">¶</a></h2>
+<p>Although the virtio devices are really an abstraction layer in the
+hypervisor, they’re exposed to the guest as if they are physical devices
+using a specific transport method -- PCI, MMIO or CCW -- that is
+orthogonal to the device itself. The virtio spec defines these transport
+methods in detail, including device discovery, capabilities and
+interrupt handling.</p>
+<p>The communication between the driver in the guest OS and the device in
+the hypervisor is done through shared memory (that’s what makes virtio
+devices so efficient) using specialized data structures called
+virtqueues, which are actually ring buffers <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of buffer descriptors
+similar to the ones used in a network device:</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.vring_desc">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vring_desc</span></span></span><a class="headerlink" href="#c.vring_desc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Virtio ring descriptors, 16 bytes long. These can chain together via <strong>next</strong>.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct vring_desc {
+    __virtio64 addr;
+    __virtio32 len;
+    __virtio16 flags;
+    __virtio16 next;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">addr</span></code></dt><dd><p>buffer address (guest-physical)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">len</span></code></dt><dd><p>buffer length</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">flags</span></code></dt><dd><p>descriptor flags</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">next</span></code></dt><dd><p>index of the next descriptor in the chain,
+if the VRING_DESC_F_NEXT flag is set. We chain unused
+descriptors via this, too.</p>
+</dd>
+</dl>
+</div>
+<p>All the buffers the descriptors point to are allocated by the guest and
+used by the host either for reading or for writing but not for both.</p>
+<p>Refer to Chapter 2.5 (“Virtqueues”) of the virtio spec (<a class="reference internal" href="#id2">[1]</a>) for the
+reference definitions of virtqueues and “Virtqueues and virtio ring: How
+the data travels” blog post (<a class="reference internal" href="#id3">[2]</a>) for an illustrated overview of how
+the host device and the guest driver communicate.</p>
+<p>The <code class="xref c c-type docutils literal notranslate"><span class="pre">vring_virtqueue</span></code> struct models a virtqueue, including the
+ring buffers and management data. Embedded in this struct is the
+<a class="reference internal" href="#c.virtqueue" title="virtqueue"><code class="xref c c-type docutils literal notranslate"><span class="pre">virtqueue</span></code></a> struct, which is the data structure that’s
+ultimately used by virtio drivers:</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.virtqueue">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">virtqueue</span></span></span><a class="headerlink" href="#c.virtqueue" title="Link to this definition">¶</a><br /></dt>
+<dd><p>a queue to register buffers for sending or receiving.</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Definition</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct virtqueue {
+    struct list_head list;
+    void (*callback)(struct virtqueue *vq);
+    const char *name;
+    struct virtio_device *vdev;
+    unsigned int index;
+    unsigned int num_free;
+    unsigned int num_max;
+    bool reset;
+    void *priv;
+};
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">list</span></code></dt><dd><p>the chain of virtqueues for this device</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">callback</span></code></dt><dd><p>the function to call when buffers are consumed (can be NULL).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>the name of this virtqueue (mainly for debugging)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vdev</span></code></dt><dd><p>the virtio device this queue was created for.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">index</span></code></dt><dd><p>the zero-based ordinal number for this queue.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">num_free</span></code></dt><dd><p>number of elements we expect to be able to fit.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">num_max</span></code></dt><dd><p>the maximum number of elements supported by the device.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">reset</span></code></dt><dd><p>vq is in reset state or not.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">priv</span></code></dt><dd><p>a pointer for the virtqueue implementation to use.</p>
+</dd>
+</dl>
+</div>
+<p><strong>Description</strong></p>
+<p>A note on <strong>num_free</strong>: with indirect buffers, each buffer needs one
+element in the queue, otherwise a buffer will need one element per
+sg element.</p>
+<p>The callback function pointed by this struct is triggered when the
+device has consumed the buffers provided by the driver. More
+specifically, the trigger will be an interrupt issued by the hypervisor
+(see <a class="reference internal" href="#c.vring_interrupt" title="vring_interrupt"><code class="xref c c-func docutils literal notranslate"><span class="pre">vring_interrupt()</span></code></a>). Interrupt request handlers are registered for
+a virtqueue during the virtqueue setup process (transport-specific).</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.vring_interrupt">
+<span class="n"><span class="pre">irqreturn_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vring_interrupt</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">irq</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">_vq</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.vring_interrupt" title="Link to this definition">¶</a><br /></dt>
+<dd><p>notify a virtqueue on an interrupt</p>
+</dd></dl>
+
+<div class="kernelindent docutils container">
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">irq</span></code></dt><dd><p>the IRQ number (ignored)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">*_vq</span></code></dt><dd><p>the <a class="reference internal" href="#c.virtqueue" title="virtqueue"><code class="xref c c-struct docutils literal notranslate"><span class="pre">struct</span> <span class="pre">virtqueue</span></code></a> to notify</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Calls the callback function of <strong>_vq</strong> to process the virtqueue
+notification.</p>
+</div>
+</section>
+<section id="device-discovery-and-probing">
+<h2>Device discovery and probing<a class="headerlink" href="#device-discovery-and-probing" title="Link to this heading">¶</a></h2>
+<p>In the kernel, the virtio core contains the virtio bus driver and
+transport-specific drivers like <cite>virtio-pci</cite> and <cite>virtio-mmio</cite>. Then
+there are individual virtio drivers for specific device types that are
+registered to the virtio bus driver.</p>
+<p>How a virtio device is found and configured by the kernel depends on how
+the hypervisor defines it. Taking the <a class="reference external" href="https://gitlab.com/qemu-project/qemu/-/blob/master/hw/char/virtio-console.c">QEMU virtio-console</a>
+device as an example. When using PCI as a transport method, the device
+will present itself on the PCI bus with vendor 0x1af4 (Red Hat, Inc.)
+and device id 0x1003 (virtio console), as defined in the spec, so the
+kernel will detect it as it would do with any other PCI device.</p>
+<p>During the PCI enumeration process, if a device is found to match the
+virtio-pci driver (according to the virtio-pci device table, any PCI
+device with vendor id = 0x1af4):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* Qumranet donated their vendor ID for devices 0x1000 thru 0x10FF. */
+static const struct pci_device_id virtio_pci_id_table[] = {
+        { PCI_DEVICE(PCI_VENDOR_ID_REDHAT_QUMRANET, PCI_ANY_ID) },
+        { 0 }
+};
+</pre></div>
+</div>
+<p>then the virtio-pci driver is probed and, if the probing goes well, the
+device is registered to the virtio bus:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>static int virtio_pci_probe(struct pci_dev *pci_dev,
+                            const struct pci_device_id *id)
+{
+        ...
+
+        if (force_legacy) {
+                rc = virtio_pci_legacy_probe(vp_dev);
+                /* Also try modern mode if we can&#39;t map BAR0 (no IO space). */
+                if (rc == -ENODEV || rc == -ENOMEM)
+                        rc = virtio_pci_modern_probe(vp_dev);
+                if (rc)
+                        goto err_probe;
+        } else {
+                rc = virtio_pci_modern_probe(vp_dev);
+                if (rc == -ENODEV)
+                        rc = virtio_pci_legacy_probe(vp_dev);
+                if (rc)
+                        goto err_probe;
+        }
+
+        ...
+
+        rc = register_virtio_device(&amp;vp_dev-&gt;vdev);
+</pre></div>
+</div>
+<p>When the device is registered to the virtio bus the kernel will look
+for a driver in the bus that can handle the device and call that
+driver’s <code class="docutils literal notranslate"><span class="pre">probe</span></code> method.</p>
+<p>At this point, the virtqueues will be allocated and configured by
+calling the appropriate <code class="docutils literal notranslate"><span class="pre">virtio_find</span></code> helper function, such as
+virtio_find_single_vq() or virtio_find_vqs(), which will end up calling
+a transport-specific <code class="docutils literal notranslate"><span class="pre">find_vqs</span></code> method.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<p><span class="target" id="id2">[1]</span> Virtio Spec v1.2:
+<a class="reference external" href="https://docs.oasis-open.org/virtio/virtio/v1.2/virtio-v1.2.html">https://docs.oasis-open.org/virtio/virtio/v1.2/virtio-v1.2.html</a></p>
+<p><span class="target" id="id3">[2]</span> Virtqueues and virtio ring: How the data travels
+<a class="reference external" href="https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels">https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels</a></p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>that’s why they may be also referred to as virtrings.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Virtio on Linux</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#device-driver-communication-virtqueues">Device - Driver communication: virtqueues</a></li>
+<li><a class="reference internal" href="#device-discovery-and-probing">Device discovery and probing</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>Virtio</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="writing_virtio_drivers.html"><span>Writing Virtio Drivers</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

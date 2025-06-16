@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>kAFS: AFS FILESYSTEM &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="autofs - how it works" href="autofs.html" />
+    <link rel="prev" title="Overview of Amiga Filesystems" href="affs.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Filesystems in the Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../block/index.html">Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cdrom/index.html">CD-ROM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scsi/index.html">SCSI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../target/index.html">TCM Virtual Device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvme/index.html">NVMe Subsystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/filesystems/afs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="kafs-afs-filesystem">
+<h1>kAFS: AFS FILESYSTEM<a class="headerlink" href="#kafs-afs-filesystem" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This filesystem provides a fairly simple secure AFS filesystem driver. It is
+under development and does not yet provide the full feature set.  The features
+it does support include:</p>
+<blockquote>
+<div><p>(*) Security (currently only AFS kaserver and KerberosIV tickets).</p>
+<p>(*) File reading and writing.</p>
+<p>(*) Automounting.</p>
+<p>(*) Local caching (via fscache).</p>
+</div></blockquote>
+<p>It does not yet support the following AFS features:</p>
+<blockquote>
+<div><p>(*) pioctl() system call.</p>
+</div></blockquote>
+</section>
+<section id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
+<p>The filesystem should be enabled by turning on the kernel configuration
+options:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_AF_RXRPC         - The RxRPC protocol transport
+CONFIG_RXKAD            - The RxRPC Kerberos security handler
+CONFIG_AFS_FS           - The AFS filesystem
+</pre></div>
+</div>
+<p>Additionally, the following can be turned on to aid debugging:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_AF_RXRPC_DEBUG   - Permit AF_RXRPC debugging to be enabled
+CONFIG_AFS_DEBUG        - Permit AFS debugging to be enabled
+</pre></div>
+</div>
+<p>They permit the debugging messages to be turned on dynamically by manipulating
+the masks in the following files:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/sys/module/af_rxrpc/parameters/debug
+/sys/module/kafs/parameters/debug
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>When inserting the driver modules the root cell must be specified along with a
+list of volume location server IP addresses:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>modprobe rxrpc
+modprobe kafs rootcell=cambridge.redhat.com:172.16.18.73:172.16.18.91
+</pre></div>
+</div>
+<p>The first module is the AF_RXRPC network protocol driver.  This provides the
+RxRPC remote operation protocol and may also be accessed from userspace.  See:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../networking/rxrpc.html"><span class="doc">RxRPC Network Protocol</span></a></p>
+</div></blockquote>
+<p>The second module is the kerberos RxRPC security driver, and the third module
+is the actual filesystem driver for the AFS filesystem.</p>
+<p>Once the module has been loaded, more modules can be added by the following
+procedure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo add grand.central.org 18.9.48.14:128.2.203.61:130.237.48.87 &gt;/proc/fs/afs/cells
+</pre></div>
+</div>
+<p>Where the parameters to the “add” command are the name of a cell and a list of
+volume location servers within that cell, with the latter separated by colons.</p>
+<p>Filesystems can be mounted anywhere by commands similar to the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount -t afs &quot;%cambridge.redhat.com:root.afs.&quot; /afs
+mount -t afs &quot;#cambridge.redhat.com:root.cell.&quot; /afs/cambridge
+mount -t afs &quot;#root.afs.&quot; /afs
+mount -t afs &quot;#root.cell.&quot; /afs/cambridge
+</pre></div>
+</div>
+<p>Where the initial character is either a hash or a percent symbol depending on
+whether you definitely want a R/W volume (percent) or whether you’d prefer a
+R/O volume, but are willing to use a R/W volume instead (hash).</p>
+<p>The name of the volume can be suffixes with “.backup” or “.readonly” to
+specify connection to only volumes of those types.</p>
+<p>The name of the cell is optional, and if not given during a mount, then the
+named volume will be looked up in the cell specified during modprobe.</p>
+<p>Additional cells can be added through /proc (see later section).</p>
+</section>
+<section id="mountpoints">
+<h2>Mountpoints<a class="headerlink" href="#mountpoints" title="Link to this heading">¶</a></h2>
+<p>AFS has a concept of mountpoints. In AFS terms, these are specially formatted
+symbolic links (of the same form as the “device name” passed to mount).  kAFS
+presents these to the user as directories that have a follow-link capability
+(i.e.: symbolic link semantics).  If anyone attempts to access them, they will
+automatically cause the target volume to be mounted (if possible) on that site.</p>
+<p>Automatically mounted filesystems will be automatically unmounted approximately
+twenty minutes after they were last used.  Alternatively they can be unmounted
+directly with the umount() system call.</p>
+<p>Manually unmounting an AFS volume will cause any idle submounts upon it to be
+culled first.  If all are culled, then the requested volume will also be
+unmounted, otherwise error EBUSY will be returned.</p>
+<p>This can be used by the administrator to attempt to unmount the whole AFS tree
+mounted on /afs in one go by doing:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>umount /afs
+</pre></div>
+</div>
+</section>
+<section id="dynamic-root">
+<h2>Dynamic Root<a class="headerlink" href="#dynamic-root" title="Link to this heading">¶</a></h2>
+<p>A mount option is available to create a serverless mount that is only usable
+for dynamic lookup.  Creating such a mount can be done by, for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount -t afs none /afs -o dyn
+</pre></div>
+</div>
+<p>This creates a mount that just has an empty directory at the root.  Attempting
+to look up a name in this directory will cause a mountpoint to be created that
+looks up a cell of the same name, for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ls /afs/grand.central.org/
+</pre></div>
+</div>
+</section>
+<section id="proc-filesystem">
+<h2>Proc Filesystem<a class="headerlink" href="#proc-filesystem" title="Link to this heading">¶</a></h2>
+<p>The AFS module creates a “/proc/fs/afs/” directory and populates it:</p>
+<blockquote>
+<div><dl>
+<dt>(*) A “cells” file that lists cells currently known to the afs module and</dt><dd><p>their usage counts:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# cat /proc/fs/afs/cells
+USE NAME
+  3 cambridge.redhat.com
+</pre></div>
+</div>
+</dd>
+<dt>(*) A directory per cell that contains files that list volume location</dt><dd><p>servers, volumes, and active servers known within that cell:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# cat /proc/fs/afs/cambridge.redhat.com/servers
+USE ADDR            STATE
+  4 172.16.18.91        0
+[root@andromeda ~]# cat /proc/fs/afs/cambridge.redhat.com/vlservers
+ADDRESS
+172.16.18.91
+[root@andromeda ~]# cat /proc/fs/afs/cambridge.redhat.com/volumes
+USE STT VLID[0]  VLID[1]  VLID[2]  NAME
+  1 Val 20000000 20000001 20000002 root.afs
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="the-cell-database">
+<h2>The Cell Database<a class="headerlink" href="#the-cell-database" title="Link to this heading">¶</a></h2>
+<p>The filesystem maintains an internal database of all the cells it knows and the
+IP addresses of the volume location servers for those cells.  The cell to which
+the system belongs is added to the database when modprobe is performed by the
+“rootcell=” argument or, if compiled in, using a “kafs.rootcell=” argument on
+the kernel command line.</p>
+<p>Further cells can be added by commands similar to the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo add CELLNAME VLADDR[:VLADDR][:VLADDR]... &gt;/proc/fs/afs/cells
+echo add grand.central.org 18.9.48.14:128.2.203.61:130.237.48.87 &gt;/proc/fs/afs/cells
+</pre></div>
+</div>
+<p>No other cell database operations are available at this time.</p>
+</section>
+<section id="security">
+<h2>Security<a class="headerlink" href="#security" title="Link to this heading">¶</a></h2>
+<p>Secure operations are initiated by acquiring a key using the klog program.  A
+very primitive klog program is available at:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://people.redhat.com/~dhowells/rxrpc/klog.c">https://people.redhat.com/~dhowells/rxrpc/klog.c</a></p>
+</div></blockquote>
+<p>This should be compiled by:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make klog LDLIBS=&quot;-lcrypto -lcrypt -lkrb4 -lkeyutils&quot;
+</pre></div>
+</div>
+<p>And then run as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./klog
+</pre></div>
+</div>
+<p>Assuming it’s successful, this adds a key of type RxRPC, named for the service
+and cell, e.g.: “afs&#64;&lt;cellname&gt;”.  This can be viewed with the keyctl program or
+by cat’ing /proc/keys:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# keyctl show
+Session Keyring
+       -3 --alswrv      0     0  keyring: _ses.3268
+        2 --alswrv      0     0   \_ keyring: _uid.0
+111416553 --als--v      0     0   \_ rxrpc: afs@CAMBRIDGE.REDHAT.COM
+</pre></div>
+</div>
+<p>Currently the username, realm, password and proposed ticket lifetime are
+compiled into the program.</p>
+<p>It is not required to acquire a key before using AFS facilities, but if one is
+not acquired then all operations will be governed by the anonymous user parts
+of the ACLs.</p>
+<p>If a key is acquired, then all AFS operations, including mounts and automounts,
+made by a possessor of that key will be secured with that key.</p>
+<p>If a file is opened with a particular key and then the file descriptor is
+passed to a process that doesn’t have that key (perhaps over an AF_UNIX
+socket), then the operations on the file will be made with key that was used to
+open the file.</p>
+</section>
+<section id="the-sys-substitution">
+<h2>The &#64;sys Substitution<a class="headerlink" href="#the-sys-substitution" title="Link to this heading">¶</a></h2>
+<p>The list of up to 16 &#64;sys substitutions for the current network namespace can
+be configured by writing a list to /proc/fs/afs/sysname:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# echo foo amd64_linux_26 &gt;/proc/fs/afs/sysname
+</pre></div>
+</div>
+<p>or cleared entirely by writing an empty list:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# echo &gt;/proc/fs/afs/sysname
+</pre></div>
+</div>
+<p>The current list for current network namespace can be retrieved by:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[root@andromeda ~]# cat /proc/fs/afs/sysname
+foo
+amd64_linux_26
+</pre></div>
+</div>
+<p>When &#64;sys is being substituted for, each element of the list is tried in the
+order given.</p>
+<p>By default, the list will contain one item that conforms to the pattern
+“&lt;arch&gt;_linux_26”, amd64 being the name for x86_64.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">kAFS: AFS FILESYSTEM</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#compilation">Compilation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#mountpoints">Mountpoints</a></li>
+<li><a class="reference internal" href="#dynamic-root">Dynamic Root</a></li>
+<li><a class="reference internal" href="#proc-filesystem">Proc Filesystem</a></li>
+<li><a class="reference internal" href="#the-cell-database">The Cell Database</a></li>
+<li><a class="reference internal" href="#security">Security</a></li>
+<li><a class="reference internal" href="#the-sys-substitution">The &#64;sys Substitution</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="affs.html">
+                    <span class="icon">&lt;</span><span>Overview of Amiga Filesystems</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="autofs.html"><span>autofs - how it works</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

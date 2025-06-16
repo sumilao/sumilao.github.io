@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9.1. Introduction &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9.3. Configuring PCI Endpoint Using CONFIGFS" href="pci-endpoint-cfs.html" />
+    <link rel="prev" title="9. PCI Endpoint Framework" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../accounting/index.html">Accounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cpu-freq/index.html">CPUFreq - CPU frequency and voltage scaling code in the Linux(TM) kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../edac/index.html">EDAC Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fpga/index.html">FPGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2c/index.html">I2C/SMBus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../iio/index.html">Industrial I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pcmcia/index.html">PCMCIA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../spi/index.html">Serial Peripheral Interface (SPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../w1/index.html">1-Wire Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../watchdog/index.html">Watchdog Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../virt/index.html">Virtualization Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hwmon/index.html">Hardware Monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../accel/index.html">Compute Accelerators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../security/index.html">Security Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../crypto/index.html">Crypto API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../bpf/index.html">BPF Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usb/index.html">USB support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">PCI Bus Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../misc-devices/index.html">Assorted Miscellaneous Devices Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../peci/index.html">PECI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../wmi/index.html">WMI Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tee/index.html">TEE Subsystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/PCI/endpoint/pci-endpoint.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<p>This document is a guide to use the PCI Endpoint Framework in order to create
+endpoint controller driver, endpoint function driver, and using configfs
+interface to bind the function driver to the controller driver.</p>
+<section id="introduction">
+<h1><span class="section-number">9.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>Linux has a comprehensive PCI subsystem to support PCI controllers that
+operates in Root Complex mode. The subsystem has capability to scan PCI bus,
+assign memory resources and IRQ resources, load PCI driver (based on
+vendor ID, device ID), support other services like hot-plug, power management,
+advanced error reporting and virtual channels.</p>
+<p>However the PCI controller IP integrated in some SoCs is capable of operating
+either in Root Complex mode or Endpoint mode. PCI Endpoint Framework will
+add endpoint mode support in Linux. This will help to run Linux in an
+EP system which can have a wide variety of use cases from testing or
+validation, co-processor accelerator, etc.</p>
+</section>
+<section id="pci-endpoint-core">
+<h1><span class="section-number">9.2. </span>PCI Endpoint Core<a class="headerlink" href="#pci-endpoint-core" title="Link to this heading">¶</a></h1>
+<p>The PCI Endpoint Core layer comprises 3 components: the Endpoint Controller
+library, the Endpoint Function library, and the configfs layer to bind the
+endpoint function with the endpoint controller.</p>
+<section id="pci-endpoint-controller-epc-library">
+<h2><span class="section-number">9.2.1. </span>PCI Endpoint Controller(EPC) Library<a class="headerlink" href="#pci-endpoint-controller-epc-library" title="Link to this heading">¶</a></h2>
+<p>The EPC library provides APIs to be used by the controller that can operate
+in endpoint mode. It also provides APIs to be used by function driver/library
+in order to implement a particular endpoint function.</p>
+<section id="apis-for-the-pci-controller-driver">
+<h3><span class="section-number">9.2.1.1. </span>APIs for the PCI controller Driver<a class="headerlink" href="#apis-for-the-pci-controller-driver" title="Link to this heading">¶</a></h3>
+<p>This section lists the APIs that the PCI Endpoint core provides to be used
+by the PCI controller driver.</p>
+<ul>
+<li><p>devm_pci_epc_create()/pci_epc_create()</p>
+<blockquote>
+<div><p>The PCI controller driver should implement the following ops:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>write_header: ops to populate configuration space header</p></li>
+<li><p>set_bar: ops to configure the BAR</p></li>
+<li><p>clear_bar: ops to reset the BAR</p></li>
+<li><p>alloc_addr_space: ops to allocate in PCI controller address space</p></li>
+<li><p>free_addr_space: ops to free the allocated address space</p></li>
+<li><p>raise_irq: ops to raise a legacy, MSI or MSI-X interrupt</p></li>
+<li><p>start: ops to start the PCI link</p></li>
+<li><p>stop: ops to stop the PCI link</p></li>
+</ul>
+</div></blockquote>
+<p>The PCI controller driver can then create a new EPC device by invoking
+devm_pci_epc_create()/pci_epc_create().</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_destroy()</p>
+<blockquote>
+<div><p>The PCI controller driver can destroy the EPC device created by
+pci_epc_create() using pci_epc_destroy().</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_linkup()</p>
+<blockquote>
+<div><p>In order to notify all the function devices that the EPC device to which
+they are linked has established a link with the host, the PCI controller
+driver should invoke pci_epc_linkup().</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_mem_init()</p>
+<blockquote>
+<div><p>Initialize the pci_epc_mem structure used for allocating EPC addr space.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_mem_exit()</p>
+<blockquote>
+<div><p>Cleanup the pci_epc_mem structure allocated during pci_epc_mem_init().</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="epc-apis-for-the-pci-endpoint-function-driver">
+<h3><span class="section-number">9.2.1.2. </span>EPC APIs for the PCI Endpoint Function Driver<a class="headerlink" href="#epc-apis-for-the-pci-endpoint-function-driver" title="Link to this heading">¶</a></h3>
+<p>This section lists the APIs that the PCI Endpoint core provides to be used
+by the PCI endpoint function driver.</p>
+<ul>
+<li><p>pci_epc_write_header()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_write_header() to
+write the standard configuration header to the endpoint controller.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_set_bar()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_set_bar() to configure
+the Base Address Register in order for the host to assign PCI addr space.
+Register space of the function driver is usually configured
+using this API.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_clear_bar()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_clear_bar() to reset
+the BAR.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_raise_irq()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_raise_irq() to raise
+Legacy Interrupt, MSI or MSI-X Interrupt.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_mem_alloc_addr()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_mem_alloc_addr(), to
+allocate memory address from EPC addr space which is required to access
+RC’s buffer</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_mem_free_addr()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should use pci_epc_mem_free_addr() to
+free the memory space allocated using pci_epc_mem_alloc_addr().</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_map_addr()</p>
+<p>A PCI endpoint function driver should use pci_epc_map_addr() to map to a RC
+PCI address the CPU address of local memory obtained with
+pci_epc_mem_alloc_addr().</p>
+</li>
+<li><p>pci_epc_unmap_addr()</p>
+<p>A PCI endpoint function driver should use pci_epc_unmap_addr() to unmap the
+CPU address of local memory mapped to a RC address with pci_epc_map_addr().</p>
+</li>
+<li><p>pci_epc_mem_map()</p>
+<p>A PCI endpoint controller may impose constraints on the RC PCI addresses that
+can be mapped. The function pci_epc_mem_map() allows endpoint function
+drivers to allocate and map controller memory while handling such
+constraints. This function will determine the size of the memory that must be
+allocated with pci_epc_mem_alloc_addr() for successfully mapping a RC PCI
+address range. This function will also indicate the size of the PCI address
+range that was actually mapped, which can be less than the requested size, as
+well as the offset into the allocated memory to use for accessing the mapped
+RC PCI address range.</p>
+</li>
+<li><p>pci_epc_mem_unmap()</p>
+<p>A PCI endpoint function driver can use pci_epc_mem_unmap() to unmap and free
+controller memory that was allocated and mapped using pci_epc_mem_map().</p>
+</li>
+</ul>
+</section>
+<section id="other-epc-apis">
+<h3><span class="section-number">9.2.1.3. </span>Other EPC APIs<a class="headerlink" href="#other-epc-apis" title="Link to this heading">¶</a></h3>
+<p>There are other APIs provided by the EPC library. These are used for binding
+the EPF device with EPC device. pci-ep-cfs.c can be used as reference for
+using these APIs.</p>
+<ul>
+<li><p>pci_epc_get()</p>
+<blockquote>
+<div><p>Get a reference to the PCI endpoint controller based on the device name of
+the controller.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_put()</p>
+<blockquote>
+<div><p>Release the reference to the PCI endpoint controller obtained using
+pci_epc_get()</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_add_epf()</p>
+<blockquote>
+<div><p>Add a PCI endpoint function to a PCI endpoint controller. A PCIe device
+can have up to 8 functions according to the specification.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_remove_epf()</p>
+<blockquote>
+<div><p>Remove the PCI endpoint function from PCI endpoint controller.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_start()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should invoke pci_epc_start() once it
+has configured the endpoint function and wants to start the PCI link.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epc_stop()</p>
+<blockquote>
+<div><p>The PCI endpoint function driver should invoke pci_epc_stop() to stop
+the PCI LINK.</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="pci-endpoint-function-epf-library">
+<h2><span class="section-number">9.2.2. </span>PCI Endpoint Function(EPF) Library<a class="headerlink" href="#pci-endpoint-function-epf-library" title="Link to this heading">¶</a></h2>
+<p>The EPF library provides APIs to be used by the function driver and the EPC
+library to provide endpoint mode functionality.</p>
+<section id="epf-apis-for-the-pci-endpoint-function-driver">
+<h3><span class="section-number">9.2.2.1. </span>EPF APIs for the PCI Endpoint Function Driver<a class="headerlink" href="#epf-apis-for-the-pci-endpoint-function-driver" title="Link to this heading">¶</a></h3>
+<p>This section lists the APIs that the PCI Endpoint core provides to be used
+by the PCI endpoint function driver.</p>
+<ul>
+<li><p>pci_epf_register_driver()</p>
+<blockquote>
+<div><dl class="simple">
+<dt>The PCI Endpoint Function driver should implement the following ops:</dt><dd><ul class="simple">
+<li><p>bind: ops to perform when a EPC device has been bound to EPF device</p></li>
+<li><p>unbind: ops to perform when a binding has been lost between a EPC
+device and EPF device</p></li>
+<li><p>add_cfs: optional ops to create function specific configfs
+attributes</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>The PCI Function driver can then register the PCI EPF driver by using
+pci_epf_register_driver().</p>
+</li>
+<li><p>pci_epf_unregister_driver()</p>
+<p>The PCI Function driver can unregister the PCI EPF driver by using
+pci_epf_unregister_driver().</p>
+</li>
+<li><p>pci_epf_alloc_space()</p>
+<p>The PCI Function driver can allocate space for a particular BAR using
+pci_epf_alloc_space().</p>
+</li>
+<li><p>pci_epf_free_space()</p>
+<p>The PCI Function driver can free the allocated space
+(using pci_epf_alloc_space) by invoking pci_epf_free_space().</p>
+</li>
+</ul>
+</section>
+<section id="apis-for-the-pci-endpoint-controller-library">
+<h3><span class="section-number">9.2.2.2. </span>APIs for the PCI Endpoint Controller Library<a class="headerlink" href="#apis-for-the-pci-endpoint-controller-library" title="Link to this heading">¶</a></h3>
+<p>This section lists the APIs that the PCI Endpoint core provides to be used
+by the PCI endpoint controller library.</p>
+<ul>
+<li><p>pci_epf_linkup()</p>
+<blockquote>
+<div><p>The PCI endpoint controller library invokes pci_epf_linkup() when the
+EPC device has established the connection to the host.</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="other-epf-apis">
+<h3><span class="section-number">9.2.2.3. </span>Other EPF APIs<a class="headerlink" href="#other-epf-apis" title="Link to this heading">¶</a></h3>
+<p>There are other APIs provided by the EPF library. These are used to notify
+the function driver when the EPF device is bound to the EPC device.
+pci-ep-cfs.c can be used as reference for using these APIs.</p>
+<ul>
+<li><p>pci_epf_create()</p>
+<blockquote>
+<div><p>Create a new PCI EPF device by passing the name of the PCI EPF device.
+This name will be used to bind the EPF device to a EPF driver.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epf_destroy()</p>
+<blockquote>
+<div><p>Destroy the created PCI EPF device.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epf_bind()</p>
+<blockquote>
+<div><p>pci_epf_bind() should be invoked when the EPF device has been bound to
+a EPC device.</p>
+</div></blockquote>
+</li>
+<li><p>pci_epf_unbind()</p>
+<blockquote>
+<div><p>pci_epf_unbind() should be invoked when the binding between EPC device
+and EPF device is lost.</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">9.1. Introduction</a></li>
+<li><a class="reference internal" href="#pci-endpoint-core">9.2. PCI Endpoint Core</a><ul>
+<li><a class="reference internal" href="#pci-endpoint-controller-epc-library">9.2.1. PCI Endpoint Controller(EPC) Library</a><ul>
+<li><a class="reference internal" href="#apis-for-the-pci-controller-driver">9.2.1.1. APIs for the PCI controller Driver</a></li>
+<li><a class="reference internal" href="#epc-apis-for-the-pci-endpoint-function-driver">9.2.1.2. EPC APIs for the PCI Endpoint Function Driver</a></li>
+<li><a class="reference internal" href="#other-epc-apis">9.2.1.3. Other EPC APIs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pci-endpoint-function-epf-library">9.2.2. PCI Endpoint Function(EPF) Library</a><ul>
+<li><a class="reference internal" href="#epf-apis-for-the-pci-endpoint-function-driver">9.2.2.1. EPF APIs for the PCI Endpoint Function Driver</a></li>
+<li><a class="reference internal" href="#apis-for-the-pci-endpoint-controller-library">9.2.2.2. APIs for the PCI Endpoint Controller Library</a></li>
+<li><a class="reference internal" href="#other-epf-apis">9.2.2.3. Other EPF APIs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">9. </span>PCI Endpoint Framework</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="pci-endpoint-cfs.html"><span><span class="section-number">9.3. </span>Configuring PCI Endpoint Using CONFIGFS</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. Programming gameport drivers &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Keyboard notifier" href="notifier.html" />
+    <link rel="prev" title="1. Creating an input device driver" href="input-programming.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sound/index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/input/gameport-programming.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="programming-gameport-drivers">
+<h1><span class="section-number">2. </span>Programming gameport drivers<a class="headerlink" href="#programming-gameport-drivers" title="Link to this heading">¶</a></h1>
+<section id="a-basic-classic-gameport">
+<h2><span class="section-number">2.1. </span>A basic classic gameport<a class="headerlink" href="#a-basic-classic-gameport" title="Link to this heading">¶</a></h2>
+<p>If the gameport doesn’t provide more than the inb()/outb() functionality,
+the code needed to register it with the joystick drivers is simple:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct gameport gameport;
+
+gameport.io = MY_IO_ADDRESS;
+gameport_register_port(&amp;gameport);
+</pre></div>
+</div>
+<p>Make sure struct gameport is initialized to 0 in all other fields. The
+gameport generic code will take care of the rest.</p>
+<p>If your hardware supports more than one io address, and your driver can
+choose which one to program the hardware to, starting from the more exotic
+addresses is preferred, because the likelihood of clashing with the standard
+0x201 address is smaller.</p>
+<p>E.g. if your driver supports addresses 0x200, 0x208, 0x210 and 0x218, then
+0x218 would be the address of first choice.</p>
+<p>If your hardware supports a gameport address that is not mapped to ISA io
+space (is above 0x1000), use that one, and don’t map the ISA mirror.</p>
+<p>Also, always request_region() on the whole io space occupied by the
+gameport. Although only one ioport is really used, the gameport usually
+occupies from one to sixteen addresses in the io space.</p>
+<p>Please also consider enabling the gameport on the card in the -&gt;open()
+callback if the io is mapped to ISA space - this way it’ll occupy the io
+space only when something really is using it. Disable it again in the
+-&gt;close() callback. You also can select the io address in the -&gt;open()
+callback, so that it doesn’t fail if some of the possible addresses are
+already occupied by other gameports.</p>
+</section>
+<section id="memory-mapped-gameport">
+<h2><span class="section-number">2.2. </span>Memory mapped gameport<a class="headerlink" href="#memory-mapped-gameport" title="Link to this heading">¶</a></h2>
+<p>When a gameport can be accessed through MMIO, this way is preferred, because
+it is faster, allowing more reads per second. Registering such a gameport
+isn’t as easy as a basic IO one, but not so much complex:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct gameport gameport;
+
+void my_trigger(struct gameport *gameport)
+{
+        my_mmio = 0xff;
+}
+
+unsigned char my_read(struct gameport *gameport)
+{
+        return my_mmio;
+}
+
+gameport.read = my_read;
+gameport.trigger = my_trigger;
+gameport_register_port(&amp;gameport);
+</pre></div>
+</div>
+</section>
+<section id="cooked-mode-gameport">
+<span id="gameport-pgm-cooked-mode"></span><h2><span class="section-number">2.3. </span>Cooked mode gameport<a class="headerlink" href="#cooked-mode-gameport" title="Link to this heading">¶</a></h2>
+<p>There are gameports that can report the axis values as numbers, that means
+the driver doesn’t have to measure them the old way - an ADC is built into
+the gameport. To register a cooked gameport:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct gameport gameport;
+
+int my_cooked_read(struct gameport *gameport, int *axes, int *buttons)
+{
+        int i;
+
+        for (i = 0; i &lt; 4; i++)
+                axes[i] = my_mmio[i];
+        buttons[0] = my_mmio[4];
+}
+
+int my_open(struct gameport *gameport, int mode)
+{
+        return -(mode != GAMEPORT_MODE_COOKED);
+}
+
+gameport.cooked_read = my_cooked_read;
+gameport.open = my_open;
+gameport.fuzz = 8;
+gameport_register_port(&amp;gameport);
+</pre></div>
+</div>
+<p>The only confusing thing here is the fuzz value. Best determined by
+experimentation, it is the amount of noise in the ADC data. Perfect
+gameports can set this to zero, most common have fuzz between 8 and 32.
+See analog.c and input.c for handling of fuzz - the fuzz value determines
+the size of a gaussian filter window that is used to eliminate the noise
+in the data.</p>
+</section>
+<section id="more-complex-gameports">
+<h2><span class="section-number">2.4. </span>More complex gameports<a class="headerlink" href="#more-complex-gameports" title="Link to this heading">¶</a></h2>
+<p>Gameports can support both raw and cooked modes. In that case combine either
+examples 1+2 or 1+3. Gameports can support internal calibration - see below,
+and also lightning.c and analog.c on how that works. If your driver supports
+more than one gameport instance simultaneously, use the -&gt;private member of
+the gameport struct to point to your data.</p>
+</section>
+<section id="unregistering-a-gameport">
+<h2><span class="section-number">2.5. </span>Unregistering a gameport<a class="headerlink" href="#unregistering-a-gameport" title="Link to this heading">¶</a></h2>
+<p>Simple:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gameport_unregister_port(&amp;gameport);
+</pre></div>
+</div>
+</section>
+<section id="the-gameport-structure">
+<h2><span class="section-number">2.6. </span>The gameport structure<a class="headerlink" href="#the-gameport-structure" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct gameport {
+
+    void *port_data;
+</pre></div>
+</div>
+<p>A private pointer for free use in the gameport driver. (Not the joystick
+driver!)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>char name[32];
+</pre></div>
+</div>
+<p>Driver’s name as set by driver calling gameport_set_name(). Informational
+purpose only.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>char phys[32];
+</pre></div>
+</div>
+<p>gameport’s physical name/description as set by driver calling gameport_set_phys().
+Informational purpose only.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int io;
+</pre></div>
+</div>
+<p>I/O address for use with raw mode. You have to either set this, or -&gt;read()
+to some value if your gameport supports raw mode.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int speed;
+</pre></div>
+</div>
+<p>Raw mode speed of the gameport reads in thousands of reads per second.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int fuzz;
+</pre></div>
+</div>
+<p>If the gameport supports cooked mode, this should be set to a value that
+represents the amount of noise in the data. See
+<a class="reference internal" href="#gameport-pgm-cooked-mode"><span class="std std-ref">Cooked mode gameport</span></a>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void (*trigger)(struct gameport *);
+</pre></div>
+</div>
+<p>Trigger. This function should trigger the ns558 oneshots. If set to NULL,
+outb(0xff, io) will be used.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>unsigned char (*read)(struct gameport *);
+</pre></div>
+</div>
+<p>Read the buttons and ns558 oneshot bits. If set to NULL, inb(io) will be
+used instead.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int (*cooked_read)(struct gameport *, int *axes, int *buttons);
+</pre></div>
+</div>
+<p>If the gameport supports cooked mode, it should point this to its cooked
+read function. It should fill axes[0..3] with four values of the joystick axes
+and buttons[0] with four bits representing the buttons.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int (*calibrate)(struct gameport *, int *axes, int *max);
+</pre></div>
+</div>
+<p>Function for calibrating the ADC hardware. When called, axes[0..3] should be
+pre-filled by cooked data by the caller, max[0..3] should be pre-filled with
+expected maximums for each axis. The calibrate() function should set the
+sensitivity of the ADC hardware so that the maximums fit in its range and
+recompute the axes[] values to match the new sensitivity or re-read them from
+the hardware so that they give valid values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int (*open)(struct gameport *, int mode);
+</pre></div>
+</div>
+<p>Open() serves two purposes. First a driver either opens the port in raw or
+in cooked mode, the open() callback can decide which modes are supported.
+Second, resource allocation can happen here. The port can also be enabled
+here. Prior to this call, other fields of the gameport struct (namely the io
+member) need not to be valid.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void (*close)(struct gameport *);
+</pre></div>
+</div>
+<p>Close() should free the resources allocated by open, possibly disabling the
+gameport.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct timer_list poll_timer;
+unsigned int poll_interval;     /* in msecs */
+spinlock_t timer_lock;
+unsigned int poll_cnt;
+void (*poll_handler)(struct gameport *);
+struct gameport *parent, *child;
+struct gameport_driver *drv;
+struct mutex drv_mutex;         /* protects serio-&gt;drv so attributes can pin driver */
+struct device dev;
+struct list_head node;
+</pre></div>
+</div>
+<p>For internal use by the gameport layer.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>};
+</pre></div>
+</div>
+<p>Enjoy!</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">2. Programming gameport drivers</a><ul>
+<li><a class="reference internal" href="#a-basic-classic-gameport">2.1. A basic classic gameport</a></li>
+<li><a class="reference internal" href="#memory-mapped-gameport">2.2. Memory mapped gameport</a></li>
+<li><a class="reference internal" href="#cooked-mode-gameport">2.3. Cooked mode gameport</a></li>
+<li><a class="reference internal" href="#more-complex-gameports">2.4. More complex gameports</a></li>
+<li><a class="reference internal" href="#unregistering-a-gameport">2.5. Unregistering a gameport</a></li>
+<li><a class="reference internal" href="#the-gameport-structure">2.6. The gameport structure</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="input-programming.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">1. </span>Creating an input device driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="notifier.html"><span><span class="section-number">3. </span>Keyboard notifier</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

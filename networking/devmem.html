@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Device Memory TCP &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DNS Resolver Module" href="dns_resolver.html" />
+    <link rel="prev" title="DCTCP (DataCenter TCP)" href="dctcp.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/devmem.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="device-memory-tcp">
+<h1>Device Memory TCP<a class="headerlink" href="#device-memory-tcp" title="Link to this heading">¶</a></h1>
+<section id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Link to this heading">¶</a></h2>
+<p>Device memory TCP (devmem TCP) enables receiving data directly into device
+memory (dmabuf). The feature is currently implemented for TCP sockets.</p>
+<section id="opportunity">
+<h3>Opportunity<a class="headerlink" href="#opportunity" title="Link to this heading">¶</a></h3>
+<p>A large number of data transfers have device memory as the source and/or
+destination. Accelerators drastically increased the prevalence of such
+transfers.  Some examples include:</p>
+<ul class="simple">
+<li><p>Distributed training, where ML accelerators, such as GPUs on different hosts,
+exchange data.</p></li>
+<li><p>Distributed raw block storage applications transfer large amounts of data with
+remote SSDs. Much of this data does not require host processing.</p></li>
+</ul>
+<p>Typically the Device-to-Device data transfers in the network are implemented as
+the following low-level operations: Device-to-Host copy, Host-to-Host network
+transfer, and Host-to-Device copy.</p>
+<p>The flow involving host copies is suboptimal, especially for bulk data transfers,
+and can put significant strains on system resources such as host memory
+bandwidth and PCIe bandwidth.</p>
+<p>Devmem TCP optimizes this use case by implementing socket APIs that enable
+the user to receive incoming network packets directly into device memory.</p>
+<p>Packet payloads go directly from the NIC to device memory.</p>
+<p>Packet headers go to host memory and are processed by the TCP/IP stack
+normally. The NIC must support header split to achieve this.</p>
+<p>Advantages:</p>
+<ul class="simple">
+<li><p>Alleviate host memory bandwidth pressure, compared to existing
+network-transfer + device-copy semantics.</p></li>
+<li><p>Alleviate PCIe bandwidth pressure, by limiting data transfer to the lowest
+level of the PCIe tree, compared to the traditional path which sends data
+through the root complex.</p></li>
+</ul>
+</section>
+<section id="more-info">
+<h3>More Info<a class="headerlink" href="#more-info" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>slides, video</dt><dd><p><a class="reference external" href="https://netdevconf.org/0x17/sessions/talk/device-memory-tcp.html">https://netdevconf.org/0x17/sessions/talk/device-memory-tcp.html</a></p>
+</dd>
+<dt>patchset</dt><dd><p>[PATCH net-next v24 00/13] Device Memory TCP
+<a class="reference external" href="https://lore.kernel.org/netdev/20240831004313.3713467-1-almasrymina&#64;google.com/">https://lore.kernel.org/netdev/20240831004313.3713467-1-almasrymina&#64;google.com/</a></p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</section>
+<section id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Link to this heading">¶</a></h2>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h3>
+<p>tools/testing/selftests/net/ncdevmem.c:do_server shows an example of setting up
+the RX path of this API.</p>
+</section>
+<section id="nic-setup">
+<h3>NIC Setup<a class="headerlink" href="#nic-setup" title="Link to this heading">¶</a></h3>
+<p>Header split, flow steering, &amp; RSS are required features for devmem TCP.</p>
+<p>Header split is used to split incoming packets into a header buffer in host
+memory, and a payload buffer in device memory.</p>
+<p>Flow steering &amp; RSS are used to ensure that only flows targeting devmem land on
+an RX queue bound to devmem.</p>
+<p>Enable header split &amp; flow steering:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># enable header split
+ethtool -G eth1 tcp-data-split on
+
+
+# enable flow steering
+ethtool -K eth1 ntuple on
+</pre></div>
+</div>
+<p>Configure RSS to steer all traffic away from the target RX queue (queue 15 in
+this example):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ethtool --set-rxfh-indir eth1 equal 15
+</pre></div>
+</div>
+<p>The user must bind a dmabuf to any number of RX queues on a given NIC using
+the netlink API:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* Bind dmabuf to NIC RX queue 15 */
+struct netdev_queue *queues;
+queues = malloc(sizeof(*queues) * 1);
+
+queues[0]._present.type = 1;
+queues[0]._present.idx = 1;
+queues[0].type = NETDEV_RX_QUEUE_TYPE_RX;
+queues[0].idx = 15;
+
+*ys = ynl_sock_create(&amp;ynl_netdev_family, &amp;yerr);
+
+req = netdev_bind_rx_req_alloc();
+netdev_bind_rx_req_set_ifindex(req, 1 /* ifindex */);
+netdev_bind_rx_req_set_dmabuf_fd(req, dmabuf_fd);
+__netdev_bind_rx_req_set_queues(req, queues, n_queue_index);
+
+rsp = netdev_bind_rx(*ys, req);
+
+dmabuf_id = rsp-&gt;dmabuf_id;
+</pre></div>
+</div>
+<p>The netlink API returns a dmabuf_id: a unique ID that refers to this dmabuf
+that has been bound.</p>
+<p>The user can unbind the dmabuf from the netdevice by closing the netlink socket
+that established the binding. We do this so that the binding is automatically
+unbound even if the userspace process crashes.</p>
+<p>Note that any reasonably well-behaved dmabuf from any exporter should work with
+devmem TCP, even if the dmabuf is not actually backed by devmem. An example of
+this is udmabuf, which wraps user memory (non-devmem) in a dmabuf.</p>
+</section>
+<section id="socket-setup">
+<h3>Socket Setup<a class="headerlink" href="#socket-setup" title="Link to this heading">¶</a></h3>
+<p>The socket must be flow steered to the dmabuf bound RX queue:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ethtool -N eth1 flow-type tcp4 ... queue 15
+</pre></div>
+</div>
+</section>
+<section id="receiving-data">
+<h3>Receiving data<a class="headerlink" href="#receiving-data" title="Link to this heading">¶</a></h3>
+<p>The user application must signal to the kernel that it is capable of receiving
+devmem data by passing the MSG_SOCK_DEVMEM flag to recvmsg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ret = recvmsg(fd, &amp;msg, MSG_SOCK_DEVMEM);
+</pre></div>
+</div>
+<p>Applications that do not specify the MSG_SOCK_DEVMEM flag will receive an EFAULT
+on devmem data.</p>
+<p>Devmem data is received directly into the dmabuf bound to the NIC in ‘NIC
+Setup’, and the kernel signals such to the user via the SCM_DEVMEM_* cmsgs:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for (cm = CMSG_FIRSTHDR(&amp;msg); cm; cm = CMSG_NXTHDR(&amp;msg, cm)) {
+        if (cm-&gt;cmsg_level != SOL_SOCKET ||
+                (cm-&gt;cmsg_type != SCM_DEVMEM_DMABUF &amp;&amp;
+                 cm-&gt;cmsg_type != SCM_DEVMEM_LINEAR))
+                continue;
+
+        dmabuf_cmsg = (struct dmabuf_cmsg *)CMSG_DATA(cm);
+
+        if (cm-&gt;cmsg_type == SCM_DEVMEM_DMABUF) {
+                /* Frag landed in dmabuf.
+                 *
+                 * dmabuf_cmsg-&gt;dmabuf_id is the dmabuf the
+                 * frag landed on.
+                 *
+                 * dmabuf_cmsg-&gt;frag_offset is the offset into
+                 * the dmabuf where the frag starts.
+                 *
+                 * dmabuf_cmsg-&gt;frag_size is the size of the
+                 * frag.
+                 *
+                 * dmabuf_cmsg-&gt;frag_token is a token used to
+                 * refer to this frag for later freeing.
+                 */
+
+                struct dmabuf_token token;
+                token.token_start = dmabuf_cmsg-&gt;frag_token;
+                token.token_count = 1;
+                continue;
+        }
+
+        if (cm-&gt;cmsg_type == SCM_DEVMEM_LINEAR)
+                /* Frag landed in linear buffer.
+                 *
+                 * dmabuf_cmsg-&gt;frag_size is the size of the
+                 * frag.
+                 */
+                continue;
+
+}
+</pre></div>
+</div>
+<p>Applications may receive 2 cmsgs:</p>
+<ul class="simple">
+<li><p>SCM_DEVMEM_DMABUF: this indicates the fragment landed in the dmabuf indicated
+by dmabuf_id.</p></li>
+<li><p>SCM_DEVMEM_LINEAR: this indicates the fragment landed in the linear buffer.
+This typically happens when the NIC is unable to split the packet at the
+header boundary, such that part (or all) of the payload landed in host
+memory.</p></li>
+</ul>
+<p>Applications may receive no SO_DEVMEM_* cmsgs. That indicates non-devmem,
+regular TCP data that landed on an RX queue not bound to a dmabuf.</p>
+</section>
+<section id="freeing-frags">
+<h3>Freeing frags<a class="headerlink" href="#freeing-frags" title="Link to this heading">¶</a></h3>
+<p>Frags received via SCM_DEVMEM_DMABUF are pinned by the kernel while the user
+processes the frag. The user must return the frag to the kernel via
+SO_DEVMEM_DONTNEED:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ret = setsockopt(client_fd, SOL_SOCKET, SO_DEVMEM_DONTNEED, &amp;token,
+                 sizeof(token));
+</pre></div>
+</div>
+<p>The user must ensure the tokens are returned to the kernel in a timely manner.
+Failure to do so will exhaust the limited dmabuf that is bound to the RX queue
+and will lead to packet drops.</p>
+<p>The user must pass no more than 128 tokens, with no more than 1024 total frags
+among the token-&gt;token_count across all the tokens. If the user provides more
+than 1024 frags, the kernel will free up to 1024 frags and return early.</p>
+<p>The kernel returns the number of actual frags freed. The number of frags freed
+can be less than the tokens provided by the user in case of:</p>
+<ol class="loweralpha simple">
+<li><p>an internal kernel leak bug.</p></li>
+<li><p>the user passed more than 1024 frags.</p></li>
+</ol>
+</section>
+</section>
+<section id="implementation-caveats">
+<h2>Implementation &amp; Caveats<a class="headerlink" href="#implementation-caveats" title="Link to this heading">¶</a></h2>
+<section id="unreadable-skbs">
+<h3>Unreadable skbs<a class="headerlink" href="#unreadable-skbs" title="Link to this heading">¶</a></h3>
+<p>Devmem payloads are inaccessible to the kernel processing the packets. This
+results in a few quirks for payloads of devmem skbs:</p>
+<ul class="simple">
+<li><p>Loopback is not functional. Loopback relies on copying the payload, which is
+not possible with devmem skbs.</p></li>
+<li><p>Software checksum calculation fails.</p></li>
+<li><p>TCP Dump and bpf can’t access devmem packet payloads.</p></li>
+</ul>
+</section>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">¶</a></h2>
+<p>More realistic example code can be found in the kernel source under
+<code class="docutils literal notranslate"><span class="pre">tools/testing/selftests/drivers/net/hw/ncdevmem.c</span></code></p>
+<p>ncdevmem is a devmem TCP netcat. It works very similarly to netcat, but
+receives data directly into a udmabuf.</p>
+<p>To run ncdevmem, you need to run it on a server on the machine under test, and
+you need to run netcat on a peer to provide the TX data.</p>
+<p>ncdevmem has a validation mode as well that expects a repeating pattern of
+incoming data and validates it as such. For example, you can launch
+ncdevmem on the server by:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ncdevmem -s &lt;server IP&gt; -c &lt;client IP&gt; -f &lt;ifname&gt; -l -p 5201 -v 7
+</pre></div>
+</div>
+<p>On client side, use regular netcat to send TX data to ncdevmem process
+on the server:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>yes $(echo -e \\x01\\x02\\x03\\x04\\x05\\x06) | \
+        tr \\n \\0 | head -c 5G | nc &lt;server IP&gt; 5201 -p 5201
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Device Memory TCP</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a><ul>
+<li><a class="reference internal" href="#opportunity">Opportunity</a></li>
+<li><a class="reference internal" href="#more-info">More Info</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interface">Interface</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#nic-setup">NIC Setup</a></li>
+<li><a class="reference internal" href="#socket-setup">Socket Setup</a></li>
+<li><a class="reference internal" href="#receiving-data">Receiving data</a></li>
+<li><a class="reference internal" href="#freeing-frags">Freeing frags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementation-caveats">Implementation &amp; Caveats</a><ul>
+<li><a class="reference internal" href="#unreadable-skbs">Unreadable skbs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="dctcp.html">
+                    <span class="icon">&lt;</span><span>DCTCP (DataCenter TCP)</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="dns_resolver.html"><span>DNS Resolver Module</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

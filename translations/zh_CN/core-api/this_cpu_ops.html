@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>this_cpu操作 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux中的并查集（Union-Find）" href="union_find.html" />
+    <link rel="prev" title="通用的位域打包和解包函数" href="packing.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_CN/core-api/this_cpu_ops.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../core-api/this_cpu_ops.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../core-api/this_cpu_ops.html"><span class="doc">this_cpu operations</span></a></p>
+</dd>
+<dt class="field-even">翻译<span class="colon">:</span></dt>
+<dd class="field-even"><p>周彬彬 Binbin Zhou &lt;<a class="reference external" href="mailto:zhoubinbin&#37;&#52;&#48;loongson&#46;cn">zhoubinbin<span>&#64;</span>loongson<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+<dt class="field-odd">校译<span class="colon">:</span></dt>
+<dd class="field-odd"><p>吴想成 Wu Xiangcheng &lt;<a class="reference external" href="mailto:bobwxc&#37;&#52;&#48;email&#46;cn">bobwxc<span>&#64;</span>email<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="this-cpu">
+<h1>this_cpu操作<a class="headerlink" href="#this-cpu" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">作者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Christoph Lameter, 2014年8月4日</p>
+</dd>
+<dt class="field-even">作者<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pranith Kumar, 2014年8月2日</p>
+</dd>
+</dl>
+<p>this_cpu操作是一种优化访问与当前执行处理器相关的每CPU变量的方法。这是通过使用段寄
+存器（或专用寄存器，cpu在其中永久存储特定处理器的每CPU区域的起始）来完成的。</p>
+<p>this_cpu操作将每CPU变量的偏移量添加到处理器特定的每CPU基址上，并将该操作编码到对
+每CPU变量进行操作的指令中。</p>
+<p>这意味着在偏移量的计算和对数据的操作之间不存在原子性问题。因此，没有必要禁用抢占
+或中断来确保处理器在计算地址和数据操作之间不被改变。</p>
+<p>读取-修改-写入操作特别值得关注。通常处理器具有特殊的低延迟指令，可以在没有典型同
+步开销的情况下运行，但仍提供某种宽松的原子性保证。例如，x86可以执行RMW（读取，
+修改，写入）指令，如同inc/dec/cmpxchg，而无需锁前缀和相关的延迟损失。</p>
+<p>对没有锁前缀的变量的访问是不同步的，也不需要同步，因为我们处理的是当前执行的处理
+器所特有的每CPU数据。只有当前的处理器可以访问该变量，因此系统中的其他处理器不存在
+并发性问题。</p>
+<p>请注意，远程处理器对每CPU区域的访问是特殊情况，可能会影响通过 <code class="docutils literal notranslate"><span class="pre">this_cpu_*</span></code> 的本
+地RMW操作的性能和正确性（远程写操作）。</p>
+<p>this_cpu操作的主要用途是优化计数器操作。</p>
+<p>定义了以下具有隐含抢占保护的this_cpu()操作。可以使用这些操作而不用担心抢占和中断:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_read(pcp)
+this_cpu_write(pcp, val)
+this_cpu_add(pcp, val)
+this_cpu_and(pcp, val)
+this_cpu_or(pcp, val)
+this_cpu_add_return(pcp, val)
+this_cpu_xchg(pcp, nval)
+this_cpu_cmpxchg(pcp, oval, nval)
+this_cpu_cmpxchg_double(pcp1, pcp2, oval1, oval2, nval1, nval2)
+this_cpu_sub(pcp, val)
+this_cpu_inc(pcp)
+this_cpu_dec(pcp)
+this_cpu_sub_return(pcp, val)
+this_cpu_inc_return(pcp)
+this_cpu_dec_return(pcp)
+</pre></div>
+</div>
+<section id="id1">
+<h2>this_cpu操作的内部工作<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>在x86上，fs:或gs:段寄存器包含每CPU区域的基址。这样就可以简单地使用段覆盖，将每CPU
+相对地址重定位到处理器适当的每CPU区域。所以对每CPU基址的重定位是通过段寄存器前缀
+在指令中编码完成的。</p>
+<p>例如:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(int, x);
+int z;
+
+z = this_cpu_read(x);
+</pre></div>
+</div>
+<p>产生的单指令为:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mov ax, gs:[x]
+</pre></div>
+</div>
+<p>而不是像每CPU操作那样，先是一系列的地址计算，然后从该地址获取。在this_cpu_ops之前，
+这样的序列还需要先禁用/启用抢占功能，以防止内核在计算过程中将线程移动到不同的处理
+器上。</p>
+<p>请思考下面this_cpu操作:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_inc(x)
+</pre></div>
+</div>
+<p>这将产生如下单指令（无锁前缀！）:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inc gs:[x]
+</pre></div>
+</div>
+<p>而不是在没有段寄存器的情况下所需要的以下操作:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int *y;
+int cpu;
+
+cpu = get_cpu();
+y = per_cpu_ptr(&amp;x, cpu);
+(*y)++;
+put_cpu();
+</pre></div>
+</div>
+<p>请注意，这些操作只能用于为特定处理器保留的每CPU数据。如果不在上下文代码中禁用抢占，
+<code class="docutils literal notranslate"><span class="pre">this_cpu_inc()</span></code> 将仅保证每CPU的某一个计数器被正确地递增，但不能保证操作系统不
+会在this_cpu指令执行的前后直接移动该进程。一般来说，这意味着每个处理器的单个计数
+器的值是没有意义的。所有每CPU计数器的总和才是唯一有意义的值。</p>
+<p>每CPU变量的使用是出于性能的考虑。如果多个处理器同时处理相同的代码路径，可以避免缓
+存行跳转。每个处理器都有自己的每CPU变量，因此不会发生并发缓存行更新。为这种优化必
+须付出的代价是，当需要计数器的值时要将每CPU计数器相加。</p>
+</section>
+<section id="id2">
+<h2>特殊的操作<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>y = this_cpu_ptr(&amp;x)
+</pre></div>
+</div>
+<p>使用每CPU变量的偏移量(&amp;x!)，并返回属于当前执行处理器的每CPU变量的地址。
+<code class="docutils literal notranslate"><span class="pre">this_cpu_ptr</span></code> 避免了通用 <code class="docutils literal notranslate"><span class="pre">get_cpu</span></code>/<code class="docutils literal notranslate"><span class="pre">put_cpu</span></code> 序列所需的多个步骤。没有可用
+的处理器编号。相反，本地每CPU区域的偏移量只是简单地添加到每CPU偏移量上。</p>
+<p>请注意，这个操作通常是在抢占被禁用后再在代码段中使用。然后该指针用来访问临界区中
+的本地每CPU数据。当重新启用抢占时，此指针通常不再有用，因为它可能不再指向当前处理
+器的每CPU数据。</p>
+</section>
+<section id="cpu">
+<h2>每CPU变量和偏移量<a class="headerlink" href="#cpu" title="Link to this heading">¶</a></h2>
+<p>每CPU变量相对于每CPU区域的起始点是有偏移的。它们没有地址，尽管代码里看起来像有一
+样。不能直接对偏移量解引用，必须用处理器每CPU区域基指针加上偏移量，以构成有效地址。</p>
+<p>因此，在每CPU操作的上下文之外使用x或&amp;x是无效的，这种行为通常会被当作一个空指针的
+解引用来处理。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(int, x);
+</pre></div>
+</div>
+<p>在每CPU操作的上下文中，上面表达式说明x是一个每CPU变量。大多数this_cpu操作都需要一
+个cpu变量。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int __percpu *p = &amp;x;
+</pre></div>
+</div>
+<p>&amp;x和p是每CPU变量的偏移量。 <code class="docutils literal notranslate"><span class="pre">this_cpu_ptr()</span></code> 使用每CPU变量的偏移量，这让它看起来
+有点奇怪。</p>
+</section>
+<section id="id3">
+<h2>每CPU结构体字段的操作<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>假设我们有一个每CPU结构:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s {
+        int n,m;
+};
+
+DEFINE_PER_CPU(struct s, p);
+</pre></div>
+</div>
+<p>这些字段的操作非常简单:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>this_cpu_inc(p.m)
+
+z = this_cpu_cmpxchg(p.m, 0, 1);
+</pre></div>
+</div>
+<p>如果我们有一个相对于结构体s的偏移量:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s __percpu *ps = &amp;p;
+
+this_cpu_dec(ps-&gt;m);
+
+z = this_cpu_inc_return(ps-&gt;n);
+</pre></div>
+</div>
+<p>如果我们后面不使用 <code class="docutils literal notranslate"><span class="pre">this_cpu</span> <span class="pre">ops</span></code> 来操作字段，则指针的计算可能需要使用
+<code class="docutils literal notranslate"><span class="pre">this_cpu_ptr()</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct s *pp;
+
+pp = this_cpu_ptr(&amp;p);
+
+pp-&gt;m--;
+
+z = pp-&gt;n++;
+</pre></div>
+</div>
+</section>
+<section id="this-cpu-ops">
+<h2>this_cpu ops的变体<a class="headerlink" href="#this-cpu-ops" title="Link to this heading">¶</a></h2>
+<p>this_cpu的操作是中断安全的。一些架构不支持这些每CPU的本地操作。在这种情况下，该操
+作必须被禁用中断的代码所取代，然后做那些保证是原子的操作，再重新启用中断。当然这
+样做是很昂贵的。如果有其他原因导致调度器不能改变我们正在执行的处理器，那么就没有
+理由禁用中断了。为此，我们提供了以下__this_cpu操作。</p>
+<p>这些操作不能保证并发中断或抢占。如果在中断上下文中不使用每CPU变量并且调度程序无法
+抢占，那么它们是安全的。如果在操作进行时仍有中断发生，并且中断也修改了变量，则无
+法保证RMW操作是安全的:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>__this_cpu_read(pcp)
+__this_cpu_write(pcp, val)
+__this_cpu_add(pcp, val)
+__this_cpu_and(pcp, val)
+__this_cpu_or(pcp, val)
+__this_cpu_add_return(pcp, val)
+__this_cpu_xchg(pcp, nval)
+__this_cpu_cmpxchg(pcp, oval, nval)
+__this_cpu_cmpxchg_double(pcp1, pcp2, oval1, oval2, nval1, nval2)
+__this_cpu_sub(pcp, val)
+__this_cpu_inc(pcp)
+__this_cpu_dec(pcp)
+__this_cpu_sub_return(pcp, val)
+__this_cpu_inc_return(pcp)
+__this_cpu_dec_return(pcp)
+</pre></div>
+</div>
+<p>将增加x，并且不会回退到在无法通过地址重定位和同一指令中的读取-修改-写入操作实现原
+子性的平台上禁用中断的代码。</p>
+</section>
+<section id="this-cpu-ptr-pp-n-this-cpu-ptr-pp-n">
+<h2>&amp;this_cpu_ptr(pp)-&gt;n 对比 this_cpu_ptr(&amp;pp-&gt;n)<a class="headerlink" href="#this-cpu-ptr-pp-n-this-cpu-ptr-pp-n" title="Link to this heading">¶</a></h2>
+<p>第一个操作使用偏移量并形成一个地址，然后再加上n字段的偏移量。这可能会导致编译器产
+生两条加法指令。</p>
+<p>第二个操作先加上两个偏移量，然后进行重定位。恕我直言，第二种形式看起来更干净，而
+且更容易与 <code class="docutils literal notranslate"><span class="pre">()</span></code> 结合。第二种形式也与 <code class="docutils literal notranslate"><span class="pre">this_cpu_read()</span></code> 和大家的使用方式一致。</p>
+</section>
+<section id="id4">
+<h2>远程访问每CPU数据<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>每CPU数据结构被设计为由一个CPU独占使用。如果您按预期使用变量，则 <code class="docutils literal notranslate"><span class="pre">this_cpu_ops()</span></code>
+保证是 <code class="docutils literal notranslate"><span class="pre">原子的</span></code> ，因为没有其他CPU可以访问这些数据结构。</p>
+<p>在某些特殊情况下，您可能需要远程访问每CPU数据结构。通常情况下，进行远程读访问是安
+全的，这经常是为了统计计数器值。远程写访问可能会出现问题，因为this_cpu操作没有锁
+语义。远程写可能会干扰this_cpu RMW操作。</p>
+<p>除非绝对必要，否则强烈建议不要对每CPU数据结构进行远程写访问。请考虑使用IPI来唤醒
+远程CPU，并对其每CPU区域进行更新。</p>
+<p>要远程访问每CPU数据结构，通常使用 <code class="docutils literal notranslate"><span class="pre">per_cpu_ptr()</span></code> 函数:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEFINE_PER_CPU(struct data, datap);
+
+struct data *p = per_cpu_ptr(&amp;datap, cpu);
+</pre></div>
+</div>
+<p>这清楚地表明，我们正准备远程访问每CPU区域。</p>
+<p>您还可以执行以下操作以将datap偏移量转换为地址:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct data *p = this_cpu_ptr(&amp;datap);
+</pre></div>
+</div>
+<p>但是，将通过this_cpu_ptr计算的指针传递给其他cpu是不寻常的，应该避免。</p>
+<p>远程访问通常只用于读取另一个cpu的每CPU数据状态。由于this_cpu操作宽松的同步要求，
+写访问可能会导致奇特的问题。</p>
+<p>下面的情况说明了写入操作的一些问题，由于两个每CPU变量共享一个缓存行，但宽松的同步
+仅应用于更新缓存行的一个进程。</p>
+<p>考虑以下示例:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct test {
+        atomic_t a;
+        int b;
+};
+
+DEFINE_PER_CPU(struct test, onecacheline);
+</pre></div>
+</div>
+<p>如果一个处理器远程更新字段 <code class="docutils literal notranslate"><span class="pre">a</span></code> ，而本地处理器将使用this_cpu ops来更新字段 <code class="docutils literal notranslate"><span class="pre">b</span></code> ，
+会发生什么情况，这一点值得注意。应避免在同一缓存行内同时访问数据。此外，可能还需
+要进行代价高昂的同步。在这种情况下，通常建议使用IPI，而不是远程写入另一个处理器的
+每CPU区域。</p>
+<p>即使在远程写很少的情况下，请记住远程写将从最有可能访问它的处理器中逐出缓存行。如
+果处理器唤醒时发现每CPU区域缺少本地缓存行，其性能和唤醒时间将受到影响。</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">this_cpu操作</a><ul>
+<li><a class="reference internal" href="#id1">this_cpu操作的内部工作</a></li>
+<li><a class="reference internal" href="#id2">特殊的操作</a></li>
+<li><a class="reference internal" href="#cpu">每CPU变量和偏移量</a></li>
+<li><a class="reference internal" href="#id3">每CPU结构体字段的操作</a></li>
+<li><a class="reference internal" href="#this-cpu-ops">this_cpu ops的变体</a></li>
+<li><a class="reference internal" href="#this-cpu-ptr-pp-n-this-cpu-ptr-pp-n">&amp;this_cpu_ptr(pp)-&gt;n 对比 this_cpu_ptr(&amp;pp-&gt;n)</a></li>
+<li><a class="reference internal" href="#id4">远程访问每CPU数据</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="packing.html">
+                    <span class="icon">&lt;</span><span>通用的位域打包和解包函数</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="union_find.html"><span>Linux中的并查集（Union-Find）</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

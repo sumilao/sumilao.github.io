@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction of mseal &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="No New Privileges Flag" href="no_new_privs.html" />
+    <link rel="prev" title="Summary of HDIO_ ioctl calls" href="ioctl/hdio.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Userspace API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#system-calls">System calls</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="unshare.html">unshare system call</a></li>
+<li class="toctree-l3"><a class="reference internal" href="futex2.html">futex2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ebpf/index.html">eBPF Userspace API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ioctl/index.html">IOCTLs</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Introduction of mseal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#security-related-interfaces">Security-related interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#devices-and-i-o">Devices and I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/userspace-api/mseal.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="introduction-of-mseal">
+<h1>Introduction of mseal<a class="headerlink" href="#introduction-of-mseal" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Jeff Xu &lt;<a class="reference external" href="mailto:jeffxu&#37;&#52;&#48;chromium&#46;org">jeffxu<span>&#64;</span>chromium<span>&#46;</span>org</a>&gt;</p>
+</dd>
+</dl>
+<p>Modern CPUs support memory permissions such as RW and NX bits. The memory
+permission feature improves security stance on memory corruption bugs, i.e.
+the attacker can’t just write to arbitrary memory and point the code to it,
+the memory has to be marked with X bit, or else an exception will happen.</p>
+<p>Memory sealing additionally protects the mapping itself against
+modifications. This is useful to mitigate memory corruption issues where a
+corrupted pointer is passed to a memory management system. For example,
+such an attacker primitive can break control-flow integrity guarantees
+since read-only memory that is supposed to be trusted can become writable
+or .text pages can get remapped. Memory sealing can automatically be
+applied by the runtime loader to seal .text and .rodata pages and
+applications can additionally seal security critical data at runtime.</p>
+<p>A similar feature already exists in the XNU kernel with the
+VM_FLAGS_PERMANENT flag [1] and on OpenBSD with the mimmutable syscall [2].</p>
+<section id="syscall">
+<h2>SYSCALL<a class="headerlink" href="#syscall" title="Link to this heading">¶</a></h2>
+<section id="mseal-syscall-signature">
+<h3>mseal syscall signature<a class="headerlink" href="#mseal-syscall-signature" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">mseal(void</span> <span class="pre">*addr,</span> <span class="pre">size_t</span> <span class="pre">len,</span> <span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">flags)</span></code></p>
+<dl>
+<dt><strong>addr</strong>/<strong>len</strong>: virtual memory address range.</dt><dd><dl class="simple">
+<dt>The address range set by <strong>addr</strong>/<strong>len</strong> must meet:</dt><dd><ul class="simple">
+<li><p>The start address must be in an allocated VMA.</p></li>
+<li><p>The start address must be page aligned.</p></li>
+<li><p>The end address (<strong>addr</strong> + <strong>len</strong>) must be in an allocated VMA.</p></li>
+<li><p>no gap (unallocated memory) between start and end address.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The <code class="docutils literal notranslate"><span class="pre">len</span></code> will be paged aligned implicitly by the kernel.</p>
+</dd>
+</dl>
+<p><strong>flags</strong>: reserved for future use.</p>
+<dl class="simple">
+<dt><strong>Return values</strong>:</dt><dd><ul class="simple">
+<li><p><strong>0</strong>: Success.</p></li>
+<li><dl class="simple">
+<dt><strong>-EINVAL</strong>:</dt><dd><ul>
+<li><p>Invalid input <code class="docutils literal notranslate"><span class="pre">flags</span></code>.</p></li>
+<li><p>The start address (<code class="docutils literal notranslate"><span class="pre">addr</span></code>) is not page aligned.</p></li>
+<li><p>Address range (<code class="docutils literal notranslate"><span class="pre">addr</span></code> + <code class="docutils literal notranslate"><span class="pre">len</span></code>) overflow.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>-ENOMEM</strong>:</dt><dd><ul>
+<li><p>The start address (<code class="docutils literal notranslate"><span class="pre">addr</span></code>) is not allocated.</p></li>
+<li><p>The end address (<code class="docutils literal notranslate"><span class="pre">addr</span></code> + <code class="docutils literal notranslate"><span class="pre">len</span></code>) is not allocated.</p></li>
+<li><p>A gap (unallocated memory) between start and end address.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>-EPERM</strong>:</dt><dd><ul>
+<li><p>sealing is supported only on 64-bit CPUs, 32-bit is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><strong>Note about error return</strong>:</dt><dd><ul class="simple">
+<li><p>For above error cases, users can expect the given memory range is
+unmodified, i.e. no partial update.</p></li>
+<li><p>There might be other internal errors/cases not listed here, e.g.
+error during merging/splitting VMAs, or the process reaching the maximum
+number of supported VMAs. In those cases, partial updates to the given
+memory range could happen. However, those cases should be rare.</p></li>
+</ul>
+</dd>
+<dt><strong>Architecture support</strong>:</dt><dd><p>mseal only works on 64-bit CPUs, not 32-bit CPUs.</p>
+</dd>
+<dt><strong>Idempotent</strong>:</dt><dd><p>users can call mseal multiple times. mseal on an already sealed memory
+is a no-action (not error).</p>
+</dd>
+<dt><strong>no munseal</strong></dt><dd><p>Once mapping is sealed, it can’t be unsealed. The kernel should never
+have munseal, this is consistent with other sealing feature, e.g.
+F_SEAL_SEAL for file.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="blocked-mm-syscall-for-sealed-mapping">
+<h3>Blocked mm syscall for sealed mapping<a class="headerlink" href="#blocked-mm-syscall-for-sealed-mapping" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>It might be important to note: <strong>once the mapping is sealed, it will
+stay in the process’s memory until the process terminates</strong>.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>*ptr = mmap(0, 4096, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+rc = mseal(ptr, 4096, 0);
+/* munmap will fail */
+rc = munmap(ptr, 4096);
+assert(rc &lt; 0);
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Blocked mm syscall:</dt><dd><ul class="simple">
+<li><p>munmap</p></li>
+<li><p>mmap</p></li>
+<li><p>mremap</p></li>
+<li><p>mprotect and pkey_mprotect</p></li>
+<li><p>some destructive madvise behaviors: MADV_DONTNEED, MADV_FREE,
+MADV_DONTNEED_LOCKED, MADV_FREE, MADV_DONTFORK, MADV_WIPEONFORK</p></li>
+</ul>
+</dd>
+</dl>
+<p>The first set of syscalls to block is munmap, mremap, mmap. They can
+either leave an empty space in the address space, therefore allowing
+replacement with a new mapping with new set of attributes, or can
+overwrite the existing mapping with another mapping.</p>
+<p>mprotect and pkey_mprotect are blocked because they changes the
+protection bits (RWX) of the mapping.</p>
+<p>Certain destructive madvise behaviors, specifically MADV_DONTNEED,
+MADV_FREE, MADV_DONTNEED_LOCKED, and MADV_WIPEONFORK, can introduce
+risks when applied to anonymous memory by threads lacking write
+permissions. Consequently, these operations are prohibited under such
+conditions. The aforementioned behaviors have the potential to modify
+region contents by discarding pages, effectively performing a memset(0)
+operation on the anonymous memory.</p>
+<p>Kernel will return -EPERM for blocked syscalls.</p>
+<p>When blocked syscall return -EPERM due to sealing, the memory regions may
+or may not be changed, depends on the syscall being blocked:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>munmap: munmap is atomic. If one of VMAs in the given range is
+sealed, none of VMAs are updated.</p></li>
+<li><p>mprotect, pkey_mprotect, madvise: partial update might happen, e.g.
+when mprotect over multiple VMAs, mprotect might update the beginning
+VMAs before reaching the sealed VMA and return -EPERM.</p></li>
+<li><p>mmap and mremap: undefined behavior.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</section>
+</section>
+<section id="use-cases">
+<h2>Use cases<a class="headerlink" href="#use-cases" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>glibc:
+The dynamic linker, during loading ELF executables, can apply sealing to
+mapping segments.</p></li>
+<li><p>Chrome browser: protect some security sensitive data structures.</p></li>
+<li><p>System mappings:
+The system mappings are created by the kernel and includes vdso, vvar,
+vvar_vclock, vectors (arm compat-mode), sigpage (arm compat-mode), uprobes.</p>
+<p>Those system mappings are readonly only or execute only, memory sealing can
+protect them from ever changing to writable or unmmap/remapped as different
+attributes. This is useful to mitigate memory corruption issues where a
+corrupted pointer is passed to a memory management system.</p>
+<p>If supported by an architecture (CONFIG_ARCH_SUPPORTS_MSEAL_SYSTEM_MAPPINGS),
+the CONFIG_MSEAL_SYSTEM_MAPPINGS seals all system mappings of this
+architecture.</p>
+<p>The following architectures currently support this feature: x86-64, arm64,
+and s390.</p>
+<p>WARNING: This feature breaks programs which rely on relocating
+or unmapping system mappings. Known broken software at the time
+of writing includes CHECKPOINT_RESTORE, UML, gVisor, rr. Therefore
+this config can’t be enabled universally.</p>
+</li>
+</ul>
+</section>
+<section id="when-not-to-use-mseal">
+<h2>When not to use mseal<a class="headerlink" href="#when-not-to-use-mseal" title="Link to this heading">¶</a></h2>
+<p>Applications can apply sealing to any virtual memory region from userspace,
+but it is <em>crucial to thoroughly analyze the mapping’s lifetime</em> prior to
+apply the sealing. This is because the sealed mapping <em>won’t be unmapped</em>
+until the process terminates or the exec system call is invoked.</p>
+<dl>
+<dt>For example:</dt><dd><ul>
+<li><p>aio/shm
+aio/shm can call mmap and  munmap on behalf of userspace, e.g.
+ksys_shmdt() in shm.c. The lifetimes of those mapping are not tied to
+the lifetime of the process. If those memories are sealed from userspace,
+then munmap will fail, causing leaks in VMA address space during the
+lifetime of the process.</p></li>
+<li><p>ptr allocated by malloc (heap)
+Don’t use mseal on the memory ptr return from malloc().
+malloc() is implemented by allocator, e.g. by glibc. Heap manager might
+allocate a ptr from brk or mapping created by mmap.
+If an app calls mseal on a ptr returned from malloc(), this can affect
+the heap manager’s ability to manage the mappings; the outcome is
+non-deterministic.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ptr = malloc(size);
+/* don&#39;t call mseal on ptr return from malloc. */
+mseal(ptr, size);
+/* free will success, allocator can&#39;t shrink heap lower than ptr */
+free(ptr);
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="mseal-doesn-t-block">
+<h2>mseal doesn’t block<a class="headerlink" href="#mseal-doesn-t-block" title="Link to this heading">¶</a></h2>
+<p>In a nutshell, mseal blocks certain mm syscall from modifying some of VMA’s
+attributes, such as protection bits (RWX). Sealed mappings doesn’t mean the
+memory is immutable.</p>
+<p>As Jann Horn pointed out in [3], there are still a few ways to write
+to RO memory, which is, in a way, by design. And those could be blocked
+by different security measures.</p>
+<p>Those cases are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Write to read-only memory through /proc/self/mem interface (FOLL_FORCE).</p></li>
+<li><p>Write to read-only memory through ptrace (such as PTRACE_POKETEXT).</p></li>
+<li><p>userfaultfd.</p></li>
+</ul>
+</div></blockquote>
+<p>The idea that inspired this patch comes from Stephen Röttger’s work in V8
+CFI [4]. Chrome browser in ChromeOS will be the first user of this API.</p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>[1] <a class="reference external" href="https://github.com/apple-oss-distributions/xnu/blob/1031c584a5e37aff177559b9f69dbd3c8c3fd30a/osfmk/mach/vm_statistics.h#L274">https://github.com/apple-oss-distributions/xnu/blob/1031c584a5e37aff177559b9f69dbd3c8c3fd30a/osfmk/mach/vm_statistics.h#L274</a></p></li>
+<li><p>[2] <a class="reference external" href="https://man.openbsd.org/mimmutable.2">https://man.openbsd.org/mimmutable.2</a></p></li>
+<li><p>[3] <a class="reference external" href="https://lore.kernel.org/lkml/CAG48ez3ShUYey+ZAFsU2i1RpQn0a5eOs2hzQ426FkcgnfUGLvA&#64;mail.gmail.com">https://lore.kernel.org/lkml/CAG48ez3ShUYey+ZAFsU2i1RpQn0a5eOs2hzQ426FkcgnfUGLvA&#64;mail.gmail.com</a></p></li>
+<li><p>[4] <a class="reference external" href="https://docs.google.com/document/d/1O2jwK4dxI3nRcOJuPYkonhTkNQfbmwdvxQMyXgeaRHo/edit#heading=h.bvaojj9fu6hc">https://docs.google.com/document/d/1O2jwK4dxI3nRcOJuPYkonhTkNQfbmwdvxQMyXgeaRHo/edit#heading=h.bvaojj9fu6hc</a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Introduction of mseal</a><ul>
+<li><a class="reference internal" href="#syscall">SYSCALL</a><ul>
+<li><a class="reference internal" href="#mseal-syscall-signature">mseal syscall signature</a></li>
+<li><a class="reference internal" href="#blocked-mm-syscall-for-sealed-mapping">Blocked mm syscall for sealed mapping</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-cases">Use cases</a></li>
+<li><a class="reference internal" href="#when-not-to-use-mseal">When not to use mseal</a></li>
+<li><a class="reference internal" href="#mseal-doesn-t-block">mseal doesn’t block</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="ioctl/hdio.html">
+                    <span class="icon">&lt;</span><span>Summary of <cite>HDIO_</cite> ioctl calls</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="no_new_privs.html"><span>No New Privileges Flag</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

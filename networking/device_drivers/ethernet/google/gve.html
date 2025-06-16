@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux kernel driver for Compute Engine Virtual Ethernet (gve): &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <script src="../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Linux Kernel Driver for Huawei Intelligent NIC(HiNIC) family" href="../huawei/hinic.html" />
+    <link rel="prev" title="The Gianfar Ethernet Driver" href="../freescale/gianfar.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../index.html" title="Go to homepage"><img src="../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/networking/device_drivers/ethernet/google/gve.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="linux-kernel-driver-for-compute-engine-virtual-ethernet-gve">
+<h1>Linux kernel driver for Compute Engine Virtual Ethernet (gve):<a class="headerlink" href="#linux-kernel-driver-for-compute-engine-virtual-ethernet-gve" title="Link to this heading">¶</a></h1>
+<section id="supported-hardware">
+<h2>Supported Hardware<a class="headerlink" href="#supported-hardware" title="Link to this heading">¶</a></h2>
+<p>The GVE driver binds to a single PCI device id used by the virtual
+Ethernet device found in some Compute Engine VMs.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Vendor ID</p></td>
+<td><p><cite>0x1AE0</cite></p></td>
+<td><p>Google</p></td>
+</tr>
+<tr class="row-odd"><td><p>Device ID</p></td>
+<td><p><cite>0x0042</cite></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Sub-vendor ID</p></td>
+<td><p><cite>0x1AE0</cite></p></td>
+<td><p>Google</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sub-device ID</p></td>
+<td><p><cite>0x0058</cite></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Revision ID</p></td>
+<td><p><cite>0x0</cite></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Device Class</p></td>
+<td><p><cite>0x200</cite></p></td>
+<td><p>Ethernet</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pci-bars">
+<h2>PCI Bars<a class="headerlink" href="#pci-bars" title="Link to this heading">¶</a></h2>
+<p>The gVNIC PCI device exposes three 32-bit memory BARS:
+- Bar0 - Device configuration and status registers.
+- Bar1 - MSI-X vector table
+- Bar2 - IRQ, RX and TX doorbells</p>
+</section>
+<section id="device-interactions">
+<h2>Device Interactions<a class="headerlink" href="#device-interactions" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>The driver interacts with the device in the following ways:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Registers</dt><dd><ul>
+<li><p>A block of MMIO registers</p></li>
+<li><p>See gve_register.h for more detail</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Admin Queue</dt><dd><ul>
+<li><p>See description below</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Reset</dt><dd><ul>
+<li><p>At any time the device can be reset</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Interrupts</dt><dd><ul>
+<li><p>See supported interrupts below</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Transmit and Receive Queues</dt><dd><ul>
+<li><p>See description below</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<section id="descriptor-formats">
+<h3>Descriptor Formats<a class="headerlink" href="#descriptor-formats" title="Link to this heading">¶</a></h3>
+<p>GVE supports two descriptor formats: GQI and DQO. These two formats have
+entirely different descriptors, which will be described below.</p>
+</section>
+<section id="addressing-mode">
+<h3>Addressing Mode<a class="headerlink" href="#addressing-mode" title="Link to this heading">¶</a></h3>
+<p>GVE supports two addressing modes: QPL and RDA.
+QPL (“queue-page-list”) mode communicates data through a set of
+pre-registered pages.</p>
+<p>For RDA (“raw DMA addressing”) mode, the set of pages is dynamic.
+Therefore, the packet buffers can be anywhere in guest memory.</p>
+</section>
+<section id="registers">
+<h3>Registers<a class="headerlink" href="#registers" title="Link to this heading">¶</a></h3>
+<p>All registers are MMIO.</p>
+<p>The registers are used for initializing and configuring the device as well as
+querying device status in response to management interrupts.</p>
+</section>
+<section id="endianness">
+<h3>Endianness<a class="headerlink" href="#endianness" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Admin Queue messages and registers are all Big Endian.</p></li>
+<li><p>GQI descriptors and datapath registers are Big Endian.</p></li>
+<li><p>DQO descriptors and datapath registers are Little Endian.</p></li>
+</ul>
+</section>
+<section id="admin-queue-aq">
+<h3>Admin Queue (AQ)<a class="headerlink" href="#admin-queue-aq" title="Link to this heading">¶</a></h3>
+<p>The Admin Queue is a PAGE_SIZE memory block, treated as an array of AQ
+commands, used by the driver to issue commands to the device and set up
+resources.The driver and the device maintain a count of how many commands
+have been submitted and executed. To issue AQ commands, the driver must do
+the following (with proper locking):</p>
+<ol class="arabic simple">
+<li><p>Copy new commands into next available slots in the AQ array</p></li>
+<li><p>Increment its counter by he number of new commands</p></li>
+<li><p>Write the counter into the GVE_ADMIN_QUEUE_DOORBELL register</p></li>
+<li><p>Poll the ADMIN_QUEUE_EVENT_COUNTER register until it equals
+the value written to the doorbell, or until a timeout.</p></li>
+</ol>
+<p>The device will update the status field in each AQ command reported as
+executed through the ADMIN_QUEUE_EVENT_COUNTER register.</p>
+</section>
+<section id="device-resets">
+<h3>Device Resets<a class="headerlink" href="#device-resets" title="Link to this heading">¶</a></h3>
+<p>A device reset is triggered by writing 0x0 to the AQ PFN register.
+This causes the device to release all resources allocated by the
+driver, including the AQ itself.</p>
+</section>
+<section id="interrupts">
+<h3>Interrupts<a class="headerlink" href="#interrupts" title="Link to this heading">¶</a></h3>
+<p>The following interrupts are supported by the driver:</p>
+<section id="management-interrupt">
+<h4>Management Interrupt<a class="headerlink" href="#management-interrupt" title="Link to this heading">¶</a></h4>
+<p>The management interrupt is used by the device to tell the driver to
+look at the GVE_DEVICE_STATUS register.</p>
+<p>The handler for the management irq simply queues the service task in
+the workqueue to check the register and acks the irq.</p>
+</section>
+<section id="notification-block-interrupts">
+<h4>Notification Block Interrupts<a class="headerlink" href="#notification-block-interrupts" title="Link to this heading">¶</a></h4>
+<p>The notification block interrupts are used to tell the driver to poll
+the queues associated with that interrupt.</p>
+<p>The handler for these irqs schedule the napi for that block to run
+and poll the queues.</p>
+</section>
+</section>
+<section id="gqi-traffic-queues">
+<h3>GQI Traffic Queues<a class="headerlink" href="#gqi-traffic-queues" title="Link to this heading">¶</a></h3>
+<p>GQI queues are composed of a descriptor ring and a buffer and are assigned to a
+notification block.</p>
+<p>The descriptor rings are power-of-two-sized ring buffers consisting of
+fixed-size descriptors. They advance their head pointer using a __be32
+doorbell located in Bar2. The tail pointers are advanced by consuming
+descriptors in-order and updating a __be32 counter. Both the doorbell
+and the counter overflow to zero.</p>
+<p>Each queue’s buffers must be registered in advance with the device as a
+queue page list, and packet data can only be put in those pages.</p>
+<section id="transmit">
+<h4>Transmit<a class="headerlink" href="#transmit" title="Link to this heading">¶</a></h4>
+<p>gve maps the buffers for transmit rings into a FIFO and copies the packets
+into the FIFO before sending them to the NIC.</p>
+</section>
+<section id="receive">
+<h4>Receive<a class="headerlink" href="#receive" title="Link to this heading">¶</a></h4>
+<p>The buffers for receive rings are put into a data ring that is the same
+length as the descriptor ring and the head and tail pointers advance over
+the rings together.</p>
+</section>
+</section>
+<section id="dqo-traffic-queues">
+<h3>DQO Traffic Queues<a class="headerlink" href="#dqo-traffic-queues" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Every TX and RX queue is assigned a notification block.</p></li>
+<li><p>TX and RX buffers queues, which send descriptors to the device, use MMIO
+doorbells to notify the device of new descriptors.</p></li>
+<li><p>RX and TX completion queues, which receive descriptors from the device, use a
+“generation bit” to know when a descriptor was populated by the device. The
+driver initializes all bits with the “current generation”. The device will
+populate received descriptors with the “next generation” which is inverted
+from the current generation. When the ring wraps, the current/next generation
+are swapped.</p></li>
+<li><p>It’s the driver’s responsibility to ensure that the RX and TX completion
+queues are not overrun. This can be accomplished by limiting the number of
+descriptors posted to HW.</p></li>
+<li><p>TX packets have a 16 bit completion_tag and RX buffers have a 16 bit
+buffer_id. These will be returned on the TX completion and RX queues
+respectively to let the driver know which packet/buffer was completed.</p></li>
+</ul>
+<section id="id1">
+<h4>Transmit<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<p>A packet’s buffers are DMA mapped for the device to access before transmission.
+After the packet was successfully transmitted, the buffers are unmapped.</p>
+</section>
+<section id="id2">
+<h4>Receive<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p>The driver posts fixed sized buffers to HW on the RX buffer queue. The packet
+received on the associated RX queue may span multiple descriptors.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux kernel driver for Compute Engine Virtual Ethernet (gve):</a><ul>
+<li><a class="reference internal" href="#supported-hardware">Supported Hardware</a></li>
+<li><a class="reference internal" href="#pci-bars">PCI Bars</a></li>
+<li><a class="reference internal" href="#device-interactions">Device Interactions</a><ul>
+<li><a class="reference internal" href="#descriptor-formats">Descriptor Formats</a></li>
+<li><a class="reference internal" href="#addressing-mode">Addressing Mode</a></li>
+<li><a class="reference internal" href="#registers">Registers</a></li>
+<li><a class="reference internal" href="#endianness">Endianness</a></li>
+<li><a class="reference internal" href="#admin-queue-aq">Admin Queue (AQ)</a></li>
+<li><a class="reference internal" href="#device-resets">Device Resets</a></li>
+<li><a class="reference internal" href="#interrupts">Interrupts</a><ul>
+<li><a class="reference internal" href="#management-interrupt">Management Interrupt</a></li>
+<li><a class="reference internal" href="#notification-block-interrupts">Notification Block Interrupts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gqi-traffic-queues">GQI Traffic Queues</a><ul>
+<li><a class="reference internal" href="#transmit">Transmit</a></li>
+<li><a class="reference internal" href="#receive">Receive</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dqo-traffic-queues">DQO Traffic Queues</a><ul>
+<li><a class="reference internal" href="#id1">Transmit</a></li>
+<li><a class="reference internal" href="#id2">Receive</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="../freescale/gianfar.html">
+                    <span class="icon">&lt;</span><span>The Gianfar Ethernet Driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../huawei/hinic.html"><span>Linux Kernel Driver for Huawei Intelligent NIC(HiNIC) family</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

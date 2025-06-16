@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Kernel Stacks &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7. Kernel Entries" href="entry_64.html" />
+    <link rel="prev" title="5. Kernel level exception handling" href="exception-tables.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">CPU architectures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../arc/index.html">ARC architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arm/index.html">ARM Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arm64/index.html">ARM64 Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../loongarch/index.html">LoongArch Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../m68k/index.html">m68k Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mips/index.html">MIPS-specific Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nios2/index.html">Nios II Specific Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../openrisc/index.html">OpenRISC Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../parisc/index.html">PA-RISC Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerpc/index.html">powerpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../riscv/index.html">RISC-V architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../s390/index.html">s390 Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sh/index.html">SuperH Interfaces Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparc/index.html">Sparc Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">x86-specific Documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="boot.html">1. The Linux/x86 Boot Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="booting-dt.html">2. DeviceTree Booting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpuinfo.html">3. x86 Feature Flags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topology.html">4. x86 Topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exception-tables.html">5. Kernel level exception handling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6. Kernel Stacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="entry_64.html">7. Kernel Entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="earlyprintk.html">8. Early Printk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="orc-unwinder.html">9. ORC unwinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zero-page.html">10. Zero Page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tlb.html">11. The TLB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mtrr.html">12. MTRR (Memory Type Range Register) control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pat.html">13. PAT (Page Attribute Table)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel-hfi.html">14. Hardware-Feedback Interface for scheduling on Intel Hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shstk.html">15. Control-flow Enforcement Technology (CET) Shadow Stack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iommu.html">16. x86 IOMMU Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_txt.html">17. Intel(R) TXT Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="amd-memory-encryption.html">18. AMD Memory Encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="amd_hsmp.html">19. AMD HSMP interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tdx.html">20. Intel Trust Domain Extensions (TDX)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pti.html">21. Page Table Isolation (PTI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mds.html">22. Microarchitectural Data Sampling (MDS) mitigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="microcode.html">23. The Linux Microcode Loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resctrl.html">24. User Interface for Resource Control feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tsx_async_abort.html">25. TSX Async Abort (TAA) mitigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buslock.html">26. Bus lock detection and handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usb-legacy-support.html">27. USB Legacy support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="i386/index.html">28. i386 Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="x86_64/index.html">29. x86_64 Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ifs.html">30. In-Field Scan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sva.html">31. Shared Virtual Addressing (SVA) with ENQCMD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sgx.html">32. Software Guard eXtensions (SGX)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features.html">33. Feature status on x86 architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elf_auxvec.html">34. x86-specific ELF Auxiliary Vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xstate.html">35. Using XSTATE features in user space applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../xtensa/index.html">Xtensa Architecture</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/arch/x86/kernel-stacks.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="kernel-stacks">
+<h1><span class="section-number">6. </span>Kernel Stacks<a class="headerlink" href="#kernel-stacks" title="Link to this heading">¶</a></h1>
+<section id="kernel-stacks-on-x86-64-bit">
+<h2><span class="section-number">6.1. </span>Kernel stacks on x86-64 bit<a class="headerlink" href="#kernel-stacks-on-x86-64-bit" title="Link to this heading">¶</a></h2>
+<p>Most of the text from Keith Owens, hacked by AK</p>
+<p>x86_64 page size (PAGE_SIZE) is 4K.</p>
+<p>Like all other architectures, x86_64 has a kernel stack for every
+active thread.  These thread stacks are THREAD_SIZE (4*PAGE_SIZE) big.
+These stacks contain useful data as long as a thread is alive or a
+zombie. While the thread is in user space the kernel stack is empty
+except for the thread_info structure at the bottom.</p>
+<p>In addition to the per thread stacks, there are specialized stacks
+associated with each CPU.  These stacks are only used while the kernel
+is in control on that CPU; when a CPU returns to user space the
+specialized stacks contain no useful data.  The main CPU stacks are:</p>
+<ul>
+<li><p>Interrupt stack.  IRQ_STACK_SIZE</p>
+<p>Used for external hardware interrupts.  If this is the first external
+hardware interrupt (i.e. not a nested hardware interrupt) then the
+kernel switches from the current task to the interrupt stack.  Like
+the split thread and interrupt stacks on i386, this gives more room
+for kernel interrupt processing without having to increase the size
+of every per thread stack.</p>
+<p>The interrupt stack is also used when processing a softirq.</p>
+</li>
+</ul>
+<p>Switching to the kernel interrupt stack is done by software based on a
+per CPU interrupt nest counter. This is needed because x86-64 “IST”
+hardware stacks cannot nest without races.</p>
+<p>x86_64 also has a feature which is not available on i386, the ability
+to automatically switch to a new stack for designated events such as
+double fault or NMI, which makes it easier to handle these unusual
+events on x86_64.  This feature is called the Interrupt Stack Table
+(IST).  There can be up to 7 IST entries per CPU. The IST code is an
+index into the Task State Segment (TSS). The IST entries in the TSS
+point to dedicated stacks; each stack can be a different size.</p>
+<p>An IST is selected by a non-zero value in the IST field of an
+interrupt-gate descriptor.  When an interrupt occurs and the hardware
+loads such a descriptor, the hardware automatically sets the new stack
+pointer based on the IST value, then invokes the interrupt handler.  If
+the interrupt came from user mode, then the interrupt handler prologue
+will switch back to the per-thread stack.  If software wants to allow
+nested IST interrupts then the handler must adjust the IST values on
+entry to and exit from the interrupt handler.  (This is occasionally
+done, e.g. for debug exceptions.)</p>
+<p>Events with different IST codes (i.e. with different stacks) can be
+nested.  For example, a debug interrupt can safely be interrupted by an
+NMI.  arch/x86_64/kernel/entry.S::paranoidentry adjusts the stack
+pointers on entry to and exit from all IST events, in theory allowing
+IST events with the same code to be nested.  However in most cases, the
+stack size allocated to an IST assumes no nesting for the same code.
+If that assumption is ever broken then the stacks will become corrupt.</p>
+<p>The currently assigned IST stacks are:</p>
+<ul>
+<li><p>ESTACK_DF.  EXCEPTION_STKSZ (PAGE_SIZE).</p>
+<p>Used for interrupt 8 - Double Fault Exception (#DF).</p>
+<p>Invoked when handling one exception causes another exception. Happens
+when the kernel is very confused (e.g. kernel stack pointer corrupt).
+Using a separate stack allows the kernel to recover from it well enough
+in many cases to still output an oops.</p>
+</li>
+<li><p>ESTACK_NMI.  EXCEPTION_STKSZ (PAGE_SIZE).</p>
+<p>Used for non-maskable interrupts (NMI).</p>
+<p>NMI can be delivered at any time, including when the kernel is in the
+middle of switching stacks.  Using IST for NMI events avoids making
+assumptions about the previous state of the kernel stack.</p>
+</li>
+<li><p>ESTACK_DB.  EXCEPTION_STKSZ (PAGE_SIZE).</p>
+<p>Used for hardware debug interrupts (interrupt 1) and for software
+debug interrupts (INT3).</p>
+<p>When debugging a kernel, debug interrupts (both hardware and
+software) can occur at any time.  Using IST for these interrupts
+avoids making assumptions about the previous state of the kernel
+stack.</p>
+<p>To handle nested #DB correctly there exist two instances of DB stacks. On
+#DB entry the IST stackpointer for #DB is switched to the second instance
+so a nested #DB starts from a clean stack. The nested #DB switches
+the IST stackpointer to a guard hole to catch triple nesting.</p>
+</li>
+<li><p>ESTACK_MCE.  EXCEPTION_STKSZ (PAGE_SIZE).</p>
+<p>Used for interrupt 18 - Machine Check Exception (#MC).</p>
+<p>MCE can be delivered at any time, including when the kernel is in the
+middle of switching stacks.  Using IST for MCE events avoids making
+assumptions about the previous state of the kernel stack.</p>
+</li>
+</ul>
+<p>For more details see the Intel IA32 or AMD AMD64 architecture manuals.</p>
+</section>
+<section id="printing-backtraces-on-x86">
+<h2><span class="section-number">6.2. </span>Printing backtraces on x86<a class="headerlink" href="#printing-backtraces-on-x86" title="Link to this heading">¶</a></h2>
+<p>The question about the ‘?’ preceding function names in an x86 stacktrace
+keeps popping up, here’s an indepth explanation. It helps if the reader
+stares at print_context_stack() and the whole machinery in and around
+arch/x86/kernel/dumpstack.c.</p>
+<p>Adapted from Ingo’s mail, Message-ID: &lt;<a class="reference external" href="mailto:20150521101614&#46;GA10889&#37;&#52;&#48;gmail&#46;com">20150521101614<span>&#46;</span>GA10889<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;:</p>
+<p>We always scan the full kernel stack for return addresses stored on
+the kernel stack(s) <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, from stack top to stack bottom, and print out
+anything that ‘looks like’ a kernel text address.</p>
+<p>If it fits into the frame pointer chain, we print it without a question
+mark, knowing that it’s part of the real backtrace.</p>
+<p>If the address does not fit into our expected frame pointer chain we
+still print it, but we print a ‘?’. It can mean two things:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>either the address is not part of the call chain: it’s just stale
+values on the kernel stack, from earlier function calls. This is
+the common case.</p></li>
+<li><p>or it is part of the call chain, but the frame pointer was not set
+up properly within the function, so we don’t recognize it.</p></li>
+</ul>
+</div></blockquote>
+<p>This way we will always print out the real call chain (plus a few more
+entries), regardless of whether the frame pointer was set up correctly
+or not - but in most cases we’ll get the call chain right as well. The
+entries printed are strictly in stack order, so you can deduce more
+information from that as well.</p>
+<p>The most important property of this method is that we _never_ lose
+information: we always strive to print _all_ addresses on the stack(s)
+that look like kernel text addresses, so if debug information is wrong,
+we still print out the real call chain as well - just with more question
+marks than ideal.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>For things like IRQ and IST stacks, we also scan those stacks, in
+the right order, and try to cross from one stack into another
+reconstructing the call chain. This works most of the time.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">6. Kernel Stacks</a><ul>
+<li><a class="reference internal" href="#kernel-stacks-on-x86-64-bit">6.1. Kernel stacks on x86-64 bit</a></li>
+<li><a class="reference internal" href="#printing-backtraces-on-x86">6.2. Printing backtraces on x86</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="exception-tables.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">5. </span>Kernel level exception handling</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="entry_64.html"><span><span class="section-number">7. </span>Kernel Entries</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

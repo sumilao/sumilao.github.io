@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kernel Support for miscellaneous Binary Formats (binfmt_misc) &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Java(tm) Binary Kernel Support for Linux v1.03" href="java.html" />
+    <link rel="prev" title="Syscall User Dispatch" href="syscall-user-dispatch.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#core-kernel-subsystems">Core-kernel subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cgroup-v2.html">Control Group v2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgroup-v1/index.html">Control Groups version 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpu-load.html">CPU load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mm/index.html">Memory Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="module-signing.html">Kernel module signing facility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespaces/index.html">Namespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numastat.html">Numa policy hit/miss statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pm/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syscall-user-dispatch.html">Syscall User Dispatch</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Kernel Support for miscellaneous Binary Formats (binfmt_misc)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="java.html">Java(tm) Binary Kernel Support for Linux v1.03</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mono.html">Mono(tm) Binary Kernel Support for Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#device-specific-guides">Device-specific guides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin-guide/binfmt-misc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="kernel-support-for-miscellaneous-binary-formats-binfmt-misc">
+<h1>Kernel Support for miscellaneous Binary Formats (binfmt_misc)<a class="headerlink" href="#kernel-support-for-miscellaneous-binary-formats-binfmt-misc" title="Link to this heading">¶</a></h1>
+<p>This Kernel feature allows you to invoke almost (for restrictions see below)
+every program by simply typing its name in the shell.
+This includes for example compiled Java(TM), Python or Emacs programs.</p>
+<p>To achieve this you must tell binfmt_misc which interpreter has to be invoked
+with which binary. Binfmt_misc recognises the binary-type by matching some bytes
+at the beginning of the file with a magic byte sequence (masking out specified
+bits) you have supplied. Binfmt_misc can also recognise a filename extension
+aka <code class="docutils literal notranslate"><span class="pre">.com</span></code> or <code class="docutils literal notranslate"><span class="pre">.exe</span></code>.</p>
+<p>First you must mount binfmt_misc:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
+</pre></div>
+</div>
+<p>To actually register a new binary type, you have to set up a string looking like
+<code class="docutils literal notranslate"><span class="pre">:name:type:offset:magic:mask:interpreter:flags</span></code> (where you can choose the
+<code class="docutils literal notranslate"><span class="pre">:</span></code> upon your needs) and echo it to <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/register</span></code>.</p>
+<p>Here is what the fields mean:</p>
+<ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>is an identifier string. A new /proc file will be created with this
+name below <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc</span></code>; cannot contain slashes <code class="docutils literal notranslate"><span class="pre">/</span></code> for
+obvious reasons.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>is the type of recognition. Give <code class="docutils literal notranslate"><span class="pre">M</span></code> for magic and <code class="docutils literal notranslate"><span class="pre">E</span></code> for extension.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">offset</span></code></dt><dd><p>is the offset of the magic/mask in the file, counted in bytes. This
+defaults to 0 if you omit it (i.e. you write <code class="docutils literal notranslate"><span class="pre">:name:type::magic...</span></code>).
+Ignored when using filename extension matching.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">magic</span></code></dt><dd><p>is the byte sequence binfmt_misc is matching for. The magic string
+may contain hex-encoded characters like <code class="docutils literal notranslate"><span class="pre">\x0a</span></code> or <code class="docutils literal notranslate"><span class="pre">\xA4</span></code>. Note that you
+must escape any NUL bytes; parsing halts at the first one. In a shell
+environment you might have to write <code class="docutils literal notranslate"><span class="pre">\\x0a</span></code> to prevent the shell from
+eating your <code class="docutils literal notranslate"><span class="pre">\</span></code>.
+If you chose filename extension matching, this is the extension to be
+recognised (without the <code class="docutils literal notranslate"><span class="pre">.</span></code>, the <code class="docutils literal notranslate"><span class="pre">\x0a</span></code> specials are not allowed).
+Extension    matching is case sensitive, and slashes <code class="docutils literal notranslate"><span class="pre">/</span></code> are not allowed!</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">mask</span></code></dt><dd><p>is an (optional, defaults to all 0xff) mask. You can mask out some
+bits from matching by supplying a string like magic and as long as magic.
+The mask is anded with the byte sequence of the file. Note that you must
+escape any NUL bytes; parsing halts at the first one. Ignored when using
+filename extension matching.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">interpreter</span></code></dt><dd><p>is the program that should be invoked with the binary as first
+argument (specify the full path)</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">flags</span></code></dt><dd><p>is an optional field that controls several aspects of the invocation
+of the interpreter. It is a string of capital letters, each controls a
+certain aspect. The following flags are supported:</p>
+<blockquote>
+<div><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">P</span></code> - preserve-argv[0]</dt><dd><p>Legacy behavior of binfmt_misc is to overwrite
+the original argv[0] with the full path to the binary. When this
+flag is included, binfmt_misc will add an argument to the argument
+vector for this purpose, thus preserving the original <code class="docutils literal notranslate"><span class="pre">argv[0]</span></code>.
+e.g. If your interp is set to <code class="docutils literal notranslate"><span class="pre">/bin/foo</span></code> and you run <code class="docutils literal notranslate"><span class="pre">blah</span></code>
+(which is in <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code>), then the kernel will execute
+<code class="docutils literal notranslate"><span class="pre">/bin/foo</span></code> with <code class="docutils literal notranslate"><span class="pre">argv[]</span></code> set to <code class="docutils literal notranslate"><span class="pre">[&quot;/bin/foo&quot;,</span> <span class="pre">&quot;/usr/local/bin/blah&quot;,</span> <span class="pre">&quot;blah&quot;]</span></code>.  The interp has to be aware of this so it can
+execute <code class="docutils literal notranslate"><span class="pre">/usr/local/bin/blah</span></code>
+with <code class="docutils literal notranslate"><span class="pre">argv[]</span></code> set to <code class="docutils literal notranslate"><span class="pre">[&quot;blah&quot;]</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">O</span></code> - open-binary</dt><dd><p>Legacy behavior of binfmt_misc is to pass the full path
+of the binary to the interpreter as an argument. When this flag is
+included, binfmt_misc will open the file for reading and pass its
+descriptor as an argument, instead of the full path, thus allowing
+the interpreter to execute non-readable binaries. This feature
+should be used with care - the interpreter has to be trusted not to
+emit the contents of the non-readable binary.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">C</span></code> - credentials</dt><dd><p>Currently, the behavior of binfmt_misc is to calculate
+the credentials and security token of the new process according to
+the interpreter. When this flag is included, these attributes are
+calculated according to the binary. It also implies the <code class="docutils literal notranslate"><span class="pre">O</span></code> flag.
+This feature should be used with care as the interpreter
+will run with root permissions when a setuid binary owned by root
+is run with binfmt_misc.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">F</span></code> - fix binary</dt><dd><p>The usual behaviour of binfmt_misc is to spawn the
+binary lazily when the misc format file is invoked.  However,
+this doesn’t work very well in the face of mount namespaces and
+changeroots, so the <code class="docutils literal notranslate"><span class="pre">F</span></code> mode opens the binary as soon as the
+emulation is installed and uses the opened image to spawn the
+emulator, meaning it is always available once installed,
+regardless of how the environment changes.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+<p>There are some restrictions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the whole register string may not exceed 1920 characters</p></li>
+<li><p>the magic must reside in the first 128 bytes of the file, i.e.
+offset+size(magic) has to be less than 128</p></li>
+<li><p>the interpreter string may not exceed 127 characters</p></li>
+</ul>
+</div></blockquote>
+<p>To use binfmt_misc you have to mount it first. You can mount it with
+<code class="docutils literal notranslate"><span class="pre">mount</span> <span class="pre">-t</span> <span class="pre">binfmt_misc</span> <span class="pre">none</span> <span class="pre">/proc/sys/fs/binfmt_misc</span></code> command, or you can add
+a line <code class="docutils literal notranslate"><span class="pre">none</span>&#160; <span class="pre">/proc/sys/fs/binfmt_misc</span> <span class="pre">binfmt_misc</span> <span class="pre">defaults</span> <span class="pre">0</span> <span class="pre">0</span></code> to your
+<code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> so it auto mounts on boot.</p>
+<p>You may want to add the binary formats in one of your <code class="docutils literal notranslate"><span class="pre">/etc/rc</span></code> scripts during
+boot-up. Read the manual of your init program to figure out how to do this
+right.</p>
+<p>Think about the order of adding entries! Later added entries are matched first!</p>
+<p>A few examples (assumed you are in <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc</span></code>):</p>
+<ul>
+<li><p>enable support for em86 (like binfmt_em86, for Alpha AXP only):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &#39;:i386:M::\x7fELF\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x03:\xff\xff\xff\xff\xff\xfe\xfe\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfb\xff\xff:/bin/em86:&#39; &gt; register
+echo &#39;:i486:M::\x7fELF\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x06:\xff\xff\xff\xff\xff\xfe\xfe\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfb\xff\xff:/bin/em86:&#39; &gt; register
+</pre></div>
+</div>
+</li>
+<li><p>enable support for packed DOS applications (pre-configured dosemu hdimages):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &#39;:DEXE:M::\x0eDEX::/usr/bin/dosexec:&#39; &gt; register
+</pre></div>
+</div>
+</li>
+<li><p>enable support for Windows executables using wine:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo &#39;:DOSWin:M::MZ::/usr/local/bin/wine:&#39; &gt; register
+</pre></div>
+</div>
+</li>
+</ul>
+<p>For java support see <a class="reference internal" href="java.html"><span class="doc">Java(tm) Binary Kernel Support for Linux v1.03</span></a></p>
+<p>You can enable/disable binfmt_misc or one binary type by echoing 0 (to disable)
+or 1 (to enable) to <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/status</span></code> or
+<code class="docutils literal notranslate"><span class="pre">/proc/.../the_name</span></code>.
+Catting the file tells you the current status of <code class="docutils literal notranslate"><span class="pre">binfmt_misc/the_entry</span></code>.</p>
+<p>You can remove one entry or all entries by echoing -1 to <code class="docutils literal notranslate"><span class="pre">/proc/.../the_name</span></code>
+or <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/status</span></code>.</p>
+<section id="hints">
+<h2>Hints<a class="headerlink" href="#hints" title="Link to this heading">¶</a></h2>
+<p>If you want to pass special arguments to your interpreter, you can
+write a wrapper script for it.
+See <a class="reference internal" href="java.html"><span class="doc">Documentation/admin-guide/java.rst</span></a> for an example.</p>
+<p>Your interpreter should NOT look in the PATH for the filename; the kernel
+passes it the full filename (or the file descriptor) to use.  Using <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> can
+cause unexpected behaviour and can be a security hazard.</p>
+<p>Richard Günther &lt;<a class="reference external" href="mailto:rguenth&#37;&#52;&#48;tat&#46;physik&#46;uni-tuebingen&#46;de">rguenth<span>&#64;</span>tat<span>&#46;</span>physik<span>&#46;</span>uni-tuebingen<span>&#46;</span>de</a>&gt;</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Kernel Support for miscellaneous Binary Formats (binfmt_misc)</a><ul>
+<li><a class="reference internal" href="#hints">Hints</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="syscall-user-dispatch.html">
+                    <span class="icon">&lt;</span><span>Syscall User Dispatch</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="java.html"><span>Java(tm) Binary Kernel Support for Linux v1.03</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

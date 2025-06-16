@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multi-Gen LRU &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="What is NUMA?" href="numa.html" />
+    <link rel="prev" title="When do you need to notify inside page table lock ?" href="mmu_notifier.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../core-api/index.html">Core API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../driver-api/index.html">Driver implementer’s API guide</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Memory Management Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../power/index.html">Power Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheduler/index.html">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timers/index.html">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/mm/multigen_lru.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="multi-gen-lru">
+<h1>Multi-Gen LRU<a class="headerlink" href="#multi-gen-lru" title="Link to this heading">¶</a></h1>
+<p>The multi-gen LRU is an alternative LRU implementation that optimizes
+page reclaim and improves performance under memory pressure. Page
+reclaim decides the kernel’s caching policy and ability to overcommit
+memory. It directly impacts the kswapd CPU usage and RAM efficiency.</p>
+<section id="design-overview">
+<h2>Design overview<a class="headerlink" href="#design-overview" title="Link to this heading">¶</a></h2>
+<section id="objectives">
+<h3>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h3>
+<p>The design objectives are:</p>
+<ul class="simple">
+<li><p>Good representation of access recency</p></li>
+<li><p>Try to profit from spatial locality</p></li>
+<li><p>Fast paths to make obvious choices</p></li>
+<li><p>Simple self-correcting heuristics</p></li>
+</ul>
+<p>The representation of access recency is at the core of all LRU
+implementations. In the multi-gen LRU, each generation represents a
+group of pages with similar access recency. Generations establish a
+(time-based) common frame of reference and therefore help make better
+choices, e.g., between different memcgs on a computer or different
+computers in a data center (for job scheduling).</p>
+<p>Exploiting spatial locality improves efficiency when gathering the
+accessed bit. A rmap walk targets a single page and does not try to
+profit from discovering a young PTE. A page table walk can sweep all
+the young PTEs in an address space, but the address space can be too
+sparse to make a profit. The key is to optimize both methods and use
+them in combination.</p>
+<p>Fast paths reduce code complexity and runtime overhead. Unmapped pages
+do not require TLB flushes; clean pages do not require writeback.
+These facts are only helpful when other conditions, e.g., access
+recency, are similar. With generations as a common frame of reference,
+additional factors stand out. But obvious choices might not be good
+choices; thus self-correction is necessary.</p>
+<p>The benefits of simple self-correcting heuristics are self-evident.
+Again, with generations as a common frame of reference, this becomes
+attainable. Specifically, pages in the same generation can be
+categorized based on additional factors, and a feedback loop can
+statistically compare the refault percentages across those categories
+and infer which of them are better choices.</p>
+</section>
+<section id="assumptions">
+<h3>Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading">¶</a></h3>
+<p>The protection of hot pages and the selection of cold pages are based
+on page access channels and patterns. There are two access channels:</p>
+<ul class="simple">
+<li><p>Accesses through page tables</p></li>
+<li><p>Accesses through file descriptors</p></li>
+</ul>
+<p>The protection of the former channel is by design stronger because:</p>
+<ol class="arabic simple">
+<li><p>The uncertainty in determining the access patterns of the former
+channel is higher due to the approximation of the accessed bit.</p></li>
+<li><p>The cost of evicting the former channel is higher due to the TLB
+flushes required and the likelihood of encountering the dirty bit.</p></li>
+<li><p>The penalty of underprotecting the former channel is higher because
+applications usually do not prepare themselves for major page
+faults like they do for blocked I/O. E.g., GUI applications
+commonly use dedicated I/O threads to avoid blocking rendering
+threads.</p></li>
+</ol>
+<p>There are also two access patterns:</p>
+<ul class="simple">
+<li><p>Accesses exhibiting temporal locality</p></li>
+<li><p>Accesses not exhibiting temporal locality</p></li>
+</ul>
+<p>For the reasons listed above, the former channel is assumed to follow
+the former pattern unless <code class="docutils literal notranslate"><span class="pre">VM_SEQ_READ</span></code> or <code class="docutils literal notranslate"><span class="pre">VM_RAND_READ</span></code> is
+present, and the latter channel is assumed to follow the latter
+pattern unless outlying refaults have been observed.</p>
+</section>
+</section>
+<section id="workflow-overview">
+<h2>Workflow overview<a class="headerlink" href="#workflow-overview" title="Link to this heading">¶</a></h2>
+<p>Evictable pages are divided into multiple generations for each
+<code class="docutils literal notranslate"><span class="pre">lruvec</span></code>. The youngest generation number is stored in
+<code class="docutils literal notranslate"><span class="pre">lrugen-&gt;max_seq</span></code> for both anon and file types as they are aged on
+an equal footing. The oldest generation numbers are stored in
+<code class="docutils literal notranslate"><span class="pre">lrugen-&gt;min_seq[]</span></code> separately for anon and file types as clean file
+pages can be evicted regardless of swap constraints. These three
+variables are monotonically increasing.</p>
+<p>Generation numbers are truncated into <code class="docutils literal notranslate"><span class="pre">order_base_2(MAX_NR_GENS+1)</span></code>
+bits in order to fit into the gen counter in <code class="docutils literal notranslate"><span class="pre">folio-&gt;flags</span></code>. Each
+truncated generation number is an index to <code class="docutils literal notranslate"><span class="pre">lrugen-&gt;folios[]</span></code>. The
+sliding window technique is used to track at least <code class="docutils literal notranslate"><span class="pre">MIN_NR_GENS</span></code> and
+at most <code class="docutils literal notranslate"><span class="pre">MAX_NR_GENS</span></code> generations. The gen counter stores a value
+within <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">MAX_NR_GENS]</span></code> while a page is on one of
+<code class="docutils literal notranslate"><span class="pre">lrugen-&gt;folios[]</span></code>; otherwise it stores zero.</p>
+<p>Each generation is divided into multiple tiers. A page accessed <code class="docutils literal notranslate"><span class="pre">N</span></code>
+times through file descriptors is in tier <code class="docutils literal notranslate"><span class="pre">order_base_2(N)</span></code>. Unlike
+generations, tiers do not have dedicated <code class="docutils literal notranslate"><span class="pre">lrugen-&gt;folios[]</span></code>. In
+contrast to moving across generations, which requires the LRU lock,
+moving across tiers only involves atomic operations on
+<code class="docutils literal notranslate"><span class="pre">folio-&gt;flags</span></code> and therefore has a negligible cost. A feedback loop
+modeled after the PID controller monitors refaults over all the tiers
+from anon and file types and decides which tiers from which types to
+evict or protect. The desired effect is to balance refault percentages
+between anon and file types proportional to the swappiness level.</p>
+<p>There are two conceptually independent procedures: the aging and the
+eviction. They form a closed-loop system, i.e., the page reclaim.</p>
+<section id="aging">
+<h3>Aging<a class="headerlink" href="#aging" title="Link to this heading">¶</a></h3>
+<p>The aging produces young generations. Given an <code class="docutils literal notranslate"><span class="pre">lruvec</span></code>, it
+increments <code class="docutils literal notranslate"><span class="pre">max_seq</span></code> when <code class="docutils literal notranslate"><span class="pre">max_seq-min_seq+1</span></code> approaches
+<code class="docutils literal notranslate"><span class="pre">MIN_NR_GENS</span></code>. The aging promotes hot pages to the youngest
+generation when it finds them accessed through page tables; the
+demotion of cold pages happens consequently when it increments
+<code class="docutils literal notranslate"><span class="pre">max_seq</span></code>. The aging uses page table walks and rmap walks to find
+young PTEs. For the former, it iterates <code class="docutils literal notranslate"><span class="pre">lruvec_memcg()-&gt;mm_list</span></code>
+and calls <code class="docutils literal notranslate"><span class="pre">walk_page_range()</span></code> with each <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> on this list
+to scan PTEs, and after each iteration, it increments <code class="docutils literal notranslate"><span class="pre">max_seq</span></code>. For
+the latter, when the eviction walks the rmap and finds a young PTE,
+the aging scans the adjacent PTEs. For both, on finding a young PTE,
+the aging clears the accessed bit and updates the gen counter of the
+page mapped by this PTE to <code class="docutils literal notranslate"><span class="pre">(max_seq%MAX_NR_GENS)+1</span></code>.</p>
+</section>
+<section id="eviction">
+<h3>Eviction<a class="headerlink" href="#eviction" title="Link to this heading">¶</a></h3>
+<p>The eviction consumes old generations. Given an <code class="docutils literal notranslate"><span class="pre">lruvec</span></code>, it
+increments <code class="docutils literal notranslate"><span class="pre">min_seq</span></code> when <code class="docutils literal notranslate"><span class="pre">lrugen-&gt;folios[]</span></code> indexed by
+<code class="docutils literal notranslate"><span class="pre">min_seq%MAX_NR_GENS</span></code> becomes empty. To select a type and a tier to
+evict from, it first compares <code class="docutils literal notranslate"><span class="pre">min_seq[]</span></code> to select the older type.
+If both types are equally old, it selects the one whose first tier has
+a lower refault percentage. The first tier contains single-use
+unmapped clean pages, which are the best bet. The eviction sorts a
+page according to its gen counter if the aging has found this page
+accessed through page tables and updated its gen counter. It also
+moves a page to the next generation, i.e., <code class="docutils literal notranslate"><span class="pre">min_seq+1</span></code>, if this page
+was accessed multiple times through file descriptors and the feedback
+loop has detected outlying refaults from the tier this page is in. To
+this end, the feedback loop uses the first tier as the baseline, for
+the reason stated earlier.</p>
+</section>
+<section id="working-set-protection">
+<h3>Working set protection<a class="headerlink" href="#working-set-protection" title="Link to this heading">¶</a></h3>
+<p>Each generation is timestamped at birth. If <code class="docutils literal notranslate"><span class="pre">lru_gen_min_ttl</span></code> is
+set, an <code class="docutils literal notranslate"><span class="pre">lruvec</span></code> is protected from the eviction when its oldest
+generation was born within <code class="docutils literal notranslate"><span class="pre">lru_gen_min_ttl</span></code> milliseconds. In other
+words, it prevents the working set of <code class="docutils literal notranslate"><span class="pre">lru_gen_min_ttl</span></code> milliseconds
+from getting evicted. The OOM killer is triggered if this working set
+cannot be kept in memory.</p>
+<p>This time-based approach has the following advantages:</p>
+<ol class="arabic simple">
+<li><p>It is easier to configure because it is agnostic to applications
+and memory sizes.</p></li>
+<li><p>It is more reliable because it is directly wired to the OOM killer.</p></li>
+</ol>
+</section>
+<section id="mm-struct-list">
+<h3><code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> list<a class="headerlink" href="#mm-struct-list" title="Link to this heading">¶</a></h3>
+<p>An <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> list is maintained for each memcg, and an
+<code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> follows its owner task to the new memcg when this task
+is migrated.</p>
+<p>A page table walker iterates <code class="docutils literal notranslate"><span class="pre">lruvec_memcg()-&gt;mm_list</span></code> and calls
+<code class="docutils literal notranslate"><span class="pre">walk_page_range()</span></code> with each <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> on this list to scan
+PTEs. When multiple page table walkers iterate the same list, each of
+them gets a unique <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code>, and therefore they can run in
+parallel.</p>
+<p>Page table walkers ignore any misplaced pages, e.g., if an
+<code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> was migrated, pages left in the previous memcg will be
+ignored when the current memcg is under reclaim. Similarly, page table
+walkers will ignore pages from nodes other than the one under reclaim.</p>
+<p>This infrastructure also tracks the usage of <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> between
+context switches so that page table walkers can skip processes that
+have been sleeping since the last iteration.</p>
+</section>
+<section id="rmap-pt-walk-feedback">
+<h3>Rmap/PT walk feedback<a class="headerlink" href="#rmap-pt-walk-feedback" title="Link to this heading">¶</a></h3>
+<p>Searching the rmap for PTEs mapping each page on an LRU list (to test
+and clear the accessed bit) can be expensive because pages from
+different VMAs (PA space) are not cache friendly to the rmap (VA
+space). For workloads mostly using mapped pages, searching the rmap
+can incur the highest CPU cost in the reclaim path.</p>
+<p><code class="docutils literal notranslate"><span class="pre">lru_gen_look_around()</span></code> exploits spatial locality to reduce the
+trips into the rmap. It scans the adjacent PTEs of a young PTE and
+promotes hot pages. If the scan was done cacheline efficiently, it
+adds the PMD entry pointing to the PTE table to the Bloom filter. This
+forms a feedback loop between the eviction and the aging.</p>
+</section>
+<section id="bloom-filters">
+<h3>Bloom filters<a class="headerlink" href="#bloom-filters" title="Link to this heading">¶</a></h3>
+<p>Bloom filters are a space and memory efficient data structure for set
+membership test, i.e., test if an element is not in the set or may be
+in the set.</p>
+<p>In the eviction path, specifically, in <code class="docutils literal notranslate"><span class="pre">lru_gen_look_around()</span></code>, if a
+PMD has a sufficient number of hot pages, its address is placed in the
+filter. In the aging path, set membership means that the PTE range
+will be scanned for young pages.</p>
+<p>Note that Bloom filters are probabilistic on set membership. If a test
+is false positive, the cost is an additional scan of a range of PTEs,
+which may yield hot pages anyway. Parameters of the filter itself can
+control the false positive rate in the limit.</p>
+</section>
+<section id="pid-controller">
+<h3>PID controller<a class="headerlink" href="#pid-controller" title="Link to this heading">¶</a></h3>
+<p>A feedback loop modeled after the Proportional-Integral-Derivative
+(PID) controller monitors refaults over anon and file types and
+decides which type to evict when both types are available from the
+same generation.</p>
+<p>The PID controller uses generations rather than the wall clock as the
+time domain because a CPU can scan pages at different rates under
+varying memory pressure. It calculates a moving average for each new
+generation to avoid being permanently locked in a suboptimal state.</p>
+</section>
+<section id="memcg-lru">
+<h3>Memcg LRU<a class="headerlink" href="#memcg-lru" title="Link to this heading">¶</a></h3>
+<p>An memcg LRU is a per-node LRU of memcgs. It is also an LRU of LRUs,
+since each node and memcg combination has an LRU of folios (see
+<code class="docutils literal notranslate"><span class="pre">mem_cgroup_lruvec()</span></code>). Its goal is to improve the scalability of
+global reclaim, which is critical to system-wide memory overcommit in
+data centers. Note that memcg LRU only applies to global reclaim.</p>
+<p>The basic structure of an memcg LRU can be understood by an analogy to
+the active/inactive LRU (of folios):</p>
+<ol class="arabic simple">
+<li><p>It has the young and the old (generations), i.e., the counterparts
+to the active and the inactive;</p></li>
+<li><p>The increment of <code class="docutils literal notranslate"><span class="pre">max_seq</span></code> triggers promotion, i.e., the
+counterpart to activation;</p></li>
+<li><p>Other events trigger similar operations, e.g., offlining an memcg
+triggers demotion, i.e., the counterpart to deactivation.</p></li>
+</ol>
+<p>In terms of global reclaim, it has two distinct features:</p>
+<ol class="arabic simple">
+<li><p>Sharding, which allows each thread to start at a random memcg (in
+the old generation) and improves parallelism;</p></li>
+<li><p>Eventual fairness, which allows direct reclaim to bail out at will
+and reduces latency without affecting fairness over some time.</p></li>
+</ol>
+<p>In terms of traversing memcgs during global reclaim, it improves the
+best-case complexity from O(n) to O(1) and does not affect the
+worst-case complexity O(n). Therefore, on average, it has a sublinear
+complexity.</p>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h3>
+<p>The multi-gen LRU (of folios) can be disassembled into the following
+parts:</p>
+<ul class="simple">
+<li><p>Generations</p></li>
+<li><p>Rmap walks</p></li>
+<li><p>Page table walks via <code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> list</p></li>
+<li><p>Bloom filters for rmap/PT walk feedback</p></li>
+<li><p>PID controller for refault feedback</p></li>
+</ul>
+<p>The aging and the eviction form a producer-consumer model;
+specifically, the latter drives the former by the sliding window over
+generations. Within the aging, rmap walks drive page table walks by
+inserting hot densely populated page tables to the Bloom filters.
+Within the eviction, the PID controller uses refaults as the feedback
+to select types to evict and tiers to protect.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Multi-Gen LRU</a><ul>
+<li><a class="reference internal" href="#design-overview">Design overview</a><ul>
+<li><a class="reference internal" href="#objectives">Objectives</a></li>
+<li><a class="reference internal" href="#assumptions">Assumptions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#workflow-overview">Workflow overview</a><ul>
+<li><a class="reference internal" href="#aging">Aging</a></li>
+<li><a class="reference internal" href="#eviction">Eviction</a></li>
+<li><a class="reference internal" href="#working-set-protection">Working set protection</a></li>
+<li><a class="reference internal" href="#mm-struct-list"><code class="docutils literal notranslate"><span class="pre">mm_struct</span></code> list</a></li>
+<li><a class="reference internal" href="#rmap-pt-walk-feedback">Rmap/PT walk feedback</a></li>
+<li><a class="reference internal" href="#bloom-filters">Bloom filters</a></li>
+<li><a class="reference internal" href="#pid-controller">PID controller</a></li>
+<li><a class="reference internal" href="#memcg-lru">Memcg LRU</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="mmu_notifier.html">
+                    <span class="icon">&lt;</span><span>When do you need to notify inside page table lock ?</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="numa.html"><span>What is NUMA?</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

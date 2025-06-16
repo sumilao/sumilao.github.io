@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PHY子系统 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <script src="../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="内核子系统文档" href="../../subsystem-apis.html" />
+    <link rel="prev" title="PHY 通用框架" href="index.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../index.html" title="Go to homepage"><img src="../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">中文翻译</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#linux">与Linux 内核社区一起工作</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#api">内部API文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id2">开发工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id3">面向用户的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id5">固件相关文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id6">体系结构文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id7">其他文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id8">术语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../zh_TW/index.html">繁體中文翻譯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/translations/zh_CN/driver-api/phy/phy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Simplified)
+
+<ul>
+
+<li><a href="../../../../driver-api/phy/phy.html">English</a></li>
+
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此文件的目的是为让中文读者更容易阅读和理解，而不是作为一个分支。 因此，
+如果您对此文件有任何意见或更新，请先尝试更新原始英文文件。
+如果您发现本文档与原始文件有任何不同或者有翻译问题，请发建议或者补丁给
+该文件的译者，或者请求中文文档维护者和审阅者的帮助。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../../driver-api/phy/phy.html"><span class="doc">PHY subsystem</span></a></p>
+</dd>
+<dt class="field-even">翻译<span class="colon">:</span></dt>
+<dd class="field-even"><p>司延腾 Yanteng Si &lt;<a class="reference external" href="mailto:siyanteng&#37;&#52;&#48;loongson&#46;cn">siyanteng<span>&#64;</span>loongson<span>&#46;</span>cn</a>&gt;</p>
+</dd>
+</dl>
+<section id="phy">
+<h1>PHY子系统<a class="headerlink" href="#phy" title="Link to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">作者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kishon Vijay Abraham I &lt;<a class="reference external" href="mailto:kishon&#37;&#52;&#48;ti&#46;com">kishon<span>&#64;</span>ti<span>&#46;</span>com</a>&gt;</p>
+</dd>
+</dl>
+<p>本文档解释了 PHY 的通用框架和提供的API，以及使用方法。</p>
+<section id="id1">
+<h2>简介<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p><em>PHY</em> 是物理层的缩写，它被用来把设备连接到一个物理媒介，例如USB控制器
+有一个提供序列化、反序列化、编码、解码和负责获取所需的数据传输速率的 PHY。
+注意，有些USB控制器内嵌了 PHY 的功能，其它的则使用了一个外置的PHY，此外
+使用 PHY 的设备还有无线网、以太网、SATA等（控制器）。</p>
+<p>创建这个框架的目的是将遍布 Linux 内核的 PHY 驱动程序融入到 drivers/phy，
+以增加代码的可复用性，进而提高代码的可维护性。</p>
+<p>该框架仅适用于使用外部 PHY（PHY 功能未嵌入控制器内）的设备。</p>
+</section>
+<section id="phy-provider">
+<h2>注册/注销PHY provider<a class="headerlink" href="#phy-provider" title="Link to this heading">¶</a></h2>
+<p>PHY provider是指实现一个或多个 PHY 实例的实体。对于 PHY provider 仅
+实现单个 PHY 实例的简单情况，框架在 of_phy_simple_xlate 中提供其自己
+的 of_xlate 实现。如果 PHY provider 实现多个实例，则应提供其自己的
+of_xlate 实现。of_xlate 仅用于 dt 启动情况。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define of_phy_provider_register(dev, xlate)    \
+        __of_phy_provider_register((dev), NULL, THIS_MODULE, (xlate))
+
+#define devm_of_phy_provider_register(dev, xlate)       \
+        __devm_of_phy_provider_register((dev), NULL, THIS_MODULE,
+                                        (xlate))
+</pre></div>
+</div>
+<p>of_phy_provider_register 和 devm_of_phy_provider_register 宏
+可用于注册 phy_provider，它以 device 和 of_xlate 作为参数。对于 dt
+启动情况，所有 PHY provider 都应使用上述两个宏之一来注册 PHY provider。</p>
+<p>与 PHY provider 关联的设备树节点通常包含一组子节点，每个子节点代表一个
+PHY。某些绑定可能会为了上下文和可扩展性将子节点嵌套在特别的层级中，在这种
+情况下，可以使用低级别的 of_phy_provider_register_full() 和
+devm_of_phy_provider_register_full() 宏来覆盖包含子节点的节点。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#define of_phy_provider_register_full(dev, children, xlate) \
+        __of_phy_provider_register(dev, children, THIS_MODULE, xlate)
+
+#define devm_of_phy_provider_register_full(dev, children, xlate) \
+        __devm_of_phy_provider_register_full(dev, children,
+                                             THIS_MODULE, xlate)
+
+void devm_of_phy_provider_unregister(struct device *dev,
+        struct phy_provider *phy_provider);
+void of_phy_provider_unregister(struct phy_provider *phy_provider);
+</pre></div>
+</div>
+<p>devm_of_phy_provider_unregister 和 of_phy_provider_unregister
+可以被用来注销PHY.</p>
+</section>
+<section id="id2">
+<h2>创建PHY<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>PHY 驱动程序应创建 PHY，以便其他外围（芯片）控制器能够使用它。PHY 框架
+提供了 2 个 API 来创建 PHY。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct phy *phy_create(struct device *dev, struct device_node *node,
+                       const struct phy_ops *ops);
+struct phy *devm_phy_create(struct device *dev,
+                            struct device_node *node,
+                            const struct phy_ops *ops);
+</pre></div>
+</div>
+<p>PHY 驱动程序可以使用上述两个 API 之一，通过传递设备指针和 phy_ops
+来创建 PHY。</p>
+<p>phy_ops 是一组用于执行 PHY 操作（例如 init、exit、power_on 和
+power_off）的函数指针。</p>
+<p>在 phy_ops 中，PHY provider驱动程序在创建 PHY 后使用 phy_set_drvdata()
+设置私有数据，使用 phy_get_drvdata() 获取私有数据。</p>
+</section>
+<section id="id3">
+<h2>获取对 PHY 的引用<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>控制器必须先获取对 PHY 的引用，然后才能使用 PHY。此框架提供以下 API
+来获取对 PHY 的引用。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>struct phy *phy_get(struct device *dev, const char *string);
+struct phy *devm_phy_get(struct device *dev, const char *string);
+struct phy *devm_phy_optional_get(struct device *dev,
+                                  const char *string);
+struct phy *devm_of_phy_get(struct device *dev, struct device_node *np,
+                            const char *con_id);
+struct phy *devm_of_phy_optional_get(struct device *dev,
+                                     struct device_node *np,
+                                     const char *con_id);
+struct phy *devm_of_phy_get_by_index(struct device *dev,
+                                     struct device_node *np,
+                                     int index);
+</pre></div>
+</div>
+<p>phy_get、devm_phy_get 和 devm_phy_optional_get 可用于在 dt
+启动的情况下获取 PHY，字符串参数应包含 dt 数据中给出的 phy 名称，在
+非 dt 启动的情况下，它应包含 PHY 的标签。两个 devm_phy_get 在成功
+获取 PHY 后使用 devres 将设备与 PHY 关联。在驱动程序分离时，将在
+devres 数据上调用 release 函数并释放 devres 数据。当 phy 是可选
+的时，应使用 _optional_get 变体。这些函数永远不会返回 -ENODEV，而
+是在找不到 phy 时返回 NULL。一些通用驱动程序（例如 ehci）可能使用
+多个 phy。在这种情况下，devm_of_phy_get 或 devm_of_phy_get_by_index
+用于根据名称或索引获取 phy 引用。</p>
+<p>需要注意的是，NULL 是有效的 phy 引用。NULL phy 上的所有 phy 使用
+者调用都将成为 NOP。也就是说释放调用，当应用于 NULL phy 时，release
+调用、phy_init()/phy_exit() 调用、phy_power_on()/phy_power_off()
+调用都是 NOP。NULL phy 在处理可选的 phy 设备中很有用。</p>
+</section>
+<section id="api">
+<h2>API的调用顺序<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
+<p>通常，调用顺序应该是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[devm_][of_]phy_get()
+phy_init()
+phy_power_on()
+[phy_set_mode[_ext]()]
+...
+phy_power_off()
+phy_exit()
+[[of_]phy_put()]
+</pre></div>
+</div>
+<p>一些PHY驱动可能没有实现 <code class="xref c c-func docutils literal notranslate"><span class="pre">phy_init()</span></code> 或 <code class="xref c c-func docutils literal notranslate"><span class="pre">phy_power_on()</span></code>,
+但是控制器应该总是调用这些函数以兼容其它PHY，有些PHY可能要求
+<code class="xref c c-func docutils literal notranslate"><span class="pre">phy_set_mode</span></code> 而其他 PHY 可能使用
+默认模式（通常通过设备树或其他固件配置）。出于兼容性考虑，如果您知道将
+使用哪种模式，则应始终调用此函数。通常，应在 <code class="xref c c-func docutils literal notranslate"><span class="pre">phy_power_on()</span></code>
+之后调用此函数，尽管某些 PHY 驱动程序可能随时允许调用它。</p>
+</section>
+<section id="id4">
+<h2>释放对 PHY 的引用<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>当控制器不再需要 PHY 时，它必须使用上一节中提到的 API 释放对已获得
+的 PHY 的引用。PHY 框架提供了 2 个 API 来释放对 PHY 的引用。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void phy_put(struct phy *phy);
+void devm_phy_put(struct device *dev, struct phy *phy);
+</pre></div>
+</div>
+<p>这两个 API 都用于释放对 PHY 的引用，并且 devm_phy_put 会销毁与此
+PHY 关联的设备资源。</p>
+</section>
+<section id="id5">
+<h2>销毁 PHY<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<p>当创建 PHY 的驱动程序被卸载时，它应该使用以下 2 个 API 之一销毁其创
+建的 PHY:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void phy_destroy(struct phy *phy);
+void devm_phy_destroy(struct device *dev, struct phy *phy);
+</pre></div>
+</div>
+<p>这两个 API 都会销毁 PHY，并且 devm_phy_destroy 会销毁与此 PHY 关
+联的 devres。</p>
+</section>
+<section id="pm-runtime">
+<h2>PM Runtime<a class="headerlink" href="#pm-runtime" title="Link to this heading">¶</a></h2>
+<p>这个子系统启用了pm runtime。 所以，在创建PHY 时，将调用此子系统创建的
+phy 设备的 pm_runtime_enable 函数，在销毁 PHY 时，将调用
+pm_runtime_disable。请注意，此子系统创建的 phy 设备将是调用 phy_create
+（PHY provider 设备）的设备的子设备。</p>
+<p>因此，由于父子关系，此子系统创建的 phy_device 的 pm_runtime_get_sync
+调用 PHY provider 设备的 pm_runtime_get_sync。还应注意，
+phy_power_on 和 phy_power_off 分别执行 phy_pm_runtime_get_sync 和
+phy_pm_runtime_put。有导出的 API，如 phy_pm_runtime_get、
+phy_pm_runtime_get_sync、phy_pm_runtime_put、phy_pm_runtime_put_sync、
+phy_pm_runtime_allow 和 phy_pm_runtime_forbid，用于执行 PM 操作。</p>
+</section>
+<section id="id6">
+<h2>PHY映射<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>为了在没有 DeviceTree 帮助的情况下获取对 PHY 的引用，框架提供了可与
+clkdev 进行比较的查找，允许将 clk 结构体绑定到设备。当 struct phy 的
+句柄已存在时，可以在运行时进行查找。</p>
+<p>该框架提供以下 API 用于注册和注销查找:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>int phy_create_lookup(struct phy *phy, const char *con_id,
+                      const char *dev_id);
+void phy_remove_lookup(struct phy *phy, const char *con_id,
+                       const char *dev_id);
+</pre></div>
+</div>
+</section>
+<section id="devicetree">
+<h2>DeviceTree绑定<a class="headerlink" href="#devicetree" title="Link to this heading">¶</a></h2>
+<p>PHY dt 绑定的文档可以在以下位置找到 &#64;
+Documentation/devicetree/bindings/phy/phy-bindings.txt</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">PHY子系统</a><ul>
+<li><a class="reference internal" href="#id1">简介</a></li>
+<li><a class="reference internal" href="#phy-provider">注册/注销PHY provider</a></li>
+<li><a class="reference internal" href="#id2">创建PHY</a></li>
+<li><a class="reference internal" href="#id3">获取对 PHY 的引用</a></li>
+<li><a class="reference internal" href="#api">API的调用顺序</a></li>
+<li><a class="reference internal" href="#id4">释放对 PHY 的引用</a></li>
+<li><a class="reference internal" href="#id5">销毁 PHY</a></li>
+<li><a class="reference internal" href="#pm-runtime">PM Runtime</a></li>
+<li><a class="reference internal" href="#id6">PHY映射</a></li>
+<li><a class="reference internal" href="#devicetree">DeviceTree绑定</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="index.html">
+                    <span class="icon">&lt;</span><span>PHY 通用框架</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../../subsystem-apis.html"><span>内核子系统文档</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

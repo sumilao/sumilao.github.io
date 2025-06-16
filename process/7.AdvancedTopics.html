@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7. Advanced topics &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. For more information" href="8.Conclusion.html" />
+    <link rel="prev" title="6. Followthrough" href="6.Followthrough.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="development-process.html">Development process</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.Intro.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.Process.html">2. How the development process works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.Early-stage.html">3. Early-stage planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.Coding.html">4. Getting the code right</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.Posting.html">5. Posting patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.Followthrough.html">6. Followthrough</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. Advanced topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#managing-patches-with-git">7.1. Managing patches with git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reviewing-patches">7.2. Reviewing patches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="8.Conclusion.html">8. For more information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.Conclusion.html#conclusion">9. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">All development-process docs</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#an-introduction-to-how-kernel-development-works">An introduction to how kernel development works</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="howto.html">HOWTO do Linux kernel development</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="development-process.html">A guide to the Kernel Development Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="submitting-patches.html">Submitting patches: the essential guide to getting your code into the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="submit-checklist.html">Linux Kernel patch submission checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#tools-and-technical-guides-for-kernel-developers">Tools and technical guides for kernel developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#policy-guides-and-developer-statements">Policy guides and developer statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#dealing-with-bugs">Dealing with bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#maintainer-information">Maintainer information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#other-material">Other material</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/process/7.AdvancedTopics.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/process/7.AdvancedTopics.html">Chinese (Simplified)</a></li>
+
+<li><a href="../translations/zh_TW/process/7.AdvancedTopics.html">Chinese (Traditional)</a></li>
+
+<li><a href="../translations/it_IT/process/7.AdvancedTopics.html">Italian</a></li>
+
+<li><a href="../translations/sp_SP/process/7.AdvancedTopics.html">Spanish</a></li>
+
+</ul>
+</div>
+<section id="advanced-topics">
+<span id="development-advancedtopics"></span><h1><span class="section-number">7. </span>Advanced topics<a class="headerlink" href="#advanced-topics" title="Link to this heading">¶</a></h1>
+<p>At this point, hopefully, you have a handle on how the development process
+works.  There is still more to learn, however!  This section will cover a
+number of topics which can be helpful for developers wanting to become a
+regular part of the Linux kernel development process.</p>
+<section id="managing-patches-with-git">
+<h2><span class="section-number">7.1. </span>Managing patches with git<a class="headerlink" href="#managing-patches-with-git" title="Link to this heading">¶</a></h2>
+<p>The use of distributed version control for the kernel began in early 2002,
+when Linus first started playing with the proprietary BitKeeper
+application.  While BitKeeper was controversial, the approach to software
+version management it embodied most certainly was not.  Distributed version
+control enabled an immediate acceleration of the kernel development
+project.  In current times, there are several free alternatives to
+BitKeeper.  For better or for worse, the kernel project has settled on git
+as its tool of choice.</p>
+<p>Managing patches with git can make life much easier for the developer,
+especially as the volume of those patches grows.  Git also has its rough
+edges and poses certain hazards; it is a young and powerful tool which is
+still being civilized by its developers.  This document will not attempt to
+teach the reader how to use git; that would be sufficient material for a
+long document in its own right.  Instead, the focus here will be on how git
+fits into the kernel development process in particular.  Developers who
+wish to come up to speed with git will find more information at:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a></p>
+<p><a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/user-manual.html">https://www.kernel.org/pub/software/scm/git/docs/user-manual.html</a></p>
+</div></blockquote>
+<p>and on various tutorials found on the web.</p>
+<p>The first order of business is to read the above sites and get a solid
+understanding of how git works before trying to use it to make patches
+available to others.  A git-using developer should be able to obtain a copy
+of the mainline repository, explore the revision history, commit changes to
+the tree, use branches, etc.  An understanding of git’s tools for the
+rewriting of history (such as rebase) is also useful.  Git comes with its
+own terminology and concepts; a new user of git should know about refs,
+remote branches, the index, fast-forward merges, pushes and pulls, detached
+heads, etc.  It can all be a little intimidating at the outset, but the
+concepts are not that hard to grasp with a bit of study.</p>
+<p>Using git to generate patches for submission by email can be a good
+exercise while coming up to speed.</p>
+<p>When you are ready to start putting up git trees for others to look at, you
+will, of course, need a server that can be pulled from.  Setting up such a
+server with git-daemon is relatively straightforward if you have a system
+which is accessible to the Internet.  Otherwise, free, public hosting sites
+(Github, for example) are starting to appear on the net.  Established
+developers can get an account on kernel.org, but those are not easy to come
+by; see <a class="reference external" href="https://kernel.org/faq/">https://kernel.org/faq/</a> for more information.</p>
+<p>The normal git workflow involves the use of a lot of branches.  Each line
+of development can be separated into a separate “topic branch” and
+maintained independently.  Branches in git are cheap, there is no reason to
+not make free use of them.  And, in any case, you should not do your
+development in any branch which you intend to ask others to pull from.
+Publicly-available branches should be created with care; merge in patches
+from development branches when they are in complete form and ready to go -
+not before.</p>
+<p>Git provides some powerful tools which can allow you to rewrite your
+development history.  An inconvenient patch (one which breaks bisection,
+say, or which has some other sort of obvious bug) can be fixed in place or
+made to disappear from the history entirely.  A patch series can be
+rewritten as if it had been written on top of today’s mainline, even though
+you have been working on it for months.  Changes can be transparently
+shifted from one branch to another.  And so on.  Judicious use of git’s
+ability to revise history can help in the creation of clean patch sets with
+fewer problems.</p>
+<p>Excessive use of this capability can lead to other problems, though, beyond
+a simple obsession for the creation of the perfect project history.
+Rewriting history will rewrite the changes contained in that history,
+turning a tested (hopefully) kernel tree into an untested one.  But, beyond
+that, developers cannot easily collaborate if they do not have a shared
+view of the project history; if you rewrite history which other developers
+have pulled into their repositories, you will make life much more difficult
+for those developers.  So a simple rule of thumb applies here: history
+which has been exported to others should generally be seen as immutable
+thereafter.</p>
+<p>So, once you push a set of changes to your publicly-available server, those
+changes should not be rewritten.  Git will attempt to enforce this rule if
+you try to push changes which do not result in a fast-forward merge
+(i.e. changes which do not share the same history).  It is possible to
+override this check, and there may be times when it is necessary to rewrite
+an exported tree.  Moving changesets between trees to avoid conflicts in
+linux-next is one example.  But such actions should be rare.  This is one
+of the reasons why development should be done in private branches (which
+can be rewritten if necessary) and only moved into public branches when
+it’s in a reasonably advanced state.</p>
+<p>As the mainline (or other tree upon which a set of changes is based)
+advances, it is tempting to merge with that tree to stay on the leading
+edge.  For a private branch, rebasing can be an easy way to keep up with
+another tree, but rebasing is not an option once a tree is exported to the
+world.  Once that happens, a full merge must be done.  Merging occasionally
+makes good sense, but overly frequent merges can clutter the history
+needlessly.  Suggested technique in this case is to merge infrequently, and
+generally only at specific release points (such as a mainline -rc
+release).  If you are nervous about specific changes, you can always
+perform test merges in a private branch.  The git “rerere” tool can be
+useful in such situations; it remembers how merge conflicts were resolved
+so that you don’t have to do the same work twice.</p>
+<p>One of the biggest recurring complaints about tools like git is this: the
+mass movement of patches from one repository to another makes it easy to
+slip in ill-advised changes which go into the mainline below the review
+radar.  Kernel developers tend to get unhappy when they see that kind of
+thing happening; putting up a git tree with unreviewed or off-topic patches
+can affect your ability to get trees pulled in the future.  Quoting Linus:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>You can send me patches, but for me to pull a git patch from you, I
+need to know that you know what you&#39;re doing, and I need to be able
+to trust things *without* then having to go and check every
+individual change by hand.
+</pre></div>
+</div>
+<p>(<a class="reference external" href="https://lwn.net/Articles/224135/">https://lwn.net/Articles/224135/</a>).</p>
+<p>To avoid this kind of situation, ensure that all patches within a given
+branch stick closely to the associated topic; a “driver fixes” branch
+should not be making changes to the core memory management code.  And, most
+importantly, do not use a git tree to bypass the review process.  Post an
+occasional summary of the tree to the relevant list, and, when the time is
+right, request that the tree be included in linux-next.</p>
+<p>If and when others start to send patches for inclusion into your tree,
+don’t forget to review them.  Also ensure that you maintain the correct
+authorship information; the git “am” tool does its best in this regard, but
+you may have to add a “From:” line to the patch if it has been relayed to
+you via a third party.</p>
+<p>When requesting a pull, be sure to give all the relevant information: where
+your tree is, what branch to pull, and what changes will result from the
+pull.  The git request-pull command can be helpful in this regard; it will
+format the request as other developers expect, and will also check to be
+sure that you have remembered to push those changes to the public server.</p>
+</section>
+<section id="reviewing-patches">
+<span id="development-advancedtopics-reviews"></span><h2><span class="section-number">7.2. </span>Reviewing patches<a class="headerlink" href="#reviewing-patches" title="Link to this heading">¶</a></h2>
+<p>Some readers will certainly object to putting this section with “advanced
+topics” on the grounds that even beginning kernel developers should be
+reviewing patches.  It is certainly true that there is no better way to
+learn how to program in the kernel environment than by looking at code
+posted by others.  In addition, reviewers are forever in short supply; by
+looking at code you can make a significant contribution to the process as a
+whole.</p>
+<p>Reviewing code can be an intimidating prospect, especially for a new kernel
+developer who may well feel nervous about questioning code - in public -
+which has been posted by those with more experience.  Even code written by
+the most experienced developers can be improved, though.  Perhaps the best
+piece of advice for reviewers (all reviewers) is this: phrase review
+comments as questions rather than criticisms.  Asking “how does the lock
+get released in this path?” will always work better than stating “the
+locking here is wrong.”</p>
+<p>Another technique that is useful in case of a disagreement is to ask for others
+to chime in. If a discussion reaches a stalemate after a few exchanges,
+then call for opinions of other reviewers or maintainers. Often those in
+agreement with a reviewer remain silent unless called upon.
+The opinion of multiple people carries exponentially more weight.</p>
+<p>Different developers will review code from different points of view.  Some
+are mostly concerned with coding style and whether code lines have trailing
+white space.  Others will focus primarily on whether the change implemented
+by the patch as a whole is a good thing for the kernel or not.  Yet others
+will check for problematic locking, excessive stack usage, possible
+security issues, duplication of code found elsewhere, adequate
+documentation, adverse effects on performance, user-space ABI changes, etc.
+All types of review, if they lead to better code going into the kernel, are
+welcome and worthwhile.</p>
+<p>There is no strict requirement to use specific tags like <code class="docutils literal notranslate"><span class="pre">Reviewed-by</span></code>.
+In fact reviews in plain English are more informative and encouraged
+even when a tag is provided, e.g. “I looked at aspects A, B and C of this
+submission and it looks good to me.”
+Some form of a review message or reply is obviously necessary otherwise
+maintainers will not know that the reviewer has looked at the patch at all!</p>
+<p>Last but not least patch review may become a negative process, focused
+on pointing out problems. Please throw in a compliment once in a while,
+particularly for newbies!</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">7. Advanced topics</a><ul>
+<li><a class="reference internal" href="#managing-patches-with-git">7.1. Managing patches with git</a></li>
+<li><a class="reference internal" href="#reviewing-patches">7.2. Reviewing patches</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="6.Followthrough.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">6. </span>Followthrough</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="8.Conclusion.html"><span><span class="section-number">8. </span>For more information</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ISO 15765-2 (ISO-TP) &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="J1939 Documentation" href="j1939.html" />
+    <link rel="prev" title="IEEE 802.15.4 Developer’s Guide" href="ieee802154.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#human-interfaces">Human interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../subsystem-apis.html#networking-interfaces">Networking interfaces</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../netlabel/index.html">NetLabel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../infiniband/index.html">InfiniBand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../isdn/index.html">ISDN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mhi/index.html">MHI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/networking/iso15765-2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="iso-15765-2-iso-tp">
+<h1>ISO 15765-2 (ISO-TP)<a class="headerlink" href="#iso-15765-2-iso-tp" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>ISO 15765-2, also known as ISO-TP, is a transport protocol specifically defined
+for diagnostic communication on CAN. It is widely used in the automotive
+industry, for example as the transport protocol for UDSonCAN (ISO 14229-3) or
+emission-related diagnostic services (ISO 15031-5).</p>
+<p>ISO-TP can be used both on CAN CC (aka Classical CAN) and CAN FD (CAN with
+Flexible Datarate) based networks. It is also designed to be compatible with a
+CAN network using SAE J1939 as data link layer (however, this is not a
+requirement).</p>
+<section id="specifications-used">
+<h3>Specifications used<a class="headerlink" href="#specifications-used" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>ISO 15765-2:2024 : Road vehicles - Diagnostic communication over Controller
+Area Network (DoCAN). Part 2: Transport protocol and network layer services.</p></li>
+</ul>
+</section>
+<section id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Link to this heading">¶</a></h3>
+<p>In its simplest form, ISO-TP is based on two kinds of addressing modes for the
+nodes connected to the same network:</p>
+<ul class="simple">
+<li><p>physical addressing is implemented by two node-specific addresses and is used
+in 1-to-1 communication.</p></li>
+<li><p>functional addressing is implemented by one node-specific address and is used
+in 1-to-N communication.</p></li>
+</ul>
+<p>Three different addressing formats can be employed:</p>
+<ul class="simple">
+<li><p>“normal” : each address is represented simply by a CAN ID.</p></li>
+<li><p>“extended”: each address is represented by a CAN ID plus the first byte of
+the CAN payload; both the CAN ID and the byte inside the payload shall be
+different between two addresses.</p></li>
+<li><p>“mixed”: each address is represented by a CAN ID plus the first byte of
+the CAN payload; the CAN ID is different between two addresses, but the
+additional byte is the same.</p></li>
+</ul>
+</section>
+<section id="transport-protocol-and-associated-frame-types">
+<h3>Transport protocol and associated frame types<a class="headerlink" href="#transport-protocol-and-associated-frame-types" title="Link to this heading">¶</a></h3>
+<p>When transmitting data using the ISO-TP protocol, the payload can either fit
+inside one single CAN message or not, also considering the overhead the protocol
+is generating and the optional extended addressing. In the first case, the data
+is transmitted at once using a so-called Single Frame (SF). In the second case,
+ISO-TP defines a multi-frame protocol, in which the sender provides (through a
+First Frame - FF) the PDU length which is to be transmitted and also asks for a
+Flow Control (FC) frame, which provides the maximum supported size of a macro
+data block (<code class="docutils literal notranslate"><span class="pre">blocksize</span></code>) and the minimum time between the single CAN messages
+composing such block (<code class="docutils literal notranslate"><span class="pre">stmin</span></code>). Once this information has been received, the
+sender starts to send frames containing fragments of the data payload (called
+Consecutive Frames - CF), stopping after every <code class="docutils literal notranslate"><span class="pre">blocksize</span></code>-sized block to wait
+confirmation from the receiver which should then send another Flow Control
+frame to inform the sender about its availability to receive more data.</p>
+</section>
+</section>
+<section id="how-to-use-iso-tp">
+<h2>How to Use ISO-TP<a class="headerlink" href="#how-to-use-iso-tp" title="Link to this heading">¶</a></h2>
+<p>As with others CAN protocols, the ISO-TP stack support is built into the
+Linux network subsystem for the CAN bus, aka. Linux-CAN or SocketCAN, and
+thus follows the same socket API.</p>
+<section id="creation-and-basic-usage-of-an-iso-tp-socket">
+<h3>Creation and basic usage of an ISO-TP socket<a class="headerlink" href="#creation-and-basic-usage-of-an-iso-tp-socket" title="Link to this heading">¶</a></h3>
+<p>To use the ISO-TP stack, <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;linux/can/isotp.h&gt;</span></code> shall be used. A
+socket can then be created using the <code class="docutils literal notranslate"><span class="pre">PF_CAN</span></code> protocol family, the
+<code class="docutils literal notranslate"><span class="pre">SOCK_DGRAM</span></code> type (as the underlying protocol is datagram-based by design)
+and the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP</span></code> protocol:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socket</span><span class="p">(</span><span class="n">PF_CAN</span><span class="p">,</span><span class="w"> </span><span class="n">SOCK_DGRAM</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>After the socket has been successfully created, <code class="docutils literal notranslate"><span class="pre">bind(2)</span></code> shall be called to
+bind the socket to the desired CAN interface; to do so:</p>
+<ul class="simple">
+<li><p>a TX CAN ID shall be specified as part of the sockaddr supplied to the call
+itself.</p></li>
+<li><p>a RX CAN ID shall also be specified, unless broadcast flags have been set
+through socket option (explained below).</p></li>
+</ul>
+<p>Once bound to an interface, the socket can be read from and written to using
+the usual <code class="docutils literal notranslate"><span class="pre">read(2)</span></code> and <code class="docutils literal notranslate"><span class="pre">write(2)</span></code> system calls, as well as <code class="docutils literal notranslate"><span class="pre">send(2)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sendmsg(2)</span></code>, <code class="docutils literal notranslate"><span class="pre">recv(2)</span></code> and <code class="docutils literal notranslate"><span class="pre">recvmsg(2)</span></code>.
+Unlike the CAN_RAW socket API, only the ISO-TP data field (the actual payload)
+is sent and received by the userspace application using these calls. The address
+information and the protocol information are automatically filled by the ISO-TP
+stack using the configuration supplied during socket creation. In the same way,
+the stack will use the transport mechanism when required (i.e., when the size
+of the data payload exceeds the MTU of the underlying CAN bus).</p>
+<p>The sockaddr structure used for SocketCAN has extensions for use with ISO-TP,
+as specified below:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_can</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">sa_family_t</span><span class="w"> </span><span class="n">can_family</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="n">can_ifindex</span><span class="p">;</span>
+<span class="w">    </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">canid_t</span><span class="w"> </span><span class="n">rx_id</span><span class="p">,</span><span class="w"> </span><span class="n">tx_id</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">tp</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">can_addr</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">can_family</span></code> and <code class="docutils literal notranslate"><span class="pre">can_ifindex</span></code> serve the same purpose as for other
+SocketCAN sockets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">can_addr.tp.rx_id</span></code> specifies the receive (RX) CAN ID and will be used as
+a RX filter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">can_addr.tp.tx_id</span></code> specifies the transmit (TX) CAN ID</p></li>
+</ul>
+</section>
+<section id="iso-tp-socket-options">
+<h3>ISO-TP socket options<a class="headerlink" href="#iso-tp-socket-options" title="Link to this heading">¶</a></h3>
+<p>When creating an ISO-TP socket, reasonable defaults are set. Some options can
+be modified with <code class="docutils literal notranslate"><span class="pre">setsockopt(2)</span></code> and/or read back with <code class="docutils literal notranslate"><span class="pre">getsockopt(2)</span></code>.</p>
+<section id="general-options">
+<h4>General options<a class="headerlink" href="#general-options" title="Link to this heading">¶</a></h4>
+<p>General socket options can be passed using the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_OPTS</span></code> optname:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_options</span><span class="w"> </span><span class="n">opts</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setsockopt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">SOL_CAN_ISOTP</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP_OPTS</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">opts</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">opts</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">can_isotp_options</span></code> structure has the following contents:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_options</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">flags</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u32</span><span class="w"> </span><span class="n">frame_txtime</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w">  </span><span class="n">ext_address</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w">  </span><span class="n">txpad_content</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w">  </span><span class="n">rxpad_content</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w">  </span><span class="n">rx_ext_address</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">flags</span></code>: modifiers to be applied to the default behaviour of the ISO-TP
+stack. Following flags are available:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_LISTEN_MODE</span></code>: listen only (do not send FC frames); normally
+used as a testing feature.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_EXTEND_ADDR</span></code>: use the byte specified in <code class="docutils literal notranslate"><span class="pre">ext_address</span></code> as an
+additional address component. This enables the “mixed” addressing format if
+used alone, or the “extended” addressing format if used in conjunction with
+<code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_EXT_ADDR</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_TX_PADDING</span></code>: enable padding for transmitted frames, using
+<code class="docutils literal notranslate"><span class="pre">txpad_content</span></code> as value for the padding bytes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_PADDING</span></code>: enable padding for the received frames, using
+<code class="docutils literal notranslate"><span class="pre">rxpad_content</span></code> as value for the padding bytes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_CHK_PAD_LEN</span></code>: check for correct padding length on the received
+frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_CHK_PAD_DATA</span></code>: check padding bytes on the received frames
+against <code class="docutils literal notranslate"><span class="pre">rxpad_content</span></code>; if <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_PADDING</span></code> is not specified,
+this flag is ignored.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_HALF_DUPLEX</span></code>: force ISO-TP socket in half duplex mode
+(that is, transport mechanism can only be incoming or outgoing at the same
+time, not both).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_FORCE_TXSTMIN</span></code>: ignore stmin from received FC; normally
+used as a testing feature.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_FORCE_RXSTMIN</span></code>: ignore CFs depending on rx stmin; normally
+used as a testing feature.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_EXT_ADDR</span></code>: use <code class="docutils literal notranslate"><span class="pre">rx_ext_address</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ext_address</span></code>
+as extended addressing byte on the reception path. If used in conjunction
+with <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_EXTEND_ADDR</span></code>, this flag effectively enables the “extended”
+addressing format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_WAIT_TX_DONE</span></code>: wait until the frame is sent before returning
+from <code class="docutils literal notranslate"><span class="pre">write(2)</span></code> and <code class="docutils literal notranslate"><span class="pre">send(2)</span></code> calls (i.e., blocking write operations).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_SF_BROADCAST</span></code>: use 1-to-N functional addressing (cannot be
+specified alongside <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_CF_BROADCAST</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_CF_BROADCAST</span></code>: use 1-to-N transmission without flow control
+(cannot be specified alongside <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_SF_BROADCAST</span></code>).
+NOTE: this is not covered by the ISO 15765-2 standard.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_DYN_FC_PARMS</span></code>: enable dynamic update of flow control
+parameters.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frame_txtime</span></code>: frame transmission time (defined as N_As/N_Ar inside the
+ISO standard); if <code class="docutils literal notranslate"><span class="pre">0</span></code>, the default (or the last set value) is used.
+To set the transmission time to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_FRAME_TXTIME_ZERO</span></code>
+macro (equal to 0xFFFFFFFF) shall be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ext_address</span></code>: extended addressing byte, used if the
+<code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_EXTEND_ADDR</span></code> flag is specified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">txpad_content</span></code>: byte used as padding value for transmitted frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rxpad_content</span></code>: byte used as padding value for received frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rx_ext_address</span></code>: extended addressing byte for the reception path, used if
+the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_EXT_ADDR</span></code> flag is specified.</p></li>
+</ul>
+</section>
+<section id="flow-control-options">
+<h4>Flow Control options<a class="headerlink" href="#flow-control-options" title="Link to this heading">¶</a></h4>
+<p>Flow Control (FC) options can be passed using the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RECV_FC</span></code> optname
+to provide the communication parameters for receiving ISO-TP PDUs.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_fc_options</span><span class="w"> </span><span class="n">fc_opts</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setsockopt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">SOL_CAN_ISOTP</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP_RECV_FC</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fc_opts</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">fc_opts</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">can_isotp_fc_options</span></code> structure has the following contents:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_options</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">bs</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">stmin</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">wftmax</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bs</span></code>: blocksize provided in flow control frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stmin</span></code>: minimum separation time provided in flow control frames; can
+have the following values (others are reserved):</p>
+<ul>
+<li><p>0x00 - 0x7F : 0 - 127 ms</p></li>
+<li><p>0xF1 - 0xF9 : 100 us - 900 us</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wftmax</span></code>: maximum number of wait frames provided in flow control frames.</p></li>
+</ul>
+</section>
+<section id="link-layer-options">
+<h4>Link Layer options<a class="headerlink" href="#link-layer-options" title="Link to this heading">¶</a></h4>
+<p>Link Layer (LL) options can be passed using the <code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_LL_OPTS</span></code> optname:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_ll_options</span><span class="w"> </span><span class="n">ll_opts</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setsockopt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">SOL_CAN_ISOTP</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP_LL_OPTS</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ll_opts</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">ll_opts</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">can_isotp_ll_options</span></code> structure has the following contents:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">can_isotp_ll_options</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">mtu</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">tx_dl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u8</span><span class="w"> </span><span class="n">tx_flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mtu</span></code>: generated and accepted CAN frame type, can be equal to <code class="docutils literal notranslate"><span class="pre">CAN_MTU</span></code>
+for classical CAN frames or <code class="docutils literal notranslate"><span class="pre">CANFD_MTU</span></code> for CAN FD frames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tx_dl</span></code>: maximum payload length for transmitted frames, can have one value
+among: 8, 12, 16, 20, 24, 32, 48, 64. Values above 8 only apply to CAN FD
+traffic (i.e.: <code class="docutils literal notranslate"><span class="pre">mtu</span> <span class="pre">=</span> <span class="pre">CANFD_MTU</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tx_flags</span></code>: flags set into <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">canfd_frame.flags</span></code> at frame creation.
+Only applies to CAN FD traffic (i.e.: <code class="docutils literal notranslate"><span class="pre">mtu</span> <span class="pre">=</span> <span class="pre">CANFD_MTU</span></code>).</p></li>
+</ul>
+</section>
+<section id="transmission-stmin">
+<h4>Transmission stmin<a class="headerlink" href="#transmission-stmin" title="Link to this heading">¶</a></h4>
+<p>The transmission minimum separation time (stmin) can be forced using the
+<code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_TX_STMIN</span></code> optname and providing an stmin value in microseconds as
+a 32bit unsigned integer; this will overwrite the value sent by the receiver in
+flow control frames:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stmin</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setsockopt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">SOL_CAN_ISOTP</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP_TX_STMIN</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">stmin</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">stmin</span><span class="p">));</span>
+</pre></div>
+</div>
+</section>
+<section id="reception-stmin">
+<h4>Reception stmin<a class="headerlink" href="#reception-stmin" title="Link to this heading">¶</a></h4>
+<p>The reception minimum separation time (stmin) can be forced using the
+<code class="docutils literal notranslate"><span class="pre">CAN_ISOTP_RX_STMIN</span></code> optname and providing an stmin value in microseconds as
+a 32bit unsigned integer; received Consecutive Frames (CF) which timestamps
+differ less than this value will be ignored:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stmin</span><span class="p">;</span>
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setsockopt</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">SOL_CAN_ISOTP</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP_RX_STMIN</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">stmin</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">stmin</span><span class="p">));</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multi-frame-transport-support">
+<h3>Multi-frame transport support<a class="headerlink" href="#multi-frame-transport-support" title="Link to this heading">¶</a></h3>
+<p>The ISO-TP stack contained inside the Linux kernel supports the multi-frame
+transport mechanism defined by the standard, with the following constraints:</p>
+<ul class="simple">
+<li><p>the maximum size of a PDU is defined by a module parameter, with an hard
+limit imposed at build time.</p></li>
+<li><p>when a transmission is in progress, subsequent calls to <code class="docutils literal notranslate"><span class="pre">write(2)</span></code> will
+block, while calls to <code class="docutils literal notranslate"><span class="pre">send(2)</span></code> will either block or fail depending on the
+presence of the <code class="docutils literal notranslate"><span class="pre">MSG_DONTWAIT</span></code> flag.</p></li>
+<li><p>no support is present for sending “wait frames”: whether a PDU can be fully
+received or not is decided when the First Frame is received.</p></li>
+</ul>
+</section>
+<section id="errors">
+<h3>Errors<a class="headerlink" href="#errors" title="Link to this heading">¶</a></h3>
+<p>Following errors are reported to userspace:</p>
+<section id="rx-path-errors">
+<h4>RX path errors<a class="headerlink" href="#rx-path-errors" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>-ETIMEDOUT</p></td>
+<td><p>timeout of data reception</p></td>
+</tr>
+<tr class="row-even"><td><p>-EILSEQ</p></td>
+<td><p>sequence number mismatch during a multi-frame reception</p></td>
+</tr>
+<tr class="row-odd"><td><p>-EBADMSG</p></td>
+<td><p>data reception with wrong padding</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tx-path-errors">
+<h4>TX path errors<a class="headerlink" href="#tx-path-errors" title="Link to this heading">¶</a></h4>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>-ECOMM</p></td>
+<td><p>flow control reception timeout</p></td>
+</tr>
+<tr class="row-even"><td><p>-EMSGSIZE</p></td>
+<td><p>flow control reception overflow</p></td>
+</tr>
+<tr class="row-odd"><td><p>-EBADMSG</p></td>
+<td><p>flow control reception with wrong layout/padding</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<section id="basic-node-example">
+<h3>Basic node example<a class="headerlink" href="#basic-node-example" title="Link to this heading">¶</a></h3>
+<p>Following example implements a node using “normal” physical addressing, with
+RX ID equal to 0x18DAF142 and a TX ID equal to 0x18DA42F1. All options are left
+to their default.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_can</span><span class="w"> </span><span class="n">addr</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+
+<span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socket</span><span class="p">(</span><span class="n">PF_CAN</span><span class="p">,</span><span class="w"> </span><span class="n">SOCK_DGRAM</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_ISOTP</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">addr</span><span class="p">.</span><span class="n">can_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_CAN</span><span class="p">;</span>
+<span class="n">addr</span><span class="p">.</span><span class="n">can_ifindex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">if_nametoindex</span><span class="p">(</span><span class="s">&quot;can0&quot;</span><span class="p">);</span>
+<span class="n">addr</span><span class="p">.</span><span class="n">can_addr</span><span class="p">.</span><span class="n">tp</span><span class="p">.</span><span class="n">tx_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x18DA42F1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CAN_EFF_FLAG</span><span class="p">;</span>
+<span class="n">addr</span><span class="p">.</span><span class="n">can_addr</span><span class="p">.</span><span class="n">tp</span><span class="p">.</span><span class="n">rx_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x18DAF142</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CAN_EFF_FLAG</span><span class="p">;</span>
+
+<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bind</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">addr</span><span class="p">));</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="cm">/* Data can now be received using read(s, ...) and sent using write(s, ...) */</span>
+</pre></div>
+</div>
+</section>
+<section id="additional-examples">
+<h3>Additional examples<a class="headerlink" href="#additional-examples" title="Link to this heading">¶</a></h3>
+<p>More complete (and complex) examples can be found inside the <code class="docutils literal notranslate"><span class="pre">isotp*</span></code> userland
+tools, distributed as part of the <code class="docutils literal notranslate"><span class="pre">can-utils</span></code> utilities at:
+<a class="reference external" href="https://github.com/linux-can/can-utils">https://github.com/linux-can/can-utils</a></p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">ISO 15765-2 (ISO-TP)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#specifications-used">Specifications used</a></li>
+<li><a class="reference internal" href="#addressing">Addressing</a></li>
+<li><a class="reference internal" href="#transport-protocol-and-associated-frame-types">Transport protocol and associated frame types</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-use-iso-tp">How to Use ISO-TP</a><ul>
+<li><a class="reference internal" href="#creation-and-basic-usage-of-an-iso-tp-socket">Creation and basic usage of an ISO-TP socket</a></li>
+<li><a class="reference internal" href="#iso-tp-socket-options">ISO-TP socket options</a><ul>
+<li><a class="reference internal" href="#general-options">General options</a></li>
+<li><a class="reference internal" href="#flow-control-options">Flow Control options</a></li>
+<li><a class="reference internal" href="#link-layer-options">Link Layer options</a></li>
+<li><a class="reference internal" href="#transmission-stmin">Transmission stmin</a></li>
+<li><a class="reference internal" href="#reception-stmin">Reception stmin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multi-frame-transport-support">Multi-frame transport support</a></li>
+<li><a class="reference internal" href="#errors">Errors</a><ul>
+<li><a class="reference internal" href="#rx-path-errors">RX path errors</a></li>
+<li><a class="reference internal" href="#tx-path-errors">TX path errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#basic-node-example">Basic node example</a></li>
+<li><a class="reference internal" href="#additional-examples">Additional examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="ieee802154.html">
+                    <span class="icon">&lt;</span><span>IEEE 802.15.4 Developer’s Guide</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="j1939.html"><span>J1939 Documentation</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

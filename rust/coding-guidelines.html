@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Coding Guidelines &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Arch Support" href="arch-support.html" />
+    <link rel="prev" title="General Information" href="general-information.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rust</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#the-rust-experiment">The Rust experiment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#code-documentation">Code documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general-information.html">General Information</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Coding Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arch-support.html">Arch Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html">Testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rust/coding-guidelines.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+English
+
+<ul>
+
+<li><a href="../translations/zh_CN/rust/coding-guidelines.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<section id="coding-guidelines">
+<h1>Coding Guidelines<a class="headerlink" href="#coding-guidelines" title="Link to this heading">¶</a></h1>
+<p>This document describes how to write Rust code in the kernel.</p>
+<section id="style-formatting">
+<h2>Style &amp; formatting<a class="headerlink" href="#style-formatting" title="Link to this heading">¶</a></h2>
+<p>The code should be formatted using <code class="docutils literal notranslate"><span class="pre">rustfmt</span></code>. In this way, a person
+contributing from time to time to the kernel does not need to learn and
+remember one more style guide. More importantly, reviewers and maintainers
+do not need to spend time pointing out style issues anymore, and thus
+less patch roundtrips may be needed to land a change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Conventions on comments and documentation are not checked by
+<code class="docutils literal notranslate"><span class="pre">rustfmt</span></code>. Thus those are still needed to be taken care of.</p>
+</div>
+<p>The default settings of <code class="docutils literal notranslate"><span class="pre">rustfmt</span></code> are used. This means the idiomatic Rust
+style is followed. For instance, 4 spaces are used for indentation rather
+than tabs.</p>
+<p>It is convenient to instruct editors/IDEs to format while typing,
+when saving or at commit time. However, if for some reason reformatting
+the entire kernel Rust sources is needed at some point, the following can be
+run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make LLVM=1 rustfmt
+</pre></div>
+</div>
+<p>It is also possible to check if everything is formatted (printing a diff
+otherwise), for instance for a CI, with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make LLVM=1 rustfmtcheck
+</pre></div>
+</div>
+<p>Like <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> for the rest of the kernel, <code class="docutils literal notranslate"><span class="pre">rustfmt</span></code> works on
+individual files, and does not require a kernel configuration. Sometimes it may
+even work with broken code.</p>
+</section>
+<section id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Link to this heading">¶</a></h2>
+<p>“Normal” comments (i.e. <code class="docutils literal notranslate"><span class="pre">//</span></code>, rather than code documentation which starts
+with <code class="docutils literal notranslate"><span class="pre">///</span></code> or <code class="docutils literal notranslate"><span class="pre">//!</span></code>) are written in Markdown the same way as documentation
+comments are, even though they will not be rendered. This improves consistency,
+simplifies the rules and allows to move content between the two kinds of
+comments more easily. For instance:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// `object` is ready to be handled now.</span>
+<span class="n">f</span><span class="p">(</span><span class="n">object</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Furthermore, just like documentation, comments are capitalized at the beginning
+of a sentence and ended with a period (even if it is a single sentence). This
+includes <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SAFETY:</span></code>, <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">TODO:</span></code> and other “tagged” comments, e.g.:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// FIXME: The error should be handled properly.</span>
+</pre></div>
+</div>
+<p>Comments should not be used for documentation purposes: comments are intended
+for implementation details, not users. This distinction is useful even if the
+reader of the source file is both an implementor and a user of an API. In fact,
+sometimes it is useful to use both comments and documentation at the same time.
+For instance, for a <code class="docutils literal notranslate"><span class="pre">TODO</span></code> list or to comment on the documentation itself.
+For the latter case, comments can be inserted in the middle; that is, closer to
+the line of documentation to be commented. For any other case, comments are
+written after the documentation, e.g.:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// Returns a new [`Foo`].</span>
+<span class="sd">///</span>
+<span class="sd">/// # Examples</span>
+<span class="sd">///</span>
+<span class="c1">// TODO: Find a better example.</span>
+<span class="sd">/// ```</span>
+<span class="sd">/// let foo = f(42);</span>
+<span class="sd">/// ```</span>
+<span class="c1">// FIXME: Use fallible approach.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Foo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>One special kind of comments are the <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SAFETY:</span></code> comments. These must appear
+before every <code class="docutils literal notranslate"><span class="pre">unsafe</span></code> block, and they explain why the code inside the block is
+correct/sound, i.e. why it cannot trigger undefined behavior in any case, e.g.:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// SAFETY: `p` is valid by the safety requirements.</span>
+<span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SAFETY:</span></code> comments are not to be confused with the <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Safety</span></code> sections
+in code documentation. <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Safety</span></code> sections specify the contract that callers
+(for functions) or implementors (for traits) need to abide by. <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SAFETY:</span></code>
+comments show why a call (for functions) or implementation (for traits) actually
+respects the preconditions stated in a <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Safety</span></code> section or the language
+reference.</p>
+</section>
+<section id="code-documentation">
+<h2>Code documentation<a class="headerlink" href="#code-documentation" title="Link to this heading">¶</a></h2>
+<p>Rust kernel code is not documented like C kernel code (i.e. via kernel-doc).
+Instead, the usual system for documenting Rust code is used: the <code class="docutils literal notranslate"><span class="pre">rustdoc</span></code>
+tool, which uses Markdown (a lightweight markup language).</p>
+<p>To learn Markdown, there are many guides available out there. For instance,
+the one at:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://commonmark.org/help/">https://commonmark.org/help/</a></p>
+</div></blockquote>
+<p>This is how a well-documented Rust function may look like:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// Returns the contained [`Some`] value, consuming the `self` value,</span>
+<span class="sd">/// without checking that the value is not [`None`].</span>
+<span class="sd">///</span>
+<span class="sd">/// # Safety</span>
+<span class="sd">///</span>
+<span class="sd">/// Calling this method on [`None`] is *[undefined behavior]*.</span>
+<span class="sd">///</span>
+<span class="sd">/// [undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html</span>
+<span class="sd">///</span>
+<span class="sd">/// # Examples</span>
+<span class="sd">///</span>
+<span class="sd">/// ```</span>
+<span class="sd">/// let x = Some(&quot;air&quot;);</span>
+<span class="sd">/// assert_eq!(unsafe { x.unwrap_unchecked() }, &quot;air&quot;);</span>
+<span class="sd">/// ```</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">unwrap_unchecked</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">val</span><span class="p">,</span>
+
+<span class="w">        </span><span class="c1">// SAFETY: The safety contract must be upheld by the caller.</span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">hint</span><span class="p">::</span><span class="n">unreachable_unchecked</span><span class="p">()</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example showcases a few <code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> features and some conventions followed
+in the kernel:</p>
+<ul>
+<li><p>The first paragraph must be a single sentence briefly describing what
+the documented item does. Further explanations must go in extra paragraphs.</p></li>
+<li><p>Unsafe functions must document their safety preconditions under
+a <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Safety</span></code> section.</p></li>
+<li><p>While not shown here, if a function may panic, the conditions under which
+that happens must be described under a <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Panics</span></code> section.</p>
+<p>Please note that panicking should be very rare and used only with a good
+reason. In almost all cases, a fallible approach should be used, typically
+returning a <code class="docutils literal notranslate"><span class="pre">Result</span></code>.</p>
+</li>
+<li><p>If providing examples of usage would help readers, they must be written in
+a section called <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Examples</span></code>.</p></li>
+<li><p>Rust items (functions, types, constants...) must be linked appropriately
+(<code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> will create a link automatically).</p></li>
+<li><p>Any <code class="docutils literal notranslate"><span class="pre">unsafe</span></code> block must be preceded by a <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SAFETY:</span></code> comment
+describing why the code inside is sound.</p>
+<p>While sometimes the reason might look trivial and therefore unneeded,
+writing these comments is not just a good way of documenting what has been
+taken into account, but most importantly, it provides a way to know that
+there are no <em>extra</em> implicit constraints.</p>
+</li>
+</ul>
+<p>To learn more about how to write documentation for Rust and extra features,
+please take a look at the <code class="docutils literal notranslate"><span class="pre">rustdoc</span></code> book at:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html">https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html</a></p>
+</div></blockquote>
+<p>In addition, the kernel supports creating links relative to the source tree by
+prefixing the link destination with <code class="docutils literal notranslate"><span class="pre">srctree/</span></code>. For instance:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">//! C header: [`include/linux/printk.h`](srctree/include/linux/printk.h)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// [`struct mutex`]: srctree/include/linux/mutex.h</span>
+</pre></div>
+</div>
+</section>
+<section id="naming">
+<h2>Naming<a class="headerlink" href="#naming" title="Link to this heading">¶</a></h2>
+<p>Rust kernel code follows the usual Rust naming conventions:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://rust-lang.github.io/api-guidelines/naming.html">https://rust-lang.github.io/api-guidelines/naming.html</a></p>
+</div></blockquote>
+<p>When existing C concepts (e.g. macros, functions, objects...) are wrapped into
+a Rust abstraction, a name as close as reasonably possible to the C side should
+be used in order to avoid confusion and to improve readability when switching
+back and forth between the C and Rust sides. For instance, macros such as
+<code class="docutils literal notranslate"><span class="pre">pr_info</span></code> from C are named the same in the Rust side.</p>
+<p>Having said that, casing should be adjusted to follow the Rust naming
+conventions, and namespacing introduced by modules and types should not be
+repeated in the item names. For instance, when wrapping constants like:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define GPIO_LINE_DIRECTION_IN  0</span>
+<span class="cp">#define GPIO_LINE_DIRECTION_OUT 1</span>
+</pre></div>
+</div>
+<p>The equivalent in Rust may look like (ignoring documentation):</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">mod</span><span class="w"> </span><span class="nn">gpio</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="nc">LineDirection</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">In</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bindings</span><span class="p">::</span><span class="n">GPIO_LINE_DIRECTION_IN</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">_</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bindings</span><span class="p">::</span><span class="n">GPIO_LINE_DIRECTION_OUT</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">_</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>That is, the equivalent of <code class="docutils literal notranslate"><span class="pre">GPIO_LINE_DIRECTION_IN</span></code> would be referred to as
+<code class="docutils literal notranslate"><span class="pre">gpio::LineDirection::In</span></code>. In particular, it should not be named
+<code class="docutils literal notranslate"><span class="pre">gpio::gpio_line_direction::GPIO_LINE_DIRECTION_IN</span></code>.</p>
+</section>
+<section id="lints">
+<h2>Lints<a class="headerlink" href="#lints" title="Link to this heading">¶</a></h2>
+<p>In Rust, it is possible to <code class="docutils literal notranslate"><span class="pre">allow</span></code> particular warnings (diagnostics, lints)
+locally, making the compiler ignore instances of a given warning within a given
+function, module, block, etc.</p>
+<p>It is similar to <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">GCC</span> <span class="pre">diagnostic</span> <span class="pre">push</span></code> + <code class="docutils literal notranslate"><span class="pre">ignored</span></code> + <code class="docutils literal notranslate"><span class="pre">pop</span></code> in C
+<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma GCC diagnostic push</span>
+<span class="cp">#pragma GCC diagnostic ignored &quot;-Wunused-function&quot;</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="cp">#pragma GCC diagnostic pop</span>
+</pre></div>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>In this particular case, the kernel’s <code class="docutils literal notranslate"><span class="pre">__{always,maybe}_unused</span></code>
+attributes (C23’s <code class="docutils literal notranslate"><span class="pre">[[maybe_unused]]</span></code>) may be used; however, the example
+is meant to reflect the equivalent lint in Rust discussed afterwards.</p>
+</aside>
+</aside>
+<p>But way less verbose:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[allow(dead_code)]</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+</pre></div>
+</div>
+<p>By that virtue, it makes it possible to comfortably enable more diagnostics by
+default (i.e. outside <code class="docutils literal notranslate"><span class="pre">W=</span></code> levels). In particular, those that may have some
+false positives but that are otherwise quite useful to keep enabled to catch
+potential mistakes.</p>
+<p>On top of that, Rust provides the <code class="docutils literal notranslate"><span class="pre">expect</span></code> attribute which takes this further.
+It makes the compiler warn if the warning was not produced. For instance, the
+following will ensure that, when <code class="docutils literal notranslate"><span class="pre">f()</span></code> is called somewhere, we will have to
+remove the attribute:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[expect(dead_code)]</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+</pre></div>
+</div>
+<p>If we do not, we get a warning from the compiler:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>warning: this lint expectation is unfulfilled
+ --&gt; x.rs:3:10
+  |
+3 | #[expect(dead_code)]
+  |          ^^^^^^^^^
+  |
+  = note: `#[warn(unfulfilled_lint_expectations)]` on by default
+</pre></div>
+</div>
+<p>This means that <code class="docutils literal notranslate"><span class="pre">expect</span></code>s do not get forgotten when they are not needed, which
+may happen in several situations, e.g.:</p>
+<ul class="simple">
+<li><p>Temporary attributes added while developing.</p></li>
+<li><p>Improvements in lints in the compiler, Clippy or custom tools which may
+remove a false positive.</p></li>
+<li><p>When the lint is not needed anymore because it was expected that it would be
+removed at some point, such as the <code class="docutils literal notranslate"><span class="pre">dead_code</span></code> example above.</p></li>
+</ul>
+<p>It also increases the visibility of the remaining <code class="docutils literal notranslate"><span class="pre">allow</span></code>s and reduces the
+chance of misapplying one.</p>
+<p>Thus prefer <code class="docutils literal notranslate"><span class="pre">expect</span></code> over <code class="docutils literal notranslate"><span class="pre">allow</span></code> unless:</p>
+<ul>
+<li><p>Conditional compilation triggers the warning in some cases but not others.</p>
+<p>If there are only a few cases where the warning triggers (or does not
+trigger) compared to the total number of cases, then one may consider using
+a conditional <code class="docutils literal notranslate"><span class="pre">expect</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">cfg_attr(...,</span> <span class="pre">expect(...))</span></code>). Otherwise,
+it is likely simpler to just use <code class="docutils literal notranslate"><span class="pre">allow</span></code>.</p>
+</li>
+<li><p>Inside macros, when the different invocations may create expanded code that
+triggers the warning in some cases but not in others.</p></li>
+<li><p>When code may trigger a warning for some architectures but not others, such
+as an <code class="docutils literal notranslate"><span class="pre">as</span></code> cast to a C FFI type.</p></li>
+</ul>
+<p>As a more developed example, consider for instance this program:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">g</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[cfg(CONFIG_X)]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, function <code class="docutils literal notranslate"><span class="pre">g()</span></code> is dead code if <code class="docutils literal notranslate"><span class="pre">CONFIG_X</span></code> is not set. Can we use
+<code class="docutils literal notranslate"><span class="pre">expect</span></code> here?</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[expect(dead_code)]</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">g</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[cfg(CONFIG_X)]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This would emit a lint if <code class="docutils literal notranslate"><span class="pre">CONFIG_X</span></code> is set, since it is not dead code in that
+configuration. Therefore, in cases like this, we cannot use <code class="docutils literal notranslate"><span class="pre">expect</span></code> as-is.</p>
+<p>A simple possibility is using <code class="docutils literal notranslate"><span class="pre">allow</span></code>:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[allow(dead_code)]</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">g</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[cfg(CONFIG_X)]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>An alternative would be using a conditional <code class="docutils literal notranslate"><span class="pre">expect</span></code>:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[cfg_attr(not(CONFIG_X), expect(dead_code))]</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">g</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[cfg(CONFIG_X)]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This would ensure that, if someone introduces another call to <code class="docutils literal notranslate"><span class="pre">g()</span></code> somewhere
+(e.g. unconditionally), then it would be spotted that it is not dead code
+anymore. However, the <code class="docutils literal notranslate"><span class="pre">cfg_attr</span></code> is more complex than a simple <code class="docutils literal notranslate"><span class="pre">allow</span></code>.</p>
+<p>Therefore, it is likely that it is not worth using conditional <code class="docutils literal notranslate"><span class="pre">expect</span></code>s when
+more than one or two configurations are involved or when the lint may be
+triggered due to non-local changes (such as <code class="docutils literal notranslate"><span class="pre">dead_code</span></code>).</p>
+<p>For more information about diagnostics in Rust, please see:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://doc.rust-lang.org/stable/reference/attributes/diagnostics.html">https://doc.rust-lang.org/stable/reference/attributes/diagnostics.html</a></p>
+</div></blockquote>
+</section>
+<section id="error-handling">
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<p>For some background and guidelines about Rust for Linux specific error handling,
+please see:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://rust.docs.kernel.org/kernel/error/type.Result.html#error-codes-in-c-and-rust">https://rust.docs.kernel.org/kernel/error/type.Result.html#error-codes-in-c-and-rust</a></p>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Coding Guidelines</a><ul>
+<li><a class="reference internal" href="#style-formatting">Style &amp; formatting</a></li>
+<li><a class="reference internal" href="#comments">Comments</a></li>
+<li><a class="reference internal" href="#code-documentation">Code documentation</a></li>
+<li><a class="reference internal" href="#naming">Naming</a></li>
+<li><a class="reference internal" href="#lints">Lints</a></li>
+<li><a class="reference internal" href="#error-handling">Error handling</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="general-information.html">
+                    <span class="icon">&lt;</span><span>General Information</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="arch-support.html"><span>Arch Support</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dynamic PCM &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Creating codec to codec dai link for ALSA dapm" href="codec-to-codec.html" />
+    <link rel="prev" title="ASoC jack detection" href="jack.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#core-subsystems">Core subsystems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../subsystem-apis.html#human-interfaces">Human interfaces</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../input/index.html">Input Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hid/index.html">Human Interface Devices (HID)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">Sound Subsystem Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gpu/index.html">GPU Driver Developer’s Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../fb/index.html">Frame Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../leds/index.html">LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#networking-interfaces">Networking interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#storage-interfaces">Storage interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subsystem-apis.html#other-subsystems">Other subsystems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/sound/soc/dpcm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="dynamic-pcm">
+<h1>Dynamic PCM<a class="headerlink" href="#dynamic-pcm" title="Link to this heading">¶</a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>Dynamic PCM allows an ALSA PCM device to digitally route its PCM audio to
+various digital endpoints during the PCM stream runtime. e.g. PCM0 can route
+digital audio to I2S DAI0, I2S DAI1 or PDM DAI2. This is useful for on SoC DSP
+drivers that expose several ALSA PCMs and can route to multiple DAIs.</p>
+<p>The DPCM runtime routing is determined by the ALSA mixer settings in the same
+way as the analog signal is routed in an ASoC codec driver. DPCM uses a DAPM
+graph representing the DSP internal audio paths and uses the mixer settings to
+determine the path used by each ALSA PCM.</p>
+<p>DPCM re-uses all the existing component codec, platform and DAI drivers without
+any modifications.</p>
+<section id="phone-audio-system-with-soc-based-dsp">
+<h3>Phone Audio System with SoC based DSP<a class="headerlink" href="#phone-audio-system-with-soc-based-dsp" title="Link to this heading">¶</a></h3>
+<p>Consider the following phone audio subsystem. This will be used in this
+document for all examples :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>| Front End PCMs    |  SoC DSP  | Back End DAIs | Audio devices |
+
+                    *************
+PCM0 &lt;------------&gt; *           * &lt;----DAI0-----&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;----DAI1-----&gt; Codec Speakers
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;----DAI2-----&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;----DAI3-----&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>This diagram shows a simple smart phone audio subsystem. It supports Bluetooth,
+FM digital radio, Speakers, Headset Jack, digital microphones and cellular
+modem. This sound card exposes 4 DSP front end (FE) ALSA PCM devices and
+supports 6 back end (BE) DAIs. Each FE PCM can digitally route audio data to any
+of the BE DAIs. The FE PCM devices can also route audio to more than 1 BE DAI.</p>
+</section>
+<section id="example-dpcm-switching-playback-from-dai0-to-dai1">
+<h3>Example - DPCM Switching playback from DAI0 to DAI1<a class="headerlink" href="#example-dpcm-switching-playback-from-dai0-to-dai1" title="Link to this heading">¶</a></h3>
+<p>Audio is being played to the Headset. After a while the user removes the headset
+and audio continues playing on the speakers.</p>
+<p>Playback on PCM0 to Headset would look like :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    *************
+PCM0 &lt;============&gt; *           * &lt;====DAI0=====&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;----DAI1-----&gt; Codec Speakers
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;----DAI2-----&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;----DAI3-----&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>The headset is removed from the jack by user so the speakers must now be used :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    *************
+PCM0 &lt;============&gt; *           * &lt;----DAI0-----&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;====DAI1=====&gt; Codec Speakers
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;----DAI2-----&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;----DAI3-----&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>The audio driver processes this as follows :-</p>
+<ol class="arabic simple">
+<li><p>Machine driver receives Jack removal event.</p></li>
+<li><p>Machine driver OR audio HAL disables the Headset path.</p></li>
+<li><p>DPCM runs the PCM trigger(stop), hw_free(), shutdown() operations on DAI0
+for headset since the path is now disabled.</p></li>
+<li><p>Machine driver or audio HAL enables the speaker path.</p></li>
+<li><p>DPCM runs the PCM ops for startup(), hw_params(), prepare() and
+trigger(start) for DAI1 Speakers since the path is enabled.</p></li>
+</ol>
+<p>In this example, the machine driver or userspace audio HAL can alter the routing
+and then DPCM will take care of managing the DAI PCM operations to either bring
+the link up or down. Audio playback does not stop during this transition.</p>
+</section>
+</section>
+<section id="dpcm-machine-driver">
+<h2>DPCM machine driver<a class="headerlink" href="#dpcm-machine-driver" title="Link to this heading">¶</a></h2>
+<p>The DPCM enabled ASoC machine driver is similar to normal machine drivers
+except that we also have to :-</p>
+<ol class="arabic simple">
+<li><p>Define the FE and BE DAI links.</p></li>
+<li><p>Define any FE/BE PCM operations.</p></li>
+<li><p>Define widget graph connections.</p></li>
+</ol>
+<section id="fe-and-be-dai-links">
+<h3>FE and BE DAI links<a class="headerlink" href="#fe-and-be-dai-links" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>| Front End PCMs    |  SoC DSP  | Back End DAIs | Audio devices |
+
+                    *************
+PCM0 &lt;------------&gt; *           * &lt;----DAI0-----&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;----DAI1-----&gt; Codec Speakers
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;----DAI2-----&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;----DAI3-----&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>For the example above we have to define 4 FE DAI links and 6 BE DAI links. The
+FE DAI links are defined as follows :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SND_SOC_DAILINK_DEFS(pcm0,
+       DAILINK_COMP_ARRAY(COMP_CPU(&quot;System Pin&quot;)),
+       DAILINK_COMP_ARRAY(COMP_DUMMY()),
+       DAILINK_COMP_ARRAY(COMP_PLATFORM(&quot;dsp-audio&quot;)));
+
+ static struct snd_soc_dai_link machine_dais[] = {
+       {
+               .name = &quot;PCM0 System&quot;,
+               .stream_name = &quot;System Playback&quot;,
+               SND_SOC_DAILINK_REG(pcm0),
+               .dynamic = 1,
+               .trigger = {SND_SOC_DPCM_TRIGGER_POST, SND_SOC_DPCM_TRIGGER_POST},
+       },
+       .....&lt; other FE and BE DAI links here &gt;
+ };
+</pre></div>
+</div>
+<p>This FE DAI link is pretty similar to a regular DAI link except that we also
+set the DAI link to a DPCM FE with the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">=</span> <span class="pre">1</span></code>.
+There is also an option to specify the ordering of the trigger call for
+each FE. This allows the ASoC core to trigger the DSP before or after the other
+components (as some DSPs have strong requirements for the ordering DAI/DSP
+start and stop sequences).</p>
+<p>The FE DAI above sets the codec and code DAIs to dummy devices since the BE is
+dynamic and will change depending on runtime config.</p>
+<p>The BE DAIs are configured as follows :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SND_SOC_DAILINK_DEFS(headset,
+       DAILINK_COMP_ARRAY(COMP_CPU(&quot;ssp-dai.0&quot;)),
+       DAILINK_COMP_ARRAY(COMP_CODEC(&quot;rt5640.0-001c&quot;, &quot;rt5640-aif1&quot;)));
+
+ static struct snd_soc_dai_link machine_dais[] = {
+       .....&lt; FE DAI links here &gt;
+       {
+               .name = &quot;Codec Headset&quot;,
+               SND_SOC_DAILINK_REG(headset),
+               .no_pcm = 1,
+               .ignore_suspend = 1,
+               .ignore_pmdown_time = 1,
+               .be_hw_params_fixup = hswult_ssp0_fixup,
+               .ops = &amp;haswell_ops,
+       },
+       .....&lt; other BE DAI links here &gt;
+ };
+</pre></div>
+</div>
+<p>This BE DAI link connects DAI0 to the codec (in this case RT5460 AIF1). It sets
+the <code class="docutils literal notranslate"><span class="pre">no_pcm</span></code> flag to mark it has a BE.</p>
+<p>The BE has also flags set for ignoring suspend and PM down time. This allows
+the BE to work in a hostless mode where the host CPU is not transferring data
+like a BT phone call :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    *************
+PCM0 &lt;------------&gt; *           * &lt;----DAI0-----&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;----DAI1-----&gt; Codec Speakers
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;====DAI2=====&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;====DAI3=====&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>This allows the host CPU to sleep while the DSP, MODEM DAI and the BT DAI are
+still in operation.</p>
+<p>A BE DAI link can also set the codec to a dummy device if the codec is a device
+that is managed externally.</p>
+<p>Likewise a BE DAI can also set a dummy cpu DAI if the CPU DAI is managed by the
+DSP firmware.</p>
+</section>
+<section id="fe-be-pcm-operations">
+<h3>FE/BE PCM operations<a class="headerlink" href="#fe-be-pcm-operations" title="Link to this heading">¶</a></h3>
+<p>The BE above also exports some PCM operations and a <code class="docutils literal notranslate"><span class="pre">fixup</span></code> callback. The fixup
+callback is used by the machine driver to (re)configure the DAI based upon the
+FE hw params. i.e. the DSP may perform SRC or ASRC from the FE to BE.</p>
+<p>e.g. DSP converts all FE hw params to run at fixed rate of 48k, 16bit, stereo for
+DAI0. This means all FE hw_params have to be fixed in the machine driver for
+DAI0 so that the DAI is running at desired configuration regardless of the FE
+configuration.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>static int dai0_fixup(struct snd_soc_pcm_runtime *rtd,
+                      struct snd_pcm_hw_params *params)
+{
+      struct snd_interval *rate = hw_param_interval(params,
+                      SNDRV_PCM_HW_PARAM_RATE);
+      struct snd_interval *channels = hw_param_interval(params,
+                                              SNDRV_PCM_HW_PARAM_CHANNELS);
+
+      /* The DSP will convert the FE rate to 48k, stereo */
+      rate-&gt;min = rate-&gt;max = 48000;
+      channels-&gt;min = channels-&gt;max = 2;
+
+      /* set DAI0 to 16 bit */
+      params_set_format(params, SNDRV_PCM_FORMAT_S16_LE);
+      return 0;
+}
+</pre></div>
+</div>
+<p>The other PCM operation are the same as for regular DAI links. Use as necessary.</p>
+</section>
+<section id="widget-graph-connections">
+<h3>Widget graph connections<a class="headerlink" href="#widget-graph-connections" title="Link to this heading">¶</a></h3>
+<p>The BE DAI links will normally be connected to the graph at initialisation time
+by the ASoC DAPM core. However, if the BE codec or BE DAI is a dummy then this
+has to be set explicitly in the driver :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/* BE for codec Headset -  DAI0 is dummy and managed by DSP FW */
+{&quot;DAI0 CODEC IN&quot;, NULL, &quot;AIF1 Capture&quot;},
+{&quot;AIF1 Playback&quot;, NULL, &quot;DAI0 CODEC OUT&quot;},
+</pre></div>
+</div>
+</section>
+</section>
+<section id="writing-a-dpcm-dsp-driver">
+<h2>Writing a DPCM DSP driver<a class="headerlink" href="#writing-a-dpcm-dsp-driver" title="Link to this heading">¶</a></h2>
+<p>The DPCM DSP driver looks much like a standard platform class ASoC driver
+combined with elements from a codec class driver. A DSP platform driver must
+implement :-</p>
+<ol class="arabic simple">
+<li><p>Front End PCM DAIs - i.e. struct snd_soc_dai_driver.</p></li>
+<li><p>DAPM graph showing DSP audio routing from FE DAIs to BEs.</p></li>
+<li><p>DAPM widgets from DSP graph.</p></li>
+<li><p>Mixers for gains, routing, etc.</p></li>
+<li><p>DMA configuration.</p></li>
+<li><p>BE AIF widgets.</p></li>
+</ol>
+<p>Items 6 is important for routing the audio outside of the DSP. AIF need to be
+defined for each BE and each stream direction. e.g for BE DAI0 above we would
+have :-</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SND_SOC_DAPM_AIF_IN(&quot;DAI0 RX&quot;, NULL, 0, SND_SOC_NOPM, 0, 0),
+SND_SOC_DAPM_AIF_OUT(&quot;DAI0 TX&quot;, NULL, 0, SND_SOC_NOPM, 0, 0),
+</pre></div>
+</div>
+<p>The BE AIF are used to connect the DSP graph to the graphs for the other
+component drivers (e.g. codec graph).</p>
+</section>
+<section id="hostless-pcm-streams">
+<h2>Hostless PCM streams<a class="headerlink" href="#hostless-pcm-streams" title="Link to this heading">¶</a></h2>
+<p>A hostless PCM stream is a stream that is not routed through the host CPU. An
+example of this would be a phone call from handset to modem.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    *************
+PCM0 &lt;------------&gt; *           * &lt;----DAI0-----&gt; Codec Headset
+                    *           *
+PCM1 &lt;------------&gt; *           * &lt;====DAI1=====&gt; Codec Speakers/Mic
+                    *   DSP     *
+PCM2 &lt;------------&gt; *           * &lt;====DAI2=====&gt; MODEM
+                    *           *
+PCM3 &lt;------------&gt; *           * &lt;----DAI3-----&gt; BT
+                    *           *
+                    *           * &lt;----DAI4-----&gt; DMIC
+                    *           *
+                    *           * &lt;----DAI5-----&gt; FM
+                    *************
+</pre></div>
+</div>
+<p>In this case the PCM data is routed via the DSP. The host CPU in this use case
+is only used for control and can sleep during the runtime of the stream.</p>
+<p>The host can control the hostless link either by :-</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Configuring the link as a CODEC &lt;-&gt; CODEC style link. In this case the link
+is enabled or disabled by the state of the DAPM graph. This usually means
+there is a mixer control that can be used to connect or disconnect the path
+between both DAIs.</p></li>
+<li><p>Hostless FE. This FE has a virtual connection to the BE DAI links on the DAPM
+graph. Control is then carried out by the FE as regular PCM operations.
+This method gives more control over the DAI links, but requires much more
+userspace code to control the link. Its recommended to use CODEC&lt;-&gt;CODEC
+unless your HW needs more fine grained sequencing of the PCM ops.</p></li>
+</ol>
+</div></blockquote>
+<section id="codec-codec-link">
+<h3>CODEC &lt;-&gt; CODEC link<a class="headerlink" href="#codec-codec-link" title="Link to this heading">¶</a></h3>
+<p>This DAI link is enabled when DAPM detects a valid path within the DAPM graph.
+The machine driver sets some additional parameters to the DAI link i.e.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>static const struct snd_soc_pcm_stream dai_params = {
+      .formats = SNDRV_PCM_FMTBIT_S32_LE,
+      .rate_min = 8000,
+      .rate_max = 8000,
+      .channels_min = 2,
+      .channels_max = 2,
+};
+
+static struct snd_soc_dai_link dais[] = {
+      &lt; ... more DAI links above ... &gt;
+      {
+              .name = &quot;MODEM&quot;,
+              .stream_name = &quot;MODEM&quot;,
+              .cpu_dai_name = &quot;dai2&quot;,
+              .codec_dai_name = &quot;modem-aif1&quot;,
+              .codec_name = &quot;modem&quot;,
+              .dai_fmt = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF
+                              | SND_SOC_DAIFMT_CBP_CFP,
+              .c2c_params = &amp;dai_params,
+              .num_c2c_params = 1,
+      }
+      &lt; ... more DAI links here ... &gt;
+</pre></div>
+</div>
+<p>These parameters are used to configure the DAI hw_params() when DAPM detects a
+valid path and then calls the PCM operations to start the link. DAPM will also
+call the appropriate PCM operations to disable the DAI when the path is no
+longer valid.</p>
+</section>
+<section id="hostless-fe">
+<h3>Hostless FE<a class="headerlink" href="#hostless-fe" title="Link to this heading">¶</a></h3>
+<p>The DAI link(s) are enabled by a FE that does not read or write any PCM data.
+This means creating a new FE that is connected with a virtual path to both
+DAI links. The DAI links will be started when the FE PCM is started and stopped
+when the FE PCM is stopped. Note that the FE PCM cannot read or write data in
+this configuration.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Dynamic PCM</a><ul>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#phone-audio-system-with-soc-based-dsp">Phone Audio System with SoC based DSP</a></li>
+<li><a class="reference internal" href="#example-dpcm-switching-playback-from-dai0-to-dai1">Example - DPCM Switching playback from DAI0 to DAI1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dpcm-machine-driver">DPCM machine driver</a><ul>
+<li><a class="reference internal" href="#fe-and-be-dai-links">FE and BE DAI links</a></li>
+<li><a class="reference internal" href="#fe-be-pcm-operations">FE/BE PCM operations</a></li>
+<li><a class="reference internal" href="#widget-graph-connections">Widget graph connections</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-a-dpcm-dsp-driver">Writing a DPCM DSP driver</a></li>
+<li><a class="reference internal" href="#hostless-pcm-streams">Hostless PCM streams</a><ul>
+<li><a class="reference internal" href="#codec-codec-link">CODEC &lt;-&gt; CODEC link</a></li>
+<li><a class="reference internal" href="#hostless-fe">Hostless FE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="jack.html">
+                    <span class="icon">&lt;</span><span>ASoC jack detection</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="codec-to-codec.html"><span>Creating codec to codec dai link for ALSA dapm</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

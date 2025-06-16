@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.16. Rockchip Image Signal Processor (rkisp1) &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.17. Raspberry Pi PiSP Camera Front End (rp1-cfe)" href="raspberrypi-rp1-cfe.html" />
+    <link rel="prev" title="7.15. Renesas R-Car Fine Display Processor (FDP1) Driver" href="rcar-fdp1.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#general-guides-to-kernel-administration">General guides to kernel administration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#booting-the-kernel">Booting the kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tracking-down-and-identifying-problems">Tracking down and identifying problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#core-kernel-subsystems">Core-kernel subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#block-layer-and-filesystem-administration">Block-layer and filesystem administration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#device-specific-guides">Device-specific guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../acpi/index.html">ACPI Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../aoe/index.html">ATA over Ethernet (AoE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auxdisplay/index.html">Auxiliary Display Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../braille-console.html">Linux Braille Console</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../btmrvl.html">btmrvl driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dell_rbu.html">Dell Remote BIOS Update driver (dell_rbu)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../edid.html">EDID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hw_random.html">Hardware random number generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../laptops/index.html">Laptop Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd-panel-cgram.html">Parallel port LCD/Keypad Panel support</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Media subsystem admin and user guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nvme-multipath.html">Linux NVMe multipath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parport.html">Parport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pnp.html">Linux Plug and Play Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rapidio.html">RapidIO Subsystem Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc.html">Real Time Clock (RTC) Drivers for Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serial-console.html">Linux Serial Console</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../svga.html">Video Mode Selection Support 2.13</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermal/index.html">Thermal Subsystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thunderbolt.html">USB4 and Thunderbolt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vga-softcursor.html">Software cursor for VGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../video-output.html">Video Output Switcher Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#workload-analysis">Workload analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/admin-guide/media/rkisp1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="rockchip-image-signal-processor-rkisp1">
+<h1><span class="section-number">7.16. </span>Rockchip Image Signal Processor (rkisp1)<a class="headerlink" href="#rockchip-image-signal-processor-rkisp1" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2><span class="section-number">7.16.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>This file documents the driver for the Rockchip ISP1 that is part of RK3288
+and RK3399 SoCs. The driver is located under drivers/media/platform/rockchip/
+rkisp1 and uses the Media-Controller API.</p>
+</section>
+<section id="revisions">
+<h2><span class="section-number">7.16.2. </span>Revisions<a class="headerlink" href="#revisions" title="Link to this heading">¶</a></h2>
+<p>There exist multiple smaller revisions to this ISP that got introduced in
+later SoCs. Revisions can be found in the enum <a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#c.rkisp1_cif_isp_version" title="rkisp1_cif_isp_version"><code class="xref c c-type docutils literal notranslate"><span class="pre">rkisp1_cif_isp_version</span></code></a>
+in the UAPI and the revision of the ISP inside the running SoC can be read
+in the field hw_revision of struct media_device_info as returned by
+ioctl MEDIA_IOC_DEVICE_INFO.</p>
+<p>Versions in use are:</p>
+<ul class="simple">
+<li><p>RKISP1_V10: used at least in rk3288 and rk3399</p></li>
+<li><p>RKISP1_V11: declared in the original vendor code, but not used</p></li>
+<li><p>RKISP1_V12: used at least in rk3326 and px30</p></li>
+<li><p>RKISP1_V13: used at least in rk1808</p></li>
+</ul>
+</section>
+<section id="topology">
+<h2><span class="section-number">7.16.3. </span>Topology<a class="headerlink" href="#topology" title="Link to this heading">¶</a></h2>
+<figure class="align-center">
+<img alt="Diagram of the default media pipeline topology" src="../../_images/rkisp1.svg" />
+</figure>
+<p>The driver has 4 video devices:</p>
+<ul class="simple">
+<li><p>rkisp1_mainpath: capture device for retrieving images, usually in higher
+resolution.</p></li>
+<li><p>rkisp1_selfpath: capture device for retrieving images.</p></li>
+<li><p>rkisp1_stats: a metadata capture device that sends statistics.</p></li>
+<li><p>rkisp1_params: a metadata output device that receives parameters
+configurations from userspace.</p></li>
+</ul>
+<p>The driver has 3 subdevices:</p>
+<ul class="simple">
+<li><p>rkisp1_resizer_mainpath: used to resize and downsample frames for the
+mainpath capture device.</p></li>
+<li><p>rkisp1_resizer_selfpath: used to resize and downsample frames for the
+selfpath capture device.</p></li>
+<li><p>rkisp1_isp: is connected to the sensor and is responsible for all the isp
+operations.</p></li>
+</ul>
+<section id="rkisp1-mainpath-rkisp1-selfpath-frames-capture-video-nodes">
+<h3><span class="section-number">7.16.3.1. </span>rkisp1_mainpath, rkisp1_selfpath - Frames Capture Video Nodes<a class="headerlink" href="#rkisp1-mainpath-rkisp1-selfpath-frames-capture-video-nodes" title="Link to this heading">¶</a></h3>
+<p>Those are the <cite>mainpath</cite> and <cite>selfpath</cite> capture devices to capture frames.
+Those entities are the DMA engines that write the frames to memory.
+The selfpath video device can capture YUV/RGB formats. Its input is YUV encoded
+stream and it is able to convert it to RGB. The selfpath is not able to
+capture bayer formats.
+The mainpath can capture both bayer and YUV formats but it is not able to
+capture RGB formats.
+Both capture videos support
+the <code class="docutils literal notranslate"><span class="pre">V4L2_CAP_IO_MC</span></code> <a class="reference internal" href="../../userspace-api/media/v4l/vidioc-querycap.html#device-capabilities"><span class="std std-ref">capability</span></a>.</p>
+</section>
+<section id="rkisp1-resizer-mainpath-rkisp1-resizer-selfpath-resizers-subdevices-nodes">
+<h3><span class="section-number">7.16.3.2. </span>rkisp1_resizer_mainpath, rkisp1_resizer_selfpath - Resizers Subdevices Nodes<a class="headerlink" href="#rkisp1-resizer-mainpath-rkisp1-resizer-selfpath-resizers-subdevices-nodes" title="Link to this heading">¶</a></h3>
+<p>Those are resizer entities for the mainpath and the selfpath. Those entities
+can scale the frames up and down and also change the YUV sampling (for example
+YUV4:2:2 -&gt; YUV4:2:0). They also have cropping capability on the sink pad.
+The resizers entities can only operate on YUV:4:2:2 format
+(MEDIA_BUS_FMT_YUYV8_2X8).
+The mainpath capture device supports capturing video in bayer formats. In that
+case the resizer of the mainpath is set to ‘bypass’ mode - it just forward the
+frame without operating on it.</p>
+</section>
+<section id="rkisp1-isp-image-signal-processing-subdevice-node">
+<h3><span class="section-number">7.16.3.3. </span>rkisp1_isp - Image Signal Processing Subdevice Node<a class="headerlink" href="#rkisp1-isp-image-signal-processing-subdevice-node" title="Link to this heading">¶</a></h3>
+<p>This is the isp entity. It is connected to the sensor on sink pad 0 and
+receives the frames using the CSI-2 protocol. It is responsible of configuring
+the CSI-2 protocol. It has a cropping capability on sink pad 0 that is
+connected to the sensor and on source pad 2 connected to the resizer entities.
+Cropping on sink pad 0 defines the image region from the sensor.
+Cropping on source pad 2 defines the region for the Image Stabilizer (IS).</p>
+</section>
+<section id="rkisp1-stats-statistics-video-node">
+<span id="rkisp1-stats"></span><h3><span class="section-number">7.16.3.4. </span>rkisp1_stats - Statistics Video Node<a class="headerlink" href="#rkisp1-stats-statistics-video-node" title="Link to this heading">¶</a></h3>
+<p>The statistics video node outputs the 3A (auto focus, auto exposure and auto
+white balance) statistics, and also histogram statistics for the frames that
+are being processed by the rkisp1 to userspace applications.
+Using these data, applications can implement algorithms and re-parameterize
+the driver through the rkisp_params node to improve image quality during a
+video stream.
+The buffer format is defined by struct <a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#c.rkisp1_stat_buffer" title="rkisp1_stat_buffer"><code class="xref c c-type docutils literal notranslate"><span class="pre">rkisp1_stat_buffer</span></code></a>, and
+userspace should set
+<a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#v4l2-meta-fmt-rk-isp1-stat-3a"><span class="std std-ref">V4L2_META_FMT_RK_ISP1_STAT_3A</span></a> as the
+dataformat.</p>
+</section>
+<section id="rkisp1-params-parameters-video-node">
+<span id="rkisp1-params"></span><h3><span class="section-number">7.16.3.5. </span>rkisp1_params - Parameters Video Node<a class="headerlink" href="#rkisp1-params-parameters-video-node" title="Link to this heading">¶</a></h3>
+<p>The rkisp1_params video node receives a set of parameters from userspace
+to be applied to the hardware during a video stream, allowing userspace
+to dynamically modify values such as black level, cross talk corrections
+and others.</p>
+<p>The ISP driver supports two different parameters configuration methods, the
+<cite>fixed parameters format</cite> or the <cite>extensible parameters format</cite>.</p>
+<p>When using the <cite>fixed parameters</cite> method the buffer format is defined by struct
+<a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#c.rkisp1_params_cfg" title="rkisp1_params_cfg"><code class="xref c c-type docutils literal notranslate"><span class="pre">rkisp1_params_cfg</span></code></a>, and userspace should set
+<a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#v4l2-meta-fmt-rk-isp1-params"><span class="std std-ref">V4L2_META_FMT_RK_ISP1_PARAMS</span></a> as the
+dataformat.</p>
+<p>When using the <cite>extensible parameters</cite> method the buffer format is defined by
+struct <a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#c.rkisp1_ext_params_cfg" title="rkisp1_ext_params_cfg"><code class="xref c c-type docutils literal notranslate"><span class="pre">rkisp1_ext_params_cfg</span></code></a>, and userspace should set
+<a class="reference internal" href="../../userspace-api/media/v4l/metafmt-rkisp1.html#v4l2-meta-fmt-rk-isp1-ext-params"><span class="std std-ref">V4L2_META_FMT_RK_ISP1_EXT_PARAMS</span></a> as
+the dataformat.</p>
+</section>
+</section>
+<section id="capturing-video-frames-example">
+<h2><span class="section-number">7.16.4. </span>Capturing Video Frames Example<a class="headerlink" href="#capturing-video-frames-example" title="Link to this heading">¶</a></h2>
+<p>In the following example, the sensor connected to pad 0 of ‘rkisp1_isp’ is
+imx219.</p>
+<p>The following commands can be used to capture video from the selfpath video
+node with dimension 900x800 planar format YUV 4:2:2. It uses all cropping
+capabilities possible, (see explanation right below)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the links</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-r&quot;</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-l&quot;</span><span class="w"> </span><span class="s2">&quot;&#39;imx219 4-0010&#39;:0 -&gt; &#39;rkisp1_isp&#39;:0 [1]&quot;</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-l&quot;</span><span class="w"> </span><span class="s2">&quot;&#39;rkisp1_isp&#39;:2 -&gt; &#39;rkisp1_resizer_selfpath&#39;:0 [1]&quot;</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-l&quot;</span><span class="w"> </span><span class="s2">&quot;&#39;rkisp1_isp&#39;:2 -&gt; &#39;rkisp1_resizer_mainpath&#39;:0 [0]&quot;</span>
+
+<span class="c1"># set format for imx219 4-0010:0</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;--set-v4l2&quot;</span><span class="w"> </span><span class="s1">&#39;&quot;imx219 4-0010&quot;:0 [fmt:SRGGB10_1X10/1640x1232]&#39;</span>
+
+<span class="c1"># set format for rkisp1_isp pads:</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;--set-v4l2&quot;</span><span class="w"> </span><span class="s1">&#39;&quot;rkisp1_isp&quot;:0 [fmt:SRGGB10_1X10/1640x1232 crop: (0,0)/1600x1200]&#39;</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;--set-v4l2&quot;</span><span class="w"> </span><span class="s1">&#39;&quot;rkisp1_isp&quot;:2 [fmt:YUYV8_2X8/1600x1200 crop: (0,0)/1500x1100]&#39;</span>
+
+<span class="c1"># set format for rkisp1_resizer_selfpath pads:</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;--set-v4l2&quot;</span><span class="w"> </span><span class="s1">&#39;&quot;rkisp1_resizer_selfpath&quot;:0 [fmt:YUYV8_2X8/1500x1100 crop: (300,400)/1400x1000]&#39;</span>
+<span class="s2">&quot;media-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;--set-v4l2&quot;</span><span class="w"> </span><span class="s1">&#39;&quot;rkisp1_resizer_selfpath&quot;:1 [fmt:YUYV8_2X8/900x800]&#39;</span>
+
+<span class="c1"># set format for rkisp1_selfpath:</span>
+<span class="s2">&quot;v4l2-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-z&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;rkisp1_selfpath&quot;</span><span class="w"> </span><span class="s2">&quot;-v&quot;</span><span class="w"> </span><span class="s2">&quot;width=900,height=800,&quot;</span>
+<span class="s2">&quot;v4l2-ctl&quot;</span><span class="w"> </span><span class="s2">&quot;-z&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;rkisp1_selfpath&quot;</span><span class="w"> </span><span class="s2">&quot;-v&quot;</span><span class="w"> </span><span class="s2">&quot;pixelformat=422P&quot;</span>
+
+<span class="c1"># start streaming:</span>
+v4l2-ctl<span class="w"> </span><span class="s2">&quot;-z&quot;</span><span class="w"> </span><span class="s2">&quot;platform:rkisp1&quot;</span><span class="w"> </span><span class="s2">&quot;-d&quot;</span><span class="w"> </span><span class="s2">&quot;rkisp1_selfpath&quot;</span><span class="w"> </span><span class="s2">&quot;--stream-mmap&quot;</span><span class="w"> </span><span class="s2">&quot;--stream-count&quot;</span><span class="w"> </span><span class="s2">&quot;10&quot;</span>
+</pre></div>
+</div>
+<p>In the above example the sensor is configured to bayer format:
+<cite>SRGGB10_1X10/1640x1232</cite>. The rkisp1_isp:0 pad should be configured to the
+same mbus format and dimensions as the sensor, otherwise streaming will fail
+with ‘EPIPE’ error. So it is also configured to <cite>SRGGB10_1X10/1640x1232</cite>.
+In addition, the rkisp1_isp:0 pad is configured to cropping <cite>(0,0)/1600x1200</cite>.</p>
+<p>The cropping dimensions are automatically propagated to be the format of the
+isp source pad <cite>rkisp1_isp:2</cite>. Another cropping operation is configured on
+the isp source pad: <cite>(0,0)/1500x1100</cite>.</p>
+<p>The resizer’s sink pad <cite>rkisp1_resizer_selfpath</cite> should be configured to format
+<cite>YUYV8_2X8/1500x1100</cite> in order to match the format on the other side of the
+link. In addition a cropping <cite>(300,400)/1400x1000</cite> is configured on it.</p>
+<p>The source pad of the resizer, <cite>rkisp1_resizer_selfpath:1</cite> is configured to
+format <cite>YUYV8_2X8/900x800</cite>. That means that the resizer first crop a window
+of <cite>(300,400)/1400x100</cite> from the received frame and then scales this window
+to dimension <cite>900x800</cite>.</p>
+<p>Note that the above example does not uses the stats-params control loop.
+Therefore the capture frames will not go through the 3A algorithms and
+probably won’t have a good quality, and can even look dark and greenish.</p>
+</section>
+<section id="configuring-quantization">
+<h2><span class="section-number">7.16.5. </span>Configuring Quantization<a class="headerlink" href="#configuring-quantization" title="Link to this heading">¶</a></h2>
+<p>The driver supports limited and full range quantization on YUV formats,
+where limited is the default.
+To switch between one or the other, userspace should use the Colorspace
+Conversion API (CSC) for subdevices on source pad 2 of the
+isp (<cite>rkisp1_isp:2</cite>). The quantization configured on this pad is the
+quantization of the captured video frames on the mainpath and selfpath
+video nodes.
+Note that the resizer and capture entities will always report
+<code class="docutils literal notranslate"><span class="pre">V4L2_QUANTIZATION_DEFAULT</span></code> even if the quantization is configured to full
+range on <cite>rkisp1_isp:2</cite>. So in order to get the configured quantization,
+application should get it from pad <cite>rkisp1_isp:2</cite>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">7.16. Rockchip Image Signal Processor (rkisp1)</a><ul>
+<li><a class="reference internal" href="#introduction">7.16.1. Introduction</a></li>
+<li><a class="reference internal" href="#revisions">7.16.2. Revisions</a></li>
+<li><a class="reference internal" href="#topology">7.16.3. Topology</a><ul>
+<li><a class="reference internal" href="#rkisp1-mainpath-rkisp1-selfpath-frames-capture-video-nodes">7.16.3.1. rkisp1_mainpath, rkisp1_selfpath - Frames Capture Video Nodes</a></li>
+<li><a class="reference internal" href="#rkisp1-resizer-mainpath-rkisp1-resizer-selfpath-resizers-subdevices-nodes">7.16.3.2. rkisp1_resizer_mainpath, rkisp1_resizer_selfpath - Resizers Subdevices Nodes</a></li>
+<li><a class="reference internal" href="#rkisp1-isp-image-signal-processing-subdevice-node">7.16.3.3. rkisp1_isp - Image Signal Processing Subdevice Node</a></li>
+<li><a class="reference internal" href="#rkisp1-stats-statistics-video-node">7.16.3.4. rkisp1_stats - Statistics Video Node</a></li>
+<li><a class="reference internal" href="#rkisp1-params-parameters-video-node">7.16.3.5. rkisp1_params - Parameters Video Node</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#capturing-video-frames-example">7.16.4. Capturing Video Frames Example</a></li>
+<li><a class="reference internal" href="#configuring-quantization">7.16.5. Configuring Quantization</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="rcar-fdp1.html">
+                    <span class="icon">&lt;</span><span><span class="section-number">7.15. </span>Renesas R-Car Fine Display Processor (FDP1) Driver</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="raspberrypi-rp1-cfe.html"><span><span class="section-number">7.17. </span>Raspberry Pi PiSP Camera Front End (rp1-cfe)</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

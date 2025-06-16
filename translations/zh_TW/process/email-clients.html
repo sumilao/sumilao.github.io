@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linux郵件客戶端配置信息 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux內核許可規則" href="license-rules.html" />
+    <link rel="prev" title="Linux 內核代碼風格" href="coding-style.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../index.html" title="Go to homepage"><img src="../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">繁體中文翻譯</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#linux">與Linux 內核社區一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#api">內部API文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id2">開發工具和流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id3">面向用戶的文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id5">固件相關文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id6">體系結構文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id7">其他文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id8">術語表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/translations/zh_TW/process/email-clients.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Traditional)
+
+<ul>
+
+<li><a href="../../../process/email-clients.html">English</a></li>
+
+<li><a href="../../zh_CN/process/email-clients.html">Chinese (Simplified)</a></li>
+
+<li><a href="../../it_IT/process/email-clients.html">Italian</a></li>
+
+<li><a href="../../sp_SP/process/email-clients.html">Spanish</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>此文件的目的是爲讓中文讀者更容易閱讀和理解，而不是作爲一個分支。因此，
+如果您對此文件有任何意見或改動，請先嘗試更新原始英文文件。如果要更改或
+修正某處翻譯文件，請將意見或補丁發送給維護者（聯繫方式見下）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您發現本文檔與原始文件有任何不同或者有翻譯問題，請聯繫該文件的譯者，
+或者發送電子郵件給胡皓文以獲取幫助：&lt;<a class="reference external" href="mailto:2023002089&#37;&#52;&#48;link&#46;tyut&#46;edu&#46;cn">2023002089<span>&#64;</span>link<span>&#46;</span>tyut<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;。</p>
+</div>
+<dl class="field-list simple" id="tw-email-clients">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../process/email-clients.html"><span class="doc">Email clients info for Linux</span></a></p>
+</dd>
+<dt class="field-even">譯者<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p>賈威威  Harry Wei &lt;<a class="reference external" href="mailto:harryxiyou&#37;&#52;&#48;gmail&#46;com">harryxiyou<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>時奎亮  Alex Shi &lt;<a class="reference external" href="mailto:alexs&#37;&#52;&#48;kernel&#46;org">alexs<span>&#64;</span>kernel<span>&#46;</span>org</a>&gt;</p></li>
+<li><p>吳想成  Wu XiangCheng &lt;<a class="reference external" href="mailto:bobwxc&#37;&#52;&#48;email&#46;cn">bobwxc<span>&#64;</span>email<span>&#46;</span>cn</a>&gt;</p></li>
+</ul>
+</dd>
+<dt class="field-odd">校譯<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Yinglin Luan &lt;<a class="reference external" href="mailto:synmyth&#37;&#52;&#48;gmail&#46;com">synmyth<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>Xiaochen Wang &lt;<a class="reference external" href="mailto:wangxiaochen0&#37;&#52;&#48;gmail&#46;com">wangxiaochen0<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>yaxinsn &lt;<a class="reference external" href="mailto:yaxinsn&#37;&#52;&#48;163&#46;com">yaxinsn<span>&#64;</span>163<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>Hu Haowen &lt;<a class="reference external" href="mailto:2023002089&#37;&#52;&#48;link&#46;tyut&#46;edu&#46;cn">2023002089<span>&#64;</span>link<span>&#46;</span>tyut<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<section id="linux">
+<h1>Linux郵件客戶端配置信息<a class="headerlink" href="#linux" title="Link to this heading">¶</a></h1>
+<section id="git">
+<h2>Git<a class="headerlink" href="#git" title="Link to this heading">¶</a></h2>
+<p>現在大多數開發人員使用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">send-email</span></code> 而不是常規的電子郵件客戶端。這方面
+的手冊非常好。在接收端，維護人員使用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span></code> 加載補丁。</p>
+<p>如果你是 <code class="docutils literal notranslate"><span class="pre">git</span></code> 新手，那麼把你的第一個補丁發送給你自己。將其保存爲包含所有
+標題的原始文本。運行 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">am</span> <span class="pre">raw_email.txt</span></code> ，然後使用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> 查看更
+改日誌。如果工作正常，再將補丁發送到相應的郵件列表。</p>
+</section>
+<section id="id1">
+<h2>通用配置<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>Linux內核補丁是通過郵件被提交的，最好把補丁作爲郵件體的內嵌文本。有些維護者
+接收附件，但是附件的內容格式應該是”text/plain”。然而，附件一般是不贊成的，
+因爲這會使補丁的引用部分在評論過程中變的很困難。</p>
+<p>同時也強烈建議在補丁或其他郵件的正文中使用純文本格式。<a class="reference external" href="https://useplaintext.email">https://useplaintext.email</a>
+有助於瞭解如何配置你喜歡的郵件客戶端，並在您還沒有首選的情況下列出一些推薦的
+客戶端。</p>
+<p>用來發送Linux內核補丁的郵件客戶端在發送補丁時應該處於文本的原始狀態。例如，
+他們不能改變或者刪除製表符或者空格，甚至是在每一行的開頭或者結尾。</p>
+<p>不要通過”format=flowed”模式發送補丁。這樣會引起不可預期以及有害的斷行。</p>
+<p>不要讓你的郵件客戶端進行自動換行。這樣也會破壞你的補丁。</p>
+<p>郵件客戶端不能改變文本的字符集編碼方式。要發送的補丁只能是ASCII或者UTF-8編碼
+方式，如果你使用UTF-8編碼方式發送郵件，那麼你將會避免一些可能發生的字符集問題。</p>
+<p>郵件客戶端應該生成並且保持“References:”或者“In-Reply-To:”郵件頭，這樣郵件會話
+就不會中斷。</p>
+<p>複製粘帖(或者剪貼粘帖)通常不能用於補丁，因爲製表符會轉換爲空格。使用xclipboard,
+xclip或者xcutsel也許可以，但是最好測試一下或者避免使用複製粘帖。</p>
+<p>不要在使用PGP/GPG簽名的郵件中包含補丁。這樣會使得很多腳本不能讀取和適用於你的
+補丁。（這個問題應該是可以修復的）</p>
+<p>在給內核郵件列表發送補丁之前，給自己發送一個補丁是個不錯的主意，保存接收到的
+郵件，將補丁用’patch’命令打上，如果成功了，再給內核郵件列表發送。</p>
+</section>
+<section id="id2">
+<h2>一些郵件客戶端提示<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>這裏給出一些詳細的MUA配置提示，可以用於給Linux內核發送補丁。這些並不意味是
+所有的軟件包配置總結。</p>
+<p>說明：</p>
+<ul class="simple">
+<li><p>TUI = 以文本爲基礎的用戶接口</p></li>
+<li><p>GUI = 圖形界面用戶接口</p></li>
+</ul>
+<section id="alpine-tui">
+<h3>Alpine (TUI)<a class="headerlink" href="#alpine-tui" title="Link to this heading">¶</a></h3>
+<p>配置選項：</p>
+<p>在 <span class="menuselection">Sending Preferences</span> 菜單：</p>
+<ul class="simple">
+<li><p><span class="menuselection">Do Not Send Flowed Text</span> 必須開啓</p></li>
+<li><p><span class="menuselection">Strip Whitespace Before Sending</span> 必須關閉</p></li>
+</ul>
+<p>當寫郵件時，光標應該放在補丁會出現的地方，然後按下 <cite>CTRL-R</cite> 組合鍵，使指
+定的補丁文件嵌入到郵件中。</p>
+</section>
+<section id="claws-mail-gui">
+<h3>Claws Mail (GUI)<a class="headerlink" href="#claws-mail-gui" title="Link to this heading">¶</a></h3>
+<p>可以用，有人用它成功地發過補丁。</p>
+<p>用 <span class="menuselection">Message‣Insert File</span> (<cite>CTRL-I</cite>) 或外置編輯器插入補丁。</p>
+<p>若要在Claws編輯窗口重修改插入的補丁，需關閉
+<span class="menuselection">Configuration‣Preferences‣Compose‣Wrapping</span>
+的 <cite>Auto wrapping</cite> 。</p>
+</section>
+<section id="evolution-gui">
+<h3>Evolution (GUI)<a class="headerlink" href="#evolution-gui" title="Link to this heading">¶</a></h3>
+<p>一些開發者成功的使用它發送補丁。</p>
+<p>撰寫郵件時：
+從 <span class="menuselection">格式‣段落樣式‣預格式化</span> (<cite>CTRL-7</cite>)
+或工具欄選擇 <span class="menuselection">預格式化</span> ；</p>
+<p>然後使用：
+<span class="menuselection">插入‣文本文件...</span> (<cite>ALT-N x</cite>) 插入補丁文件。</p>
+<p>你還可以 <code class="docutils literal notranslate"><span class="pre">diff</span> <span class="pre">-Nru</span> <span class="pre">old.c</span> <span class="pre">new.c</span> <span class="pre">|</span> <span class="pre">xclip</span></code> ，選擇 <span class="menuselection">預格式化</span> ，
+然後使用鼠標中鍵進行粘帖。</p>
+</section>
+<section id="kmail-gui">
+<h3>Kmail (GUI)<a class="headerlink" href="#kmail-gui" title="Link to this heading">¶</a></h3>
+<p>一些開發者成功的使用它發送補丁。</p>
+<p>默認撰寫設置禁用HTML格式是合適的；不要啓用它。</p>
+<p>當書寫一封郵件的時候，在選項下面不要選擇自動換行。唯一的缺點就是你在郵件中輸
+入的任何文本都不會被自動換行，因此你必須在發送補丁之前手動換行。最簡單的方法
+就是啓用自動換行來書寫郵件，然後把它保存爲草稿。一旦你在草稿中再次打開它，它
+已經全部自動換行了，那麼你的郵件雖然沒有選擇自動換行，但是還不會失去已有的自
+動換行。</p>
+<p>在郵件的底部，插入補丁之前，放上常用的補丁定界符：三個連字符(<code class="docutils literal notranslate"><span class="pre">---</span></code>)。</p>
+<p>然後在 <span class="menuselection">信件</span> 菜單，選擇 <span class="menuselection">插入文本文件</span> ，接
+着選取你的補丁文件。還有一個額外的選項，你可以通過它配置你的創建新郵件工具欄，
+加上 <span class="menuselection">插入文本文件</span> 圖標。</p>
+<p>將編輯器窗口拉到足夠寬避免折行。對於KMail 1.13.5 (KDE 4.5.4)，它會在發送郵件
+時對編輯器窗口中顯示折行的地方自動換行。在選項菜單中取消自動換行仍不能解決。
+因此，如果你的補丁中有非常長的行，必須在發送之前把編輯器窗口拉得非常寬。
+參見：<a class="reference external" href="https://bugs.kde.org/show_bug.cgi?id=174034">https://bugs.kde.org/show_bug.cgi?id=174034</a></p>
+<p>你可以安全地用GPG簽名附件，但是內嵌補丁最好不要使用GPG簽名它們。作爲內嵌文本
+插入的簽名補丁將使其難以從7-bit編碼中提取。</p>
+<p>如果你非要以附件的形式發送補丁，那麼就右鍵點擊附件，然後選擇
+<span class="menuselection">屬性</span> ，打開 <span class="menuselection">建議自動顯示</span> ，使附件內聯更容
+易讓讀者看到。</p>
+<p>當你要保存將要發送的內嵌文本補丁，你可以從消息列表窗格選擇包含補丁的郵件，然
+後右鍵選擇 <span class="menuselection">另存爲</span> 。如果整個電子郵件的組成正確，您可直接將
+其作爲補丁使用。電子郵件以當前用戶可讀寫權限保存，因此您必須 <code class="docutils literal notranslate"><span class="pre">chmod</span></code> ，以
+使其在複製到別處時用戶組和其他人可讀。</p>
+</section>
+<section id="lotus-notes-gui">
+<h3>Lotus Notes (GUI)<a class="headerlink" href="#lotus-notes-gui" title="Link to this heading">¶</a></h3>
+<p>不要使用它。</p>
+</section>
+<section id="ibm-verse-web-gui">
+<h3>IBM Verse (Web GUI)<a class="headerlink" href="#ibm-verse-web-gui" title="Link to this heading">¶</a></h3>
+<p>同上條。</p>
+</section>
+<section id="mutt-tui">
+<h3>Mutt (TUI)<a class="headerlink" href="#mutt-tui" title="Link to this heading">¶</a></h3>
+<p>很多Linux開發人員使用mutt客戶端，這證明它肯定工作得非常漂亮。</p>
+<p>Mutt不自帶編輯器，所以不管你使用什麼編輯器，不自動斷行就行。大多數編輯器都有
+<span class="menuselection">插入文件</span> 選項，它可以在不改變文件內容的情況下插入文件。</p>
+<p>用 <code class="docutils literal notranslate"><span class="pre">vim</span></code> 作爲mutt的編輯器:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set editor=&quot;vi&quot;
+</pre></div>
+</div>
+<p>如果使用xclip，敲入以下命令:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:set paste
+</pre></div>
+</div>
+<p>然後再按中鍵或者shift-insert或者使用:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:r filename
+</pre></div>
+</div>
+<p>把補丁插入爲內嵌文本。
+在未設置  <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">paste</span></code> 時(a)ttach工作的很好。</p>
+<p>你可以通過 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">format-patch</span></code> 生成補丁，然後用 Mutt發送它們:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mutt -H 0001-some-bug-fix.patch
+</pre></div>
+</div>
+<p>配置選項：</p>
+<p>它應該以默認設置的形式工作。
+然而，把 <code class="docutils literal notranslate"><span class="pre">send_charset</span></code> 設置一下也是一個不錯的主意:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set send_charset=&quot;us-ascii:utf-8&quot;
+</pre></div>
+</div>
+<p>Mutt 是高度可配置的。 這裏是個使用mutt通過 Gmail 發送的補丁的最小配置:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># .muttrc
+# ================  IMAP ====================
+set imap_user = &#39;yourusername@gmail.com&#39;
+set imap_pass = &#39;yourpassword&#39;
+set spoolfile = imaps://imap.gmail.com/INBOX
+set folder = imaps://imap.gmail.com/
+set record=&quot;imaps://imap.gmail.com/[Gmail]/Sent Mail&quot;
+set postponed=&quot;imaps://imap.gmail.com/[Gmail]/Drafts&quot;
+set mbox=&quot;imaps://imap.gmail.com/[Gmail]/All Mail&quot;
+
+# ================  SMTP  ====================
+set smtp_url = &quot;smtp://username@smtp.gmail.com:587/&quot;
+set smtp_pass = $imap_pass
+set ssl_force_tls = yes # Require encrypted connection
+
+# ================  Composition  ====================
+set editor = `echo \$EDITOR`
+set edit_headers = yes  # See the headers when editing
+set charset = UTF-8     # value of $LANG; also fallback for send_charset
+# Sender, email address, and sign-off line must match
+unset use_domain        # because joe@localhost is just embarrassing
+set realname = &quot;YOUR NAME&quot;
+set from = &quot;username@gmail.com&quot;
+set use_from = yes
+</pre></div>
+</div>
+<p>Mutt文檔含有更多信息：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail">https://gitlab.com/muttmua/mutt/-/wikis/UseCases/Gmail</a></p>
+<p><a class="reference external" href="http://www.mutt.org/doc/manual/">http://www.mutt.org/doc/manual/</a></p>
+</div></blockquote>
+</section>
+<section id="pine-tui">
+<h3>Pine (TUI)<a class="headerlink" href="#pine-tui" title="Link to this heading">¶</a></h3>
+<p>Pine過去有一些空格刪減問題，但是這些現在應該都被修復了。</p>
+<p>如果可以，請使用alpine（pine的繼承者）。</p>
+<p>配置選項：</p>
+<ul class="simple">
+<li><p>最近的版本需要 <code class="docutils literal notranslate"><span class="pre">quell-flowed-text</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">no-strip-whitespace-before-send</span></code> 選項也是需要的。</p></li>
+</ul>
+</section>
+<section id="sylpheed-gui">
+<h3>Sylpheed (GUI)<a class="headerlink" href="#sylpheed-gui" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>內嵌文本可以很好的工作（或者使用附件）。</p></li>
+<li><p>允許使用外部的編輯器。</p></li>
+<li><p>收件箱較多時非常慢。</p></li>
+<li><p>如果通過non-SSL連接，無法使用TLS SMTP授權。</p></li>
+<li><p>撰寫窗口的標尺很有用。</p></li>
+<li><p>將地址添加到通訊簿時無法正確理解顯示的名稱。</p></li>
+</ul>
+</section>
+<section id="thunderbird-gui">
+<h3>Thunderbird (GUI)<a class="headerlink" href="#thunderbird-gui" title="Link to this heading">¶</a></h3>
+<p>Thunderbird是Outlook的克隆版本，它很容易損壞文本，但也有一些方法強制修正。</p>
+<p>在完成修改後（包括安裝擴展），您需要重新啓動Thunderbird。</p>
+<ul>
+<li><p>允許使用外部編輯器：</p>
+<p>使用Thunderbird發補丁最簡單的方法是使用擴展來打開您最喜歡的外部編輯器。</p>
+<p>下面是一些能夠做到這一點的擴展樣例。</p>
+<ul>
+<li><p>“External Editor Revived”</p>
+<p><a class="reference external" href="https://github.com/Frederick888/external-editor-revived">https://github.com/Frederick888/external-editor-revived</a></p>
+<p><a class="reference external" href="https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/">https://addons.thunderbird.net/en-GB/thunderbird/addon/external-editor-revived/</a></p>
+<p>它需要安裝“本地消息主機（native messaging host）”。
+參見以下文檔:
+<a class="reference external" href="https://github.com/Frederick888/external-editor-revived/wiki">https://github.com/Frederick888/external-editor-revived/wiki</a></p>
+</li>
+<li><p>“External Editor”</p>
+<p><a class="reference external" href="https://github.com/exteditor/exteditor">https://github.com/exteditor/exteditor</a></p>
+<p>下載並安裝此擴展，然後打開 <span class="menuselection">新建消息</span> 窗口, 用
+<span class="menuselection">查看‣工具欄‣自定義...</span> 給它增加一個按鈕，直接點擊此
+按鈕即可使用外置編輯器。</p>
+<p>請注意，“External Editor”要求你的編輯器不能fork，換句話說，編輯器必須在
+關閉前不返回。你可能需要傳遞額外的參數或修改編輯器設置。最值得注意的是，
+如果您使用的是gvim，那麼您必須將 <span class="menuselection">external editor</span> 設置的
+編輯器字段設置爲 <code class="docutils literal notranslate"><span class="pre">/usr/bin/gvim</span> <span class="pre">--nofork&quot;</span></code> （假設可執行文件在
+<code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> ），以傳遞 <code class="docutils literal notranslate"><span class="pre">-f</span></code> 參數。如果您正在使用其他編輯器，請閱讀其
+手冊瞭解如何處理。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>若要修正內部編輯器，請執行以下操作：</p>
+<ul class="simple">
+<li><p>修改你的Thunderbird設置，不要使用 <code class="docutils literal notranslate"><span class="pre">format=flowed</span></code> ！
+回到主窗口，按照
+<span class="menuselection">主菜單‣首選項‣常規‣配置編輯器...</span>
+打開Thunderbird的配置編輯器。</p>
+<ul>
+<li><p>將 <code class="docutils literal notranslate"><span class="pre">mailnews.send_plaintext_flowed</span></code> 設爲 <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>將 <code class="docutils literal notranslate"><span class="pre">mailnews.wraplength</span></code> 從 <code class="docutils literal notranslate"><span class="pre">72</span></code> 改爲 <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</li>
+<li><p>不要寫HTML郵件！
+回到主窗口，打開
+<span class="menuselection">主菜單‣賬戶設置‣你的&#64;郵件.地址‣通訊錄/編寫<span class="accelerator">地</span>址簿</span> ，
+關掉 <code class="docutils literal notranslate"><span class="pre">以HTML格式編寫消息</span></code> 。</p></li>
+<li><p>只用純文本格式查看郵件！
+回到主窗口， <span class="menuselection">主菜單‣查看‣消息體爲‣純文本</span> ！</p></li>
+</ul>
+</section>
+<section id="tkrat-gui">
+<h3>TkRat (GUI)<a class="headerlink" href="#tkrat-gui" title="Link to this heading">¶</a></h3>
+<p>可以使用它。使用”Insert file...”或者外部的編輯器。</p>
+</section>
+<section id="gmail-web-gui">
+<h3>Gmail (Web GUI)<a class="headerlink" href="#gmail-web-gui" title="Link to this heading">¶</a></h3>
+<p>不要使用它發送補丁。</p>
+<p>Gmail網頁客戶端自動地把製表符轉換爲空格。</p>
+<p>雖然製表符轉換爲空格問題可以被外部編輯器解決，但它同時還會使用回車換行把每行
+拆分爲78個字符。</p>
+<p>另一個問題是Gmail還會把任何含有非ASCII的字符的消息改用base64編碼，如歐洲人的
+名字。</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Linux郵件客戶端配置信息</a><ul>
+<li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#id1">通用配置</a></li>
+<li><a class="reference internal" href="#id2">一些郵件客戶端提示</a><ul>
+<li><a class="reference internal" href="#alpine-tui">Alpine (TUI)</a></li>
+<li><a class="reference internal" href="#claws-mail-gui">Claws Mail (GUI)</a></li>
+<li><a class="reference internal" href="#evolution-gui">Evolution (GUI)</a></li>
+<li><a class="reference internal" href="#kmail-gui">Kmail (GUI)</a></li>
+<li><a class="reference internal" href="#lotus-notes-gui">Lotus Notes (GUI)</a></li>
+<li><a class="reference internal" href="#ibm-verse-web-gui">IBM Verse (Web GUI)</a></li>
+<li><a class="reference internal" href="#mutt-tui">Mutt (TUI)</a></li>
+<li><a class="reference internal" href="#pine-tui">Pine (TUI)</a></li>
+<li><a class="reference internal" href="#sylpheed-gui">Sylpheed (GUI)</a></li>
+<li><a class="reference internal" href="#thunderbird-gui">Thunderbird (GUI)</a></li>
+<li><a class="reference internal" href="#tkrat-gui">TkRat (GUI)</a></li>
+<li><a class="reference internal" href="#gmail-web-gui">Gmail (Web GUI)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="coding-style.html">
+                    <span class="icon">&lt;</span><span>Linux 內核代碼風格</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="license-rules.html"><span>Linux內核許可規則</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

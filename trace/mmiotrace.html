@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>In-kernel memory-mapped I/O tracing &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=9b2032db" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Event Histograms" href="histogram.html" />
+    <link rel="prev" title="MSR Trace Events" href="events-msr.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../index.html" title="Go to homepage"><img src="../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locking/index.html">Locking</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tracing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ftrace-design.html">Function Tracer Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracepoint-analysis.html">Notes on Analysing Behaviour Using Events and Tracepoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ftrace.html">ftrace - Function Tracer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ftrace-uses.html">Using ftrace to hook to functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fprobe.html">Fprobe - Function entry/exit probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kprobes.html">Kernel Probes (Kprobes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kprobetrace.html">Kprobe-based Event Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uprobetracer.html">Uprobe-tracer: Uprobe-based Event Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fprobetrace.html">Fprobe-based Event Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracepoints.html">Using the Linux Kernel Tracepoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Event Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events-kmem.html">Subsystem Trace Points: kmem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events-power.html">Subsystem Trace Points: power</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events-nmi.html">NMI Trace Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events-msr.html">MSR Trace Events</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">In-kernel memory-mapped I/O tracing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-quick-reference">Usage Quick Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-mmiotrace-works">How Mmiotrace Works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trace-log-format">Trace Log Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#explanation-keyword-space-separated-arguments">Explanation     Keyword Space-separated arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools-for-developers">Tools for Developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="histogram.html">Event Histograms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram-design.html">Histogram Design Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boottime-trace.html">Boot-time tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Using the tracer for debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hwlat_detector.html">Hardware Latency Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osnoise-tracer.html">OSNOISE Tracer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timerlat-tracer.html">Timerlat tracer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_th.html">Intel(R) Trace Hub (TH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ring-buffer-design.html">Lockless Ring Buffer Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ring-buffer-map.html">Tracefs ring-buffer memory mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stm.html">System Trace Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sys-t.html">MIPI SyS-T over STP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coresight/index.html">CoreSight - ARM Hardware Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_events.html">user_events: User-based Event Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rv/index.html">Runtime Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hisi-ptt.html">HiSilicon PCIe Tune and Trace device</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/trace/mmiotrace.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="in-kernel-memory-mapped-i-o-tracing">
+<h1>In-kernel memory-mapped I/O tracing<a class="headerlink" href="#in-kernel-memory-mapped-i-o-tracing" title="Link to this heading">¶</a></h1>
+<p>Home page and links to optional user space tools:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://nouveau.freedesktop.org/wiki/MmioTrace">https://nouveau.freedesktop.org/wiki/MmioTrace</a></p>
+</div></blockquote>
+<p>MMIO tracing was originally developed by Intel around 2003 for their Fault
+Injection Test Harness. In Dec 2006 - Jan 2007, using the code from Intel,
+Jeff Muizelaar created a tool for tracing MMIO accesses with the Nouveau
+project in mind. Since then many people have contributed.</p>
+<p>Mmiotrace was built for reverse engineering any memory-mapped IO device with
+the Nouveau project as the first real user. Only x86 and x86_64 architectures
+are supported.</p>
+<p>Out-of-tree mmiotrace was originally modified for mainline inclusion and
+ftrace framework by Pekka Paalanen &lt;<a class="reference external" href="mailto:pq&#37;&#52;&#48;iki&#46;fi">pq<span>&#64;</span>iki<span>&#46;</span>fi</a>&gt;.</p>
+<section id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Link to this heading">¶</a></h2>
+<p>Mmiotrace feature is compiled in by the CONFIG_MMIOTRACE option. Tracing is
+disabled by default, so it is safe to have this set to yes. SMP systems are
+supported, but tracing is unreliable and may miss events if more than one CPU
+is on-line, therefore mmiotrace takes all but one CPU off-line during run-time
+activation. You can re-enable CPUs by hand, but you have been warned, there
+is no way to automatically detect if you are losing events due to CPUs racing.</p>
+</section>
+<section id="usage-quick-reference">
+<h2>Usage Quick Reference<a class="headerlink" href="#usage-quick-reference" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mount -t debugfs debugfs /sys/kernel/debug
+$ echo mmiotrace &gt; /sys/kernel/tracing/current_tracer
+$ cat /sys/kernel/tracing/trace_pipe &gt; mydump.txt &amp;
+Start X or whatever.
+$ echo &quot;X is up&quot; &gt; /sys/kernel/tracing/trace_marker
+$ echo nop &gt; /sys/kernel/tracing/current_tracer
+Check for lost events.
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>Make sure debugfs is mounted to /sys/kernel/debug.
+If not (requires root privileges):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mount -t debugfs debugfs /sys/kernel/debug
+</pre></div>
+</div>
+<p>Check that the driver you are about to trace is not loaded.</p>
+<p>Activate mmiotrace (requires root privileges):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo mmiotrace &gt; /sys/kernel/tracing/current_tracer
+</pre></div>
+</div>
+<p>Start storing the trace:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cat /sys/kernel/tracing/trace_pipe &gt; mydump.txt &amp;
+</pre></div>
+</div>
+<p>The ‘cat’ process should stay running (sleeping) in the background.</p>
+<p>Load the driver you want to trace and use it. Mmiotrace will only catch MMIO
+accesses to areas that are ioremapped while mmiotrace is active.</p>
+<p>During tracing you can place comments (markers) into the trace by
+$ echo “X is up” &gt; /sys/kernel/tracing/trace_marker
+This makes it easier to see which part of the (huge) trace corresponds to
+which action. It is recommended to place descriptive markers about what you
+do.</p>
+<p>Shut down mmiotrace (requires root privileges):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo nop &gt; /sys/kernel/tracing/current_tracer
+</pre></div>
+</div>
+<p>The ‘cat’ process exits. If it does not, kill it by issuing ‘fg’ command and
+pressing ctrl+c.</p>
+<p>Check that mmiotrace did not lose events due to a buffer filling up. Either:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ grep -i lost mydump.txt
+</pre></div>
+</div>
+<p>which tells you exactly how many events were lost, or use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ dmesg
+</pre></div>
+</div>
+<p>to view your kernel log and look for “mmiotrace has lost events” warning. If
+events were lost, the trace is incomplete. You should enlarge the buffers and
+try again. Buffers are enlarged by first seeing how large the current buffers
+are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cat /sys/kernel/tracing/buffer_size_kb
+</pre></div>
+</div>
+<p>gives you a number. Approximately double this number and write it back, for
+instance:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo 128000 &gt; /sys/kernel/tracing/buffer_size_kb
+</pre></div>
+</div>
+<p>Then start again from the top.</p>
+<p>If you are doing a trace for a driver project, e.g. Nouveau, you should also
+do the following before sending your results:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ lspci -vvv &gt; lspci.txt
+$ dmesg &gt; dmesg.txt
+$ tar zcf pciid-nick-mmiotrace.tar.gz mydump.txt lspci.txt dmesg.txt
+</pre></div>
+</div>
+<p>and then send the .tar.gz file. The trace compresses considerably. Replace
+“pciid” and “nick” with the PCI ID or model name of your piece of hardware
+under investigation and your nickname.</p>
+</section>
+<section id="how-mmiotrace-works">
+<h2>How Mmiotrace Works<a class="headerlink" href="#how-mmiotrace-works" title="Link to this heading">¶</a></h2>
+<p>Access to hardware IO-memory is gained by mapping addresses from PCI bus by
+calling one of the ioremap_*() functions. Mmiotrace is hooked into the
+__ioremap() function and gets called whenever a mapping is created. Mapping is
+an event that is recorded into the trace log. Note that ISA range mappings
+are not caught, since the mapping always exists and is returned directly.</p>
+<p>MMIO accesses are recorded via page faults. Just before __ioremap() returns,
+the mapped pages are marked as not present. Any access to the pages causes a
+fault. The page fault handler calls mmiotrace to handle the fault. Mmiotrace
+marks the page present, sets TF flag to achieve single stepping and exits the
+fault handler. The instruction that faulted is executed and debug trap is
+entered. Here mmiotrace again marks the page as not present. The instruction
+is decoded to get the type of operation (read/write), data width and the value
+read or written. These are stored to the trace log.</p>
+<p>Setting the page present in the page fault handler has a race condition on SMP
+machines. During the single stepping other CPUs may run freely on that page
+and events can be missed without a notice. Re-enabling other CPUs during
+tracing is discouraged.</p>
+</section>
+<section id="trace-log-format">
+<h2>Trace Log Format<a class="headerlink" href="#trace-log-format" title="Link to this heading">¶</a></h2>
+<p>The raw log is text and easily filtered with e.g. grep and awk. One record is
+one line in the log. A record starts with a keyword, followed by keyword-
+dependent arguments. Arguments are separated by a space, or continue until the
+end of line. The format for version 20070824 is as follows:</p>
+</section>
+<section id="explanation-keyword-space-separated-arguments">
+<h2>Explanation     Keyword Space-separated arguments<a class="headerlink" href="#explanation-keyword-space-separated-arguments" title="Link to this heading">¶</a></h2>
+<p>read event      R       width, timestamp, map id, physical, value, PC, PID
+write event     W       width, timestamp, map id, physical, value, PC, PID
+ioremap event   MAP     timestamp, map id, physical, virtual, length, PC, PID
+iounmap event   UNMAP   timestamp, map id, PC, PID
+marker          MARK    timestamp, text
+version         VERSION the string “20070824”
+info for reader LSPCI   one line from lspci -v
+PCI address map PCIDEV  space-separated /proc/bus/pci/devices data
+unk. opcode     UNKNOWN timestamp, map id, physical, data, PC, PID</p>
+<p>Timestamp is in seconds with decimals. Physical is a PCI bus address, virtual
+is a kernel virtual address. Width is the data width in bytes and value is the
+data value. Map id is an arbitrary id number identifying the mapping that was
+used in an operation. PC is the program counter and PID is process id. PC is
+zero if it is not recorded. PID is always zero as tracing MMIO accesses
+originating in user space memory is not yet supported.</p>
+<p>For instance, the following awk filter will pass all 32-bit writes that target
+physical addresses in the range [0xfb73ce40, 0xfb800000]</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ awk &#39;/W 4 / { adr=strtonum($5); if (adr &gt;= 0xfb73ce40 &amp;&amp;
+adr &lt; 0xfb800000) print; }&#39;
+</pre></div>
+</div>
+</section>
+<section id="tools-for-developers">
+<h2>Tools for Developers<a class="headerlink" href="#tools-for-developers" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>The user space tools include utilities for:</dt><dd><ul class="simple">
+<li><p>replacing numeric addresses and values with hardware register names</p></li>
+<li><p>replaying MMIO logs, i.e., re-executing the recorded writes</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">In-kernel memory-mapped I/O tracing</a><ul>
+<li><a class="reference internal" href="#preparation">Preparation</a></li>
+<li><a class="reference internal" href="#usage-quick-reference">Usage Quick Reference</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#how-mmiotrace-works">How Mmiotrace Works</a></li>
+<li><a class="reference internal" href="#trace-log-format">Trace Log Format</a></li>
+<li><a class="reference internal" href="#explanation-keyword-space-separated-arguments">Explanation     Keyword Space-separated arguments</a></li>
+<li><a class="reference internal" href="#tools-for-developers">Tools for Developers</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="events-msr.html">
+                    <span class="icon">&lt;</span><span>MSR Trace Events</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="histogram.html"><span>Event Histograms</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

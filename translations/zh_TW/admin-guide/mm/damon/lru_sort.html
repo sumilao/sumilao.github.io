@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>基於DAMON的LRU排序 &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <script src="../../../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="內核同頁合併" href="../ksm.html" />
+    <link rel="prev" title="基於DAMON的回收" href="reclaim.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../../../../index.html" title="Go to homepage"><img src="../../../../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../../../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../locking/index.html">Locking</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/index.html">Development tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../dev-tools/testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../index.html">Translations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../zh_CN/index.html">中文翻译</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">繁體中文翻譯</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#linux">與Linux 內核社區一起工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#api">內部API文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id2">開發工具和流程</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../index.html#id3">面向用戶的文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id5">固件相關文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id6">體系結構文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id7">其他文檔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id8">術語表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../index.html#id9">索引和表格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../it_IT/index.html">La documentazione del kernel Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../ko_KR/index.html">한국어 번역</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../ja_JP/index.html">日本語訳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sp_SP/index.html">Traducción al español</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../index.html#disclaimer">Disclaimer</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/translations/zh_TW/admin-guide/mm/damon/lru_sort.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+
+<div class="language-selection">
+Chinese (Traditional)
+
+<ul>
+
+<li><a href="../../../../../admin-guide/mm/damon/lru_sort.html">English</a></li>
+
+<li><a href="../../../../zh_CN/admin-guide/mm/damon/lru_sort.html">Chinese (Simplified)</a></li>
+
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>此文件的目的是爲讓中文讀者更容易閱讀和理解，而不是作爲一個分支。因此，
+如果您對此文件有任何意見或改動，請先嘗試更新原始英文文件。如果要更改或
+修正某處翻譯文件，請將意見或補丁發送給維護者（聯繫方式見下）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您發現本文檔與原始文件有任何不同或者有翻譯問題，請聯繫該文件的譯者，
+或者發送電子郵件給胡皓文以獲取幫助：&lt;<a class="reference external" href="mailto:2023002089&#37;&#52;&#48;link&#46;tyut&#46;edu&#46;cn">2023002089<span>&#64;</span>link<span>&#46;</span>tyut<span>&#46;</span>edu<span>&#46;</span>cn</a>&gt;。</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Original<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../../../../admin-guide/mm/damon/lru_sort.html"><span class="doc">DAMON-based LRU-lists Sorting</span></a></p>
+</dd>
+<dt class="field-even">翻譯<span class="colon">:</span></dt>
+<dd class="field-even"><p>臧雷剛 Leigang Zang &lt;<a class="reference external" href="mailto:zangleigang&#37;&#52;&#48;hisilicon&#46;com">zangleigang<span>&#64;</span>hisilicon<span>&#46;</span>com</a>&gt;</p>
+</dd>
+<dt class="field-odd">校譯<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<section id="damonlru">
+<h1>基於DAMON的LRU排序<a class="headerlink" href="#damonlru" title="Link to this heading">¶</a></h1>
+<p>基於DAMON的LRU排序是一個靜態的內核模塊，旨在用於以主動的、輕量級的數據訪問模型
+爲基礎的頁面優先級處理的LRU鏈表上，以使得LRU上的數據訪問模型更爲可信。</p>
+<section id="lru">
+<h2>哪裏需要主動的LRU排序<a class="headerlink" href="#lru" title="Link to this heading">¶</a></h2>
+<p>在一個大型系統中，以頁爲粒度的訪問檢測會有比較顯著的開銷，LRU通常不會主動去排序，
+而是對部分特殊事件進行部分的、響應式的排序，例如：特殊的用戶請求，系統調用或者
+內存壓力。這導致，在有些場景下，LRU不能夠完美的作爲一個可信的數據訪問模型，比如
+在內存壓力下對目標內存進行回收。</p>
+<p>因爲DAMON能夠儘可能準確的識別數據訪問模型，同時只引起用戶指定範圍的開銷，主動的
+執行DAMON_LRU_SORT讓LRU變得更爲可信是有益的，而且這隻需要較少和可控的開銷。</p>
+</section>
+<section id="id1">
+<h2>這是如何工作的<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>DAMON_LRU_SORT使用DAMON尋找熱頁（範圍內的頁面訪問頻率高於用戶指定的閾值）和冷頁
+（範圍內的頁面在超過用戶指定的時間無訪問），並提高熱頁和降低冷頁在LRU中的優先級。
+爲了避免在排序過程佔用更多的CPU計算資源，可以設置一個CPU佔用時間的約束值。在約
+束下，分別提升或者降低更多的熱頁和冷頁。系統管理員也可以配置三個內存水位以控制
+在何種條件下自動激活或者停止這種機制。</p>
+<p>冷熱閾值和CPU約束的默認值是比較保守的。這意味着，在默認參數下，模塊可以廣泛且無
+負作用的使用在常見環境中，同時在只消耗一小部分CPU時間的情況下，給有內存壓力的系
+統提供一定水平的冷熱識別。</p>
+</section>
+<section id="id2">
+<h2>接口：模塊參數<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>使用此特性，你首先需要確認你的系統中運行的內核在編譯時啓用了
+<code class="docutils literal notranslate"><span class="pre">CONFIG_DAMON_LRU_SORT=y</span></code>.</p>
+<p>爲了讓系統管理員打開或者關閉並且調節指定的系統，DAMON_LRU_SORT設計了模塊參數。
+這意味着，你可以添加 <code class="docutils literal notranslate"><span class="pre">damon_lru_sort.&lt;parameter&gt;=&lt;value&gt;</span></code> 到內核的啓動命令行
+參數，或者在 <code class="docutils literal notranslate"><span class="pre">/sys/modules/damon_lru_sort/parameters/&lt;parameter&gt;</span></code> 寫入正確的
+值。</p>
+<p>下邊是每個參數的描述</p>
+<section id="enabled">
+<h3>enabled<a class="headerlink" href="#enabled" title="Link to this heading">¶</a></h3>
+<p>打開或者關閉DAMON_LRU_SORT.</p>
+<p>你可以通過設置這個參數爲 <code class="docutils literal notranslate"><span class="pre">Y</span></code> 來打開DAMON_LRU_SORT。設置爲 <code class="docutils literal notranslate"><span class="pre">N</span></code> 關閉
+DAMON_LRU_SORT。注意，在基於水位的激活的情況下，DAMON_LRU_SORT有可能不會真正去
+監測或者做LRU排序。對這種情況，參考下方關於水位的描述。</p>
+</section>
+<section id="commit-inputs">
+<h3>commit_inputs<a class="headerlink" href="#commit-inputs" title="Link to this heading">¶</a></h3>
+<p>讓DAMON_LRU_SORT再次讀取輸入參數，除了 <code class="docutils literal notranslate"><span class="pre">enabled</span></code> 。</p>
+<p>在DAMON_LRU_SORT運行時，新的輸入參數默認不會被應用。一旦這個參數被設置爲 <code class="docutils literal notranslate"><span class="pre">Y</span></code>
+，DAMON_LRU_SORT會再次讀取除了 <code class="docutils literal notranslate"><span class="pre">enabled</span></code> 之外的參數。讀取完成後，這個參數會被
+設置爲 <code class="docutils literal notranslate"><span class="pre">N</span></code> 。如果在讀取時發現有無效參數，DAMON_LRU_SORT會被關閉。</p>
+</section>
+<section id="hot-thres-access-freq">
+<h3>hot_thres_access_freq<a class="headerlink" href="#hot-thres-access-freq" title="Link to this heading">¶</a></h3>
+<p>熱點內存區域的訪問頻率閾值，千分比。</p>
+<p>如果一個內存區域的訪問頻率大於等於這個值，DAMON_LRU_SORT把這個區域看作熱區，並
+在LRU上把這個區域標記爲已訪問，因些在內存壓力下這部分內存不會被回收。默認爲50%。</p>
+</section>
+<section id="cold-min-age">
+<h3>cold_min_age<a class="headerlink" href="#cold-min-age" title="Link to this heading">¶</a></h3>
+<p>用於識別冷內存區域的時間閾值，單位是微秒。</p>
+<p>如果一個內存區域在這個時間內未被訪問過，DAMON_LRU_SORT把這個區域看作冷區，並在
+LRU上把這個區域標記爲未訪問，因此在內存壓力下這些內存會首先被回收。默認值爲120
+秒。</p>
+</section>
+<section id="quota-ms">
+<h3>quota_ms<a class="headerlink" href="#quota-ms" title="Link to this heading">¶</a></h3>
+<p>嘗試LRU鏈表排序的時間限制，單位是毫秒。</p>
+<p>DAMON_LRU_SORT在一個時間窗口內（quota_reset_interval_ms）內最多嘗試這麼長時間來
+對LRU進行排序。這個可以用來作爲CPU計算資源的約束。如果值爲0，則表示無限制。</p>
+<p>默認10毫秒。</p>
+</section>
+<section id="quota-reset-interval-ms">
+<h3>quota_reset_interval_ms<a class="headerlink" href="#quota-reset-interval-ms" title="Link to this heading">¶</a></h3>
+<p>配額計時重置週期，毫秒。</p>
+<p>配額計時重置週期。即，在quota_reset_interval_ms毫秒內，DAMON_LRU_SORT對LRU進行
+排序不會超過quota_ms或者quota_sz。</p>
+<p>默認1秒。</p>
+</section>
+<section id="wmarks-interval">
+<h3>wmarks_interval<a class="headerlink" href="#wmarks-interval" title="Link to this heading">¶</a></h3>
+<p>水位的檢查週期，單位是微秒。</p>
+<p>當DAMON_LRU_SORT使能但是由於水位而不活躍時檢查水位前最小的等待時間。默認值5秒。</p>
+</section>
+<section id="wmarks-high">
+<h3>wmarks_high<a class="headerlink" href="#wmarks-high" title="Link to this heading">¶</a></h3>
+<p>空閒內存高水位，千分比。</p>
+<p>如果空閒內存水位高於這個值，DAMON_LRU_SORT停止工作，不做任何事，除了週期性的檢
+查水位。默認200(20%)。</p>
+</section>
+<section id="wmarks-mid">
+<h3>wmarks_mid<a class="headerlink" href="#wmarks-mid" title="Link to this heading">¶</a></h3>
+<p>空閒內存中間水位，千分比。</p>
+<p>如果空閒內存水位在這個值與低水位之間，DAMON_LRU_SORT開始工作，開始檢測並對LRU鏈
+表進行排序。默認150(15%)。</p>
+</section>
+<section id="wmarks-low">
+<h3>wmarks_low<a class="headerlink" href="#wmarks-low" title="Link to this heading">¶</a></h3>
+<p>空閒內存低水位，千分比。</p>
+<p>如果空閒內存小於這個值，DAMON_LRU_SORT不再工作，不做任何事，除了週期性的檢查水
+線。默認50(5%)。</p>
+</section>
+<section id="sample-interval">
+<h3>sample_interval<a class="headerlink" href="#sample-interval" title="Link to this heading">¶</a></h3>
+<p>監測的採樣週期，微秒。</p>
+<p>DAMON對冷內存監測的採樣週期。更多細節請參考DAMON文檔 (<a class="reference internal" href="usage.html"><span class="doc">詳細用法</span></a>) 。默認5
+毫秒。</p>
+</section>
+<section id="aggr-interval">
+<h3>aggr_interval<a class="headerlink" href="#aggr-interval" title="Link to this heading">¶</a></h3>
+<p>監測的收集週期，微秒。</p>
+<p>DAMON對冷內存進行收集的時間週期。更多細節請參考DAMON文檔 (<a class="reference internal" href="usage.html"><span class="doc">詳細用法</span></a>) 。默認
+100毫秒。</p>
+</section>
+<section id="min-nr-regions">
+<h3>min_nr_regions<a class="headerlink" href="#min-nr-regions" title="Link to this heading">¶</a></h3>
+<p>最小監測區域數量。</p>
+<p>對冷內存區域監測的最小數量。這個值可以作爲監測質量的下限。不過，這個值設置的過
+大會增加開銷。更多細節請參考DAMON文檔 (<a class="reference internal" href="usage.html"><span class="doc">詳細用法</span></a>) 。默認值爲10。</p>
+</section>
+<section id="max-nr-regions">
+<h3>max_nr_regions<a class="headerlink" href="#max-nr-regions" title="Link to this heading">¶</a></h3>
+<p>最大監測區域數量。</p>
+<p>對冷內存區域監測的最大數量。這個值可以作爲監測質量的上限。然而，這個值設置的過
+低會導致監測結果變差。更多細節請參考DAMON文檔 (<a class="reference internal" href="usage.html"><span class="doc">詳細用法</span></a>) 。默認值爲1000。</p>
+</section>
+<section id="monitor-region-start">
+<h3>monitor_region_start<a class="headerlink" href="#monitor-region-start" title="Link to this heading">¶</a></h3>
+<p>目標內存區域的起始物理地址。</p>
+<p>DAMON_LRU_SORT要處理的目標內存區域的起始物理地址。默認，使用系統最大內存。</p>
+</section>
+<section id="monitor-region-end">
+<h3>monitor_region_end<a class="headerlink" href="#monitor-region-end" title="Link to this heading">¶</a></h3>
+<p>目標內存區域的結束物理地址。</p>
+<p>DAMON_LRU_SORT要處理的目標內存區域的結束物理地址。默認，使用系統最大內存。</p>
+</section>
+<section id="kdamond-pid">
+<h3>kdamond_pid<a class="headerlink" href="#kdamond-pid" title="Link to this heading">¶</a></h3>
+<p>DAMON線程的PID。</p>
+<p>如果DAMON_LRU_SORT是使能的，這個表示任務線程的PID。其它情況爲-1。</p>
+</section>
+<section id="nr-lru-sort-tried-hot-regions">
+<h3>nr_lru_sort_tried_hot_regions<a class="headerlink" href="#nr-lru-sort-tried-hot-regions" title="Link to this heading">¶</a></h3>
+<p>被嘗試進行LRU排序的熱內存區域的數量。</p>
+</section>
+<section id="bytes-lru-sort-tried-hot-regions">
+<h3>bytes_lru_sort_tried_hot_regions<a class="headerlink" href="#bytes-lru-sort-tried-hot-regions" title="Link to this heading">¶</a></h3>
+<p>被嘗試進行LRU排序的熱內存區域的大小（字節）。</p>
+</section>
+<section id="nr-lru-sorted-hot-regions">
+<h3>nr_lru_sorted_hot_regions<a class="headerlink" href="#nr-lru-sorted-hot-regions" title="Link to this heading">¶</a></h3>
+<p>成功進行LRU排序的熱內存區域的數量。</p>
+</section>
+<section id="bytes-lru-sorted-hot-regions">
+<h3>bytes_lru_sorted_hot_regions<a class="headerlink" href="#bytes-lru-sorted-hot-regions" title="Link to this heading">¶</a></h3>
+<p>成功進行LRU排序的熱內存區域的大小（字節）。</p>
+</section>
+<section id="nr-hot-quota-exceeds">
+<h3>nr_hot_quota_exceeds<a class="headerlink" href="#nr-hot-quota-exceeds" title="Link to this heading">¶</a></h3>
+<p>熱區域時間約束超過限制的次數。</p>
+</section>
+<section id="nr-lru-sort-tried-cold-regions">
+<h3>nr_lru_sort_tried_cold_regions<a class="headerlink" href="#nr-lru-sort-tried-cold-regions" title="Link to this heading">¶</a></h3>
+<p>被嘗試進行LRU排序的冷內存區域的數量。</p>
+</section>
+<section id="bytes-lru-sort-tried-cold-regions">
+<h3>bytes_lru_sort_tried_cold_regions<a class="headerlink" href="#bytes-lru-sort-tried-cold-regions" title="Link to this heading">¶</a></h3>
+<p>被嘗試進行LRU排序的冷內存區域的大小（字節）。</p>
+</section>
+<section id="nr-lru-sorted-cold-regions">
+<h3>nr_lru_sorted_cold_regions<a class="headerlink" href="#nr-lru-sorted-cold-regions" title="Link to this heading">¶</a></h3>
+<p>成功進行LRU排序的冷內存區域的數量。</p>
+</section>
+<section id="bytes-lru-sorted-cold-regions">
+<h3>bytes_lru_sorted_cold_regions<a class="headerlink" href="#bytes-lru-sorted-cold-regions" title="Link to this heading">¶</a></h3>
+<p>成功進行LRU排序的冷內存區域的大小（字節）。</p>
+</section>
+<section id="nr-cold-quota-exceeds">
+<h3>nr_cold_quota_exceeds<a class="headerlink" href="#nr-cold-quota-exceeds" title="Link to this heading">¶</a></h3>
+<p>冷區域時間約束超過限制的次數。</p>
+</section>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>如下是一個運行時的命令示例，使DAMON_LRU_SORT查找訪問頻率超過50%的區域並對其進行
+LRU的優先級的提升，同時降低那些超過120秒無人訪問的內存區域的優先級。優先級的處
+理被限制在最多1%的CPU以避免DAMON_LRU_SORT消費過多CPU時間。在系統空閒內存超過50%
+時DAMON_LRU_SORT停止工作，並在低於40%時重新開始工作。如果DAMON_RECLAIM沒有取得
+進展且空閒內存低於20%，再次讓DAMON_LRU_SORT停止工作，以此回退到以LRU鏈表爲基礎
+以頁面爲單位的內存回收上。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># cd /sys/modules/damon_lru_sort/parameters
+# echo 500 &gt; hot_thres_access_freq
+# echo 120000000 &gt; cold_min_age
+# echo 10 &gt; quota_ms
+# echo 1000 &gt; quota_reset_interval_ms
+# echo 500 &gt; wmarks_high
+# echo 400 &gt; wmarks_mid
+# echo 200 &gt; wmarks_low
+# echo Y &gt; enabled
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">基於DAMON的LRU排序</a><ul>
+<li><a class="reference internal" href="#lru">哪裏需要主動的LRU排序</a></li>
+<li><a class="reference internal" href="#id1">這是如何工作的</a></li>
+<li><a class="reference internal" href="#id2">接口：模塊參數</a><ul>
+<li><a class="reference internal" href="#enabled">enabled</a></li>
+<li><a class="reference internal" href="#commit-inputs">commit_inputs</a></li>
+<li><a class="reference internal" href="#hot-thres-access-freq">hot_thres_access_freq</a></li>
+<li><a class="reference internal" href="#cold-min-age">cold_min_age</a></li>
+<li><a class="reference internal" href="#quota-ms">quota_ms</a></li>
+<li><a class="reference internal" href="#quota-reset-interval-ms">quota_reset_interval_ms</a></li>
+<li><a class="reference internal" href="#wmarks-interval">wmarks_interval</a></li>
+<li><a class="reference internal" href="#wmarks-high">wmarks_high</a></li>
+<li><a class="reference internal" href="#wmarks-mid">wmarks_mid</a></li>
+<li><a class="reference internal" href="#wmarks-low">wmarks_low</a></li>
+<li><a class="reference internal" href="#sample-interval">sample_interval</a></li>
+<li><a class="reference internal" href="#aggr-interval">aggr_interval</a></li>
+<li><a class="reference internal" href="#min-nr-regions">min_nr_regions</a></li>
+<li><a class="reference internal" href="#max-nr-regions">max_nr_regions</a></li>
+<li><a class="reference internal" href="#monitor-region-start">monitor_region_start</a></li>
+<li><a class="reference internal" href="#monitor-region-end">monitor_region_end</a></li>
+<li><a class="reference internal" href="#kdamond-pid">kdamond_pid</a></li>
+<li><a class="reference internal" href="#nr-lru-sort-tried-hot-regions">nr_lru_sort_tried_hot_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sort-tried-hot-regions">bytes_lru_sort_tried_hot_regions</a></li>
+<li><a class="reference internal" href="#nr-lru-sorted-hot-regions">nr_lru_sorted_hot_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sorted-hot-regions">bytes_lru_sorted_hot_regions</a></li>
+<li><a class="reference internal" href="#nr-hot-quota-exceeds">nr_hot_quota_exceeds</a></li>
+<li><a class="reference internal" href="#nr-lru-sort-tried-cold-regions">nr_lru_sort_tried_cold_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sort-tried-cold-regions">bytes_lru_sort_tried_cold_regions</a></li>
+<li><a class="reference internal" href="#nr-lru-sorted-cold-regions">nr_lru_sorted_cold_regions</a></li>
+<li><a class="reference internal" href="#bytes-lru-sorted-cold-regions">bytes_lru_sorted_cold_regions</a></li>
+<li><a class="reference internal" href="#nr-cold-quota-exceeds">nr_cold_quota_exceeds</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="reclaim.html">
+                    <span class="icon">&lt;</span><span>基於DAMON的回收</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="../ksm.html"><span>內核同頁合併</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>

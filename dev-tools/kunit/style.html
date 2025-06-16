@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Test Style and Nomenclature &#8212; The Linux Kernel  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="Platform Device API" href="api/platformdevice.html" /> 
+  </head><body data-dark_mode_code_blocks="true">
+
+<div id="top_nav">
+    
+
+    <nav>
+        
+            
+        
+
+        <p id="toggle_sidebar">
+            <a href="#" title="Toggle sidebar">|||</a>
+        </p>
+        <h1><a href="../../index.html" title="Go to homepage"><img src="../../_static/logo.svg"/></a></h1>
+
+        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
+    <template v-if="mode == 'light'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'dark'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+
+    <template v-if="mode == 'darkest'">
+        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
+    </template>
+</a>
+
+<script>
+(function() {
+    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+
+    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (initialMode) {
+        // Make sure the value in local storage is valid
+        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
+            initialMode = 'light'
+            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+        }
+    } else {
+        // Check if the client prefers dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            initialMode = 'dark'
+        } else {
+            initialMode = 'light'
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
+    }
+
+    document.documentElement.dataset.mode = initialMode
+
+    PetiteVue.createApp({
+        'mode': initialMode,
+        handleClick() {
+            let currentMode = this.mode
+
+            if (currentMode == 'light') {
+                this.mode = 'dark'
+            } else if (currentMode == 'dark') {
+                this.mode = 'darkest'
+            } else if (currentMode == 'darkest') {
+                this.mode = 'light'
+            }
+
+            document.documentElement.dataset.mode = this.mode
+            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
+
+            console.log(this.mode)
+        }
+    }).mount('#mode_toggle')
+})()
+</script>
+            <p class="mobile_search_link">
+                <a href="../../search.html" title="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
+                    </svg>
+                </a>
+            </p>
+        
+
+        <div class="searchbox_wrapper">
+            
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><!-- SPDX-License-Identifier: GPL-2.0 -->
+
+<p>
+<h3 class="kernel-toc-contents">Contents</h3>
+<input type="checkbox" class="kernel-toc-toggle" id = "kernel-toc-toggle" checked>
+<label class="kernel-toc-title" for="kernel-toc-toggle"></label>
+
+<div class="kerneltoc" id="kerneltoc">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../process/development-process.html">Development process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/code-of-conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintainer/index.html">Maintainer handbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../process/index.html">All development-process docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../core-api/index.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../driver-api/index.html">Driver APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subsystem-apis.html">Subsystems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locking/index.html">Locking</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../process/license-rules.html">Licensing rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../doc-guide/index.html">Writing documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Development tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../testing-overview.html">Kernel Testing Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../checkpatch.html">Checkpatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clang-format.html">clang-format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coccinelle.html">Coccinelle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparse.html">Sparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kcov.html">KCOV: code coverage for fuzzing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gcov.html">Using gcov with the Linux kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kasan.html">Kernel Address Sanitizer (KASAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kmsan.html">Kernel Memory Sanitizer (KMSAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ubsan.html">Undefined Behavior Sanitizer - UBSAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kmemleak.html">Kernel Memory Leak Detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kcsan.html">Kernel Concurrency Sanitizer (KCSAN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kfence.html">Kernel Electric-Fence (KFENCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kselftest.html">Linux Kernel Selftests</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">KUnit - Linux Kernel Unit Testing</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="start.html">Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html">KUnit Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="run_wrapper.html">Running tests with kunit_tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="run_manual.html">Run Tests without kunit_tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html">Writing Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#common-patterns">Common Patterns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/index.html">API Reference</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Test Style and Nomenclature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="running_tips.html">Tips For Running KUnit Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#unit-testing">Unit Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#how-do-i-use-it">How do I use it?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ktap.html">The Kernel Test Anything Protocol (KTAP), version 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../checkuapi.html">UAPI Checker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gpio-sloppy-logic-analyzer.html">Linux Kernel GPIO based sloppy logic analyzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autofdo.html">Using AutoFDO with the Linux kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../propeller.html">Using Propeller with the Linux kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testing-overview.html">Testing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kernel-hacking/index.html">Hacking guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trace/index.html">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fault-injection/index.html">Fault injection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../livepatch/index.html">Livepatching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rust/index.html">Rust</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/index.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kbuild/index.html">Build system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin-guide/reporting-issues.html">Reporting issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Userspace tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userspace-api/index.html">Userspace API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware-guide/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devicetree/index.html">Firmware and Devicetree</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../arch/index.html">CPU architectures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../staging/index.html">Unsorted documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../translations/index.html">Translations</a></li>
+</ul>
+
+</div>
+
+<script type="text/javascript"> <!--
+  var sbar = document.getElementsByClassName("sphinxsidebar")[0];
+  let currents = document.getElementsByClassName("current")
+  if (currents.length) {
+    sbar.scrollTop = currents[currents.length - 1].offsetTop;
+  }
+  --> </script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/dev-tools/kunit/style.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <!-- SPDX-License-Identifier: GPL-2.0 -->
+<!-- Copyright © 2023, Oracle and/or its affiliates. -->
+
+
+<section id="test-style-and-nomenclature">
+<h1>Test Style and Nomenclature<a class="headerlink" href="#test-style-and-nomenclature" title="Link to this heading">¶</a></h1>
+<p>To make finding, writing, and using KUnit tests as simple as possible, it is
+strongly encouraged that they are named and written according to the guidelines
+below. While it is possible to write KUnit tests which do not follow these rules,
+they may break some tooling, may conflict with other tests, and may not be run
+automatically by testing systems.</p>
+<p>It is recommended that you only deviate from these guidelines when:</p>
+<ol class="arabic simple">
+<li><p>Porting tests to KUnit which are already known with an existing name.</p></li>
+<li><p>Writing tests which would cause serious problems if automatically run. For
+example, non-deterministically producing false positives or negatives, or
+taking a long time to run.</p></li>
+</ol>
+<section id="subsystems-suites-and-tests">
+<h2>Subsystems, Suites, and Tests<a class="headerlink" href="#subsystems-suites-and-tests" title="Link to this heading">¶</a></h2>
+<p>To make tests easy to find, they are grouped into suites and subsystems. A test
+suite is a group of tests which test a related area of the kernel. A subsystem
+is a set of test suites which test different parts of a kernel subsystem
+or a driver.</p>
+<section id="subsystems">
+<h3>Subsystems<a class="headerlink" href="#subsystems" title="Link to this heading">¶</a></h3>
+<p>Every test suite must belong to a subsystem. A subsystem is a collection of one
+or more KUnit test suites which test the same driver or part of the kernel. A
+test subsystem should match a single kernel module. If the code being tested
+cannot be compiled as a module, in many cases the subsystem should correspond to
+a directory in the source tree or an entry in the <code class="docutils literal notranslate"><span class="pre">MAINTAINERS</span></code> file. If
+unsure, follow the conventions set by tests in similar areas.</p>
+<p>Test subsystems should be named after the code being tested, either after the
+module (wherever possible), or after the directory or files being tested. Test
+subsystems should be named to avoid ambiguity where necessary.</p>
+<p>If a test subsystem name has multiple components, they should be separated by
+underscores. <em>Do not</em> include “test” or “kunit” directly in the subsystem name
+unless we are actually testing other tests or the kunit framework itself. For
+example, subsystems could be called:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ext4</span></code></dt><dd><p>Matches the module and filesystem name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">apparmor</span></code></dt><dd><p>Matches the module name and LSM name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">kasan</span></code></dt><dd><p>Common name for the tool, prominent part of the path <code class="docutils literal notranslate"><span class="pre">mm/kasan</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">snd_hda_codec_hdmi</span></code></dt><dd><p>Has several components (<code class="docutils literal notranslate"><span class="pre">snd</span></code>, <code class="docutils literal notranslate"><span class="pre">hda</span></code>, <code class="docutils literal notranslate"><span class="pre">codec</span></code>, <code class="docutils literal notranslate"><span class="pre">hdmi</span></code>) separated by
+underscores. Matches the module name.</p>
+</dd>
+</dl>
+<p>Avoid names as shown in examples below:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">linear-ranges</span></code></dt><dd><p>Names should use underscores, not dashes, to separate words. Prefer
+<code class="docutils literal notranslate"><span class="pre">linear_ranges</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">qos-kunit-test</span></code></dt><dd><p>This name should use underscores, and not have “kunit-test” as a
+suffix. <code class="docutils literal notranslate"><span class="pre">qos</span></code> is also ambiguous as a subsystem name, because several parts
+of the kernel have a <code class="docutils literal notranslate"><span class="pre">qos</span></code> subsystem. <code class="docutils literal notranslate"><span class="pre">power_qos</span></code> would be a better name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">pc_parallel_port</span></code></dt><dd><p>The corresponding module name is <code class="docutils literal notranslate"><span class="pre">parport_pc</span></code>, so this subsystem should also
+be named <code class="docutils literal notranslate"><span class="pre">parport_pc</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The KUnit API and tools do not explicitly know about subsystems. They are
+a way of categorizing test suites and naming modules which provides a
+simple, consistent way for humans to find and run tests. This may change
+in the future.</p>
+</div>
+</section>
+<section id="suites">
+<h3>Suites<a class="headerlink" href="#suites" title="Link to this heading">¶</a></h3>
+<p>KUnit tests are grouped into test suites, which cover a specific area of
+functionality being tested. Test suites can have shared initialization and
+shutdown code which is run for all tests in the suite. Not all subsystems need
+to be split into multiple test suites (for example, simple drivers).</p>
+<p>Test suites are named after the subsystem they are part of. If a subsystem
+contains several suites, the specific area under test should be appended to the
+subsystem name, separated by an underscore.</p>
+<p>In the event that there are multiple types of test using KUnit within a
+subsystem (for example, both unit tests and integration tests), they should be
+put into separate suites, with the type of test as the last element in the suite
+name. Unless these tests are actually present, avoid using <code class="docutils literal notranslate"><span class="pre">_test</span></code>, <code class="docutils literal notranslate"><span class="pre">_unittest</span></code>
+or similar in the suite name.</p>
+<p>The full test suite name (including the subsystem name) should be specified as
+the <code class="docutils literal notranslate"><span class="pre">.name</span></code> member of the <code class="docutils literal notranslate"><span class="pre">kunit_suite</span></code> struct, and forms the base for the
+module name. For example, test suites could include:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ext4_inode</span></code></dt><dd><p>Part of the <code class="docutils literal notranslate"><span class="pre">ext4</span></code> subsystem, testing the <code class="docutils literal notranslate"><span class="pre">inode</span></code> area.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">kunit_try_catch</span></code></dt><dd><p>Part of the <code class="docutils literal notranslate"><span class="pre">kunit</span></code> implementation itself, testing the <code class="docutils literal notranslate"><span class="pre">try_catch</span></code> area.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">apparmor_property_entry</span></code></dt><dd><p>Part of the <code class="docutils literal notranslate"><span class="pre">apparmor</span></code> subsystem, testing the <code class="docutils literal notranslate"><span class="pre">property_entry</span></code> area.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">kasan</span></code></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">kasan</span></code> subsystem has only one suite, so the suite name is the same as
+the subsystem name.</p>
+</dd>
+</dl>
+<p>Avoid names, for example:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ext4_ext4_inode</span></code></dt><dd><p>There is no reason to state the subsystem twice.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">property_entry</span></code></dt><dd><p>The suite name is ambiguous without the subsystem name.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">kasan_integration_test</span></code></dt><dd><p>Because there is only one suite in the <code class="docutils literal notranslate"><span class="pre">kasan</span></code> subsystem, the suite should
+just be called as <code class="docutils literal notranslate"><span class="pre">kasan</span></code>. Do not redundantly add
+<code class="docutils literal notranslate"><span class="pre">integration_test</span></code>. It should be a separate test suite. For example, if the
+unit tests are added, then that suite could be named as <code class="docutils literal notranslate"><span class="pre">kasan_unittest</span></code> or
+similar.</p>
+</dd>
+</dl>
+</section>
+<section id="test-cases">
+<h3>Test Cases<a class="headerlink" href="#test-cases" title="Link to this heading">¶</a></h3>
+<p>Individual tests consist of a single function which tests a constrained
+codepath, property, or function. In the test output, an individual test’s
+results will show up as subtests of the suite’s results.</p>
+<p>Tests should be named after what they are testing. This is often the name of the
+function being tested, with a description of the input or codepath being tested.
+As tests are C functions, they should be named and written in accordance with
+the kernel coding style.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As tests are themselves functions, their names cannot conflict with
+other C identifiers in the kernel. This may require some creative
+naming. It is a good idea to make your test functions <cite>static</cite> to avoid
+polluting the global namespace.</p>
+</div>
+<p>Example test names include:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">unpack_u32_with_null_name</span></code></dt><dd><p>Tests the <code class="docutils literal notranslate"><span class="pre">unpack_u32</span></code> function when a NULL name is passed in.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">test_list_splice</span></code></dt><dd><p>Tests the <code class="docutils literal notranslate"><span class="pre">list_splice</span></code> macro. It has the prefix <code class="docutils literal notranslate"><span class="pre">test_</span></code> to avoid a
+name conflict with the macro itself.</p>
+</dd>
+</dl>
+<p>Should it be necessary to refer to a test outside the context of its test suite,
+the <em>fully-qualified</em> name of a test should be the suite name followed by the
+test name, separated by a colon (i.e. <code class="docutils literal notranslate"><span class="pre">suite:test</span></code>).</p>
+</section>
+</section>
+<section id="test-kconfig-entries">
+<h2>Test Kconfig Entries<a class="headerlink" href="#test-kconfig-entries" title="Link to this heading">¶</a></h2>
+<p>Every test suite should be tied to a Kconfig entry.</p>
+<p>This Kconfig entry must:</p>
+<ul class="simple">
+<li><p>be named <code class="docutils literal notranslate"><span class="pre">CONFIG_&lt;name&gt;_KUNIT_TEST</span></code>: where &lt;name&gt; is the name of the test
+suite.</p></li>
+<li><p>be listed either alongside the config entries for the driver/subsystem being
+tested, or be under [Kernel Hacking]-&gt;[Kernel Testing and Coverage]</p></li>
+<li><p>depend on <code class="docutils literal notranslate"><span class="pre">CONFIG_KUNIT</span></code>.</p></li>
+<li><p>be visible only if <code class="docutils literal notranslate"><span class="pre">CONFIG_KUNIT_ALL_TESTS</span></code> is not enabled.</p></li>
+<li><p>have a default value of <code class="docutils literal notranslate"><span class="pre">CONFIG_KUNIT_ALL_TESTS</span></code>.</p></li>
+<li><p>have a brief description of KUnit in the help text.</p></li>
+</ul>
+<p>If we are not able to meet above conditions (for example, the test is unable to
+be built as a module), Kconfig entries for tests should be tristate.</p>
+<p>For example, a Kconfig entry might look like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>config FOO_KUNIT_TEST
+        tristate &quot;KUnit test for foo&quot; if !KUNIT_ALL_TESTS
+        depends on KUNIT
+        default KUNIT_ALL_TESTS
+        help
+          This builds unit tests for foo.
+
+          For more information on KUnit and unit tests in general,
+          please refer to the KUnit documentation in Documentation/dev-tools/kunit/.
+
+          If unsure, say N.
+</pre></div>
+</div>
+</section>
+<section id="test-file-and-module-names">
+<h2>Test File and Module Names<a class="headerlink" href="#test-file-and-module-names" title="Link to this heading">¶</a></h2>
+<p>KUnit tests are often compiled as a separate module. To avoid conflicting
+with regular modules, KUnit modules should be named after the test suite,
+followed by <code class="docutils literal notranslate"><span class="pre">_kunit</span></code> (e.g. if “foobar” is the core module, then
+“foobar_kunit” is the KUnit test module).</p>
+<p>Test source files, whether compiled as a separate module or an
+<code class="docutils literal notranslate"><span class="pre">#include</span></code> in another source file, are best kept in a <code class="docutils literal notranslate"><span class="pre">tests/</span></code>
+subdirectory to not conflict with other source files (e.g. for
+tab-completion).</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">_test</span></code> suffix has also been used in some existing
+tests. The <code class="docutils literal notranslate"><span class="pre">_kunit</span></code> suffix is preferred, as it makes the distinction
+between KUnit and non-KUnit tests clearer.</p>
+<p>So for the common case, name the file containing the test suite
+<code class="docutils literal notranslate"><span class="pre">tests/&lt;suite&gt;_kunit.c</span></code>. The <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory should be placed at
+the same level as the code under test. For example, tests for
+<code class="docutils literal notranslate"><span class="pre">lib/string.c</span></code> live in <code class="docutils literal notranslate"><span class="pre">lib/tests/string_kunit.c</span></code>.</p>
+<p>If the suite name contains some or all of the name of the test’s parent
+directory, it may make sense to modify the source filename to reduce
+redundancy. For example, a <code class="docutils literal notranslate"><span class="pre">foo_firmware</span></code> suite could be in the
+<code class="docutils literal notranslate"><span class="pre">foo/tests/firmware_kunit.c</span></code> file.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Test Style and Nomenclature</a><ul>
+<li><a class="reference internal" href="#subsystems-suites-and-tests">Subsystems, Suites, and Tests</a><ul>
+<li><a class="reference internal" href="#subsystems">Subsystems</a></li>
+<li><a class="reference internal" href="#suites">Suites</a></li>
+<li><a class="reference internal" href="#test-cases">Test Cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#test-kconfig-entries">Test Kconfig Entries</a></li>
+<li><a class="reference internal" href="#test-file-and-module-names">Test File and Module Names</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+    
+
+      <div class="clearer"></div>
+    </div>
+    <div class="button_nav_wrapper">
+        <div class="button_nav">
+            <div class="left">
+                
+                <a href="api/platformdevice.html">
+                    <span class="icon">&lt;</span><span>Platform Device API</span></a>
+                
+            </div>
+
+            <div class="right">
+                
+                    <a href="faq.html"><span>Frequently Asked Questions</span><span class="icon">&gt;</span></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; Copyright The kernel development community.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+
+<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
+  </body>
+</html>
